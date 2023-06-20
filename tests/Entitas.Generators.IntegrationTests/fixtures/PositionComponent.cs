@@ -1,8 +1,7 @@
 using Entitas;
 using Entitas.Generators.Attributes;
 
-// ReSharper disable once CheckNamespace
-namespace MyApp
+namespace MyFeature
 {
     [Context("MyApp.MainContext")]
     partial class PositionComponent : IComponent

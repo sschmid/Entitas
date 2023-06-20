@@ -14,24 +14,24 @@ public static class MyAppSomeNamespacedEntityExtension
 {
     static readonly MyApp.SomeNamespacedComponent SingleSomeNamespacedComponent = new MyApp.SomeNamespacedComponent();
 
-    public static bool HasSomeNamespaced(this Other.Entity entity)
+    public static bool HasSomeNamespaced(this Entity entity)
     {
         return entity.HasComponent(MyAppSomeNamespacedComponentIndex.Value);
     }
 
-    public static Other.Entity AddSomeNamespaced(this Other.Entity entity)
+    public static Entity AddSomeNamespaced(this Entity entity)
     {
         entity.AddComponent(MyAppSomeNamespacedComponentIndex.Value, SingleSomeNamespacedComponent);
         return entity;
     }
 
-    public static Other.Entity ReplaceSomeNamespaced(this Other.Entity entity)
+    public static Entity ReplaceSomeNamespaced(this Entity entity)
     {
         entity.ReplaceComponent(MyAppSomeNamespacedComponentIndex.Value, SingleSomeNamespacedComponent);
         return entity;
     }
 
-    public static Other.Entity RemoveSomeNamespaced(this Other.Entity entity)
+    public static Entity RemoveSomeNamespaced(this Entity entity)
     {
         entity.RemoveComponent(MyAppSomeNamespacedComponentIndex.Value);
         return entity;

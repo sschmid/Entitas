@@ -14,24 +14,24 @@ public static class MyAppOneContextNamespacedEntityExtension
 {
     static readonly MyApp.OneContextNamespacedComponent SingleOneContextNamespacedComponent = new MyApp.OneContextNamespacedComponent();
 
-    public static bool HasOneContextNamespaced(this Other.Entity entity)
+    public static bool HasOneContextNamespaced(this Entity entity)
     {
         return entity.HasComponent(MyAppOneContextNamespacedComponentIndex.Value);
     }
 
-    public static Other.Entity AddOneContextNamespaced(this Other.Entity entity)
+    public static Entity AddOneContextNamespaced(this Entity entity)
     {
         entity.AddComponent(MyAppOneContextNamespacedComponentIndex.Value, SingleOneContextNamespacedComponent);
         return entity;
     }
 
-    public static Other.Entity ReplaceOneContextNamespaced(this Other.Entity entity)
+    public static Entity ReplaceOneContextNamespaced(this Entity entity)
     {
         entity.ReplaceComponent(MyAppOneContextNamespacedComponentIndex.Value, SingleOneContextNamespacedComponent);
         return entity;
     }
 
-    public static Other.Entity RemoveOneContextNamespaced(this Other.Entity entity)
+    public static Entity RemoveOneContextNamespaced(this Entity entity)
     {
         entity.RemoveComponent(MyAppOneContextNamespacedComponentIndex.Value);
         return entity;

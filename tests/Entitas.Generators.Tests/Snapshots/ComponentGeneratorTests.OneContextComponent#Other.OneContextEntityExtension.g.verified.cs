@@ -14,24 +14,24 @@ public static class OneContextEntityExtension
 {
     static readonly OneContextComponent SingleOneContextComponent = new OneContextComponent();
 
-    public static bool HasOneContext(this Other.Entity entity)
+    public static bool HasOneContext(this Entity entity)
     {
         return entity.HasComponent(OneContextComponentIndex.Value);
     }
 
-    public static Other.Entity AddOneContext(this Other.Entity entity)
+    public static Entity AddOneContext(this Entity entity)
     {
         entity.AddComponent(OneContextComponentIndex.Value, SingleOneContextComponent);
         return entity;
     }
 
-    public static Other.Entity ReplaceOneContext(this Other.Entity entity)
+    public static Entity ReplaceOneContext(this Entity entity)
     {
         entity.ReplaceComponent(OneContextComponentIndex.Value, SingleOneContextComponent);
         return entity;
     }
 
-    public static Other.Entity RemoveOneContext(this Other.Entity entity)
+    public static Entity RemoveOneContext(this Entity entity)
     {
         entity.RemoveComponent(OneContextComponentIndex.Value);
         return entity;

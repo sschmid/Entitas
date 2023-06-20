@@ -12,22 +12,22 @@ namespace Other
 {
 public static class Matcher
 {
-    public static Entitas.IAllOfMatcher<Other.Entity> AllOf(System.Span<ComponentIndex> indices)
+    public static Entitas.IAllOfMatcher<Entity> AllOf(System.Span<ComponentIndex> indices)
     {
-        return Entitas.Matcher<Other.Entity>.AllOf(ToIntArray(indices));
+        return Entitas.Matcher<Entity>.AllOf(ToIntArray(indices));
     }
 
-    public static Entitas.IAnyOfMatcher<Other.Entity> AnyOf(System.Span<ComponentIndex> indices)
+    public static Entitas.IAnyOfMatcher<Entity> AnyOf(System.Span<ComponentIndex> indices)
     {
-        return Entitas.Matcher<Other.Entity>.AnyOf(ToIntArray(indices));
+        return Entitas.Matcher<Entity>.AnyOf(ToIntArray(indices));
     }
 
-    public static Entitas.IAnyOfMatcher<Other.Entity> AnyOf(this Entitas.IAllOfMatcher<Other.Entity> matcher, System.Span<ComponentIndex> indices)
+    public static Entitas.IAnyOfMatcher<Entity> AnyOf(this Entitas.IAllOfMatcher<Entity> matcher, System.Span<ComponentIndex> indices)
     {
         return matcher.AnyOf(ToIntArray(indices));
     }
 
-    public static Entitas.INoneOfMatcher<Other.Entity> NoneOf(this Entitas.IAnyOfMatcher<Other.Entity> matcher, System.Span<ComponentIndex> indices)
+    public static Entitas.INoneOfMatcher<Entity> NoneOf(this Entitas.IAnyOfMatcher<Entity> matcher, System.Span<ComponentIndex> indices)
     {
         return matcher.NoneOf(ToIntArray(indices));
     }
