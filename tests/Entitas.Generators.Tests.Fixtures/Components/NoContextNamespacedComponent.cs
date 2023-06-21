@@ -2,5 +2,5 @@ using Entitas;
 
 namespace MyFeature
 {
-    partial class NoContextNamespacedComponent : IComponent { }
+    public sealed class NoContextNamespacedComponent : IComponent { }
 }

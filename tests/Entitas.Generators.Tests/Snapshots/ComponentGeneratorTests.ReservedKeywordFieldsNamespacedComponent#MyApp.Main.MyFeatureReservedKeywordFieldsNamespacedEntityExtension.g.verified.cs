@@ -12,6 +12,11 @@ namespace MyApp.Main
 {
 public static class MyFeatureReservedKeywordFieldsNamespacedEntityExtension
 {
+    public static MyFeature.ReservedKeywordFieldsNamespacedComponent GetReservedKeywordFieldsNamespaced(this Entity entity)
+    {
+        return (MyFeature.ReservedKeywordFieldsNamespacedComponent)entity.GetComponent(MyFeatureReservedKeywordFieldsNamespacedComponentIndex.Value);
+    }
+
     public static bool HasReservedKeywordFieldsNamespaced(this Entity entity)
     {
         return entity.HasComponent(MyFeatureReservedKeywordFieldsNamespacedComponentIndex.Value);

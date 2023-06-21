@@ -3,5 +3,5 @@ using Entitas;
 namespace MyFeature
 {
     [MyApp.Main.Context]
-    partial class SomeNamespacedComponent : IComponent { }
+    public sealed class SomeNamespacedComponent : IComponent { }
 }

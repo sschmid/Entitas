@@ -6,7 +6,7 @@ using Entitas;
 namespace MyFeature
 {
     [MyApp.Main.Context]
-    partial class NoValidFieldsNamespacedComponent : IComponent
+    public sealed class NoValidFieldsNamespacedComponent : IComponent
     {
         public static string PublicStaticField;
 

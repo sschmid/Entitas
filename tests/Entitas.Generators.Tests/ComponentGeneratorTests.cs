@@ -24,7 +24,7 @@ public class ComponentGeneratorTests
     public Task Class() => Verify("SomeClass");
 
     [Fact]
-    public Task NonPartialComponent() => VerifyComponent("NonPartialComponent");
+    public Task NonPublicComponent() => VerifyComponent("NonPublicComponent");
 
     [Fact]
     public Task NamespacedComponent() => VerifyComponent("SomeNamespacedComponent");

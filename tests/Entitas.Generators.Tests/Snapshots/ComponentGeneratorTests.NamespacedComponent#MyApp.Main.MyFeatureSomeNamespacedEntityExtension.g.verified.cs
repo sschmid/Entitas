@@ -14,6 +14,11 @@ public static class MyFeatureSomeNamespacedEntityExtension
 {
     static readonly MyFeature.SomeNamespacedComponent SingleSomeNamespacedComponent = new MyFeature.SomeNamespacedComponent();
 
+    public static MyFeature.SomeNamespacedComponent GetSomeNamespaced(this Entity entity)
+    {
+        return (MyFeature.SomeNamespacedComponent)entity.GetComponent(MyFeatureSomeNamespacedComponentIndex.Value);
+    }
+
     public static bool HasSomeNamespaced(this Entity entity)
     {
         return entity.HasComponent(MyFeatureSomeNamespacedComponentIndex.Value);
