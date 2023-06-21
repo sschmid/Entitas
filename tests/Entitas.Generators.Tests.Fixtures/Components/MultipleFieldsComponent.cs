@@ -3,7 +3,7 @@ using Entitas;
 #pragma warning disable CS0649
 
 [MyApp.Main.Context]
-partial class MultipleFieldsComponent : IComponent
+public sealed class MultipleFieldsComponent : IComponent
 {
     public string Value1;
     public string Value2;

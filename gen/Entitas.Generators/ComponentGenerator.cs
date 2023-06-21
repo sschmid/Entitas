@@ -22,10 +22,10 @@ namespace Entitas.Generators
         static bool SyntacticComponentPredicate(SyntaxNode node, CancellationToken cancellationToken)
         {
             return node is ClassDeclarationSyntax { BaseList.Types.Count: > 0 } candidate
-                   && !candidate.Modifiers.Any(SyntaxKind.PublicKeyword)
+                   && candidate.Modifiers.Any(SyntaxKind.PublicKeyword)
                    && !candidate.Modifiers.Any(SyntaxKind.StaticKeyword)
-                   && !candidate.Modifiers.Any(SyntaxKind.SealedKeyword)
-                   && candidate.Modifiers.Any(SyntaxKind.PartialKeyword);
+                   && candidate.Modifiers.Any(SyntaxKind.SealedKeyword)
+                   && !candidate.Modifiers.Any(SyntaxKind.PartialKeyword);
         }
 
         static ComponentDeclaration? SemanticComponentTransform(GeneratorSyntaxContext context, CancellationToken cancellationToken)
@@ -86,6 +86,11 @@ namespace Entitas.Generators
                             $$"""
                         public static class {{className}}
                         {
+                            public static {{component.FullName}} Get{{component.ComponentPrefix}}(this Entity entity)
+                            {
+                                return ({{component.FullName}})entity.GetComponent({{index}});
+                            }
+
                             public static bool Has{{component.ComponentPrefix}}(this Entity entity)
                             {
                                 return entity.HasComponent({{index}});
@@ -140,6 +145,11 @@ namespace Entitas.Generators
                         public static class {{className}}
                         {
                             static readonly {{component.FullName}} Single{{component.Name}} = new {{component.FullName}}();
+
+                            public static {{component.FullName}} Get{{component.ComponentPrefix}}(this Entity entity)
+                            {
+                                return ({{component.FullName}})entity.GetComponent({{index}});
+                            }
 
                             public static bool Has{{component.ComponentPrefix}}(this Entity entity)
                             {

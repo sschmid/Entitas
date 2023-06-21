@@ -14,6 +14,11 @@ public static class SomeEntityExtension
 {
     static readonly SomeComponent SingleSomeComponent = new SomeComponent();
 
+    public static SomeComponent GetSome(this Entity entity)
+    {
+        return (SomeComponent)entity.GetComponent(SomeComponentIndex.Value);
+    }
+
     public static bool HasSome(this Entity entity)
     {
         return entity.HasComponent(SomeComponentIndex.Value);

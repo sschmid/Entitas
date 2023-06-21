@@ -12,6 +12,11 @@ namespace MyApp.Main
 {
 public static class MyFeatureOneFieldNamespacedEntityExtension
 {
+    public static MyFeature.OneFieldNamespacedComponent GetOneFieldNamespaced(this Entity entity)
+    {
+        return (MyFeature.OneFieldNamespacedComponent)entity.GetComponent(MyFeatureOneFieldNamespacedComponentIndex.Value);
+    }
+
     public static bool HasOneFieldNamespaced(this Entity entity)
     {
         return entity.HasComponent(MyFeatureOneFieldNamespacedComponentIndex.Value);

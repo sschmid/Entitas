@@ -12,6 +12,11 @@ namespace MyApp.Main
 {
 public static class MyFeatureMultipleFieldsNamespacedEntityExtension
 {
+    public static MyFeature.MultipleFieldsNamespacedComponent GetMultipleFieldsNamespaced(this Entity entity)
+    {
+        return (MyFeature.MultipleFieldsNamespacedComponent)entity.GetComponent(MyFeatureMultipleFieldsNamespacedComponentIndex.Value);
+    }
+
     public static bool HasMultipleFieldsNamespaced(this Entity entity)
     {
         return entity.HasComponent(MyFeatureMultipleFieldsNamespacedComponentIndex.Value);

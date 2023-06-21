@@ -5,7 +5,7 @@ using Entitas;
 namespace MyFeature
 {
     [MyApp.Main.Context]
-    partial class MultipleFieldsNamespacedComponent : IComponent
+    public sealed class MultipleFieldsNamespacedComponent : IComponent
     {
         public string Value1;
         public string Value2;

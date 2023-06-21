@@ -12,6 +12,11 @@ namespace MyApp.Main
 {
 public static class MultipleFieldsEntityExtension
 {
+    public static MultipleFieldsComponent GetMultipleFields(this Entity entity)
+    {
+        return (MultipleFieldsComponent)entity.GetComponent(MultipleFieldsComponentIndex.Value);
+    }
+
     public static bool HasMultipleFields(this Entity entity)
     {
         return entity.HasComponent(MultipleFieldsComponentIndex.Value);

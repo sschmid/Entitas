@@ -1,4 +1,4 @@
 using Entitas;
 
 [MyApp.Main.Context]
-partial class SomeComponent : IComponent { }
+public sealed class SomeComponent : IComponent { }

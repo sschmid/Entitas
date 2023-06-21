@@ -1,3 +1,3 @@
 using Entitas;
 
-partial class NoContextComponent : IComponent { }
+public sealed class NoContextComponent : IComponent { }
