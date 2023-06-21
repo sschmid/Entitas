@@ -12,18 +12,6 @@ namespace MyApp.Main
 {
 public static class MyFeatureReservedKeywordFieldsNamespacedEntityExtension
 {
-    public static MyFeature.ReservedKeywordFieldsNamespacedComponent GetReservedKeywordFieldsNamespaced(this Entity entity)
-    {
-        return (MyFeature.ReservedKeywordFieldsNamespacedComponent)entity.GetComponent(MyFeatureReservedKeywordFieldsNamespacedComponentIndex.Value);
-    }
-
-    public static void Deconstruct(this MyFeature.ReservedKeywordFieldsNamespacedComponent component, out string @namespace, out string @class, out string @public)
-    {
-        @namespace = component.Namespace;
-        @class = component.Class;
-        @public = component.Public;
-    }
-
     public static bool HasReservedKeywordFieldsNamespaced(this Entity entity)
     {
         return entity.HasComponent(MyFeatureReservedKeywordFieldsNamespacedComponentIndex.Value);
@@ -55,6 +43,18 @@ public static class MyFeatureReservedKeywordFieldsNamespacedEntityExtension
     {
         entity.RemoveComponent(MyFeatureReservedKeywordFieldsNamespacedComponentIndex.Value);
         return entity;
+    }
+
+    public static MyFeature.ReservedKeywordFieldsNamespacedComponent GetReservedKeywordFieldsNamespaced(this Entity entity)
+    {
+        return (MyFeature.ReservedKeywordFieldsNamespacedComponent)entity.GetComponent(MyFeatureReservedKeywordFieldsNamespacedComponentIndex.Value);
+    }
+
+    public static void Deconstruct(this MyFeature.ReservedKeywordFieldsNamespacedComponent component, out string @namespace, out string @class, out string @public)
+    {
+        @namespace = component.Namespace;
+        @class = component.Class;
+        @public = component.Public;
     }
 }
 }

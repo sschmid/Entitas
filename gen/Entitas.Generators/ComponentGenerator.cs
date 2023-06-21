@@ -86,16 +86,6 @@ namespace Entitas.Generators
                             $$"""
                         public static class {{className}}
                         {
-                            public static {{component.FullName}} Get{{component.ComponentPrefix}}(this Entity entity)
-                            {
-                                return ({{component.FullName}})entity.GetComponent({{index}});
-                            }
-
-                            public static void Deconstruct(this {{component.FullName}} component, {{ComponentDeconstructMethodArgs(component)}})
-                            {
-                        {{ComponentDeconstructValueAssignments(component)}}
-                            }
-
                             public static bool Has{{component.ComponentPrefix}}(this Entity entity)
                             {
                                 return entity.HasComponent({{index}});
@@ -123,6 +113,16 @@ namespace Entitas.Generators
                             {
                                 entity.RemoveComponent({{index}});
                                 return entity;
+                            }
+
+                            public static {{component.FullName}} Get{{component.ComponentPrefix}}(this Entity entity)
+                            {
+                                return ({{component.FullName}})entity.GetComponent({{index}});
+                            }
+
+                            public static void Deconstruct(this {{component.FullName}} component, {{ComponentDeconstructMethodArgs(component)}})
+                            {
+                        {{ComponentDeconstructValueAssignments(component)}}
                             }
                         }
 
@@ -164,11 +164,6 @@ namespace Entitas.Generators
                         {
                             static readonly {{component.FullName}} Single{{component.Name}} = new {{component.FullName}}();
 
-                            public static {{component.FullName}} Get{{component.ComponentPrefix}}(this Entity entity)
-                            {
-                                return ({{component.FullName}})entity.GetComponent({{index}});
-                            }
-
                             public static bool Has{{component.ComponentPrefix}}(this Entity entity)
                             {
                                 return entity.HasComponent({{index}});
@@ -190,6 +185,11 @@ namespace Entitas.Generators
                             {
                                 entity.RemoveComponent({{index}});
                                 return entity;
+                            }
+
+                            public static {{component.FullName}} Get{{component.ComponentPrefix}}(this Entity entity)
+                            {
+                                return ({{component.FullName}})entity.GetComponent({{index}});
                             }
                         }
 

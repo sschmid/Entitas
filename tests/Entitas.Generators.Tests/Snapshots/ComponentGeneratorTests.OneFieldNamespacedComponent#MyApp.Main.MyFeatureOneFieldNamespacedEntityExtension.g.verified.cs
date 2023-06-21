@@ -12,16 +12,6 @@ namespace MyApp.Main
 {
 public static class MyFeatureOneFieldNamespacedEntityExtension
 {
-    public static MyFeature.OneFieldNamespacedComponent GetOneFieldNamespaced(this Entity entity)
-    {
-        return (MyFeature.OneFieldNamespacedComponent)entity.GetComponent(MyFeatureOneFieldNamespacedComponentIndex.Value);
-    }
-
-    public static void Deconstruct(this MyFeature.OneFieldNamespacedComponent component, out string value)
-    {
-        value = component.Value;
-    }
-
     public static bool HasOneFieldNamespaced(this Entity entity)
     {
         return entity.HasComponent(MyFeatureOneFieldNamespacedComponentIndex.Value);
@@ -49,6 +39,16 @@ public static class MyFeatureOneFieldNamespacedEntityExtension
     {
         entity.RemoveComponent(MyFeatureOneFieldNamespacedComponentIndex.Value);
         return entity;
+    }
+
+    public static MyFeature.OneFieldNamespacedComponent GetOneFieldNamespaced(this Entity entity)
+    {
+        return (MyFeature.OneFieldNamespacedComponent)entity.GetComponent(MyFeatureOneFieldNamespacedComponentIndex.Value);
+    }
+
+    public static void Deconstruct(this MyFeature.OneFieldNamespacedComponent component, out string value)
+    {
+        value = component.Value;
     }
 }
 }
