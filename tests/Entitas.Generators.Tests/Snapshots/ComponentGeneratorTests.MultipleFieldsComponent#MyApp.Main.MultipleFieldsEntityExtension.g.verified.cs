@@ -12,18 +12,6 @@ namespace MyApp.Main
 {
 public static class MultipleFieldsEntityExtension
 {
-    public static MultipleFieldsComponent GetMultipleFields(this Entity entity)
-    {
-        return (MultipleFieldsComponent)entity.GetComponent(MultipleFieldsComponentIndex.Value);
-    }
-
-    public static void Deconstruct(this MultipleFieldsComponent component, out string value1, out string value2, out string value3)
-    {
-        value1 = component.Value1;
-        value2 = component.Value2;
-        value3 = component.Value3;
-    }
-
     public static bool HasMultipleFields(this Entity entity)
     {
         return entity.HasComponent(MultipleFieldsComponentIndex.Value);
@@ -55,6 +43,18 @@ public static class MultipleFieldsEntityExtension
     {
         entity.RemoveComponent(MultipleFieldsComponentIndex.Value);
         return entity;
+    }
+
+    public static MultipleFieldsComponent GetMultipleFields(this Entity entity)
+    {
+        return (MultipleFieldsComponent)entity.GetComponent(MultipleFieldsComponentIndex.Value);
+    }
+
+    public static void Deconstruct(this MultipleFieldsComponent component, out string value1, out string value2, out string value3)
+    {
+        value1 = component.Value1;
+        value2 = component.Value2;
+        value3 = component.Value3;
     }
 }
 }

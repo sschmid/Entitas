@@ -12,18 +12,6 @@ namespace MyApp.Main
 {
 public static class MyFeatureMultipleFieldsNamespacedEntityExtension
 {
-    public static MyFeature.MultipleFieldsNamespacedComponent GetMultipleFieldsNamespaced(this Entity entity)
-    {
-        return (MyFeature.MultipleFieldsNamespacedComponent)entity.GetComponent(MyFeatureMultipleFieldsNamespacedComponentIndex.Value);
-    }
-
-    public static void Deconstruct(this MyFeature.MultipleFieldsNamespacedComponent component, out string value1, out string value2, out string value3)
-    {
-        value1 = component.Value1;
-        value2 = component.Value2;
-        value3 = component.Value3;
-    }
-
     public static bool HasMultipleFieldsNamespaced(this Entity entity)
     {
         return entity.HasComponent(MyFeatureMultipleFieldsNamespacedComponentIndex.Value);
@@ -55,6 +43,18 @@ public static class MyFeatureMultipleFieldsNamespacedEntityExtension
     {
         entity.RemoveComponent(MyFeatureMultipleFieldsNamespacedComponentIndex.Value);
         return entity;
+    }
+
+    public static MyFeature.MultipleFieldsNamespacedComponent GetMultipleFieldsNamespaced(this Entity entity)
+    {
+        return (MyFeature.MultipleFieldsNamespacedComponent)entity.GetComponent(MyFeatureMultipleFieldsNamespacedComponentIndex.Value);
+    }
+
+    public static void Deconstruct(this MyFeature.MultipleFieldsNamespacedComponent component, out string value1, out string value2, out string value3)
+    {
+        value1 = component.Value1;
+        value2 = component.Value2;
+        value3 = component.Value3;
     }
 }
 }

@@ -14,11 +14,6 @@ public static class MyFeatureNoValidFieldsNamespacedEntityExtension
 {
     static readonly MyFeature.NoValidFieldsNamespacedComponent SingleNoValidFieldsNamespacedComponent = new MyFeature.NoValidFieldsNamespacedComponent();
 
-    public static MyFeature.NoValidFieldsNamespacedComponent GetNoValidFieldsNamespaced(this Entity entity)
-    {
-        return (MyFeature.NoValidFieldsNamespacedComponent)entity.GetComponent(MyFeatureNoValidFieldsNamespacedComponentIndex.Value);
-    }
-
     public static bool HasNoValidFieldsNamespaced(this Entity entity)
     {
         return entity.HasComponent(MyFeatureNoValidFieldsNamespacedComponentIndex.Value);
@@ -40,6 +35,11 @@ public static class MyFeatureNoValidFieldsNamespacedEntityExtension
     {
         entity.RemoveComponent(MyFeatureNoValidFieldsNamespacedComponentIndex.Value);
         return entity;
+    }
+
+    public static MyFeature.NoValidFieldsNamespacedComponent GetNoValidFieldsNamespaced(this Entity entity)
+    {
+        return (MyFeature.NoValidFieldsNamespacedComponent)entity.GetComponent(MyFeatureNoValidFieldsNamespacedComponentIndex.Value);
     }
 }
 }

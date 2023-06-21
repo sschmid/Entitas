@@ -12,16 +12,6 @@ namespace MyApp.Main
 {
 public static class OneFieldEntityExtension
 {
-    public static OneFieldComponent GetOneField(this Entity entity)
-    {
-        return (OneFieldComponent)entity.GetComponent(OneFieldComponentIndex.Value);
-    }
-
-    public static void Deconstruct(this OneFieldComponent component, out string value)
-    {
-        value = component.Value;
-    }
-
     public static bool HasOneField(this Entity entity)
     {
         return entity.HasComponent(OneFieldComponentIndex.Value);
@@ -49,6 +39,16 @@ public static class OneFieldEntityExtension
     {
         entity.RemoveComponent(OneFieldComponentIndex.Value);
         return entity;
+    }
+
+    public static OneFieldComponent GetOneField(this Entity entity)
+    {
+        return (OneFieldComponent)entity.GetComponent(OneFieldComponentIndex.Value);
+    }
+
+    public static void Deconstruct(this OneFieldComponent component, out string value)
+    {
+        value = component.Value;
     }
 }
 }
