@@ -1,7 +1,5 @@
 namespace MyApp.Main
 {
-    public sealed class ContextAttribute : Entitas.Generators.Attributes.ContextAttribute
-    {
-        public ContextAttribute() : base("MyApp.MainContext") { }
-    }
+    [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
+    public sealed class ContextAttribute : System.Attribute { }
 }

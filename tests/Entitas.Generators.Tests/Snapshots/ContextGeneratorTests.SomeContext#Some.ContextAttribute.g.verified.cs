@@ -10,8 +10,6 @@
 //------------------------------------------------------------------------------
 namespace Some
 {
-public sealed class ContextAttribute : Entitas.Generators.Attributes.ContextAttribute
-{
-    public ContextAttribute() : base("SomeContext") { }
-}
+[System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
+public sealed class ContextAttribute : System.Attribute { }
 }
