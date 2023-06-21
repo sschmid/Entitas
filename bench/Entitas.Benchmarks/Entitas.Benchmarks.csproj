@@ -12,4 +12,8 @@
     <PackageReference Include="BenchmarkDotNet" Version="0.13.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../../src/Entitas/Entitas.csproj" />
+  </ItemGroup>
+
 </Project>
