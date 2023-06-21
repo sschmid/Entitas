@@ -8,7 +8,7 @@ namespace Entitas.Generators.IntegrationTests
         [Fact]
         public void ContextAttribute()
         {
-            new MyApp.Main.ContextAttribute().Should().BeAssignableTo<Attributes.ContextAttribute>();
+            new MyApp.Main.ContextAttribute().Should().BeAssignableTo<System.Attribute>();
         }
     }
 }

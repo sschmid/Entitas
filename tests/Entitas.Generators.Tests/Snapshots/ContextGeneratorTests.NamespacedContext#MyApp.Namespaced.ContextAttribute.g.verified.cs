@@ -10,8 +10,6 @@
 //------------------------------------------------------------------------------
 namespace MyApp.Namespaced
 {
-public sealed class ContextAttribute : Entitas.Generators.Attributes.ContextAttribute
-{
-    public ContextAttribute() : base("MyApp.NamespacedContext") { }
-}
+[System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
+public sealed class ContextAttribute : System.Attribute { }
 }

@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../../src/Entitas/Entitas.csproj" />
-    <ProjectReference Include="../../src/Entitas.Generators.Attributes/Entitas.Generators.Attributes.csproj" />
   </ItemGroup>
 
 </Project>
