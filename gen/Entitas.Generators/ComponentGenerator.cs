@@ -44,7 +44,7 @@ namespace Entitas.Generators
             if (!isComponent)
                 return null;
 
-            return new ComponentDeclaration(symbol);
+            return new ComponentDeclaration(symbol, cancellationToken);
         }
 
         static void Execute(SourceProductionContext spc, ComponentDeclaration component)
@@ -230,7 +230,7 @@ namespace Entitas.Generators
             /// Then: Some
             public readonly string ComponentPrefix;
 
-            public ComponentDeclaration(INamedTypeSymbol symbol)
+            public ComponentDeclaration(INamedTypeSymbol symbol, CancellationToken cancellationToken)
             {
                 Namespace = !symbol.ContainingNamespace.IsGlobalNamespace ? symbol.ContainingNamespace.ToDisplayString() : null;
                 FullName = symbol.ToDisplayString();
@@ -240,7 +240,7 @@ namespace Entitas.Generators
                     .Where(member => member.DeclaredAccessibility == Accessibility.Public
                                      && !member.IsStatic
                                      && member.CanBeReferencedByName
-                                     && (member is IFieldSymbol || IsAutoProperty(member)))
+                                     && (member is IFieldSymbol || IsAutoProperty(member, cancellationToken)))
                     .Select<ISymbol, MemberDeclaration?>(member => member switch
                     {
                         IFieldSymbol field => new MemberDeclaration(field),
@@ -262,13 +262,13 @@ namespace Entitas.Generators
                 FullComponentPrefix = FullName.Replace(".", string.Empty).RemoveSuffix("Component");
                 ComponentPrefix = Name.RemoveSuffix("Component");
 
-                static bool IsAutoProperty(ISymbol symbol)
+                static bool IsAutoProperty(ISymbol symbol, CancellationToken cancellationToken)
                 {
                     return symbol is IPropertySymbol { SetMethod: not null, GetMethod: not null } property
                            && !property.GetMethod.DeclaringSyntaxReferences.First()
-                               .GetSyntax().DescendantNodes().Any(node => node is MethodDeclarationSyntax)
+                               .GetSyntax(cancellationToken).DescendantNodes().Any(node => node is MethodDeclarationSyntax)
                            && !property.SetMethod.DeclaringSyntaxReferences.First()
-                               .GetSyntax().DescendantNodes().Any(node => node is MethodDeclarationSyntax);
+                               .GetSyntax(cancellationToken).DescendantNodes().Any(node => node is MethodDeclarationSyntax);
                 }
             }
 
