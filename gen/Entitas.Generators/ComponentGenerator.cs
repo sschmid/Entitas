@@ -241,21 +241,11 @@ namespace Entitas.Generators
                                      && !member.IsStatic
                                      && member.CanBeReferencedByName
                                      && (member is IFieldSymbol || IsAutoProperty(member)))
-                    .Select<ISymbol, MemberDeclaration?>(member =>
+                    .Select<ISymbol, MemberDeclaration?>(member => member switch
                     {
-                        var memberType = member switch
-                        {
-                            IFieldSymbol field => field.Type,
-                            IPropertySymbol property => property.Type,
-                            _ => null
-                        };
-
-                        if (memberType is null)
-                            return null;
-
-                        return new MemberDeclaration(
-                            memberType.ToDisplayString(),
-                            member.Name);
+                        IFieldSymbol field => new MemberDeclaration(field),
+                        IPropertySymbol property => new MemberDeclaration(property),
+                        _ => null
                     })
                     .Where(member => member is not null)
                     .Select(member => member!.Value)
@@ -276,13 +266,9 @@ namespace Entitas.Generators
                 {
                     return symbol is IPropertySymbol { SetMethod: not null, GetMethod: not null } property
                            && !property.GetMethod.DeclaringSyntaxReferences.First()
-                               .GetSyntax()
-                               .DescendantNodes()
-                               .Any(node => node is MethodDeclarationSyntax)
+                               .GetSyntax().DescendantNodes().Any(node => node is MethodDeclarationSyntax)
                            && !property.SetMethod.DeclaringSyntaxReferences.First()
-                               .GetSyntax()
-                               .DescendantNodes()
-                               .Any(node => node is MethodDeclarationSyntax);
+                               .GetSyntax().DescendantNodes().Any(node => node is MethodDeclarationSyntax);
                 }
             }
 
@@ -304,23 +290,23 @@ namespace Entitas.Generators
 
             public readonly string ValidLowerFirstName;
 
-            static readonly System.CodeDom.Compiler.CodeDomProvider CodeDomProvider =
-                System.CodeDom.Compiler.CodeDomProvider.CreateProvider(LanguageNames.CSharp);
+            public MemberDeclaration(IFieldSymbol field) : this(field.Type.ToDisplayString(), field) { }
 
-            public MemberDeclaration(string type, string name)
+            public MemberDeclaration(IPropertySymbol property) : this(property.Type.ToDisplayString(), property) { }
+
+            public MemberDeclaration(string type, ISymbol symbol)
             {
                 Type = type;
-                Name = name;
-
+                Name = symbol.Name;
                 ValidLowerFirstName = ToValidLowerFirst(Name);
+            }
 
-                static string ToValidLowerFirst(string value)
-                {
-                    var lowerFirst = char.ToLower(value[0]) + value[1..];
-                    return !CodeDomProvider.IsValidIdentifier(lowerFirst)
-                        ? $"@{lowerFirst}"
-                        : lowerFirst;
-                }
+            static string ToValidLowerFirst(string value)
+            {
+                var lowerFirst = char.ToLower(value[0]) + value[1..];
+                return SyntaxFacts.GetKeywordKind(lowerFirst) != SyntaxKind.None
+                    ? $"@{lowerFirst}"
+                    : lowerFirst;
             }
 
             public bool Equals(MemberDeclaration other) => Type == other.Type && Name == other.Name;
