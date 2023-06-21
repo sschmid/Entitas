@@ -13,7 +13,7 @@ namespace Entitas.Generators.IntegrationTests
         }
 
         [Fact]
-        public void IsStrippedByCompiler()
+        public void StripsAttributes()
         {
             typeof(MovableComponent).CustomAttributes.Should().HaveCount(0);
         }
