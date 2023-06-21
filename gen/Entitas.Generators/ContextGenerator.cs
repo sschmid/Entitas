@@ -89,6 +89,7 @@ namespace Entitas.Generators
                 GeneratedFileHeader(GeneratorSource(nameof(ContextAttribute))) +
                 NamespaceDeclaration(context.Namespace, context.ContextPrefix,
                     $$"""
+                    [System.Diagnostics.Conditional("false")]
                     [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
                     public sealed class ContextAttribute : System.Attribute { }
 
