@@ -44,7 +44,7 @@ namespace Entitas.Generators
             if (!isComponent)
                 return null;
 
-            return new ComponentDeclaration(symbol, context, cancellationToken);
+            return new ComponentDeclaration(symbol);
         }
 
         static void Execute(SourceProductionContext spc, ComponentDeclaration component)
@@ -130,27 +130,27 @@ namespace Entitas.Generators
 
                     static string ComponentDeconstructMethodArgs(ComponentDeclaration component)
                     {
-                        return string.Join(", ", component.Members.Select(member => $"out {member.Type} {member.Name.ToValidLowerFirst()}"));
+                        return string.Join(", ", component.Members.Select(member => $"out {member.Type} {member.ValidLowerFirstName}"));
                     }
 
                     static string ComponentDeconstructValueAssignments(ComponentDeclaration component)
                     {
                         return string.Join("\n", component.Members.Select(member =>
                             $$"""
-                                    {{member.Name.ToValidLowerFirst()}} = component.{{member.Name}};
+                                    {{member.ValidLowerFirstName}} = component.{{member.Name}};
                             """));
                     }
 
                     static string ComponentMethodArgs(ComponentDeclaration component)
                     {
-                        return string.Join(", ", component.Members.Select(member => $"{member.Type} {member.Name.ToValidLowerFirst()}"));
+                        return string.Join(", ", component.Members.Select(member => $"{member.Type} {member.ValidLowerFirstName}"));
                     }
 
                     static string ComponentValueAssignments(ComponentDeclaration component)
                     {
                         return string.Join("\n", component.Members.Select(member =>
                             $$"""
-                                    component.{{member.Name}} = {{member.Name.ToValidLowerFirst()}};
+                                    component.{{member.Name}} = {{member.ValidLowerFirstName}};
                             """));
                     }
                 }
@@ -230,7 +230,7 @@ namespace Entitas.Generators
             /// Then: Some
             public readonly string ComponentPrefix;
 
-            public ComponentDeclaration(INamedTypeSymbol symbol, GeneratorSyntaxContext context, CancellationToken cancellationToken)
+            public ComponentDeclaration(INamedTypeSymbol symbol)
             {
                 Namespace = !symbol.ContainingNamespace.IsGlobalNamespace ? symbol.ContainingNamespace.ToDisplayString() : null;
                 FullName = symbol.ToDisplayString();
@@ -302,10 +302,25 @@ namespace Entitas.Generators
             public readonly string Type;
             public readonly string Name;
 
+            public readonly string ValidLowerFirstName;
+
+            static readonly System.CodeDom.Compiler.CodeDomProvider CodeDomProvider =
+                System.CodeDom.Compiler.CodeDomProvider.CreateProvider(LanguageNames.CSharp);
+
             public MemberDeclaration(string type, string name)
             {
                 Type = type;
                 Name = name;
+
+                ValidLowerFirstName = ToValidLowerFirst(Name);
+
+                static string ToValidLowerFirst(string value)
+                {
+                    var lowerFirst = char.ToLower(value[0]) + value[1..];
+                    return !CodeDomProvider.IsValidIdentifier(lowerFirst)
+                        ? $"@{lowerFirst}"
+                        : lowerFirst;
+                }
             }
 
             public bool Equals(MemberDeclaration other) => Type == other.Type && Name == other.Name;

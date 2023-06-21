@@ -17,6 +17,13 @@ public static class MultipleFieldsEntityExtension
         return (MultipleFieldsComponent)entity.GetComponent(MultipleFieldsComponentIndex.Value);
     }
 
+    public static void Deconstruct(this MultipleFieldsComponent component, out string value1, out string value2, out string value3)
+    {
+        value1 = component.Value1;
+        value2 = component.Value2;
+        value3 = component.Value3;
+    }
+
     public static bool HasMultipleFields(this Entity entity)
     {
         return entity.HasComponent(MultipleFieldsComponentIndex.Value);
