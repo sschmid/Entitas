@@ -91,6 +91,11 @@ namespace Entitas.Generators
                                 return ({{component.FullName}})entity.GetComponent({{index}});
                             }
 
+                            public static void Deconstruct(this {{component.FullName}} component, {{ComponentDeconstructMethodArgs(component)}})
+                            {
+                        {{ComponentDeconstructValueAssignments(component)}}
+                            }
+
                             public static bool Has{{component.ComponentPrefix}}(this Entity entity)
                             {
                                 return entity.HasComponent({{index}});
@@ -122,6 +127,19 @@ namespace Entitas.Generators
                         }
 
                         """));
+
+                    static string ComponentDeconstructMethodArgs(ComponentDeclaration component)
+                    {
+                        return string.Join(", ", component.Members.Select(member => $"out {member.Type} {member.Name.ToValidLowerFirst()}"));
+                    }
+
+                    static string ComponentDeconstructValueAssignments(ComponentDeclaration component)
+                    {
+                        return string.Join("\n", component.Members.Select(member =>
+                            $$"""
+                                    {{member.Name.ToValidLowerFirst()}} = component.{{member.Name}};
+                            """));
+                    }
 
                     static string ComponentMethodArgs(ComponentDeclaration component)
                     {
