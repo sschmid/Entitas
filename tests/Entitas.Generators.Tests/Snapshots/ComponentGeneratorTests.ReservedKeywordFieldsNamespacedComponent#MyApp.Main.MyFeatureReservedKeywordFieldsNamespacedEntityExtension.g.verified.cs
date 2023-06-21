@@ -17,6 +17,13 @@ public static class MyFeatureReservedKeywordFieldsNamespacedEntityExtension
         return (MyFeature.ReservedKeywordFieldsNamespacedComponent)entity.GetComponent(MyFeatureReservedKeywordFieldsNamespacedComponentIndex.Value);
     }
 
+    public static void Deconstruct(this MyFeature.ReservedKeywordFieldsNamespacedComponent component, out string @namespace, out string @class, out string @public)
+    {
+        @namespace = component.Namespace;
+        @class = component.Class;
+        @public = component.Public;
+    }
+
     public static bool HasReservedKeywordFieldsNamespaced(this Entity entity)
     {
         return entity.HasComponent(MyFeatureReservedKeywordFieldsNamespacedComponentIndex.Value);

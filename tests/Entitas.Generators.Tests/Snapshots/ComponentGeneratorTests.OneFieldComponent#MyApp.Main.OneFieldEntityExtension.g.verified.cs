@@ -17,6 +17,11 @@ public static class OneFieldEntityExtension
         return (OneFieldComponent)entity.GetComponent(OneFieldComponentIndex.Value);
     }
 
+    public static void Deconstruct(this OneFieldComponent component, out string value)
+    {
+        value = component.Value;
+    }
+
     public static bool HasOneField(this Entity entity)
     {
         return entity.HasComponent(OneFieldComponentIndex.Value);

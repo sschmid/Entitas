@@ -17,6 +17,11 @@ public static class MyFeatureOneFieldNamespacedEntityExtension
         return (MyFeature.OneFieldNamespacedComponent)entity.GetComponent(MyFeatureOneFieldNamespacedComponentIndex.Value);
     }
 
+    public static void Deconstruct(this MyFeature.OneFieldNamespacedComponent component, out string value)
+    {
+        value = component.Value;
+    }
+
     public static bool HasOneFieldNamespaced(this Entity entity)
     {
         return entity.HasComponent(MyFeatureOneFieldNamespacedComponentIndex.Value);
