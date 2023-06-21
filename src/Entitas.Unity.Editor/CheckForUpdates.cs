@@ -142,7 +142,9 @@ namespace Entitas.Unity.Editor
 
         struct ResponseData
         {
+#pragma warning disable CS0649
             public string tag_name;
+#pragma warning restore CS0649
         }
     }
 }
