@@ -35,6 +35,10 @@ namespace Entitas.Generators.IntegrationTests
             var position = entity.GetPosition();
             position.X.Should().Be(1);
             position.Y.Should().Be(2);
+
+            var (x, y) = entity.GetPosition();
+            x.Should().Be(1);
+            y.Should().Be(2);
         }
     }
 
