@@ -65,7 +65,7 @@ namespace Entitas.Generators
                         $$"""
                         public static class {{className}}
                         {
-                            public static ComponentIndex Value;
+                            public static ComponentIndex Index;
                         }
 
                         """));
@@ -77,56 +77,56 @@ namespace Entitas.Generators
             foreach (var context in component.Contexts)
             {
                 var className = $"{component.FullComponentPrefix}EntityExtension";
-                var index = $"{component.FullComponentPrefix}ComponentIndex.Value";
                 if (component.Members.Length > 0)
                 {
                     spc.AddSource(GeneratedPath($"{context}.{className}"),
                         GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
+                        $"using static {context}.{component.FullComponentPrefix}ComponentIndex;\n\n" +
                         NamespaceDeclaration(context,
                             $$"""
-                        public static class {{className}}
-                        {
-                            public static bool Has{{component.ComponentPrefix}}(this Entity entity)
+                            public static class {{className}}
                             {
-                                return entity.HasComponent({{index}});
+                                public static bool Has{{component.ComponentPrefix}}(this Entity entity)
+                                {
+                                    return entity.HasComponent(Index);
+                                }
+
+                                public static Entity Add{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
+                                {
+                                    var index = Index;
+                                    var component = ({{component.FullName}})entity.CreateComponent(index, typeof({{component.FullName}}));
+                            {{ComponentValueAssignments(component)}}
+                                    entity.AddComponent(index, component);
+                                    return entity;
+                                }
+
+                                public static Entity Replace{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
+                                {
+                                    var index = Index;
+                                    var component = ({{component.FullName}})entity.CreateComponent(index, typeof({{component.FullName}}));
+                            {{ComponentValueAssignments(component)}}
+                                    entity.ReplaceComponent(index, component);
+                                    return entity;
+                                }
+
+                                public static Entity Remove{{component.ComponentPrefix}}(this Entity entity)
+                                {
+                                    entity.RemoveComponent(Index);
+                                    return entity;
+                                }
+
+                                public static {{component.FullName}} Get{{component.ComponentPrefix}}(this Entity entity)
+                                {
+                                    return ({{component.FullName}})entity.GetComponent(Index);
+                                }
+
+                                public static void Deconstruct(this {{component.FullName}} component, {{ComponentDeconstructMethodArgs(component)}})
+                                {
+                            {{ComponentDeconstructValueAssignments(component)}}
+                                }
                             }
 
-                            public static Entity Add{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
-                            {
-                                var index = {{index}};
-                                var component = ({{component.FullName}})entity.CreateComponent(index, typeof({{component.FullName}}));
-                        {{ComponentValueAssignments(component)}}
-                                entity.AddComponent(index, component);
-                                return entity;
-                            }
-
-                            public static Entity Replace{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
-                            {
-                                var index = {{index}};
-                                var component = ({{component.FullName}})entity.CreateComponent(index, typeof({{component.FullName}}));
-                        {{ComponentValueAssignments(component)}}
-                                entity.ReplaceComponent(index, component);
-                                return entity;
-                            }
-
-                            public static Entity Remove{{component.ComponentPrefix}}(this Entity entity)
-                            {
-                                entity.RemoveComponent({{index}});
-                                return entity;
-                            }
-
-                            public static {{component.FullName}} Get{{component.ComponentPrefix}}(this Entity entity)
-                            {
-                                return ({{component.FullName}})entity.GetComponent({{index}});
-                            }
-
-                            public static void Deconstruct(this {{component.FullName}} component, {{ComponentDeconstructMethodArgs(component)}})
-                            {
-                        {{ComponentDeconstructValueAssignments(component)}}
-                            }
-                        }
-
-                        """));
+                            """));
 
                     static string ComponentDeconstructMethodArgs(ComponentDeclaration component)
                     {
@@ -158,42 +158,43 @@ namespace Entitas.Generators
                 {
                     spc.AddSource(GeneratedPath($"{context}.{className}"),
                         GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
+                        $"using static {context}.{component.FullComponentPrefix}ComponentIndex;\n\n" +
                         NamespaceDeclaration(context,
                             $$"""
-                        public static class {{className}}
-                        {
-                            static readonly {{component.FullName}} Single{{component.Name}} = new {{component.FullName}}();
-
-                            public static bool Has{{component.ComponentPrefix}}(this Entity entity)
+                            public static class {{className}}
                             {
-                                return entity.HasComponent({{index}});
+                                static readonly {{component.FullName}} Single{{component.Name}} = new {{component.FullName}}();
+
+                                public static bool Has{{component.ComponentPrefix}}(this Entity entity)
+                                {
+                                    return entity.HasComponent(Index);
+                                }
+
+                                public static Entity Add{{component.ComponentPrefix}}(this Entity entity)
+                                {
+                                    entity.AddComponent(Index, Single{{component.Name}});
+                                    return entity;
+                                }
+
+                                public static Entity Replace{{component.ComponentPrefix}}(this Entity entity)
+                                {
+                                    entity.ReplaceComponent(Index, Single{{component.Name}});
+                                    return entity;
+                                }
+
+                                public static Entity Remove{{component.ComponentPrefix}}(this Entity entity)
+                                {
+                                    entity.RemoveComponent(Index);
+                                    return entity;
+                                }
+
+                                public static {{component.FullName}} Get{{component.ComponentPrefix}}(this Entity entity)
+                                {
+                                    return ({{component.FullName}})entity.GetComponent(Index);
+                                }
                             }
 
-                            public static Entity Add{{component.ComponentPrefix}}(this Entity entity)
-                            {
-                                entity.AddComponent({{index}}, Single{{component.Name}});
-                                return entity;
-                            }
-
-                            public static Entity Replace{{component.ComponentPrefix}}(this Entity entity)
-                            {
-                                entity.ReplaceComponent({{index}}, Single{{component.Name}});
-                                return entity;
-                            }
-
-                            public static Entity Remove{{component.ComponentPrefix}}(this Entity entity)
-                            {
-                                entity.RemoveComponent({{index}});
-                                return entity;
-                            }
-
-                            public static {{component.FullName}} Get{{component.ComponentPrefix}}(this Entity entity)
-                            {
-                                return ({{component.FullName}})entity.GetComponent({{index}});
-                            }
-                        }
-
-                        """));
+                            """));
                 }
             }
         }
