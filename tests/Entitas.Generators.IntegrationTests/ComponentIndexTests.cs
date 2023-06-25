@@ -12,33 +12,15 @@ namespace Entitas.Generators.IntegrationTests
         }
 
         [Fact]
-        public void ImplicitCastToInt()
-        {
-            int index = new MyApp.Main.ComponentIndex(1);
-            index.Should().Be(1);
-        }
-
-        [Fact]
-        public void ImplicitCastFromInt()
-        {
-            MyApp.Main.ComponentIndex componentIndex = 1;
-            componentIndex.Value.Should().Be(1);
-        }
-
-        [Fact]
         public void EqualsComponentIndexWithSameIndex()
         {
-            int index1 = new MyApp.Main.ComponentIndex(1);
-            int index2 = new MyApp.Main.ComponentIndex(1);
-            index1.Equals(index2).Should().BeTrue();
+            new MyApp.Main.ComponentIndex(1).Equals(new MyApp.Main.ComponentIndex(1)).Should().BeTrue();
         }
 
         [Fact]
         public void DoesNotEqualComponentIndexWithDifferentIndex()
         {
-            int index1 = new MyApp.Main.ComponentIndex(1);
-            int index2 = new MyApp.Main.ComponentIndex(2);
-            index1.Equals(index2).Should().BeFalse();
+            new MyApp.Main.ComponentIndex(1).Equals(new MyApp.Main.ComponentIndex(2)).Should().BeFalse();
         }
     }
 }
