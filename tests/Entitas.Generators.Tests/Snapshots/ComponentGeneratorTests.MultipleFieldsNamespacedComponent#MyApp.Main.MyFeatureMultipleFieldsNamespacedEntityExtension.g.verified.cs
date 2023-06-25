@@ -8,18 +8,20 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using static MyApp.Main.MyFeatureMultipleFieldsNamespacedComponentIndex;
+
 namespace MyApp.Main
 {
 public static class MyFeatureMultipleFieldsNamespacedEntityExtension
 {
     public static bool HasMultipleFieldsNamespaced(this Entity entity)
     {
-        return entity.HasComponent(MyFeatureMultipleFieldsNamespacedComponentIndex.Value);
+        return entity.HasComponent(Index.Value);
     }
 
     public static Entity AddMultipleFieldsNamespaced(this Entity entity, string value1, string value2, string value3)
     {
-        var index = MyFeatureMultipleFieldsNamespacedComponentIndex.Value;
+        var index = Index.Value;
         var component = (MyFeature.MultipleFieldsNamespacedComponent)entity.CreateComponent(index, typeof(MyFeature.MultipleFieldsNamespacedComponent));
         component.Value1 = value1;
         component.Value2 = value2;
@@ -30,7 +32,7 @@ public static class MyFeatureMultipleFieldsNamespacedEntityExtension
 
     public static Entity ReplaceMultipleFieldsNamespaced(this Entity entity, string value1, string value2, string value3)
     {
-        var index = MyFeatureMultipleFieldsNamespacedComponentIndex.Value;
+        var index = Index.Value;
         var component = (MyFeature.MultipleFieldsNamespacedComponent)entity.CreateComponent(index, typeof(MyFeature.MultipleFieldsNamespacedComponent));
         component.Value1 = value1;
         component.Value2 = value2;
@@ -41,13 +43,13 @@ public static class MyFeatureMultipleFieldsNamespacedEntityExtension
 
     public static Entity RemoveMultipleFieldsNamespaced(this Entity entity)
     {
-        entity.RemoveComponent(MyFeatureMultipleFieldsNamespacedComponentIndex.Value);
+        entity.RemoveComponent(Index.Value);
         return entity;
     }
 
     public static MyFeature.MultipleFieldsNamespacedComponent GetMultipleFieldsNamespaced(this Entity entity)
     {
-        return (MyFeature.MultipleFieldsNamespacedComponent)entity.GetComponent(MyFeatureMultipleFieldsNamespacedComponentIndex.Value);
+        return (MyFeature.MultipleFieldsNamespacedComponent)entity.GetComponent(Index.Value);
     }
 
     public static void Deconstruct(this MyFeature.MultipleFieldsNamespacedComponent component, out string value1, out string value2, out string value3)

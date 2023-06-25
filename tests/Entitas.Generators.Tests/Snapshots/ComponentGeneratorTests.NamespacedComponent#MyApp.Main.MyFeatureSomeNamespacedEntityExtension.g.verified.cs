@@ -8,6 +8,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using static MyApp.Main.MyFeatureSomeNamespacedComponentIndex;
+
 namespace MyApp.Main
 {
 public static class MyFeatureSomeNamespacedEntityExtension
@@ -16,30 +18,30 @@ public static class MyFeatureSomeNamespacedEntityExtension
 
     public static bool HasSomeNamespaced(this Entity entity)
     {
-        return entity.HasComponent(MyFeatureSomeNamespacedComponentIndex.Value);
+        return entity.HasComponent(Index.Value);
     }
 
     public static Entity AddSomeNamespaced(this Entity entity)
     {
-        entity.AddComponent(MyFeatureSomeNamespacedComponentIndex.Value, SingleSomeNamespacedComponent);
+        entity.AddComponent(Index.Value, SingleSomeNamespacedComponent);
         return entity;
     }
 
     public static Entity ReplaceSomeNamespaced(this Entity entity)
     {
-        entity.ReplaceComponent(MyFeatureSomeNamespacedComponentIndex.Value, SingleSomeNamespacedComponent);
+        entity.ReplaceComponent(Index.Value, SingleSomeNamespacedComponent);
         return entity;
     }
 
     public static Entity RemoveSomeNamespaced(this Entity entity)
     {
-        entity.RemoveComponent(MyFeatureSomeNamespacedComponentIndex.Value);
+        entity.RemoveComponent(Index.Value);
         return entity;
     }
 
     public static MyFeature.SomeNamespacedComponent GetSomeNamespaced(this Entity entity)
     {
-        return (MyFeature.SomeNamespacedComponent)entity.GetComponent(MyFeatureSomeNamespacedComponentIndex.Value);
+        return (MyFeature.SomeNamespacedComponent)entity.GetComponent(Index.Value);
     }
 }
 }
