@@ -63,9 +63,6 @@ namespace Entitas.Generators
                     """
                     public readonly struct ComponentIndex : System.IEquatable<ComponentIndex>
                     {
-                        public static implicit operator int(ComponentIndex index) => index.Value;
-                        public static implicit operator ComponentIndex(int index) => new ComponentIndex(index);
-
                         public readonly int Value;
 
                         public ComponentIndex(int value)
@@ -139,7 +136,7 @@ namespace Entitas.Generators
                         {
                             var ints = new int[indices.Length];
                             for (var i = 0; i < indices.Length; i++)
-                                ints[i] = indices[i];
+                                ints[i] = indices[i].Value;
 
                             return ints;
                         }

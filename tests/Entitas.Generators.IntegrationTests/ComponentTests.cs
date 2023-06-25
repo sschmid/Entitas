@@ -21,7 +21,7 @@ namespace Entitas.Generators.IntegrationTests
         {
             var entity = CreateContext().CreateEntity();
             entity.AddPosition(1, 2);
-            entity.HasComponent(MyFeaturePositionComponentIndex.Index);
+            entity.HasComponent(MyFeaturePositionComponentIndex.Index.Value);
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace Entitas.Generators.IntegrationTests
             var component = new PositionComponent { X = 1, Y = 2 };
             var entity = CreateContext().CreateEntity();
             entity
-                .GetComponentPool(MyFeaturePositionComponentIndex.Index)
+                .GetComponentPool(MyFeaturePositionComponentIndex.Index.Value)
                 .Push(component);
 
             entity.AddPosition(3, 4);
@@ -71,7 +71,7 @@ namespace Entitas.Generators.IntegrationTests
             var entity = CreateContext().CreateEntity();
             entity.AddPosition(3, 4);
             entity
-                .GetComponentPool(MyFeaturePositionComponentIndex.Index)
+                .GetComponentPool(MyFeaturePositionComponentIndex.Index.Value)
                 .Push(component);
 
             entity.ReplacePosition(5, 6);
@@ -94,8 +94,8 @@ namespace Entitas.Generators.IntegrationTests
 
         static TestContext<MyApp.Main.Entity> CreateContext()
         {
-            MyFeatureMovableComponentIndex.Index = 0;
-            MyFeaturePositionComponentIndex.Index = 1;
+            MyFeatureMovableComponentIndex.Index = new ComponentIndex(0);
+            MyFeaturePositionComponentIndex.Index = new ComponentIndex(1);
             return new TestContext<MyApp.Main.Entity>(
                 2,
                 new[]
