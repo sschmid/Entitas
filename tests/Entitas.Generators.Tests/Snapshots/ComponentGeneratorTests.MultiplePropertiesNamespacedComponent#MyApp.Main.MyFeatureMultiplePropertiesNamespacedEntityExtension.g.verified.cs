@@ -8,18 +8,20 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using static MyApp.Main.MyFeatureMultiplePropertiesNamespacedComponentIndex;
+
 namespace MyApp.Main
 {
 public static class MyFeatureMultiplePropertiesNamespacedEntityExtension
 {
     public static bool HasMultiplePropertiesNamespaced(this Entity entity)
     {
-        return entity.HasComponent(MyFeatureMultiplePropertiesNamespacedComponentIndex.Value);
+        return entity.HasComponent(Index.Value);
     }
 
     public static Entity AddMultiplePropertiesNamespaced(this Entity entity, string value1, string value2, string value3)
     {
-        var index = MyFeatureMultiplePropertiesNamespacedComponentIndex.Value;
+        var index = Index.Value;
         var component = (MyFeature.MultiplePropertiesNamespacedComponent)entity.CreateComponent(index, typeof(MyFeature.MultiplePropertiesNamespacedComponent));
         component.Value1 = value1;
         component.Value2 = value2;
@@ -30,7 +32,7 @@ public static class MyFeatureMultiplePropertiesNamespacedEntityExtension
 
     public static Entity ReplaceMultiplePropertiesNamespaced(this Entity entity, string value1, string value2, string value3)
     {
-        var index = MyFeatureMultiplePropertiesNamespacedComponentIndex.Value;
+        var index = Index.Value;
         var component = (MyFeature.MultiplePropertiesNamespacedComponent)entity.CreateComponent(index, typeof(MyFeature.MultiplePropertiesNamespacedComponent));
         component.Value1 = value1;
         component.Value2 = value2;
@@ -41,13 +43,13 @@ public static class MyFeatureMultiplePropertiesNamespacedEntityExtension
 
     public static Entity RemoveMultiplePropertiesNamespaced(this Entity entity)
     {
-        entity.RemoveComponent(MyFeatureMultiplePropertiesNamespacedComponentIndex.Value);
+        entity.RemoveComponent(Index.Value);
         return entity;
     }
 
     public static MyFeature.MultiplePropertiesNamespacedComponent GetMultiplePropertiesNamespaced(this Entity entity)
     {
-        return (MyFeature.MultiplePropertiesNamespacedComponent)entity.GetComponent(MyFeatureMultiplePropertiesNamespacedComponentIndex.Value);
+        return (MyFeature.MultiplePropertiesNamespacedComponent)entity.GetComponent(Index.Value);
     }
 
     public static void Deconstruct(this MyFeature.MultiplePropertiesNamespacedComponent component, out string value1, out string value2, out string value3)

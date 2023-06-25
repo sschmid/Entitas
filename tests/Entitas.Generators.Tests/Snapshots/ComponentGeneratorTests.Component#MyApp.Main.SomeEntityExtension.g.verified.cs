@@ -8,6 +8,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using static MyApp.Main.SomeComponentIndex;
+
 namespace MyApp.Main
 {
 public static class SomeEntityExtension
@@ -16,30 +18,30 @@ public static class SomeEntityExtension
 
     public static bool HasSome(this Entity entity)
     {
-        return entity.HasComponent(SomeComponentIndex.Value);
+        return entity.HasComponent(Index.Value);
     }
 
     public static Entity AddSome(this Entity entity)
     {
-        entity.AddComponent(SomeComponentIndex.Value, SingleSomeComponent);
+        entity.AddComponent(Index.Value, SingleSomeComponent);
         return entity;
     }
 
     public static Entity ReplaceSome(this Entity entity)
     {
-        entity.ReplaceComponent(SomeComponentIndex.Value, SingleSomeComponent);
+        entity.ReplaceComponent(Index.Value, SingleSomeComponent);
         return entity;
     }
 
     public static Entity RemoveSome(this Entity entity)
     {
-        entity.RemoveComponent(SomeComponentIndex.Value);
+        entity.RemoveComponent(Index.Value);
         return entity;
     }
 
     public static SomeComponent GetSome(this Entity entity)
     {
-        return (SomeComponent)entity.GetComponent(SomeComponentIndex.Value);
+        return (SomeComponent)entity.GetComponent(Index.Value);
     }
 }
 }

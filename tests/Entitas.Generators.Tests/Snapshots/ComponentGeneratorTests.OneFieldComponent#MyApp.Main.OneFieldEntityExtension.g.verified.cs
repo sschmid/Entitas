@@ -8,18 +8,20 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using static MyApp.Main.OneFieldComponentIndex;
+
 namespace MyApp.Main
 {
 public static class OneFieldEntityExtension
 {
     public static bool HasOneField(this Entity entity)
     {
-        return entity.HasComponent(OneFieldComponentIndex.Value);
+        return entity.HasComponent(Index.Value);
     }
 
     public static Entity AddOneField(this Entity entity, string value)
     {
-        var index = OneFieldComponentIndex.Value;
+        var index = Index.Value;
         var component = (OneFieldComponent)entity.CreateComponent(index, typeof(OneFieldComponent));
         component.Value = value;
         entity.AddComponent(index, component);
@@ -28,7 +30,7 @@ public static class OneFieldEntityExtension
 
     public static Entity ReplaceOneField(this Entity entity, string value)
     {
-        var index = OneFieldComponentIndex.Value;
+        var index = Index.Value;
         var component = (OneFieldComponent)entity.CreateComponent(index, typeof(OneFieldComponent));
         component.Value = value;
         entity.ReplaceComponent(index, component);
@@ -37,13 +39,13 @@ public static class OneFieldEntityExtension
 
     public static Entity RemoveOneField(this Entity entity)
     {
-        entity.RemoveComponent(OneFieldComponentIndex.Value);
+        entity.RemoveComponent(Index.Value);
         return entity;
     }
 
     public static OneFieldComponent GetOneField(this Entity entity)
     {
-        return (OneFieldComponent)entity.GetComponent(OneFieldComponentIndex.Value);
+        return (OneFieldComponent)entity.GetComponent(Index.Value);
     }
 
     public static void Deconstruct(this OneFieldComponent component, out string value)

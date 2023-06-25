@@ -12,9 +12,6 @@ namespace MyApp.Namespaced
 {
 public readonly struct ComponentIndex : System.IEquatable<ComponentIndex>
 {
-    public static implicit operator int(ComponentIndex index) => index.Value;
-    public static implicit operator ComponentIndex(int index) => new ComponentIndex(index);
-
     public readonly int Value;
 
     public ComponentIndex(int value)

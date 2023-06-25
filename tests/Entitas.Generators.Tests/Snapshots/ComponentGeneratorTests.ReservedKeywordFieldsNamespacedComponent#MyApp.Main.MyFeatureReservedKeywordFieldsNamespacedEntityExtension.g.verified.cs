@@ -8,18 +8,20 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using static MyApp.Main.MyFeatureReservedKeywordFieldsNamespacedComponentIndex;
+
 namespace MyApp.Main
 {
 public static class MyFeatureReservedKeywordFieldsNamespacedEntityExtension
 {
     public static bool HasReservedKeywordFieldsNamespaced(this Entity entity)
     {
-        return entity.HasComponent(MyFeatureReservedKeywordFieldsNamespacedComponentIndex.Value);
+        return entity.HasComponent(Index.Value);
     }
 
     public static Entity AddReservedKeywordFieldsNamespaced(this Entity entity, string @namespace, string @class, string @public)
     {
-        var index = MyFeatureReservedKeywordFieldsNamespacedComponentIndex.Value;
+        var index = Index.Value;
         var component = (MyFeature.ReservedKeywordFieldsNamespacedComponent)entity.CreateComponent(index, typeof(MyFeature.ReservedKeywordFieldsNamespacedComponent));
         component.Namespace = @namespace;
         component.Class = @class;
@@ -30,7 +32,7 @@ public static class MyFeatureReservedKeywordFieldsNamespacedEntityExtension
 
     public static Entity ReplaceReservedKeywordFieldsNamespaced(this Entity entity, string @namespace, string @class, string @public)
     {
-        var index = MyFeatureReservedKeywordFieldsNamespacedComponentIndex.Value;
+        var index = Index.Value;
         var component = (MyFeature.ReservedKeywordFieldsNamespacedComponent)entity.CreateComponent(index, typeof(MyFeature.ReservedKeywordFieldsNamespacedComponent));
         component.Namespace = @namespace;
         component.Class = @class;
@@ -41,13 +43,13 @@ public static class MyFeatureReservedKeywordFieldsNamespacedEntityExtension
 
     public static Entity RemoveReservedKeywordFieldsNamespaced(this Entity entity)
     {
-        entity.RemoveComponent(MyFeatureReservedKeywordFieldsNamespacedComponentIndex.Value);
+        entity.RemoveComponent(Index.Value);
         return entity;
     }
 
     public static MyFeature.ReservedKeywordFieldsNamespacedComponent GetReservedKeywordFieldsNamespaced(this Entity entity)
     {
-        return (MyFeature.ReservedKeywordFieldsNamespacedComponent)entity.GetComponent(MyFeatureReservedKeywordFieldsNamespacedComponentIndex.Value);
+        return (MyFeature.ReservedKeywordFieldsNamespacedComponent)entity.GetComponent(Index.Value);
     }
 
     public static void Deconstruct(this MyFeature.ReservedKeywordFieldsNamespacedComponent component, out string @namespace, out string @class, out string @public)

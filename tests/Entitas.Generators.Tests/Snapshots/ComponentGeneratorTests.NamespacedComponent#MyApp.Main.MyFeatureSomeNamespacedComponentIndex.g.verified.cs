@@ -12,6 +12,6 @@ namespace MyApp.Main
 {
 public static class MyFeatureSomeNamespacedComponentIndex
 {
-    public static ComponentIndex Value;
+    public static ComponentIndex Index;
 }
 }

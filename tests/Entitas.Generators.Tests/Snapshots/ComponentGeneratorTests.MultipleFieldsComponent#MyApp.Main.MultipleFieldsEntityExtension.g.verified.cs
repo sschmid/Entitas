@@ -8,18 +8,20 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using static MyApp.Main.MultipleFieldsComponentIndex;
+
 namespace MyApp.Main
 {
 public static class MultipleFieldsEntityExtension
 {
     public static bool HasMultipleFields(this Entity entity)
     {
-        return entity.HasComponent(MultipleFieldsComponentIndex.Value);
+        return entity.HasComponent(Index.Value);
     }
 
     public static Entity AddMultipleFields(this Entity entity, string value1, string value2, string value3)
     {
-        var index = MultipleFieldsComponentIndex.Value;
+        var index = Index.Value;
         var component = (MultipleFieldsComponent)entity.CreateComponent(index, typeof(MultipleFieldsComponent));
         component.Value1 = value1;
         component.Value2 = value2;
@@ -30,7 +32,7 @@ public static class MultipleFieldsEntityExtension
 
     public static Entity ReplaceMultipleFields(this Entity entity, string value1, string value2, string value3)
     {
-        var index = MultipleFieldsComponentIndex.Value;
+        var index = Index.Value;
         var component = (MultipleFieldsComponent)entity.CreateComponent(index, typeof(MultipleFieldsComponent));
         component.Value1 = value1;
         component.Value2 = value2;
@@ -41,13 +43,13 @@ public static class MultipleFieldsEntityExtension
 
     public static Entity RemoveMultipleFields(this Entity entity)
     {
-        entity.RemoveComponent(MultipleFieldsComponentIndex.Value);
+        entity.RemoveComponent(Index.Value);
         return entity;
     }
 
     public static MultipleFieldsComponent GetMultipleFields(this Entity entity)
     {
-        return (MultipleFieldsComponent)entity.GetComponent(MultipleFieldsComponentIndex.Value);
+        return (MultipleFieldsComponent)entity.GetComponent(Index.Value);
     }
 
     public static void Deconstruct(this MultipleFieldsComponent component, out string value1, out string value2, out string value3)

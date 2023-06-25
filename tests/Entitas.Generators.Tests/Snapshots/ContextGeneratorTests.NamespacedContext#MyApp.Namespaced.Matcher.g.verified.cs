@@ -36,7 +36,7 @@ public static class Matcher
     {
         var ints = new int[indices.Length];
         for (var i = 0; i < indices.Length; i++)
-            ints[i] = indices[i];
+            ints[i] = indices[i].Value;
 
         return ints;
     }

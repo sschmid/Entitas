@@ -8,18 +8,20 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using static MyApp.Main.MyFeatureOneFieldNamespacedComponentIndex;
+
 namespace MyApp.Main
 {
 public static class MyFeatureOneFieldNamespacedEntityExtension
 {
     public static bool HasOneFieldNamespaced(this Entity entity)
     {
-        return entity.HasComponent(MyFeatureOneFieldNamespacedComponentIndex.Value);
+        return entity.HasComponent(Index.Value);
     }
 
     public static Entity AddOneFieldNamespaced(this Entity entity, string value)
     {
-        var index = MyFeatureOneFieldNamespacedComponentIndex.Value;
+        var index = Index.Value;
         var component = (MyFeature.OneFieldNamespacedComponent)entity.CreateComponent(index, typeof(MyFeature.OneFieldNamespacedComponent));
         component.Value = value;
         entity.AddComponent(index, component);
@@ -28,7 +30,7 @@ public static class MyFeatureOneFieldNamespacedEntityExtension
 
     public static Entity ReplaceOneFieldNamespaced(this Entity entity, string value)
     {
-        var index = MyFeatureOneFieldNamespacedComponentIndex.Value;
+        var index = Index.Value;
         var component = (MyFeature.OneFieldNamespacedComponent)entity.CreateComponent(index, typeof(MyFeature.OneFieldNamespacedComponent));
         component.Value = value;
         entity.ReplaceComponent(index, component);
@@ -37,13 +39,13 @@ public static class MyFeatureOneFieldNamespacedEntityExtension
 
     public static Entity RemoveOneFieldNamespaced(this Entity entity)
     {
-        entity.RemoveComponent(MyFeatureOneFieldNamespacedComponentIndex.Value);
+        entity.RemoveComponent(Index.Value);
         return entity;
     }
 
     public static MyFeature.OneFieldNamespacedComponent GetOneFieldNamespaced(this Entity entity)
     {
-        return (MyFeature.OneFieldNamespacedComponent)entity.GetComponent(MyFeatureOneFieldNamespacedComponentIndex.Value);
+        return (MyFeature.OneFieldNamespacedComponent)entity.GetComponent(Index.Value);
     }
 
     public static void Deconstruct(this MyFeature.OneFieldNamespacedComponent component, out string value)

@@ -8,6 +8,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using static MyApp.Main.MyFeatureNoValidFieldsNamespacedComponentIndex;
+
 namespace MyApp.Main
 {
 public static class MyFeatureNoValidFieldsNamespacedEntityExtension
@@ -16,30 +18,30 @@ public static class MyFeatureNoValidFieldsNamespacedEntityExtension
 
     public static bool HasNoValidFieldsNamespaced(this Entity entity)
     {
-        return entity.HasComponent(MyFeatureNoValidFieldsNamespacedComponentIndex.Value);
+        return entity.HasComponent(Index.Value);
     }
 
     public static Entity AddNoValidFieldsNamespaced(this Entity entity)
     {
-        entity.AddComponent(MyFeatureNoValidFieldsNamespacedComponentIndex.Value, SingleNoValidFieldsNamespacedComponent);
+        entity.AddComponent(Index.Value, SingleNoValidFieldsNamespacedComponent);
         return entity;
     }
 
     public static Entity ReplaceNoValidFieldsNamespaced(this Entity entity)
     {
-        entity.ReplaceComponent(MyFeatureNoValidFieldsNamespacedComponentIndex.Value, SingleNoValidFieldsNamespacedComponent);
+        entity.ReplaceComponent(Index.Value, SingleNoValidFieldsNamespacedComponent);
         return entity;
     }
 
     public static Entity RemoveNoValidFieldsNamespaced(this Entity entity)
     {
-        entity.RemoveComponent(MyFeatureNoValidFieldsNamespacedComponentIndex.Value);
+        entity.RemoveComponent(Index.Value);
         return entity;
     }
 
     public static MyFeature.NoValidFieldsNamespacedComponent GetNoValidFieldsNamespaced(this Entity entity)
     {
-        return (MyFeature.NoValidFieldsNamespacedComponent)entity.GetComponent(MyFeatureNoValidFieldsNamespacedComponentIndex.Value);
+        return (MyFeature.NoValidFieldsNamespacedComponent)entity.GetComponent(Index.Value);
     }
 }
 }
