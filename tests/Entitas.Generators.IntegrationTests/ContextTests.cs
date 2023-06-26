@@ -8,6 +8,7 @@ namespace Entitas.Generators.IntegrationTests
         [Fact]
         public void GeneratesContext()
         {
+            MyApp.Main.ComponentsLookup.AssignComponentIndexes();
             var context = new MyApp.MainContext();
             context.Should().NotBeNull();
             context.Should().BeAssignableTo<Context<MyApp.Main.Entity>>();
