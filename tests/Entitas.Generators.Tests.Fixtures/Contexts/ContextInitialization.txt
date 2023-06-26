@@ -1,0 +1,19 @@
+using Entitas;
+
+namespace MyFeature
+{
+    [MyApp.Main.Context]
+    public sealed class SomeNamespacedComponent : IComponent { }
+
+    [MyApp.Main.Context]
+    public sealed class AnotherNamespacedComponent : IComponent { }
+}
+
+namespace MyApp
+{
+    public static partial class ContextInitialization
+    {
+        [MyApp.Main.ContextInitialization]
+        public static partial void Initialize();
+    }
+}

@@ -14,16 +14,23 @@ namespace Entitas.Generators
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
-            var provider = initContext.SyntaxProvider
-                .CreateSyntaxProvider(SyntacticComponentPredicate, SemanticComponentTransform)
+            var componentProvider = initContext.SyntaxProvider
+                .CreateSyntaxProvider(IsComponentCandidate, CreateComponentDeclaration)
                 .Where(component => component is not null)
                 .Select((component, _) => component!.Value)
                 .Collect();
 
-            initContext.RegisterSourceOutput(provider, Execute);
+            var contextInitializationMethodProvider = initContext.SyntaxProvider
+                .CreateSyntaxProvider(IsContextInitializationMethodCandidate, CreateContextInitializationMethodDeclaration)
+                .Where(method => method is not null)
+                .Select((method, _) => method!.Value)
+                .Collect();
+
+            var combined = contextInitializationMethodProvider.Combine(componentProvider);
+            initContext.RegisterSourceOutput(combined, Execute);
         }
 
-        static bool SyntacticComponentPredicate(SyntaxNode node, CancellationToken cancellationToken)
+        static bool IsComponentCandidate(SyntaxNode node, CancellationToken cancellationToken)
         {
             return node is ClassDeclarationSyntax { BaseList.Types.Count: > 0 } candidate
                    && candidate.Modifiers.Any(SyntaxKind.PublicKeyword)
@@ -32,7 +39,7 @@ namespace Entitas.Generators
                    && !candidate.Modifiers.Any(SyntaxKind.PartialKeyword);
         }
 
-        static ComponentDeclaration? SemanticComponentTransform(GeneratorSyntaxContext context, CancellationToken cancellationToken)
+        static ComponentDeclaration? CreateComponentDeclaration(GeneratorSyntaxContext context, CancellationToken cancellationToken)
         {
             var candidate = (ClassDeclarationSyntax)context.Node;
             var symbol = context.SemanticModel.GetDeclaredSymbol(candidate, cancellationToken);
@@ -51,19 +58,54 @@ namespace Entitas.Generators
             return new ComponentDeclaration(symbol, cancellationToken);
         }
 
-        static void Execute(SourceProductionContext spc, ImmutableArray<ComponentDeclaration> components)
+        static bool IsContextInitializationMethodCandidate(SyntaxNode node, CancellationToken cancellationToken)
         {
-            foreach (var component in components)
+            return node is MethodDeclarationSyntax { AttributeLists.Count: > 0 } candidate
+                   && candidate.Modifiers.Any(SyntaxKind.PublicKeyword)
+                   && candidate.Modifiers.Any(SyntaxKind.StaticKeyword)
+                   && candidate.Modifiers.Any(SyntaxKind.PartialKeyword)
+                   && candidate.ReturnType is PredefinedTypeSyntax predefined
+                   && predefined.Keyword.IsKind(SyntaxKind.VoidKeyword);
+        }
+
+        static ContextInitializationMethodDeclaration? CreateContextInitializationMethodDeclaration(GeneratorSyntaxContext context, CancellationToken cancellationToken)
+        {
+            var candidate = (MethodDeclarationSyntax)context.Node;
+            var symbol = context.SemanticModel.GetDeclaredSymbol(candidate, cancellationToken);
+            if (symbol is null)
+                return null;
+
+            if (!symbol.ContainingType.IsStatic || symbol.ContainingType.DeclaredAccessibility != Accessibility.Public)
+                return null;
+
+            var attribute = symbol
+                .GetAttributes()
+                .SingleOrDefault(attribute => attribute.AttributeClass?.ToDisplayString()
+                    .EndsWith(".ContextInitialization") ?? false);
+
+            if (attribute is null)
+                return null;
+
+            return new ContextInitializationMethodDeclaration(symbol, attribute);
+        }
+
+        void Execute(SourceProductionContext spc, (ImmutableArray<ContextInitializationMethodDeclaration> Methods, ImmutableArray<ComponentDeclaration> Components) arg)
+        {
+            foreach (var component in arg.Components)
             foreach (var context in component.Contexts)
             {
                 ComponentIndex(spc, component, context);
                 EntityExtension(spc, component, context);
             }
 
-            var orderedComponents = components.OrderBy(c => c.FullName).ToImmutableArray();
-            foreach (var context in orderedComponents.SelectMany(c => c.Contexts).Distinct())
+            foreach (var method in arg.Methods)
             {
-                ComponentsLookup(spc, orderedComponents, context);
+                var orderedComponents = arg.Components
+                    .Where(component => component.Contexts.Contains(method.Context.RemoveSuffix("Context")))
+                    .OrderBy(component => component.FullName)
+                    .ToImmutableArray();
+
+                ContextInitializationMethod(spc, method, orderedComponents);
             }
         }
 
@@ -207,29 +249,30 @@ namespace Entitas.Generators
             }
         }
 
-        static void ComponentsLookup(SourceProductionContext spc, ImmutableArray<ComponentDeclaration> components, string context)
+        static void ContextInitializationMethod(SourceProductionContext spc, ContextInitializationMethodDeclaration method, ImmutableArray<ComponentDeclaration> components)
         {
             spc.AddSource(
-                GeneratedPath($"{context}.ComponentsLookup"),
-                GeneratedFileHeader(GeneratorSource(nameof(ComponentsLookup))) +
-                NamespaceDeclaration(context,
+                GeneratedPath($"{method.Context}.ContextInitializationMethod"),
+                GeneratedFileHeader(GeneratorSource(nameof(ContextInitializationMethod))) +
+                $"using {method.Context.RemoveSuffix("Context")};\n\n" +
+                NamespaceDeclaration(method.Namespace,
                     $$"""
-                    public static class ComponentsLookup
+                    public static partial class {{method.Class}}
                     {
-                        public static void AssignComponentIndexes()
+                        public static partial void {{method.Name}}()
                         {
                     {{ComponentIndexAssignments(components)}}
-                        }
 
-                        public static readonly string[] ComponentNames = new string[]
-                        {
+                            {{method.Context}}.ComponentNames = new string[]
+                            {
                     {{ComponentNames(components)}}
-                        };
+                            };
 
-                        public static readonly System.Type[] ComponentTypes = new System.Type[]
-                        {
+                            {{method.Context}}.ComponentTypes = new System.Type[]
+                            {
                     {{ComponentTypes(components)}}
-                        };
+                            };
+                        }
                     }
 
                     """));
@@ -242,12 +285,12 @@ namespace Entitas.Generators
 
             static string ComponentNames(ImmutableArray<ComponentDeclaration> components)
             {
-                return string.Join(",\n", components.Select(component => $"        \"{component.FullComponentPrefix}\""));
+                return string.Join(",\n", components.Select(component => $"            \"{component.FullName.RemoveSuffix("Component")}\""));
             }
 
             static string ComponentTypes(ImmutableArray<ComponentDeclaration> components)
             {
-                return string.Join(",\n", components.Select(component => $"        typeof({component.FullName})"));
+                return string.Join(",\n", components.Select(component => $"            typeof({component.FullName})"));
             }
         }
 
@@ -352,6 +395,35 @@ namespace Entitas.Generators
             public bool Equals(MemberDeclaration other) => Type == other.Type && Name == other.Name;
             public override bool Equals(object? obj) => obj is MemberDeclaration other && Equals(other);
             public override int GetHashCode() => HashCode.Combine(Type, Name);
+        }
+
+        public readonly struct ContextInitializationMethodDeclaration : IEquatable<ContextInitializationMethodDeclaration>
+        {
+            public readonly string? Namespace;
+            public readonly string Class;
+            public readonly string Name;
+            public readonly string Context;
+
+            public readonly Location Location;
+
+            public ContextInitializationMethodDeclaration(IMethodSymbol symbol, AttributeData attribute)
+            {
+                Namespace = !symbol.ContainingNamespace.IsGlobalNamespace ? symbol.ContainingNamespace.ToDisplayString() : null;
+                Class = symbol.ContainingType.Name;
+                Name = symbol.Name;
+                Context = attribute.AttributeClass!.ToDisplayString().RemoveSuffix(".ContextInitialization") + "Context";
+
+                Location = symbol.Locations.FirstOrDefault() ?? Location.None;
+            }
+
+            public bool Equals(ContextInitializationMethodDeclaration other) =>
+                Namespace == other.Namespace &&
+                Class == other.Class &&
+                Name == other.Name &&
+                Context == other.Context;
+
+            public override bool Equals(object? obj) => obj is ContextInitializationMethodDeclaration other && Equals(other);
+            public override int GetHashCode() => HashCode.Combine(Namespace, Class, Name, Context);
         }
     }
 }

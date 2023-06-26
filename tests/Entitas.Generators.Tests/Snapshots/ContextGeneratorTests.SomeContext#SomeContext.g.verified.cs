@@ -10,14 +10,17 @@
 //------------------------------------------------------------------------------
 public sealed partial class SomeContext : Entitas.Context<Some.Entity>
 {
+    public static string[] ComponentNames;
+    public static System.Type[] ComponentTypes;
+
     public SomeContext()
         : base(
-            Some.ComponentsLookup.ComponentTypes.Length,
+            ComponentTypes.Length,
             0,
             new Entitas.ContextInfo(
                 "SomeContext",
-                Some.ComponentsLookup.ComponentNames,
-                Some.ComponentsLookup.ComponentTypes
+                ComponentNames,
+                ComponentTypes
             ),
             entity =>
 #if (ENTITAS_FAST_AND_UNSAFE)

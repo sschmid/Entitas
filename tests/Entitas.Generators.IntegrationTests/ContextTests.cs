@@ -5,10 +5,14 @@ namespace Entitas.Generators.IntegrationTests
 {
     public class ContextTests
     {
+        public ContextTests()
+        {
+            ContextInitialization.Initialize();
+        }
+
         [Fact]
         public void GeneratesContext()
         {
-            MyApp.Main.ComponentsLookup.AssignComponentIndexes();
             var context = new MyApp.MainContext();
             context.Should().NotBeNull();
             context.Should().BeAssignableTo<Context<MyApp.Main.Entity>>();

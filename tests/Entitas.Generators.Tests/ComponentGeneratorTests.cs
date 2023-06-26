@@ -17,6 +17,9 @@ public class ComponentGeneratorTests
     static Task VerifyComponent(string fixture) => TestHelper.Verify(File.ReadAllText(
         Path.Combine(FixturesPath, "Components", $"{fixture}.cs")), new ComponentGenerator());
 
+    static Task VerifyContext(string fixture) => TestHelper.Verify(File.ReadAllText(
+        Path.Combine(FixturesPath, "Contexts", $"{fixture}.txt")), new ComponentGenerator());
+
     [Fact]
     public Task SomeNamespacedClass() => Verify("SomeNamespacedClass");
 
@@ -58,4 +61,10 @@ public class ComponentGeneratorTests
 
     [Fact]
     public Task MultiplePropertiesNamespacedComponent() => VerifyComponent("MultiplePropertiesNamespacedComponent");
+
+    [Fact]
+    public Task EmptyContextInitialization() => VerifyContext("EmptyContextInitialization");
+
+    [Fact]
+    public Task ContextInitialization() => VerifyContext("ContextInitialization");
 }
