@@ -4,16 +4,16 @@ namespace MyApp
     {
         public MainContext()
             : base(
-                0,
+                Main.ComponentsLookup.ComponentTypes.Length,
                 0,
                 new Entitas.ContextInfo(
                     "MyApp.MainContext",
-                    System.Array.Empty<string>(),
-                    System.Array.Empty<System.Type>()
+                    Main.ComponentsLookup.ComponentNames,
+                    Main.ComponentsLookup.ComponentTypes
                 ),
                 entity =>
 #if (ENTITAS_FAST_AND_UNSAFE)
-                    new Entitas.UnsafeAERC(),
+                new Entitas.UnsafeAERC(),
 #else
                     new Entitas.SafeAERC(entity),
 #endif
