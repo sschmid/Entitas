@@ -14,9 +14,13 @@ namespace Entitas.Generators
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
-            initContext.RegisterSourceOutput(initContext.SyntaxProvider
+            var provider = initContext.SyntaxProvider
                 .CreateSyntaxProvider(SyntacticComponentPredicate, SemanticComponentTransform)
-                .Where(component => component is not null), (spc, component) => Execute(spc, component!.Value));
+                .Where(component => component is not null)
+                .Select((component, _) => component!.Value)
+                .Collect();
+
+            initContext.RegisterSourceOutput(provider, Execute);
         }
 
         static bool SyntacticComponentPredicate(SyntaxNode node, CancellationToken cancellationToken)
@@ -47,155 +51,203 @@ namespace Entitas.Generators
             return new ComponentDeclaration(symbol, cancellationToken);
         }
 
-        static void Execute(SourceProductionContext spc, ComponentDeclaration component)
+        static void Execute(SourceProductionContext spc, ImmutableArray<ComponentDeclaration> components)
         {
-            ComponentIndex(spc, component);
-            EntityExtension(spc, component);
-        }
-
-        static void ComponentIndex(SourceProductionContext spc, ComponentDeclaration component)
-        {
+            foreach (var component in components)
             foreach (var context in component.Contexts)
             {
-                var className = $"{component.FullComponentPrefix}ComponentIndex";
-                spc.AddSource(
-                    GeneratedPath($"{context}.{className}"),
-                    GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
+                ComponentIndex(spc, component, context);
+                EntityExtension(spc, component, context);
+            }
+
+            var orderedComponents = components.OrderBy(c => c.FullName).ToImmutableArray();
+            foreach (var context in orderedComponents.SelectMany(c => c.Contexts).Distinct())
+            {
+                ComponentsLookup(spc, orderedComponents, context);
+            }
+        }
+
+        static void ComponentIndex(SourceProductionContext spc, ComponentDeclaration component, string context)
+        {
+            var className = $"{component.FullComponentPrefix}ComponentIndex";
+            spc.AddSource(
+                GeneratedPath($"{context}.{className}"),
+                GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
+                NamespaceDeclaration(context,
+                    $$"""
+                    public static class {{className}}
+                    {
+                        public static ComponentIndex Index;
+                    }
+
+                    """));
+        }
+
+        static void EntityExtension(SourceProductionContext spc, ComponentDeclaration component, string context)
+        {
+            var className = $"{component.FullComponentPrefix}EntityExtension";
+            if (component.Members.Length > 0)
+            {
+                spc.AddSource(GeneratedPath($"{context}.{className}"),
+                    GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
+                    $"using static {context}.{component.FullComponentPrefix}ComponentIndex;\n\n" +
                     NamespaceDeclaration(context,
                         $$"""
                         public static class {{className}}
                         {
-                            public static ComponentIndex Index;
+                            public static bool Has{{component.ComponentPrefix}}(this Entity entity)
+                            {
+                                return entity.HasComponent(Index.Value);
+                            }
+
+                            public static Entity Add{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
+                            {
+                                var index = Index.Value;
+                                var component = ({{component.FullName}})entity.CreateComponent(index, typeof({{component.FullName}}));
+                        {{ComponentValueAssignments(component)}}
+                                entity.AddComponent(index, component);
+                                return entity;
+                            }
+
+                            public static Entity Replace{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
+                            {
+                                var index = Index.Value;
+                                var component = ({{component.FullName}})entity.CreateComponent(index, typeof({{component.FullName}}));
+                        {{ComponentValueAssignments(component)}}
+                                entity.ReplaceComponent(index, component);
+                                return entity;
+                            }
+
+                            public static Entity Remove{{component.ComponentPrefix}}(this Entity entity)
+                            {
+                                entity.RemoveComponent(Index.Value);
+                                return entity;
+                            }
+
+                            public static {{component.FullName}} Get{{component.ComponentPrefix}}(this Entity entity)
+                            {
+                                return ({{component.FullName}})entity.GetComponent(Index.Value);
+                            }
+
+                            public static void Deconstruct(this {{component.FullName}} component, {{ComponentDeconstructMethodArgs(component)}})
+                            {
+                        {{ComponentDeconstructValueAssignments(component)}}
+                            }
+                        }
+
+                        """));
+
+                static string ComponentDeconstructMethodArgs(ComponentDeclaration component)
+                {
+                    return string.Join(", ", component.Members.Select(member => $"out {member.Type} {member.ValidLowerFirstName}"));
+                }
+
+                static string ComponentDeconstructValueAssignments(ComponentDeclaration component)
+                {
+                    return string.Join("\n", component.Members.Select(member =>
+                        $$"""
+                                {{member.ValidLowerFirstName}} = component.{{member.Name}};
+                        """));
+                }
+
+                static string ComponentMethodArgs(ComponentDeclaration component)
+                {
+                    return string.Join(", ", component.Members.Select(member => $"{member.Type} {member.ValidLowerFirstName}"));
+                }
+
+                static string ComponentValueAssignments(ComponentDeclaration component)
+                {
+                    return string.Join("\n", component.Members.Select(member =>
+                        $$"""
+                                component.{{member.Name}} = {{member.ValidLowerFirstName}};
+                        """));
+                }
+            }
+            else
+            {
+                spc.AddSource(GeneratedPath($"{context}.{className}"),
+                    GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
+                    $"using static {context}.{component.FullComponentPrefix}ComponentIndex;\n\n" +
+                    NamespaceDeclaration(context,
+                        $$"""
+                        public static class {{className}}
+                        {
+                            static readonly {{component.FullName}} Single{{component.Name}} = new {{component.FullName}}();
+
+                            public static bool Has{{component.ComponentPrefix}}(this Entity entity)
+                            {
+                                return entity.HasComponent(Index.Value);
+                            }
+
+                            public static Entity Add{{component.ComponentPrefix}}(this Entity entity)
+                            {
+                                entity.AddComponent(Index.Value, Single{{component.Name}});
+                                return entity;
+                            }
+
+                            public static Entity Replace{{component.ComponentPrefix}}(this Entity entity)
+                            {
+                                entity.ReplaceComponent(Index.Value, Single{{component.Name}});
+                                return entity;
+                            }
+
+                            public static Entity Remove{{component.ComponentPrefix}}(this Entity entity)
+                            {
+                                entity.RemoveComponent(Index.Value);
+                                return entity;
+                            }
+
+                            public static {{component.FullName}} Get{{component.ComponentPrefix}}(this Entity entity)
+                            {
+                                return ({{component.FullName}})entity.GetComponent(Index.Value);
+                            }
                         }
 
                         """));
             }
         }
 
-        static void EntityExtension(SourceProductionContext spc, ComponentDeclaration component)
+        static void ComponentsLookup(SourceProductionContext spc, ImmutableArray<ComponentDeclaration> components, string context)
         {
-            foreach (var context in component.Contexts)
+            spc.AddSource(
+                GeneratedPath($"{context}.ComponentsLookup"),
+                GeneratedFileHeader(GeneratorSource(nameof(ComponentsLookup))) +
+                NamespaceDeclaration(context,
+                    $$"""
+                    public static class ComponentsLookup
+                    {
+                        public static void AssignComponentIndexes()
+                        {
+                    {{ComponentIndexAssignments(components)}}
+                        }
+
+                        public static readonly string[] ComponentNames = new string[]
+                        {
+                    {{ComponentNames(components)}}
+                        };
+
+                        public static readonly System.Type[] ComponentTypes = new System.Type[]
+                        {
+                    {{ComponentTypes(components)}}
+                        };
+                    }
+
+                    """));
+
+            static string ComponentIndexAssignments(ImmutableArray<ComponentDeclaration> components)
             {
-                var className = $"{component.FullComponentPrefix}EntityExtension";
-                if (component.Members.Length > 0)
-                {
-                    spc.AddSource(GeneratedPath($"{context}.{className}"),
-                        GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
-                        $"using static {context}.{component.FullComponentPrefix}ComponentIndex;\n\n" +
-                        NamespaceDeclaration(context,
-                            $$"""
-                            public static class {{className}}
-                            {
-                                public static bool Has{{component.ComponentPrefix}}(this Entity entity)
-                                {
-                                    return entity.HasComponent(Index.Value);
-                                }
+                return string.Join("\n", components.Select((component, i) =>
+                    $"        {component.FullComponentPrefix}ComponentIndex.Index = new ComponentIndex({i});"));
+            }
 
-                                public static Entity Add{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
-                                {
-                                    var index = Index.Value;
-                                    var component = ({{component.FullName}})entity.CreateComponent(index, typeof({{component.FullName}}));
-                            {{ComponentValueAssignments(component)}}
-                                    entity.AddComponent(index, component);
-                                    return entity;
-                                }
+            static string ComponentNames(ImmutableArray<ComponentDeclaration> components)
+            {
+                return string.Join(",\n", components.Select(component => $"        \"{component.FullComponentPrefix}\""));
+            }
 
-                                public static Entity Replace{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
-                                {
-                                    var index = Index.Value;
-                                    var component = ({{component.FullName}})entity.CreateComponent(index, typeof({{component.FullName}}));
-                            {{ComponentValueAssignments(component)}}
-                                    entity.ReplaceComponent(index, component);
-                                    return entity;
-                                }
-
-                                public static Entity Remove{{component.ComponentPrefix}}(this Entity entity)
-                                {
-                                    entity.RemoveComponent(Index.Value);
-                                    return entity;
-                                }
-
-                                public static {{component.FullName}} Get{{component.ComponentPrefix}}(this Entity entity)
-                                {
-                                    return ({{component.FullName}})entity.GetComponent(Index.Value);
-                                }
-
-                                public static void Deconstruct(this {{component.FullName}} component, {{ComponentDeconstructMethodArgs(component)}})
-                                {
-                            {{ComponentDeconstructValueAssignments(component)}}
-                                }
-                            }
-
-                            """));
-
-                    static string ComponentDeconstructMethodArgs(ComponentDeclaration component)
-                    {
-                        return string.Join(", ", component.Members.Select(member => $"out {member.Type} {member.ValidLowerFirstName}"));
-                    }
-
-                    static string ComponentDeconstructValueAssignments(ComponentDeclaration component)
-                    {
-                        return string.Join("\n", component.Members.Select(member =>
-                            $$"""
-                                    {{member.ValidLowerFirstName}} = component.{{member.Name}};
-                            """));
-                    }
-
-                    static string ComponentMethodArgs(ComponentDeclaration component)
-                    {
-                        return string.Join(", ", component.Members.Select(member => $"{member.Type} {member.ValidLowerFirstName}"));
-                    }
-
-                    static string ComponentValueAssignments(ComponentDeclaration component)
-                    {
-                        return string.Join("\n", component.Members.Select(member =>
-                            $$"""
-                                    component.{{member.Name}} = {{member.ValidLowerFirstName}};
-                            """));
-                    }
-                }
-                else
-                {
-                    spc.AddSource(GeneratedPath($"{context}.{className}"),
-                        GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
-                        $"using static {context}.{component.FullComponentPrefix}ComponentIndex;\n\n" +
-                        NamespaceDeclaration(context,
-                            $$"""
-                            public static class {{className}}
-                            {
-                                static readonly {{component.FullName}} Single{{component.Name}} = new {{component.FullName}}();
-
-                                public static bool Has{{component.ComponentPrefix}}(this Entity entity)
-                                {
-                                    return entity.HasComponent(Index.Value);
-                                }
-
-                                public static Entity Add{{component.ComponentPrefix}}(this Entity entity)
-                                {
-                                    entity.AddComponent(Index.Value, Single{{component.Name}});
-                                    return entity;
-                                }
-
-                                public static Entity Replace{{component.ComponentPrefix}}(this Entity entity)
-                                {
-                                    entity.ReplaceComponent(Index.Value, Single{{component.Name}});
-                                    return entity;
-                                }
-
-                                public static Entity Remove{{component.ComponentPrefix}}(this Entity entity)
-                                {
-                                    entity.RemoveComponent(Index.Value);
-                                    return entity;
-                                }
-
-                                public static {{component.FullName}} Get{{component.ComponentPrefix}}(this Entity entity)
-                                {
-                                    return ({{component.FullName}})entity.GetComponent(Index.Value);
-                                }
-                            }
-
-                            """));
-                }
+            static string ComponentTypes(ImmutableArray<ComponentDeclaration> components)
+            {
+                return string.Join(",\n", components.Select(component => $"        typeof({component.FullName})"));
             }
         }
 
@@ -206,16 +258,8 @@ namespace Entitas.Generators
 
         public readonly struct ComponentDeclaration : IEquatable<ComponentDeclaration>
         {
-            /// When: MyApp.SomeComponent
-            /// Then: MyApp
             public readonly string? Namespace;
-
-            /// When: MyApp.SomeComponent
-            /// Then: MyApp.SomeComponent
             public readonly string FullName;
-
-            /// When: MyApp.SomeComponent
-            /// Then: SomeComponent
             public readonly string Name;
 
             public readonly ImmutableArray<MemberDeclaration> Members;
@@ -223,12 +267,7 @@ namespace Entitas.Generators
 
             public readonly Location Location;
 
-            /// When: MyApp.SomeComponent
-            /// Then: MyAppSome
             public readonly string FullComponentPrefix;
-
-            /// When: MyApp.SomeComponent
-            /// Then: Some
             public readonly string ComponentPrefix;
 
             public ComponentDeclaration(INamedTypeSymbol symbol, CancellationToken cancellationToken)

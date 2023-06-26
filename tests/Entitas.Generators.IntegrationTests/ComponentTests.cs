@@ -1,6 +1,5 @@
-using System;
-using System.Linq;
 using FluentAssertions;
+using MyApp;
 using MyApp.Main;
 using MyFeature;
 using Xunit;
@@ -92,33 +91,10 @@ namespace Entitas.Generators.IntegrationTests
             entity1.GetMovable().Should().BeSameAs(entity2.GetMovable());
         }
 
-        static TestContext<MyApp.Main.Entity> CreateContext()
+        static IContext<MyApp.Main.Entity> CreateContext()
         {
-            MyFeatureMovableComponentIndex.Index = new ComponentIndex(0);
-            MyFeaturePositionComponentIndex.Index = new ComponentIndex(1);
-            return new TestContext<MyApp.Main.Entity>(
-                2,
-                new[]
-                {
-                    typeof(MovableComponent),
-                    typeof(PositionComponent)
-                });
+            ComponentsLookup.AssignComponentIndexes();
+            return new MainContext();
         }
-    }
-
-    public sealed class TestContext<TEntity> : Context<TEntity> where TEntity : class, IEntity, new()
-    {
-        public TestContext(int totalComponents, Type[] componentTypes)
-            : base(
-                totalComponents,
-                0,
-                new ContextInfo(
-                    "Entitas.Generators.IntegrationTests.TestContext",
-                    componentTypes.Select(type => type.FullName).ToArray(),
-                    componentTypes
-                ),
-                entity => new SafeAERC(entity),
-                () => new TEntity()
-            ) { }
     }
 }

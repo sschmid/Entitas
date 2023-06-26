@@ -13,9 +13,11 @@ namespace Entitas.Generators
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
-            initContext.RegisterSourceOutput(initContext.SyntaxProvider
+            var provider = initContext.SyntaxProvider
                 .CreateSyntaxProvider(SyntacticContextPredicate, SemanticContextTransform)
-                .Where(context => context is not null), (spc, context) => Execute(spc, context!.Value));
+                .Where(context => context is not null);
+
+            initContext.RegisterSourceOutput(provider, (spc, context) => Execute(spc, context!.Value));
         }
 
         static bool SyntacticContextPredicate(SyntaxNode node, CancellationToken cancellationToken)
@@ -151,16 +153,16 @@ namespace Entitas.Generators
                 GeneratedFileHeader(GeneratorSource(nameof(Context))) +
                 NamespaceDeclaration(context.Namespace,
                     $$"""
-                    public sealed partial class {{context.Name}} : Entitas.Context<{{context.EntityName}}>
+                    public sealed partial class {{context.Name}} : Entitas.Context<{{context.ContextPrefix}}.Entity>
                     {
                         public {{context.Name}}()
                             : base(
-                                0,
+                                {{context.ContextPrefix}}.ComponentsLookup.ComponentTypes.Length,
                                 0,
                                 new Entitas.ContextInfo(
                                     "{{context.FullName}}",
-                                    System.Array.Empty<string>(),
-                                    System.Array.Empty<System.Type>()
+                                    {{context.ContextPrefix}}.ComponentsLookup.ComponentNames,
+                                    {{context.ContextPrefix}}.ComponentsLookup.ComponentTypes
                                 ),
                                 entity =>
                     #if (ENTITAS_FAST_AND_UNSAFE)
@@ -168,7 +170,7 @@ namespace Entitas.Generators
                     #else
                                     new Entitas.SafeAERC(entity),
                     #endif
-                                () => new {{context.EntityName}}()
+                                () => new {{context.ContextPrefix}}.Entity()
                             ) { }
                     }
 
@@ -187,27 +189,13 @@ namespace Entitas.Generators
 
         public readonly struct ContextDeclaration : IEquatable<ContextDeclaration>
         {
-            /// When: MyApp.MainContext
-            /// Then: MyApp
             public readonly string? Namespace;
-
-            /// When: MyApp.MainContext
-            /// Then: MyApp.MainContext
             public readonly string FullName;
-
-            /// When: MyApp.MainContext
-            /// Then: MainContext
             public readonly string Name;
 
             public readonly Location Location;
 
-            /// When: MyApp.MainContext
-            /// Then: Main
             public readonly string ContextPrefix;
-
-            /// When: MyApp.MainContext
-            /// Then: Main.Entity
-            public readonly string EntityName;
 
             public ContextDeclaration(INamedTypeSymbol symbol)
             {
@@ -218,7 +206,6 @@ namespace Entitas.Generators
                 Location = symbol.Locations.FirstOrDefault() ?? Location.None;
 
                 ContextPrefix = Name.RemoveSuffix("Context");
-                EntityName = $"{ContextPrefix}.Entity";
             }
 
             public bool Equals(ContextDeclaration other) =>
