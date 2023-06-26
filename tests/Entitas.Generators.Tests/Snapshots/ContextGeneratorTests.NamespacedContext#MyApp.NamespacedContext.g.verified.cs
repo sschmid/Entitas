@@ -12,14 +12,17 @@ namespace MyApp
 {
 public sealed partial class NamespacedContext : Entitas.Context<Namespaced.Entity>
 {
+    public static string[] ComponentNames;
+    public static System.Type[] ComponentTypes;
+
     public NamespacedContext()
         : base(
-            Namespaced.ComponentsLookup.ComponentTypes.Length,
+            ComponentTypes.Length,
             0,
             new Entitas.ContextInfo(
                 "MyApp.NamespacedContext",
-                Namespaced.ComponentsLookup.ComponentNames,
-                Namespaced.ComponentsLookup.ComponentTypes
+                ComponentNames,
+                ComponentTypes
             ),
             entity =>
 #if (ENTITAS_FAST_AND_UNSAFE)

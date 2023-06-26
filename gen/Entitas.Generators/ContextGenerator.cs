@@ -14,13 +14,14 @@ namespace Entitas.Generators
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
             var provider = initContext.SyntaxProvider
-                .CreateSyntaxProvider(SyntacticContextPredicate, SemanticContextTransform)
-                .Where(context => context is not null);
+                .CreateSyntaxProvider(IsContextCandidate, CreateContextDeclaration)
+                .Where(context => context is not null)
+                .Select((context, _) => context!.Value);
 
-            initContext.RegisterSourceOutput(provider, (spc, context) => Execute(spc, context!.Value));
+            initContext.RegisterSourceOutput(provider, Execute);
         }
 
-        static bool SyntacticContextPredicate(SyntaxNode node, CancellationToken cancellationToken)
+        static bool IsContextCandidate(SyntaxNode node, CancellationToken cancellationToken)
         {
             return node is ClassDeclarationSyntax { BaseList.Types.Count: > 0 } candidate
                    && !candidate.Modifiers.Any(SyntaxKind.PublicKeyword)
@@ -29,7 +30,7 @@ namespace Entitas.Generators
                    && candidate.Modifiers.Any(SyntaxKind.PartialKeyword);
         }
 
-        static ContextDeclaration? SemanticContextTransform(GeneratorSyntaxContext context, CancellationToken cancellationToken)
+        static ContextDeclaration? CreateContextDeclaration(GeneratorSyntaxContext context, CancellationToken cancellationToken)
         {
             var candidate = (ClassDeclarationSyntax)context.Node;
             var symbol = context.SemanticModel.GetDeclaredSymbol(candidate, cancellationToken);
@@ -52,6 +53,7 @@ namespace Entitas.Generators
         {
             ComponentIndex(spc, context);
             ContextAttribute(spc, context);
+            ContextInitializationAttribute(spc, context);
             Entity(spc, context);
             Matcher(spc, context);
             Context(spc, context);
@@ -91,6 +93,19 @@ namespace Entitas.Generators
                     [System.Diagnostics.Conditional("false")]
                     [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
                     public sealed class ContextAttribute : System.Attribute { }
+
+                    """));
+        }
+
+        static void ContextInitializationAttribute(SourceProductionContext spc, ContextDeclaration context)
+        {
+            spc.AddSource(ContextAwarePath(context, "ContextInitializationAttribute"),
+                GeneratedFileHeader(GeneratorSource(nameof(ContextInitializationAttribute))) +
+                NamespaceDeclaration(context.Namespace, context.ContextPrefix,
+                    """
+                    [System.Diagnostics.Conditional("false")]
+                    [System.AttributeUsage(System.AttributeTargets.Method, AllowMultiple = true)]
+                    public sealed class ContextInitializationAttribute : System.Attribute { }
 
                     """));
         }
@@ -155,14 +170,17 @@ namespace Entitas.Generators
                     $$"""
                     public sealed partial class {{context.Name}} : Entitas.Context<{{context.ContextPrefix}}.Entity>
                     {
+                        public static string[] ComponentNames;
+                        public static System.Type[] ComponentTypes;
+
                         public {{context.Name}}()
                             : base(
-                                {{context.ContextPrefix}}.ComponentsLookup.ComponentTypes.Length,
+                                ComponentTypes.Length,
                                 0,
                                 new Entitas.ContextInfo(
                                     "{{context.FullName}}",
-                                    {{context.ContextPrefix}}.ComponentsLookup.ComponentNames,
-                                    {{context.ContextPrefix}}.ComponentsLookup.ComponentTypes
+                                    ComponentNames,
+                                    ComponentTypes
                                 ),
                                 entity =>
                     #if (ENTITAS_FAST_AND_UNSAFE)

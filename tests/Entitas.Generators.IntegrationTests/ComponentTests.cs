@@ -8,17 +8,25 @@ namespace Entitas.Generators.IntegrationTests
 {
     public class ComponentTests
     {
+        readonly MainContext _context;
+
+        public ComponentTests()
+        {
+            ContextInitialization.Initialize();
+            _context = new MainContext();
+        }
+
         [Fact]
         public void DoesNotHaveComponent()
         {
-            var entity = CreateContext().CreateEntity();
+            var entity = _context.CreateEntity();
             entity.HasPosition().Should().BeFalse();
         }
 
         [Fact]
         public void AddComponent()
         {
-            var entity = CreateContext().CreateEntity();
+            var entity = _context.CreateEntity();
             entity.AddPosition(1, 2);
             entity.HasComponent(MyFeaturePositionComponentIndex.Index.Value);
         }
@@ -26,7 +34,7 @@ namespace Entitas.Generators.IntegrationTests
         [Fact]
         public void HasComponent()
         {
-            var entity = CreateContext().CreateEntity();
+            var entity = _context.CreateEntity();
             entity.AddPosition(1, 2);
             entity.HasPosition().Should().BeTrue();
         }
@@ -34,12 +42,24 @@ namespace Entitas.Generators.IntegrationTests
         [Fact]
         public void GetComponent()
         {
-            var entity = CreateContext().CreateEntity();
+            var entity = _context.CreateEntity();
             entity.AddPosition(1, 2);
 
             var position = entity.GetPosition();
             position.X.Should().Be(1);
             position.Y.Should().Be(2);
+        }
+
+        [Fact]
+        public void ReplaceComponent()
+        {
+            var entity = _context.CreateEntity();
+            entity.AddPosition(1, 2);
+            entity.ReplacePosition(3, 4);
+
+            var position = entity.GetPosition();
+            position.X.Should().Be(3);
+            position.Y.Should().Be(4);
         }
 
         [Fact]
@@ -54,7 +74,7 @@ namespace Entitas.Generators.IntegrationTests
         public void AddComponentUsesComponentPool()
         {
             var component = new PositionComponent { X = 1, Y = 2 };
-            var entity = CreateContext().CreateEntity();
+            var entity = _context.CreateEntity();
             entity
                 .GetComponentPool(MyFeaturePositionComponentIndex.Index.Value)
                 .Push(component);
@@ -67,7 +87,7 @@ namespace Entitas.Generators.IntegrationTests
         public void ReplaceComponentUsesComponentPool()
         {
             var component = new PositionComponent { X = 1, Y = 2 };
-            var entity = CreateContext().CreateEntity();
+            var entity = _context.CreateEntity();
             entity.AddPosition(3, 4);
             entity
                 .GetComponentPool(MyFeaturePositionComponentIndex.Index.Value)
@@ -80,21 +100,15 @@ namespace Entitas.Generators.IntegrationTests
         [Fact]
         public void UsesSingleComponent()
         {
-            var entity1 = CreateContext()
+            var entity1 = _context
                 .CreateEntity()
                 .AddMovable();
 
-            var entity2 = CreateContext()
+            var entity2 = _context
                 .CreateEntity()
                 .AddMovable();
 
             entity1.GetMovable().Should().BeSameAs(entity2.GetMovable());
-        }
-
-        static IContext<MyApp.Main.Entity> CreateContext()
-        {
-            ComponentsLookup.AssignComponentIndexes();
-            return new MainContext();
         }
     }
 }
