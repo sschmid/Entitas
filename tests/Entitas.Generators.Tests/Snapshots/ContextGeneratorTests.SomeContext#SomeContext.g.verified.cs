@@ -12,12 +12,12 @@ public sealed partial class SomeContext : Entitas.Context<Some.Entity>
 {
     public SomeContext()
         : base(
-            0,
+            Some.ComponentsLookup.ComponentTypes.Length,
             0,
             new Entitas.ContextInfo(
                 "SomeContext",
-                System.Array.Empty<string>(),
-                System.Array.Empty<System.Type>()
+                Some.ComponentsLookup.ComponentNames,
+                Some.ComponentsLookup.ComponentTypes
             ),
             entity =>
 #if (ENTITAS_FAST_AND_UNSAFE)

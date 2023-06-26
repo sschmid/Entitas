@@ -14,12 +14,12 @@ public sealed partial class NamespacedContext : Entitas.Context<Namespaced.Entit
 {
     public NamespacedContext()
         : base(
-            0,
+            Namespaced.ComponentsLookup.ComponentTypes.Length,
             0,
             new Entitas.ContextInfo(
                 "MyApp.NamespacedContext",
-                System.Array.Empty<string>(),
-                System.Array.Empty<System.Type>()
+                Namespaced.ComponentsLookup.ComponentNames,
+                Namespaced.ComponentsLookup.ComponentTypes
             ),
             entity =>
 #if (ENTITAS_FAST_AND_UNSAFE)
