@@ -1,6 +1,4 @@
-using System;
 using System.Linq;
-using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -13,40 +11,33 @@ namespace Entitas.Generators
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
-            var provider = initContext.SyntaxProvider
-                .CreateSyntaxProvider(IsContextCandidate, CreateContextDeclaration)
+            var contextProvider = initContext.SyntaxProvider.CreateSyntaxProvider(
+                    static (node, _) => node is ClassDeclarationSyntax { BaseList.Types.Count: > 0 } candidate
+                                        && !candidate.Modifiers.Any(SyntaxKind.PublicKeyword)
+                                        && !candidate.Modifiers.Any(SyntaxKind.StaticKeyword)
+                                        && !candidate.Modifiers.Any(SyntaxKind.SealedKeyword)
+                                        && candidate.Modifiers.Any(SyntaxKind.PartialKeyword),
+                    static ContextDeclaration? (syntaxContext, cancellationToken) =>
+                    {
+                        var candidate = (ClassDeclarationSyntax)syntaxContext.Node;
+                        var symbol = syntaxContext.SemanticModel.GetDeclaredSymbol(candidate, cancellationToken);
+                        if (symbol is null)
+                            return null;
+
+                        var interfaceType = syntaxContext.SemanticModel.Compilation.GetTypeByMetadataName("Entitas.IContext");
+                        if (interfaceType is null)
+                            return null;
+
+                        var isContext = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(interfaceType, SymbolEqualityComparer.Default));
+                        if (!isContext)
+                            return null;
+
+                        return new ContextDeclaration(symbol);
+                    })
                 .Where(context => context is not null)
                 .Select((context, _) => context!.Value);
 
-            initContext.RegisterSourceOutput(provider, Execute);
-        }
-
-        static bool IsContextCandidate(SyntaxNode node, CancellationToken cancellationToken)
-        {
-            return node is ClassDeclarationSyntax { BaseList.Types.Count: > 0 } candidate
-                   && !candidate.Modifiers.Any(SyntaxKind.PublicKeyword)
-                   && !candidate.Modifiers.Any(SyntaxKind.StaticKeyword)
-                   && !candidate.Modifiers.Any(SyntaxKind.SealedKeyword)
-                   && candidate.Modifiers.Any(SyntaxKind.PartialKeyword);
-        }
-
-        static ContextDeclaration? CreateContextDeclaration(GeneratorSyntaxContext context, CancellationToken cancellationToken)
-        {
-            var candidate = (ClassDeclarationSyntax)context.Node;
-            var symbol = context.SemanticModel.GetDeclaredSymbol(candidate, cancellationToken);
-            if (symbol is null)
-                return null;
-
-            // TODO: Emit diagnostics when interface is not found
-            var interfaceType = context.SemanticModel.Compilation.GetTypeByMetadataName("Entitas.IContext");
-            if (interfaceType is null)
-                return null;
-
-            var isContext = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(interfaceType, SymbolEqualityComparer.Default));
-            if (!isContext)
-                return null;
-
-            return new ContextDeclaration(symbol);
+            initContext.RegisterSourceOutput(contextProvider, Execute);
         }
 
         static void Execute(SourceProductionContext spc, ContextDeclaration context)
@@ -63,7 +54,7 @@ namespace Entitas.Generators
         {
             spc.AddSource(ContextAwarePath(context, "ComponentIndex"),
                 GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
-                NamespaceDeclaration(context.Namespace, context.ContextPrefix,
+                NamespaceDeclaration(context.FullContextPrefix,
                     """
                     public readonly struct ComponentIndex : System.IEquatable<ComponentIndex>
                     {
@@ -88,7 +79,7 @@ namespace Entitas.Generators
         {
             spc.AddSource(ContextAwarePath(context, "ContextAttribute"),
                 GeneratedFileHeader(GeneratorSource(nameof(ContextAttribute))) +
-                NamespaceDeclaration(context.Namespace, context.ContextPrefix,
+                NamespaceDeclaration(context.FullContextPrefix,
                     """
                     [System.Diagnostics.Conditional("false")]
                     [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
@@ -101,7 +92,7 @@ namespace Entitas.Generators
         {
             spc.AddSource(ContextAwarePath(context, "ContextInitializationAttribute"),
                 GeneratedFileHeader(GeneratorSource(nameof(ContextInitializationAttribute))) +
-                NamespaceDeclaration(context.Namespace, context.ContextPrefix,
+                NamespaceDeclaration(context.FullContextPrefix,
                     """
                     [System.Diagnostics.Conditional("false")]
                     [System.AttributeUsage(System.AttributeTargets.Method, AllowMultiple = true)]
@@ -114,7 +105,7 @@ namespace Entitas.Generators
         {
             spc.AddSource(ContextAwarePath(context, "Entity"),
                 GeneratedFileHeader(GeneratorSource(nameof(Entity))) +
-                NamespaceDeclaration(context.Namespace, context.ContextPrefix,
+                NamespaceDeclaration(context.FullContextPrefix,
                     """
                     public sealed class Entity : Entitas.Entity { }
 
@@ -125,7 +116,7 @@ namespace Entitas.Generators
         {
             spc.AddSource(ContextAwarePath(context, "Matcher"),
                 GeneratedFileHeader(GeneratorSource(nameof(Matcher))) +
-                NamespaceDeclaration(context.Namespace, context.ContextPrefix,
+                NamespaceDeclaration(context.FullContextPrefix,
                     """
                     public static class Matcher
                     {
@@ -197,42 +188,12 @@ namespace Entitas.Generators
 
         static string ContextAwarePath(ContextDeclaration context, string hintName)
         {
-            return GeneratedPath($"{CombinedNamespace(context.Namespace, context.ContextPrefix)}.{hintName}");
+            return GeneratedPath($"{context.FullContextPrefix}.{hintName}");
         }
 
         static string GeneratorSource(string source)
         {
             return $"{typeof(ContextGenerator).FullName}.{source}";
-        }
-
-        public readonly struct ContextDeclaration : IEquatable<ContextDeclaration>
-        {
-            public readonly string? Namespace;
-            public readonly string FullName;
-            public readonly string Name;
-
-            public readonly Location Location;
-
-            public readonly string ContextPrefix;
-
-            public ContextDeclaration(INamedTypeSymbol symbol)
-            {
-                Namespace = !symbol.ContainingNamespace.IsGlobalNamespace ? symbol.ContainingNamespace.ToDisplayString() : null;
-                FullName = symbol.ToDisplayString();
-                Name = symbol.Name;
-
-                Location = symbol.Locations.FirstOrDefault() ?? Location.None;
-
-                ContextPrefix = Name.RemoveSuffix("Context");
-            }
-
-            public bool Equals(ContextDeclaration other) =>
-                Namespace == other.Namespace &&
-                FullName == other.FullName &&
-                Name == other.Name;
-
-            public override bool Equals(object? obj) => obj is ContextDeclaration other && Equals(other);
-            public override int GetHashCode() => HashCode.Combine(Namespace, FullName, Name);
         }
     }
 }
