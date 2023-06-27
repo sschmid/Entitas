@@ -1,6 +1,5 @@
 using FluentAssertions;
 using MyApp;
-using MyApp.Main;
 using MyFeature;
 using Xunit;
 
@@ -28,7 +27,7 @@ namespace Entitas.Generators.IntegrationTests
         {
             var entity = _context.CreateEntity();
             entity.AddPosition(1, 2);
-            entity.HasComponent(MyFeaturePositionComponentIndex.Index.Value);
+            entity.HasComponent(MyAppMainPositionComponentIndex.Index.Value);
         }
 
         [Fact]
@@ -63,20 +62,12 @@ namespace Entitas.Generators.IntegrationTests
         }
 
         [Fact]
-        public void DeconstructComponent()
-        {
-            var (x, y) = new PositionComponent { X = 1, Y = 2 };
-            x.Should().Be(1);
-            y.Should().Be(2);
-        }
-
-        [Fact]
         public void AddComponentUsesComponentPool()
         {
             var component = new PositionComponent { X = 1, Y = 2 };
             var entity = _context.CreateEntity();
             entity
-                .GetComponentPool(MyFeaturePositionComponentIndex.Index.Value)
+                .GetComponentPool(MyAppMainPositionComponentIndex.Index.Value)
                 .Push(component);
 
             entity.AddPosition(3, 4);
@@ -90,7 +81,7 @@ namespace Entitas.Generators.IntegrationTests
             var entity = _context.CreateEntity();
             entity.AddPosition(3, 4);
             entity
-                .GetComponentPool(MyFeaturePositionComponentIndex.Index.Value)
+                .GetComponentPool(MyAppMainPositionComponentIndex.Index.Value)
                 .Push(component);
 
             entity.ReplacePosition(5, 6);

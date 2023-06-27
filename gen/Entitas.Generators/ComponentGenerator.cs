@@ -101,7 +101,7 @@ namespace Entitas.Generators
             foreach (var method in arg.Methods)
             {
                 var orderedComponents = arg.Components
-                    .Where(component => component.Contexts.Contains(method.Context.RemoveSuffix("Context")))
+                    .Where(component => component.Contexts.Contains(method.FullContextPrefix))
                     .OrderBy(component => component.FullName)
                     .ToImmutableArray();
 
@@ -111,11 +111,14 @@ namespace Entitas.Generators
 
         static void ComponentIndex(SourceProductionContext spc, ComponentDeclaration component, string context)
         {
-            var className = $"{component.FullComponentPrefix}ComponentIndex";
+            var fileName = $"{component.FullName}.{context}.ComponentIndex";
+            var className = $"{context.Replace(".", string.Empty)}{component.ComponentPrefix}ComponentIndex";
+
             spc.AddSource(
-                GeneratedPath($"{context}.{className}"),
+                GeneratedPath(fileName),
                 GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
-                NamespaceDeclaration(context,
+                $"using {context};\n\n" +
+                NamespaceDeclaration(component.Namespace,
                     $$"""
                     public static class {{className}}
                     {
@@ -127,70 +130,53 @@ namespace Entitas.Generators
 
         static void EntityExtension(SourceProductionContext spc, ComponentDeclaration component, string context)
         {
-            var className = $"{component.FullComponentPrefix}EntityExtension";
+            var contextPrefix = context.Replace(".", string.Empty);
+            var fileName = $"{component.FullName}.{context}.EntityExtension";
+            var className = $"{contextPrefix}{component.ComponentPrefix}EntityExtension";
+
+            string content;
             if (component.Members.Length > 0)
             {
-                spc.AddSource(GeneratedPath($"{context}.{className}"),
-                    GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
-                    $"using static {context}.{component.FullComponentPrefix}ComponentIndex;\n\n" +
-                    NamespaceDeclaration(context,
-                        $$"""
-                        public static class {{className}}
+                content = $$"""
+                    public static class {{className}}
+                    {
+                        public static bool Has{{component.ComponentPrefix}}(this Entity entity)
                         {
-                            public static bool Has{{component.ComponentPrefix}}(this Entity entity)
-                            {
-                                return entity.HasComponent(Index.Value);
-                            }
-
-                            public static Entity Add{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
-                            {
-                                var index = Index.Value;
-                                var component = ({{component.FullName}})entity.CreateComponent(index, typeof({{component.FullName}}));
-                        {{ComponentValueAssignments(component)}}
-                                entity.AddComponent(index, component);
-                                return entity;
-                            }
-
-                            public static Entity Replace{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
-                            {
-                                var index = Index.Value;
-                                var component = ({{component.FullName}})entity.CreateComponent(index, typeof({{component.FullName}}));
-                        {{ComponentValueAssignments(component)}}
-                                entity.ReplaceComponent(index, component);
-                                return entity;
-                            }
-
-                            public static Entity Remove{{component.ComponentPrefix}}(this Entity entity)
-                            {
-                                entity.RemoveComponent(Index.Value);
-                                return entity;
-                            }
-
-                            public static {{component.FullName}} Get{{component.ComponentPrefix}}(this Entity entity)
-                            {
-                                return ({{component.FullName}})entity.GetComponent(Index.Value);
-                            }
-
-                            public static void Deconstruct(this {{component.FullName}} component, {{ComponentDeconstructMethodArgs(component)}})
-                            {
-                        {{ComponentDeconstructValueAssignments(component)}}
-                            }
+                            return entity.HasComponent(Index.Value);
                         }
 
-                        """));
+                        public static Entity Add{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
+                        {
+                            var index = Index.Value;
+                            var component = ({{component.Name}})entity.CreateComponent(index, typeof({{component.Name}}));
+                    {{ComponentValueAssignments(component)}}
+                            entity.AddComponent(index, component);
+                            return entity;
+                        }
 
-                static string ComponentDeconstructMethodArgs(ComponentDeclaration component)
-                {
-                    return string.Join(", ", component.Members.Select(member => $"out {member.Type} {member.ValidLowerFirstName}"));
-                }
+                        public static Entity Replace{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
+                        {
+                            var index = Index.Value;
+                            var component = ({{component.Name}})entity.CreateComponent(index, typeof({{component.Name}}));
+                    {{ComponentValueAssignments(component)}}
+                            entity.ReplaceComponent(index, component);
+                            return entity;
+                        }
 
-                static string ComponentDeconstructValueAssignments(ComponentDeclaration component)
-                {
-                    return string.Join("\n", component.Members.Select(member =>
-                        $$"""
-                                {{member.ValidLowerFirstName}} = component.{{member.Name}};
-                        """));
-                }
+                        public static Entity Remove{{component.ComponentPrefix}}(this Entity entity)
+                        {
+                            entity.RemoveComponent(Index.Value);
+                            return entity;
+                        }
+
+                        public static {{component.Name}} Get{{component.ComponentPrefix}}(this Entity entity)
+                        {
+                            return ({{component.Name}})entity.GetComponent(Index.Value);
+                        }
+                    }
+
+                    """;
+
 
                 static string ComponentMethodArgs(ComponentDeclaration component)
                 {
@@ -207,61 +193,63 @@ namespace Entitas.Generators
             }
             else
             {
-                spc.AddSource(GeneratedPath($"{context}.{className}"),
-                    GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
-                    $"using static {context}.{component.FullComponentPrefix}ComponentIndex;\n\n" +
-                    NamespaceDeclaration(context,
-                        $$"""
-                        public static class {{className}}
+                content = $$"""
+                    public static class {{className}}
+                    {
+                        static readonly {{component.Name}} Single{{component.Name}} = new {{component.Name}}();
+
+                        public static bool Has{{component.ComponentPrefix}}(this Entity entity)
                         {
-                            static readonly {{component.FullName}} Single{{component.Name}} = new {{component.FullName}}();
-
-                            public static bool Has{{component.ComponentPrefix}}(this Entity entity)
-                            {
-                                return entity.HasComponent(Index.Value);
-                            }
-
-                            public static Entity Add{{component.ComponentPrefix}}(this Entity entity)
-                            {
-                                entity.AddComponent(Index.Value, Single{{component.Name}});
-                                return entity;
-                            }
-
-                            public static Entity Replace{{component.ComponentPrefix}}(this Entity entity)
-                            {
-                                entity.ReplaceComponent(Index.Value, Single{{component.Name}});
-                                return entity;
-                            }
-
-                            public static Entity Remove{{component.ComponentPrefix}}(this Entity entity)
-                            {
-                                entity.RemoveComponent(Index.Value);
-                                return entity;
-                            }
-
-                            public static {{component.FullName}} Get{{component.ComponentPrefix}}(this Entity entity)
-                            {
-                                return ({{component.FullName}})entity.GetComponent(Index.Value);
-                            }
+                            return entity.HasComponent(Index.Value);
                         }
 
-                        """));
+                        public static Entity Add{{component.ComponentPrefix}}(this Entity entity)
+                        {
+                            entity.AddComponent(Index.Value, Single{{component.Name}});
+                            return entity;
+                        }
+
+                        public static Entity Replace{{component.ComponentPrefix}}(this Entity entity)
+                        {
+                            entity.ReplaceComponent(Index.Value, Single{{component.Name}});
+                            return entity;
+                        }
+
+                        public static Entity Remove{{component.ComponentPrefix}}(this Entity entity)
+                        {
+                            entity.RemoveComponent(Index.Value);
+                            return entity;
+                        }
+
+                        public static {{component.Name}} Get{{component.ComponentPrefix}}(this Entity entity)
+                        {
+                            return ({{component.Name}})entity.GetComponent(Index.Value);
+                        }
+                    }
+
+                    """;
             }
+
+            spc.AddSource(GeneratedPath(fileName),
+                GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
+                $"using {context};\n" +
+                $"using static {CombinedNamespace(component.Namespace, contextPrefix)}{component.ComponentPrefix}ComponentIndex;\n\n" +
+                NamespaceDeclaration(component.Namespace, content));
         }
 
         static void ContextInitializationMethod(SourceProductionContext spc, ContextInitializationMethodDeclaration method, ImmutableArray<ComponentDeclaration> components)
         {
             spc.AddSource(
-                GeneratedPath($"{method.Context}.ContextInitializationMethod"),
+                GeneratedPath($"{method.FullContextPrefix}.ContextInitializationMethod"),
                 GeneratedFileHeader(GeneratorSource(nameof(ContextInitializationMethod))) +
-                $"using {method.Context.RemoveSuffix("Context")};\n\n" +
+                $"using {method.FullContextPrefix};\n\n" +
                 NamespaceDeclaration(method.Namespace,
                     $$"""
                     public static partial class {{method.Class}}
                     {
                         public static partial void {{method.Name}}()
                         {
-                    {{ComponentIndexAssignments(components)}}
+                    {{ComponentIndexAssignments(method, components)}}
 
                             {{method.Context}}.ComponentNames = new string[]
                             {
@@ -277,10 +265,13 @@ namespace Entitas.Generators
 
                     """));
 
-            static string ComponentIndexAssignments(ImmutableArray<ComponentDeclaration> components)
+            static string ComponentIndexAssignments(ContextInitializationMethodDeclaration method, ImmutableArray<ComponentDeclaration> components)
             {
                 return string.Join("\n", components.Select((component, i) =>
-                    $"        {component.FullComponentPrefix}ComponentIndex.Index = new ComponentIndex({i});"));
+                {
+                    var contextPrefix = CombinedNamespace(component.Namespace, method.FullContextPrefix.Replace(".", string.Empty));
+                    return $"        {contextPrefix}{component.ComponentPrefix}ComponentIndex.Index = new ComponentIndex({i});";
+                }));
             }
 
             static string ComponentNames(ImmutableArray<ComponentDeclaration> components)
@@ -406,12 +397,17 @@ namespace Entitas.Generators
 
             public readonly Location Location;
 
+            public readonly string FullContextPrefix;
+
             public ContextInitializationMethodDeclaration(IMethodSymbol symbol, AttributeData attribute)
             {
                 Namespace = !symbol.ContainingNamespace.IsGlobalNamespace ? symbol.ContainingNamespace.ToDisplayString() : null;
                 Class = symbol.ContainingType.Name;
                 Name = symbol.Name;
-                Context = attribute.AttributeClass!.ToDisplayString().RemoveSuffix(".ContextInitialization") + "Context";
+
+                FullContextPrefix = attribute.AttributeClass!.ToDisplayString().RemoveSuffix(".ContextInitialization");
+
+                Context = FullContextPrefix + "Context";
 
                 Location = symbol.Locations.FirstOrDefault() ?? Location.None;
             }
