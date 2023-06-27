@@ -25,6 +25,13 @@ namespace Entitas.Generators
                 """;
         }
 
+        public static string CombinedNamespace(string? @namespace, string suffix)
+        {
+            return @namespace is not null
+                ? $"{@namespace}.{suffix}"
+                : suffix;
+        }
+
         public static string NamespaceDeclaration(string? @namespace, string content)
         {
             return @namespace is not null
@@ -34,16 +41,7 @@ namespace Entitas.Generators
 
         public static string NamespaceDeclaration(string? @namespace, string suffix, string content)
         {
-            return @namespace is not null
-                ? $"namespace {@namespace}.{suffix}\n{{\n{content}}}\n"
-                : $"namespace {suffix}\n{{\n{content}}}\n";
-        }
-
-        public static string CombinedNamespace(string? @namespace, string suffix)
-        {
-            return @namespace is not null
-                ? $"{@namespace}.{suffix}"
-                : suffix;
+            return NamespaceDeclaration(CombinedNamespace(@namespace, suffix), content);
         }
 
         public static string AddSuffix(this string str, string suffix) =>
