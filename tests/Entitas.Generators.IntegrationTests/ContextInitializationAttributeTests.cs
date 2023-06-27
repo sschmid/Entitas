@@ -1,5 +1,6 @@
 using System.Linq;
 using FluentAssertions;
+using MyApp;
 using Xunit;
 
 namespace Entitas.Generators.IntegrationTests
