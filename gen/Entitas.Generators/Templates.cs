@@ -44,10 +44,14 @@ namespace Entitas.Generators
             return NamespaceDeclaration(CombinedNamespace(@namespace, suffix), content);
         }
 
-        public static string AddSuffix(this string str, string suffix) =>
-            str.EndsWith(suffix, StringComparison.Ordinal) ? str : str + suffix;
+        public static string AddSuffix(this string str, string suffix)
+        {
+            return str.EndsWith(suffix, StringComparison.Ordinal) ? str : str + suffix;
+        }
 
-        public static string RemoveSuffix(this string str, string suffix) =>
-            str.EndsWith(suffix, StringComparison.Ordinal) ? str[..^suffix.Length] : str;
+        public static string RemoveSuffix(this string str, string suffix)
+        {
+            return str.EndsWith(suffix, StringComparison.Ordinal) ? str.Substring(0, str.Length - suffix.Length) : str;
+        }
     }
 }

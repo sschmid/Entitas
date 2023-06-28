@@ -23,7 +23,7 @@ namespace Entitas.Generators
 
         static string ToValidLowerFirst(string value)
         {
-            var lowerFirst = char.ToLower(value[0]) + value[1..];
+            var lowerFirst = char.ToLower(value[0]) + value.Substring(1);
             return SyntaxFacts.GetKeywordKind(lowerFirst) != SyntaxKind.None
                 ? $"@{lowerFirst}"
                 : lowerFirst;
