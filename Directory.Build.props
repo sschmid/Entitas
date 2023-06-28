@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <DefaultNetTargetFramework>net7.0</DefaultNetTargetFramework>
-    <DefaultTargetFramework>netstandard2.1</DefaultTargetFramework>
+    <DefaultTargetFramework>netstandard2.0</DefaultTargetFramework>
     <DefaultTestTargetFramework>net7.0</DefaultTestTargetFramework>
     <Deterministic>true</Deterministic>
     <LangVersion>default</LangVersion>
