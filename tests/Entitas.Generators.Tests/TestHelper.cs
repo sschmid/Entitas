@@ -15,7 +15,8 @@ namespace Entitas.Generators.Tests
             IEnumerable<PortableExecutableReference> references = new[]
             {
                 MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(IComponent).Assembly.Location)
+                MetadataReference.CreateFromFile(typeof(IComponent).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(MyApp.Library.ContextAttribute).Assembly.Location)
             };
 
             var compilation = CSharpCompilation.Create(

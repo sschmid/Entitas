@@ -20,11 +20,23 @@ namespace Entitas.Generators.Tests
         static Task VerifyContext(string fixture) => TestHelper.Verify(File.ReadAllText(
             Path.Combine(FixturesPath, "Contexts", $"{fixture}.txt")), new ComponentGenerator());
 
+        /*
+         *
+         * Non components
+         *
+         */
+
         [Fact]
         public Task SomeNamespacedClass() => Verify("SomeNamespacedClass");
 
         [Fact]
         public Task Class() => Verify("SomeClass");
+
+        /*
+         *
+         * Valid components
+         *
+         */
 
         [Fact]
         public Task NonPublicComponent() => VerifyComponent("NonPublicComponent");
@@ -62,11 +74,15 @@ namespace Entitas.Generators.Tests
         [Fact]
         public Task MultiplePropertiesNamespacedComponent() => VerifyComponent("MultiplePropertiesNamespacedComponent");
 
+        [Fact]
+        public Task ContextFromDifferentAssemblyNamespacedComponent() => VerifyComponent("ContextFromDifferentAssemblyNamespacedComponent");
+
         /*
          *
          * Invalid usages
          *
          */
+
         [Fact]
         public Task DuplicatedContextsNamespacedComponent() => VerifyComponent("DuplicatedContextsNamespacedComponent");
 
