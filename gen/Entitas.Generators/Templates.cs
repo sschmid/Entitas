@@ -53,5 +53,18 @@ namespace Entitas.Generators
         {
             return str.EndsWith(suffix, StringComparison.Ordinal) ? str.Substring(0, str.Length - suffix.Length) : str;
         }
+
+        public static bool HasAttributeSuffix(this string str, string suffix)
+        {
+            return str.EndsWith(suffix, StringComparison.Ordinal) ||
+                   str.EndsWith(suffix + "Attribute", StringComparison.Ordinal);
+        }
+
+        public static string RemoveAttributeSuffix(this string str, string suffix)
+        {
+            return str.EndsWith(suffix, StringComparison.Ordinal)
+                ? str.Substring(0, str.Length - suffix.Length)
+                : str.RemoveSuffix(suffix + "Attribute");
+        }
     }
 }

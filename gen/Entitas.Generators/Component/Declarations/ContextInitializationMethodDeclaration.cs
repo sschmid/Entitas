@@ -18,7 +18,7 @@ namespace Entitas.Generators
             Class = symbol.ContainingType.Name;
             Name = symbol.Name;
 
-            FullContextPrefix = attribute.AttributeClass!.ToDisplayString().RemoveSuffix(".ContextInitialization");
+            FullContextPrefix = attribute.AttributeClass!.ToDisplayString().RemoveAttributeSuffix(".ContextInitialization");
 
             Context = FullContextPrefix + "Context";
         }
