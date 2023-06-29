@@ -17,7 +17,7 @@ namespace Entitas.Generators.IntegrationTests
         public void StripsAttributes()
         {
             typeof(ContextInitialization)
-                .GetMethod(nameof(ContextInitialization.Initialize))!
+                .GetMethod(nameof(ContextInitialization.InitializeMain))!
                 .CustomAttributes
                 .Where(data => data.AttributeType.Name.EndsWith("ContextInitializationAttribute"))
                 .Should().HaveCount(0);

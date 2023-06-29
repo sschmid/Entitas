@@ -8,7 +8,7 @@ namespace Entitas.Generators.IntegrationTests
     {
         public ContextTests()
         {
-            ContextInitialization.Initialize();
+            ContextInitialization.InitializeMain();
         }
 
         [Fact]

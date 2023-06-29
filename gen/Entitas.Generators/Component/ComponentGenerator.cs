@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
@@ -36,16 +35,10 @@ namespace Entitas.Generators
 
                         return symbol.GetAttributes()
                             .Select(attribute => attribute.AttributeClass?.ToDisplayString())
-                            .Where(attribute => attribute?.EndsWith(".Context") | attribute?.EndsWith(".ContextAttribute") ?? false)
-                            .Select(attribute =>
-                            {
-                                const string suffix = ".Context";
-                                return attribute!.EndsWith(suffix, StringComparison.Ordinal)
-                                    ? attribute.Substring(0, attribute.Length - suffix.Length)
-                                    : attribute!.RemoveSuffix(".ContextAttribute");
-                            })
+                            .Where(attribute => attribute?.HasAttributeSuffix(".Context") ?? false)
+                            .Select(attribute => attribute!.RemoveAttributeSuffix(".Context"))
                             .Distinct()
-                            .Select(attribute => new ComponentDeclaration(symbol, attribute.RemoveSuffix(".Context"), cancellationToken))
+                            .Select(attribute => new ComponentDeclaration(symbol, attribute, cancellationToken))
                             .ToImmutableArray();
                     })
                 .SelectMany((components, _) => components);
@@ -76,7 +69,7 @@ namespace Entitas.Generators
                         var attribute = symbol
                             .GetAttributes()
                             .SingleOrDefault(attribute => attribute.AttributeClass?.ToDisplayString()
-                                .EndsWith(".ContextInitialization") ?? false);
+                                .HasAttributeSuffix(".ContextInitialization") ?? false);
 
                         if (attribute is null)
                             return null;

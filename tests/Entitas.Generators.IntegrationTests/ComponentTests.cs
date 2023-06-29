@@ -11,7 +11,7 @@ namespace Entitas.Generators.IntegrationTests
 
         public ComponentTests()
         {
-            ContextInitialization.Initialize();
+            ContextInitialization.InitializeMain();
             _context = new MainContext();
         }
 
