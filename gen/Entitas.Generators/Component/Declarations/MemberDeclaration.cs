@@ -7,7 +7,6 @@ namespace Entitas.Generators
     {
         public readonly string Type;
         public readonly string Name;
-
         public readonly string ValidLowerFirstName;
 
         public MemberDeclaration(IFieldSymbol field) : this(field.Type.ToDisplayString(), field) { }

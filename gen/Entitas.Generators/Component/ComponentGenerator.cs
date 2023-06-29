@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -12,87 +13,98 @@ namespace Entitas.Generators
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
-            var allComponents = initContext.SyntaxProvider.CreateSyntaxProvider(
-                    static (node, _) => node is ClassDeclarationSyntax { BaseList.Types.Count: > 0 } candidate
-                                        && candidate.Modifiers.Any(SyntaxKind.PublicKeyword)
-                                        && !candidate.Modifiers.Any(SyntaxKind.StaticKeyword)
-                                        && candidate.Modifiers.Any(SyntaxKind.SealedKeyword)
-                                        && !candidate.Modifiers.Any(SyntaxKind.PartialKeyword),
-                    static ImmutableArray<ComponentDeclaration> (syntaxContext, cancellationToken) =>
-                    {
-                        var candidate = (ClassDeclarationSyntax)syntaxContext.Node;
-                        var symbol = syntaxContext.SemanticModel.GetDeclaredSymbol(candidate, cancellationToken);
-                        if (symbol is null)
-                            return ImmutableArray<ComponentDeclaration>.Empty;
-
-                        var interfaceType = syntaxContext.SemanticModel.Compilation.GetTypeByMetadataName("Entitas.IComponent");
-                        if (interfaceType is null)
-                            return ImmutableArray<ComponentDeclaration>.Empty;
-
-                        var isComponent = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(interfaceType, SymbolEqualityComparer.Default));
-                        if (!isComponent)
-                            return ImmutableArray<ComponentDeclaration>.Empty;
-
-                        return symbol.GetAttributes()
-                            .Select(attribute => attribute.AttributeClass?.ToDisplayString())
-                            .Where(attribute => attribute?.HasAttributeSuffix(".Context") ?? false)
-                            .Select(attribute => attribute!.RemoveAttributeSuffix(".Context"))
-                            .Distinct()
-                            .Select(attribute => new ComponentDeclaration(symbol, attribute, cancellationToken))
-                            .ToImmutableArray();
-                    })
+            var allComponents = initContext.SyntaxProvider
+                .CreateSyntaxProvider(IsComponentCandidate, CreateComponentDeclarations)
                 .SelectMany((components, _) => components);
 
-            var componentIndexesProvider = allComponents.WithComparer(new ComponentIndexComparer());
-            initContext.RegisterSourceOutput(componentIndexesProvider, ComponentIndex);
+            var fullNameOrContextChanged = allComponents.WithComparer(new FullNameAndContextComparer());
+            initContext.RegisterSourceOutput(fullNameOrContextChanged, OnFullNameOrContextChanged);
 
-            var entityExtensionsProvider = allComponents.WithComparer(new EntityExtensionComparer());
-            initContext.RegisterSourceOutput(entityExtensionsProvider, EntityExtension);
+            var fullNameOrMembersOrContextChanged = allComponents.WithComparer(new FullNameAndMembersAndContextComparer());
+            initContext.RegisterSourceOutput(fullNameOrMembersOrContextChanged, OnFullNameOrMembersOrContextChanged);
 
-            var contextInitializationMethodsProvider = initContext.SyntaxProvider.CreateSyntaxProvider(
-                    static (node, _) => node is MethodDeclarationSyntax { AttributeLists.Count: > 0 } candidate
-                                        && candidate.Modifiers.Any(SyntaxKind.PublicKeyword)
-                                        && candidate.Modifiers.Any(SyntaxKind.StaticKeyword)
-                                        && candidate.Modifiers.Any(SyntaxKind.PartialKeyword)
-                                        && candidate.ReturnType is PredefinedTypeSyntax predefined
-                                        && predefined.Keyword.IsKind(SyntaxKind.VoidKeyword),
-                    static ContextInitializationMethodDeclaration? (syntaxContext, cancellationToken) =>
-                    {
-                        var candidate = (MethodDeclarationSyntax)syntaxContext.Node;
-                        var symbol = syntaxContext.SemanticModel.GetDeclaredSymbol(candidate, cancellationToken);
-                        if (symbol is null)
-                            return null;
-
-                        if (!symbol.ContainingType.IsStatic || symbol.ContainingType.DeclaredAccessibility != Accessibility.Public)
-                            return null;
-
-                        var attribute = symbol
-                            .GetAttributes()
-                            .SingleOrDefault(attribute => attribute.AttributeClass?.ToDisplayString()
-                                .HasAttributeSuffix(".ContextInitialization") ?? false);
-
-                        if (attribute is null)
-                            return null;
-
-                        return new ContextInitializationMethodDeclaration(symbol, attribute);
-                    })
+            var contextInitializationMethods = initContext.SyntaxProvider
+                .CreateSyntaxProvider(IsContextInitializationMethodCandidate, CreateContextInitializationMethodDeclaration)
                 .Where(method => method is not null)
                 .Select((method, _) => method!.Value);
 
-            var contextInitializationMethodComponentsProvider = allComponents
-                .WithComparer(new ContextInitializationMethodComparer())
+            var componentsOrderChanged = fullNameOrContextChanged
                 .Collect()
                 .Select((components, _) => components
                     .OrderBy(component => component.FullName)
                     .ToImmutableArray());
 
-            initContext.RegisterSourceOutput(contextInitializationMethodsProvider.Combine(contextInitializationMethodComponentsProvider), (spc, pair) =>
-            {
-                var (method, components) = pair;
-                ContextInitializationMethod(spc, method, components
-                    .Where(component => component.Context == method.FullContextPrefix)
-                    .ToImmutableArray());
-            });
+            var lookupChanged = contextInitializationMethods.Combine(componentsOrderChanged);
+            initContext.RegisterSourceOutput(lookupChanged, OnLookupChanged);
+        }
+
+        static bool IsComponentCandidate(SyntaxNode node, CancellationToken _)
+        {
+            return node is ClassDeclarationSyntax { BaseList.Types.Count: > 0 } candidate
+                   && candidate.Modifiers.Any(SyntaxKind.PublicKeyword)
+                   && !candidate.Modifiers.Any(SyntaxKind.StaticKeyword)
+                   && candidate.Modifiers.Any(SyntaxKind.SealedKeyword)
+                   && !candidate.Modifiers.Any(SyntaxKind.PartialKeyword);
+        }
+
+        static ImmutableArray<ComponentDeclaration> CreateComponentDeclarations(GeneratorSyntaxContext syntaxContext, CancellationToken cancellationToken)
+        {
+            var candidate = (ClassDeclarationSyntax)syntaxContext.Node;
+            var symbol = syntaxContext.SemanticModel.GetDeclaredSymbol(candidate, cancellationToken);
+            if (symbol is null)
+                return ImmutableArray<ComponentDeclaration>.Empty;
+
+            var interfaceType = syntaxContext.SemanticModel.Compilation.GetTypeByMetadataName("Entitas.IComponent");
+            if (interfaceType is null)
+                return ImmutableArray<ComponentDeclaration>.Empty;
+
+            var isComponent = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(interfaceType, SymbolEqualityComparer.Default));
+            if (!isComponent)
+                return ImmutableArray<ComponentDeclaration>.Empty;
+
+            return symbol.GetAttributes()
+                .Select(attribute => attribute.AttributeClass?.ToDisplayString())
+                .Where(attribute => attribute?.HasAttributeSuffix(".Context") ?? false)
+                .Select(attribute => attribute!.RemoveAttributeSuffix(".Context"))
+                .Distinct()
+                .Select(attribute => new ComponentDeclaration(symbol, attribute, cancellationToken))
+                .ToImmutableArray();
+        }
+
+        static bool IsContextInitializationMethodCandidate(SyntaxNode node, CancellationToken _)
+        {
+            return node is MethodDeclarationSyntax { AttributeLists.Count: > 0 } candidate
+                   && candidate.Modifiers.Any(SyntaxKind.PublicKeyword)
+                   && candidate.Modifiers.Any(SyntaxKind.StaticKeyword)
+                   && candidate.Modifiers.Any(SyntaxKind.PartialKeyword)
+                   && candidate.ReturnType is PredefinedTypeSyntax predefined
+                   && predefined.Keyword.IsKind(SyntaxKind.VoidKeyword);
+        }
+
+        static ContextInitializationMethodDeclaration? CreateContextInitializationMethodDeclaration(GeneratorSyntaxContext syntaxContext, CancellationToken cancellationToken)
+        {
+            var candidate = (MethodDeclarationSyntax)syntaxContext.Node;
+            var symbol = syntaxContext.SemanticModel.GetDeclaredSymbol(candidate, cancellationToken);
+            if (symbol is null)
+                return null;
+
+            if (!symbol.ContainingType.IsStatic || symbol.ContainingType.DeclaredAccessibility != Accessibility.Public)
+                return null;
+
+            var attribute = symbol
+                .GetAttributes()
+                .SingleOrDefault(attribute => attribute.AttributeClass?.ToDisplayString()
+                    .HasAttributeSuffix(".ContextInitialization") ?? false);
+
+            if (attribute is null)
+                return null;
+
+            return new ContextInitializationMethodDeclaration(symbol, attribute);
+        }
+
+        static void OnFullNameOrContextChanged(SourceProductionContext spc, ComponentDeclaration component)
+        {
+            ComponentIndex(spc, component);
         }
 
         static void ComponentIndex(SourceProductionContext spc, ComponentDeclaration component)
@@ -112,6 +124,11 @@ namespace Entitas.Generators
                     }
 
                     """));
+        }
+
+        static void OnFullNameOrMembersOrContextChanged(SourceProductionContext spc, ComponentDeclaration component)
+        {
+            EntityExtension(spc, component);
         }
 
         static void EntityExtension(SourceProductionContext spc, ComponentDeclaration component)
@@ -221,6 +238,16 @@ namespace Entitas.Generators
                 $"using {component.Context};\n" +
                 $"using static {CombinedNamespace(component.Namespace, contextPrefix)}{component.ComponentPrefix}ComponentIndex;\n\n" +
                 NamespaceDeclaration(component.Namespace, content));
+        }
+
+        static void OnLookupChanged(SourceProductionContext spc, (ContextInitializationMethodDeclaration Left, ImmutableArray<ComponentDeclaration> Right) pair)
+        {
+            var (method, components) = pair;
+            var componentsForContext = components
+                .Where(component => component.Context == method.FullContextPrefix)
+                .ToImmutableArray();
+
+            ContextInitializationMethod(spc, method, componentsForContext);
         }
 
         static void ContextInitializationMethod(SourceProductionContext spc, ContextInitializationMethodDeclaration method, ImmutableArray<ComponentDeclaration> components)
