@@ -62,6 +62,20 @@ namespace Entitas.Generators.Tests
         [Fact]
         public Task MultiplePropertiesNamespacedComponent() => VerifyComponent("MultiplePropertiesNamespacedComponent");
 
+        /*
+         *
+         * Invalid usages
+         *
+         */
+        [Fact]
+        public Task DuplicatedContextsNamespacedComponent() => VerifyComponent("DuplicatedContextsNamespacedComponent");
+
+        /*
+         *
+         * ContextInitialization
+         *
+         */
+
         [Fact]
         public Task EmptyContextInitialization() => VerifyContext("EmptyContextInitialization");
 
