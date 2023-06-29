@@ -32,12 +32,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../Entitas.Generators.Tests.Fixtures.Dependencies/Entitas.Generators.Tests.Fixtures.Dependencies.csproj" />
     <ProjectReference Include="../Entitas.Tests/Entitas.Tests.csproj" />
     <ProjectReference Include="../../gen/Entitas.Generators/Entitas.Generators.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Snapshots\" />
+    <Folder Include="Snapshots/" />
   </ItemGroup>
 
 </Project>

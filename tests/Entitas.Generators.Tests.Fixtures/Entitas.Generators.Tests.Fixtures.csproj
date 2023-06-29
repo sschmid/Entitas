@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../Entitas.Generators.Tests.Fixtures.Dependencies/Entitas.Generators.Tests.Fixtures.Dependencies.csproj" />
     <ProjectReference Include="../../src/Entitas/Entitas.csproj" />
   </ItemGroup>
 
