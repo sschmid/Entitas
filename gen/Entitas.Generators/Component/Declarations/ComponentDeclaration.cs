@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
@@ -11,10 +13,8 @@ namespace Entitas.Generators
         public readonly string? Namespace;
         public readonly string FullName;
         public readonly string Name;
-
         public readonly ImmutableArray<MemberDeclaration> Members;
         public readonly string Context;
-
         public readonly string ComponentPrefix;
 
         public ComponentDeclaration(INamedTypeSymbol symbol, string context, CancellationToken cancellationToken)
@@ -22,7 +22,6 @@ namespace Entitas.Generators
             Namespace = !symbol.ContainingNamespace.IsGlobalNamespace ? symbol.ContainingNamespace.ToDisplayString() : null;
             FullName = symbol.ToDisplayString();
             Name = symbol.Name;
-
             Members = symbol.GetMembers()
                 .Where(member => member.DeclaredAccessibility == Accessibility.Public
                                  && !member.IsStatic
@@ -39,7 +38,6 @@ namespace Entitas.Generators
                 .ToImmutableArray();
 
             Context = context;
-
             ComponentPrefix = Name.RemoveSuffix("Component");
 
             static bool IsAutoProperty(ISymbol symbol, CancellationToken cancellationToken)
@@ -50,6 +48,37 @@ namespace Entitas.Generators
                        && !property.SetMethod.DeclaringSyntaxReferences.First()
                            .GetSyntax(cancellationToken).DescendantNodes().Any(node => node is MethodDeclarationSyntax);
             }
+        }
+    }
+
+    class FullNameAndContextComparer : IEqualityComparer<ComponentDeclaration>
+    {
+        public bool Equals(ComponentDeclaration x, ComponentDeclaration y)
+        {
+            return
+                x.FullName == y.FullName &&
+                x.Context == y.Context;
+        }
+
+        public int GetHashCode(ComponentDeclaration component)
+        {
+            return HashCode.Combine(component.FullName, component.Context);
+        }
+    }
+
+    class FullNameAndMembersAndContextComparer : IEqualityComparer<ComponentDeclaration>
+    {
+        public bool Equals(ComponentDeclaration x, ComponentDeclaration y)
+        {
+            return
+                x.FullName == y.FullName &&
+                x.Members.SequenceEqual(y.Members) &&
+                x.Context == y.Context;
+        }
+
+        public int GetHashCode(ComponentDeclaration component)
+        {
+            return HashCode.Combine(component.FullName, component.Members, component.Context);
         }
     }
 }
