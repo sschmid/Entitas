@@ -16,6 +16,7 @@ namespace Entitas.Generators
         public readonly ImmutableArray<MemberDeclaration> Members;
         public readonly string Context;
         public readonly string ComponentPrefix;
+        public readonly string ContextAwareComponentPrefix;
 
         public ComponentDeclaration(INamedTypeSymbol symbol, string context, CancellationToken cancellationToken)
         {
@@ -38,7 +39,9 @@ namespace Entitas.Generators
                 .ToImmutableArray();
 
             Context = context;
+
             ComponentPrefix = Name.RemoveSuffix("Component");
+            ContextAwareComponentPrefix = Context.Replace(".", string.Empty) + ComponentPrefix;
 
             static bool IsAutoProperty(ISymbol symbol, CancellationToken cancellationToken)
             {

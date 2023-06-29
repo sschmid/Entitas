@@ -109,16 +109,13 @@ namespace Entitas.Generators
 
         static void ComponentIndex(SourceProductionContext spc, ComponentDeclaration component)
         {
-            var fileName = $"{component.FullName}.{component.Context}.ComponentIndex";
-            var className = $"{component.Context.Replace(".", string.Empty)}{component.ComponentPrefix}ComponentIndex";
-
             spc.AddSource(
-                GeneratedPath(fileName),
+                GeneratedPath($"{component.FullName}.{component.Context}.ComponentIndex"),
                 GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
                 $"using {component.Context};\n\n" +
                 NamespaceDeclaration(component.Namespace,
                     $$"""
-                    public static class {{className}}
+                    public static class {{component.ContextAwareComponentPrefix}}ComponentIndex
                     {
                         public static ComponentIndex Index;
                     }
@@ -133,9 +130,7 @@ namespace Entitas.Generators
 
         static void EntityExtension(SourceProductionContext spc, ComponentDeclaration component)
         {
-            var contextPrefix = component.Context.Replace(".", string.Empty);
-            var className = $"{contextPrefix}{component.ComponentPrefix}EntityExtension";
-
+            var className = $"{component.ContextAwareComponentPrefix}EntityExtension";
             string content;
             if (component.Members.Length > 0)
             {
@@ -236,7 +231,7 @@ namespace Entitas.Generators
                 GeneratedPath($"{component.FullName}.{component.Context}.EntityExtension"),
                 GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
                 $"using {component.Context};\n" +
-                $"using static {CombinedNamespace(component.Namespace, contextPrefix)}{component.ComponentPrefix}ComponentIndex;\n\n" +
+                $"using static {CombinedNamespace(component.Namespace, component.ContextAwareComponentPrefix)}ComponentIndex;\n\n" +
                 NamespaceDeclaration(component.Namespace, content));
         }
 
