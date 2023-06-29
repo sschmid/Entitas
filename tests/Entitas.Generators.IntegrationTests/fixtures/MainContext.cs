@@ -1,4 +1,6 @@
+using Entitas;
+
 namespace MyApp
 {
-    partial class MainContext : Entitas.IContext { }
+    partial class MainContext : IContext { }
 }
