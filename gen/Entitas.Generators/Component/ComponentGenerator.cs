@@ -41,6 +41,16 @@ namespace Entitas.Generators
         static bool IsComponentCandidate(SyntaxNode node, CancellationToken _)
         {
             return node is ClassDeclarationSyntax { BaseList.Types.Count: > 0 } candidate
+                   && candidate.BaseList.Types.Any(baseType => baseType.Type switch
+                   {
+                       IdentifierNameSyntax identifierNameSyntax => identifierNameSyntax.Identifier is { Text: "IComponent" },
+                       QualifiedNameSyntax qualifiedNameSyntax => qualifiedNameSyntax is
+                       {
+                           Left: IdentifierNameSyntax { Identifier.Text: "Entitas" },
+                           Right: IdentifierNameSyntax { Identifier.Text: "IComponent" }
+                       },
+                       _ => false
+                   })
                    && candidate.Modifiers.Any(SyntaxKind.PublicKeyword)
                    && !candidate.Modifiers.Any(SyntaxKind.StaticKeyword)
                    && candidate.Modifiers.Any(SyntaxKind.SealedKeyword)
