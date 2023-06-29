@@ -23,6 +23,16 @@ namespace Entitas.Generators
         static bool IsContextCandidate(SyntaxNode node, CancellationToken _)
         {
             return node is ClassDeclarationSyntax { BaseList.Types.Count: > 0 } candidate
+                   && candidate.BaseList.Types.Any(baseType => baseType.Type switch
+                   {
+                       IdentifierNameSyntax identifierNameSyntax => identifierNameSyntax.Identifier is { Text: "IContext" },
+                       QualifiedNameSyntax qualifiedNameSyntax => qualifiedNameSyntax is
+                       {
+                           Left: IdentifierNameSyntax { Identifier.Text: "Entitas" },
+                           Right: IdentifierNameSyntax { Identifier.Text: "IContext" }
+                       },
+                       _ => false
+                   })
                    && !candidate.Modifiers.Any(SyntaxKind.PublicKeyword)
                    && !candidate.Modifiers.Any(SyntaxKind.StaticKeyword)
                    && !candidate.Modifiers.Any(SyntaxKind.SealedKeyword)
