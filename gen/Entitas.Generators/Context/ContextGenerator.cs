@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -11,36 +12,42 @@ namespace Entitas.Generators
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
-            var contextProvider = initContext.SyntaxProvider.CreateSyntaxProvider(
-                    static (node, _) => node is ClassDeclarationSyntax { BaseList.Types.Count: > 0 } candidate
-                                        && !candidate.Modifiers.Any(SyntaxKind.PublicKeyword)
-                                        && !candidate.Modifiers.Any(SyntaxKind.StaticKeyword)
-                                        && !candidate.Modifiers.Any(SyntaxKind.SealedKeyword)
-                                        && candidate.Modifiers.Any(SyntaxKind.PartialKeyword),
-                    static ContextDeclaration? (syntaxContext, cancellationToken) =>
-                    {
-                        var candidate = (ClassDeclarationSyntax)syntaxContext.Node;
-                        var symbol = syntaxContext.SemanticModel.GetDeclaredSymbol(candidate, cancellationToken);
-                        if (symbol is null)
-                            return null;
-
-                        var interfaceType = syntaxContext.SemanticModel.Compilation.GetTypeByMetadataName("Entitas.IContext");
-                        if (interfaceType is null)
-                            return null;
-
-                        var isContext = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(interfaceType, SymbolEqualityComparer.Default));
-                        if (!isContext)
-                            return null;
-
-                        return new ContextDeclaration(symbol);
-                    })
+            var contextChanged = initContext.SyntaxProvider
+                .CreateSyntaxProvider(IsContextCandidate, CreateContextDeclaration)
                 .Where(context => context is not null)
                 .Select((context, _) => context!.Value);
 
-            initContext.RegisterSourceOutput(contextProvider, Execute);
+            initContext.RegisterSourceOutput(contextChanged, OnContextChanged);
         }
 
-        static void Execute(SourceProductionContext spc, ContextDeclaration context)
+        static bool IsContextCandidate(SyntaxNode node, CancellationToken _)
+        {
+            return node is ClassDeclarationSyntax { BaseList.Types.Count: > 0 } candidate
+                   && !candidate.Modifiers.Any(SyntaxKind.PublicKeyword)
+                   && !candidate.Modifiers.Any(SyntaxKind.StaticKeyword)
+                   && !candidate.Modifiers.Any(SyntaxKind.SealedKeyword)
+                   && candidate.Modifiers.Any(SyntaxKind.PartialKeyword);
+        }
+
+        static ContextDeclaration? CreateContextDeclaration(GeneratorSyntaxContext syntaxContext, CancellationToken cancellationToken)
+        {
+            var candidate = (ClassDeclarationSyntax)syntaxContext.Node;
+            var symbol = syntaxContext.SemanticModel.GetDeclaredSymbol(candidate, cancellationToken);
+            if (symbol is null)
+                return null;
+
+            var interfaceType = syntaxContext.SemanticModel.Compilation.GetTypeByMetadataName("Entitas.IContext");
+            if (interfaceType is null)
+                return null;
+
+            var isContext = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(interfaceType, SymbolEqualityComparer.Default));
+            if (!isContext)
+                return null;
+
+            return new ContextDeclaration(symbol);
+        }
+
+        static void OnContextChanged(SourceProductionContext spc, ContextDeclaration context)
         {
             ComponentIndex(spc, context);
             ContextAttribute(spc, context);
