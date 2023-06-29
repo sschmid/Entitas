@@ -36,6 +36,7 @@ namespace Entitas.Generators
                         return symbol.GetAttributes()
                             .Select(attribute => attribute.AttributeClass?.ToDisplayString())
                             .Where(attribute => attribute?.EndsWith(".Context") ?? false)
+                            .Distinct()
                             .Select(attribute => new ComponentDeclaration(symbol, attribute!.RemoveSuffix(".Context"), cancellationToken))
                             .ToImmutableArray();
                     })
@@ -115,7 +116,6 @@ namespace Entitas.Generators
         static void EntityExtension(SourceProductionContext spc, ComponentDeclaration component)
         {
             var contextPrefix = component.Context.Replace(".", string.Empty);
-            var fileName = $"{component.FullName}.{component.Context}.EntityExtension";
             var className = $"{contextPrefix}{component.ComponentPrefix}EntityExtension";
 
             string content;
@@ -214,7 +214,8 @@ namespace Entitas.Generators
                     """;
             }
 
-            spc.AddSource(GeneratedPath(fileName),
+            spc.AddSource(
+                GeneratedPath($"{component.FullName}.{component.Context}.EntityExtension"),
                 GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
                 $"using {component.Context};\n" +
                 $"using static {CombinedNamespace(component.Namespace, contextPrefix)}{component.ComponentPrefix}ComponentIndex;\n\n" +
