@@ -8,7 +8,7 @@ using static Entitas.Generators.Templates;
 namespace Entitas.Generators
 {
     [Generator(LanguageNames.CSharp)]
-    public class ContextGenerator : IIncrementalGenerator
+    public sealed class ContextGenerator : IIncrementalGenerator
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
