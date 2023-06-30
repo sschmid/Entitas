@@ -19,11 +19,12 @@ namespace Entitas.Generators.Tests
             {
                 MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(IComponent).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(Attributes.ContextAttribute).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(MyApp.Library.ContextAttribute).Assembly.Location)
             };
 
             var compilation = CSharpCompilation.Create(
-                "Tests",
+                "Entitas.Generators.Tests",
                 new[] { syntaxTree },
                 references);
 
