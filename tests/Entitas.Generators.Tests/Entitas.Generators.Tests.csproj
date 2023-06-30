@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Snapshots/" />
+    <Folder Include="snapshots/" />
   </ItemGroup>
 
 </Project>

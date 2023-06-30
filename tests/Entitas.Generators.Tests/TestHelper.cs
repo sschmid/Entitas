@@ -25,7 +25,7 @@ namespace Entitas.Generators.Tests
                 references);
 
             var driver = CSharpGeneratorDriver.Create(generator).RunGenerators(compilation);
-            return Verifier.Verify(driver).UseDirectory("Snapshots");
+            return Verifier.Verify(driver).UseDirectory("snapshots");
         }
     }
 }
