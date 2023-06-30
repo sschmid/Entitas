@@ -9,7 +9,7 @@ using static Entitas.Generators.Templates;
 namespace Entitas.Generators
 {
     [Generator(LanguageNames.CSharp)]
-    public class ComponentGenerator : IIncrementalGenerator
+    public sealed class ComponentGenerator : IIncrementalGenerator
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
