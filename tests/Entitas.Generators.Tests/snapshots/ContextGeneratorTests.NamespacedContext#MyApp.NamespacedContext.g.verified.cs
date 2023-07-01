@@ -10,25 +10,25 @@
 //------------------------------------------------------------------------------
 namespace MyApp
 {
-public sealed partial class NamespacedContext : Entitas.Context<Namespaced.Entity>
+public sealed partial class NamespacedContext : global::Entitas.Context<Namespaced.Entity>
 {
     public static string[] ComponentNames;
-    public static System.Type[] ComponentTypes;
+    public static global::System.Type[] ComponentTypes;
 
     public NamespacedContext()
         : base(
             ComponentTypes.Length,
             0,
-            new Entitas.ContextInfo(
+            new global::Entitas.ContextInfo(
                 "MyApp.NamespacedContext",
                 ComponentNames,
                 ComponentTypes
             ),
             entity =>
 #if (ENTITAS_FAST_AND_UNSAFE)
-                new Entitas.UnsafeAERC(),
+                new global::Entitas.UnsafeAERC(),
 #else
-                new Entitas.SafeAERC(entity),
+                new global::Entitas.SafeAERC(entity),
 #endif
             () => new Namespaced.Entity()
         ) { }

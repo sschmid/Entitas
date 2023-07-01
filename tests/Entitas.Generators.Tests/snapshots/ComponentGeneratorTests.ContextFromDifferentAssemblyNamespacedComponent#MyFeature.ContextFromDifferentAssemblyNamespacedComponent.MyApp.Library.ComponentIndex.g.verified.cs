@@ -8,7 +8,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using MyApp.Library;
+using global::MyApp.Library;
 
 namespace MyFeature
 {

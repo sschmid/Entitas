@@ -8,7 +8,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using MyApp.Main;
+using global::MyApp.Main;
 
 namespace MyApp
 {
@@ -23,7 +23,7 @@ public static partial class ContextInitialization
 
         };
 
-        MyApp.MainContext.ComponentTypes = new System.Type[]
+        MyApp.MainContext.ComponentTypes = new global::System.Type[]
         {
 
         };

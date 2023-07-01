@@ -8,8 +8,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using MyApp.Main;
-using static MyAppMainOneFieldComponentIndex;
+using global::MyApp.Main;
+using static global::MyAppMainOneFieldComponentIndex;
 
 public static class MyAppMainOneFieldEntityExtension
 {

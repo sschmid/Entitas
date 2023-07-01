@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using VerifyXunit;
@@ -26,6 +29,20 @@ namespace Entitas.Generators.Tests
 
             var driver = CSharpGeneratorDriver.Create(generator).RunGenerators(compilation);
             return Verifier.Verify(driver).UseDirectory("snapshots");
+        }
+
+        public static void AssertUsesGlobalNamespaces(string code)
+        {
+            var patterns = new[]
+            {
+                "System",
+                "Entitas"
+            }.Select(word => $"(?<!\\busing )(?<!\\bstatic )(?<!\\bnamespace )(?<!\\bglobal::)(?<!\"){word}");
+
+            foreach (var pattern in patterns)
+            {
+                Regex.Matches(code, pattern).Should().HaveCount(0);
+            }
         }
     }
 }

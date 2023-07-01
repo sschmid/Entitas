@@ -122,7 +122,7 @@ namespace Entitas.Generators
             spc.AddSource(
                 GeneratedPath($"{component.FullName}.{component.Context}.ComponentIndex"),
                 GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
-                $"using {component.Context};\n\n" +
+                $"using global::{component.Context};\n\n" +
                 NamespaceDeclaration(component.Namespace,
                     $$"""
                     public static class {{component.ContextAwareComponentPrefix}}ComponentIndex
@@ -240,8 +240,8 @@ namespace Entitas.Generators
             spc.AddSource(
                 GeneratedPath($"{component.FullName}.{component.Context}.EntityExtension"),
                 GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
-                $"using {component.Context};\n" +
-                $"using static {CombinedNamespace(component.Namespace, component.ContextAwareComponentPrefix)}ComponentIndex;\n\n" +
+                $"using global::{component.Context};\n" +
+                $"using static global::{CombinedNamespace(component.Namespace, component.ContextAwareComponentPrefix)}ComponentIndex;\n\n" +
                 NamespaceDeclaration(component.Namespace, content));
         }
 
@@ -260,7 +260,7 @@ namespace Entitas.Generators
             spc.AddSource(
                 GeneratedPath($"{method.FullContextPrefix}.ContextInitializationMethod"),
                 GeneratedFileHeader(GeneratorSource(nameof(ContextInitializationMethod))) +
-                $"using {method.FullContextPrefix};\n\n" +
+                $"using global::{method.FullContextPrefix};\n\n" +
                 NamespaceDeclaration(method.Namespace,
                     $$"""
                     public static partial class {{method.Class}}
@@ -274,7 +274,7 @@ namespace Entitas.Generators
                     {{ComponentNames(components)}}
                             };
 
-                            {{method.Context}}.ComponentTypes = new System.Type[]
+                            {{method.Context}}.ComponentTypes = new global::System.Type[]
                             {
                     {{ComponentTypes(components)}}
                             };
@@ -287,7 +287,7 @@ namespace Entitas.Generators
             {
                 return string.Join("\n", components.Select((component, i) =>
                 {
-                    var contextPrefix = CombinedNamespace(component.Namespace, method.FullContextPrefix.Replace(".", string.Empty));
+                    var contextPrefix = "global::" + CombinedNamespace(component.Namespace, method.FullContextPrefix.Replace(".", string.Empty));
                     return $"        {contextPrefix}{component.ComponentPrefix}ComponentIndex.Index = new ComponentIndex({i});";
                 }));
             }
@@ -299,7 +299,7 @@ namespace Entitas.Generators
 
             static string ComponentTypes(ImmutableArray<ComponentDeclaration> components)
             {
-                return string.Join(",\n", components.Select(component => $"            typeof({component.FullName})"));
+                return string.Join(",\n", components.Select(component => $"            typeof(global::{component.FullName})"));
             }
         }
 

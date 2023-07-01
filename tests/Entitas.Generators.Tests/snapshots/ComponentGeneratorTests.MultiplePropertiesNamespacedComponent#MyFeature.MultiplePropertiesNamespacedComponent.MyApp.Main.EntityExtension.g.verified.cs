@@ -8,8 +8,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using MyApp.Main;
-using static MyFeature.MyAppMainMultiplePropertiesNamespacedComponentIndex;
+using global::MyApp.Main;
+using static global::MyFeature.MyAppMainMultiplePropertiesNamespacedComponentIndex;
 
 namespace MyFeature
 {

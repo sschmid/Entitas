@@ -10,7 +10,7 @@
 //------------------------------------------------------------------------------
 namespace MyApp.Namespaced
 {
-[System.Diagnostics.Conditional("false")]
-[System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
-public sealed class ContextAttribute : System.Attribute { }
+[global::System.Diagnostics.Conditional("false")]
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+public sealed class ContextAttribute : global::System.Attribute { }
 }

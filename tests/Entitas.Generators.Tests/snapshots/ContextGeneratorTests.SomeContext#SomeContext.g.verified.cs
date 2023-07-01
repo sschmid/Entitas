@@ -8,25 +8,25 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed partial class SomeContext : Entitas.Context<Some.Entity>
+public sealed partial class SomeContext : global::Entitas.Context<Some.Entity>
 {
     public static string[] ComponentNames;
-    public static System.Type[] ComponentTypes;
+    public static global::System.Type[] ComponentTypes;
 
     public SomeContext()
         : base(
             ComponentTypes.Length,
             0,
-            new Entitas.ContextInfo(
+            new global::Entitas.ContextInfo(
                 "SomeContext",
                 ComponentNames,
                 ComponentTypes
             ),
             entity =>
 #if (ENTITAS_FAST_AND_UNSAFE)
-                new Entitas.UnsafeAERC(),
+                new global::Entitas.UnsafeAERC(),
 #else
-                new Entitas.SafeAERC(entity),
+                new global::Entitas.SafeAERC(entity),
 #endif
             () => new Some.Entity()
         ) { }

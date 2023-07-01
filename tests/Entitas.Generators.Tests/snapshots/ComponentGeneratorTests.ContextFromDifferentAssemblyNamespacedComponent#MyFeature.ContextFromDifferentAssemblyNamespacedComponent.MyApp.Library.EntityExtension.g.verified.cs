@@ -8,8 +8,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using MyApp.Library;
-using static MyFeature.MyAppLibraryContextFromDifferentAssemblyNamespacedComponentIndex;
+using global::MyApp.Library;
+using static global::MyFeature.MyAppLibraryContextFromDifferentAssemblyNamespacedComponentIndex;
 
 namespace MyFeature
 {

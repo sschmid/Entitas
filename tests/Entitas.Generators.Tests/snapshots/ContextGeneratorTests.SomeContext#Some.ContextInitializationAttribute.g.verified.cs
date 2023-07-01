@@ -10,7 +10,7 @@
 //------------------------------------------------------------------------------
 namespace Some
 {
-[System.Diagnostics.Conditional("false")]
-[System.AttributeUsage(System.AttributeTargets.Method, AllowMultiple = true)]
-public sealed class ContextInitializationAttribute : System.Attribute { }
+[global::System.Diagnostics.Conditional("false")]
+[global::System.AttributeUsage(global::System.AttributeTargets.Method, AllowMultiple = true)]
+public sealed class ContextInitializationAttribute : global::System.Attribute { }
 }

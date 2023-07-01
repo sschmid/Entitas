@@ -8,7 +8,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using MyApp.Main;
+using global::MyApp.Main;
 
 namespace MyApp
 {
@@ -16,8 +16,8 @@ public static partial class ContextInitialization
 {
     public static partial void Initialize()
     {
-        MyFeature.MyAppMainAnotherNamespacedComponentIndex.Index = new ComponentIndex(0);
-        MyFeature.MyAppMainSomeNamespacedComponentIndex.Index = new ComponentIndex(1);
+        global::MyFeature.MyAppMainAnotherNamespacedComponentIndex.Index = new ComponentIndex(0);
+        global::MyFeature.MyAppMainSomeNamespacedComponentIndex.Index = new ComponentIndex(1);
 
         MyApp.MainContext.ComponentNames = new string[]
         {
@@ -25,10 +25,10 @@ public static partial class ContextInitialization
             "MyFeature.SomeNamespaced"
         };
 
-        MyApp.MainContext.ComponentTypes = new System.Type[]
+        MyApp.MainContext.ComponentTypes = new global::System.Type[]
         {
-            typeof(MyFeature.AnotherNamespacedComponent),
-            typeof(MyFeature.SomeNamespacedComponent)
+            typeof(global::MyFeature.AnotherNamespacedComponent),
+            typeof(global::MyFeature.SomeNamespacedComponent)
         };
     }
 }

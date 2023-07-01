@@ -8,7 +8,9 @@ namespace Entitas.Generators.Tests
     [UsesVerify]
     public class ContextGeneratorTests
     {
-        static string FixturesPath => Path.Combine(TestExtensions.GetProjectRoot(),
+        static readonly string ProjectRoot = TestExtensions.GetProjectRoot();
+
+        static readonly string FixturesPath = Path.Combine(ProjectRoot,
             "tests", "Entitas.Generators.Tests.Fixtures");
 
         static Task Verify(string fixture) => TestHelper.Verify(File.ReadAllText(
@@ -16,6 +18,13 @@ namespace Entitas.Generators.Tests
 
         static Task VerifyContext(string fixture) => TestHelper.Verify(File.ReadAllText(
             Path.Combine(FixturesPath, "Contexts", $"{fixture}.txt")), new ContextGenerator());
+
+        [Fact]
+        public void UsesGlobalNamespace()
+        {
+            TestHelper.AssertUsesGlobalNamespaces(File.ReadAllText(Path.Combine(ProjectRoot,
+                "gen/Entitas.Generators/Context/ContextGenerator.cs")));
+        }
 
         [Fact]
         public Task SomeClass() => Verify("SomeClass");

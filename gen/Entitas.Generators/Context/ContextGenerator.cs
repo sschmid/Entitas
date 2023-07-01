@@ -73,7 +73,7 @@ namespace Entitas.Generators
                 GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
                 NamespaceDeclaration(context.FullContextPrefix,
                     """
-                    public readonly struct ComponentIndex : System.IEquatable<ComponentIndex>
+                    public readonly struct ComponentIndex : global::System.IEquatable<ComponentIndex>
                     {
                         public readonly int Value;
 
@@ -98,9 +98,9 @@ namespace Entitas.Generators
                 GeneratedFileHeader(GeneratorSource(nameof(ContextAttribute))) +
                 NamespaceDeclaration(context.FullContextPrefix,
                     """
-                    [System.Diagnostics.Conditional("false")]
-                    [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
-                    public sealed class ContextAttribute : System.Attribute { }
+                    [global::System.Diagnostics.Conditional("false")]
+                    [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+                    public sealed class ContextAttribute : global::System.Attribute { }
 
                     """));
         }
@@ -111,9 +111,9 @@ namespace Entitas.Generators
                 GeneratedFileHeader(GeneratorSource(nameof(ContextInitializationAttribute))) +
                 NamespaceDeclaration(context.FullContextPrefix,
                     """
-                    [System.Diagnostics.Conditional("false")]
-                    [System.AttributeUsage(System.AttributeTargets.Method, AllowMultiple = true)]
-                    public sealed class ContextInitializationAttribute : System.Attribute { }
+                    [global::System.Diagnostics.Conditional("false")]
+                    [global::System.AttributeUsage(global::System.AttributeTargets.Method, AllowMultiple = true)]
+                    public sealed class ContextInitializationAttribute : global::System.Attribute { }
 
                     """));
         }
@@ -124,7 +124,7 @@ namespace Entitas.Generators
                 GeneratedFileHeader(GeneratorSource(nameof(Entity))) +
                 NamespaceDeclaration(context.FullContextPrefix,
                     """
-                    public sealed class Entity : Entitas.Entity { }
+                    public sealed class Entity : global::Entitas.Entity { }
 
                     """));
         }
@@ -137,27 +137,27 @@ namespace Entitas.Generators
                     """
                     public static class Matcher
                     {
-                        public static Entitas.IAllOfMatcher<Entity> AllOf(System.Span<ComponentIndex> indices)
+                        public static global::Entitas.IAllOfMatcher<Entity> AllOf(global::System.Span<ComponentIndex> indices)
                         {
-                            return Entitas.Matcher<Entity>.AllOf(ToIntArray(indices));
+                            return global::Entitas.Matcher<Entity>.AllOf(ToIntArray(indices));
                         }
 
-                        public static Entitas.IAnyOfMatcher<Entity> AnyOf(System.Span<ComponentIndex> indices)
+                        public static global::Entitas.IAnyOfMatcher<Entity> AnyOf(global::System.Span<ComponentIndex> indices)
                         {
-                            return Entitas.Matcher<Entity>.AnyOf(ToIntArray(indices));
+                            return global::Entitas.Matcher<Entity>.AnyOf(ToIntArray(indices));
                         }
 
-                        public static Entitas.IAnyOfMatcher<Entity> AnyOf(this Entitas.IAllOfMatcher<Entity> matcher, System.Span<ComponentIndex> indices)
+                        public static global::Entitas.IAnyOfMatcher<Entity> AnyOf(this global::Entitas.IAllOfMatcher<Entity> matcher, global::System.Span<ComponentIndex> indices)
                         {
                             return matcher.AnyOf(ToIntArray(indices));
                         }
 
-                        public static Entitas.INoneOfMatcher<Entity> NoneOf(this Entitas.IAnyOfMatcher<Entity> matcher, System.Span<ComponentIndex> indices)
+                        public static global::Entitas.INoneOfMatcher<Entity> NoneOf(this global::Entitas.IAnyOfMatcher<Entity> matcher, global::System.Span<ComponentIndex> indices)
                         {
                             return matcher.NoneOf(ToIntArray(indices));
                         }
 
-                        static int[] ToIntArray(System.Span<ComponentIndex> indices)
+                        static int[] ToIntArray(global::System.Span<ComponentIndex> indices)
                         {
                             var ints = new int[indices.Length];
                             for (var i = 0; i < indices.Length; i++)
@@ -176,25 +176,25 @@ namespace Entitas.Generators
                 GeneratedFileHeader(GeneratorSource(nameof(Context))) +
                 NamespaceDeclaration(context.Namespace,
                     $$"""
-                    public sealed partial class {{context.Name}} : Entitas.Context<{{context.ContextPrefix}}.Entity>
+                    public sealed partial class {{context.Name}} : global::Entitas.Context<{{context.ContextPrefix}}.Entity>
                     {
                         public static string[] ComponentNames;
-                        public static System.Type[] ComponentTypes;
+                        public static global::System.Type[] ComponentTypes;
 
                         public {{context.Name}}()
                             : base(
                                 ComponentTypes.Length,
                                 0,
-                                new Entitas.ContextInfo(
+                                new global::Entitas.ContextInfo(
                                     "{{context.FullName}}",
                                     ComponentNames,
                                     ComponentTypes
                                 ),
                                 entity =>
                     #if (ENTITAS_FAST_AND_UNSAFE)
-                                    new Entitas.UnsafeAERC(),
+                                    new global::Entitas.UnsafeAERC(),
                     #else
-                                    new Entitas.SafeAERC(entity),
+                                    new global::Entitas.SafeAERC(entity),
                     #endif
                                 () => new {{context.ContextPrefix}}.Entity()
                             ) { }
