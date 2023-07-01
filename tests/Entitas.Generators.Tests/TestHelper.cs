@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -14,19 +14,21 @@ namespace Entitas.Generators.Tests
         // https://andrewlock.net/creating-a-source-generator-part-2-testing-an-incremental-generator-with-snapshot-testing/
         public static Task Verify(string source, IIncrementalGenerator generator)
         {
-            var syntaxTree = CSharpSyntaxTree.ParseText(source);
-            IEnumerable<PortableExecutableReference> references = new[]
-            {
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(IComponent).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(Attributes.ContextAttribute).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(MyApp.Library.ContextAttribute).Assembly.Location)
-            };
+            var references = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(assembly => !assembly.IsDynamic && !string.IsNullOrWhiteSpace(assembly.Location))
+                .Select(assembly => MetadataReference.CreateFromFile(assembly.Location))
+                .Concat(new[]
+                {
+                    MetadataReference.CreateFromFile(typeof(IComponent).Assembly.Location),
+                    MetadataReference.CreateFromFile(typeof(Attributes.ContextAttribute).Assembly.Location),
+                    MetadataReference.CreateFromFile(typeof(MyApp.Library.ContextAttribute).Assembly.Location)
+                });
 
             var compilation = CSharpCompilation.Create(
                 "Entitas.Generators.Tests",
-                new[] { syntaxTree },
-                references);
+                new[] { CSharpSyntaxTree.ParseText(source) },
+                references,
+                new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
             var driver = CSharpGeneratorDriver.Create(generator).RunGenerators(compilation);
             return Verifier.Verify(driver).UseDirectory("snapshots");
