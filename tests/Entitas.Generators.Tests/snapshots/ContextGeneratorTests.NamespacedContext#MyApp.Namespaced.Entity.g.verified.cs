@@ -10,5 +10,5 @@
 //------------------------------------------------------------------------------
 namespace MyApp.Namespaced
 {
-public sealed class Entity : Entitas.Entity { }
+public sealed class Entity : global::Entitas.Entity { }
 }

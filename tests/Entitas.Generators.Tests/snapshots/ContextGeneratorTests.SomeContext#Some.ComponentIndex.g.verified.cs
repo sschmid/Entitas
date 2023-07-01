@@ -10,7 +10,7 @@
 //------------------------------------------------------------------------------
 namespace Some
 {
-public readonly struct ComponentIndex : System.IEquatable<ComponentIndex>
+public readonly struct ComponentIndex : global::System.IEquatable<ComponentIndex>
 {
     public readonly int Value;
 

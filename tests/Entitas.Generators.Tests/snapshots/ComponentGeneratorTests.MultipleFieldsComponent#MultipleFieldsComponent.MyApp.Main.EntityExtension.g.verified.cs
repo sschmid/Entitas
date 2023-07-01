@@ -8,8 +8,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using MyApp.Main;
-using static MyAppMainMultipleFieldsComponentIndex;
+using global::MyApp.Main;
+using static global::MyAppMainMultipleFieldsComponentIndex;
 
 public static class MyAppMainMultipleFieldsEntityExtension
 {

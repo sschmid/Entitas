@@ -8,8 +8,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using MyApp.Main;
-using static MyAppMainSomeComponentIndex;
+using global::MyApp.Main;
+using static global::MyAppMainSomeComponentIndex;
 
 public static class MyAppMainSomeEntityExtension
 {
