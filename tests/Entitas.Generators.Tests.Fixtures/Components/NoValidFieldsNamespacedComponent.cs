@@ -1,11 +1,12 @@
 using Entitas;
+using Entitas.Generators.Attributes;
+using MyApp;
 
 #pragma warning disable CS0169
-#pragma warning disable CS0649
 
 namespace MyFeature
 {
-    [MyApp.Main.Context]
+    [Context(typeof(MainContext))]
     public sealed class NoValidFieldsNamespacedComponent : IComponent
     {
         public static string PublicStaticField;

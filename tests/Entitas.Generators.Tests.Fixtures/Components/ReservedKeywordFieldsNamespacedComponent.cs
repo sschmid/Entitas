@@ -1,10 +1,10 @@
 using Entitas;
-
-#pragma warning disable CS0649
+using Entitas.Generators.Attributes;
+using MyApp;
 
 namespace MyFeature
 {
-    [MyApp.Main.Context]
+    [Context(typeof(MainContext))]
     public sealed class ReservedKeywordFieldsNamespacedComponent : IComponent
     {
         public string Namespace;

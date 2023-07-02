@@ -1,8 +1,8 @@
 using Entitas;
+using Entitas.Generators.Attributes;
+using MyApp;
 
-#pragma warning disable CS0649
-
-[MyApp.Main.Context]
+[Context(typeof(MainContext))]
 public sealed class MultipleFieldsComponent : IComponent
 {
     public string Value1;

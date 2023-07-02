@@ -6,4 +6,8 @@
     <IsPublishable>false</IsPublishable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../../src/Entitas/Entitas.csproj" />
+  </ItemGroup>
+
 </Project>

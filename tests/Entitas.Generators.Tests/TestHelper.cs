@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using MyFeature;
 using VerifyXunit;
 
 namespace Entitas.Generators.Tests
@@ -21,7 +22,8 @@ namespace Entitas.Generators.Tests
                 {
                     MetadataReference.CreateFromFile(typeof(IComponent).Assembly.Location),
                     MetadataReference.CreateFromFile(typeof(Attributes.ContextAttribute).Assembly.Location),
-                    MetadataReference.CreateFromFile(typeof(MyApp.Library.ContextAttribute).Assembly.Location)
+                    MetadataReference.CreateFromFile(typeof(SomeNamespacedComponent).Assembly.Location),
+                    MetadataReference.CreateFromFile(typeof(MyApp.LibraryContext).Assembly.Location)
                 });
 
             var compilation = CSharpCompilation.Create(

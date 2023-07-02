@@ -1,7 +1,9 @@
 using Entitas;
+using Entitas.Generators.Attributes;
+using MyApp;
 
 namespace MyFeature
 {
-    [MyApp.Library.Context]
+    [Context(typeof(LibraryContext))]
     public sealed class ContextFromDifferentAssemblyNamespacedComponent : IComponent { }
 }

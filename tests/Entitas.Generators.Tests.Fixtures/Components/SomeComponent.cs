@@ -1,4 +1,6 @@
 using Entitas;
+using Entitas.Generators.Attributes;
+using MyApp;
 
-[MyApp.Main.Context]
+[Context(typeof(MainContext))]
 public sealed class SomeComponent : IComponent { }
