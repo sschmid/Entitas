@@ -1,8 +1,10 @@
 using Entitas;
+using Entitas.Generators.Attributes;
+using MyApp;
 
 namespace MyFeature
 {
-    [MyApp.Main.Context]
-    [MyApp.Main.Context]
+    [Context(typeof(MainContext))]
+    [Context(typeof(MainContext))]
     public sealed class DuplicatedContextsNamespacedComponent : IComponent { }
 }

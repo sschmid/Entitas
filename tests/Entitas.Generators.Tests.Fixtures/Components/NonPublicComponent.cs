@@ -1,10 +1,12 @@
 using Entitas;
+using Entitas.Generators.Attributes;
+using MyApp;
 
 #pragma warning disable CS0649
 
 namespace MyFeature
 {
-    [MyApp.Main.Context]
+    [Context(typeof(MainContext))]
     class NonPublicComponent : IComponent
     {
         public string Value;

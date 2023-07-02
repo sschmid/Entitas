@@ -73,11 +73,12 @@ namespace Entitas.Generators
                 return ImmutableArray<ComponentDeclaration>.Empty;
 
             return symbol.GetAttributes()
-                .Select(attribute => attribute.AttributeClass?.ToDisplayString())
-                .Where(attribute => attribute?.HasAttributeSuffix(".Context") ?? false)
-                .Select(attribute => attribute!.RemoveAttributeSuffix(".Context"))
+                .Where(attribute => attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.ContextAttribute")
+                .Select(attribute => attribute.ConstructorArguments.SingleOrDefault())
+                .Where(arg => arg.Type?.ToDisplayString() == "System.Type" && arg.Value is INamedTypeSymbol)
+                .Select(arg => ((INamedTypeSymbol)arg.Value!).ToDisplayString().RemoveSuffix("Context"))
                 .Distinct()
-                .Select(attribute => new ComponentDeclaration(symbol, attribute, cancellationToken))
+                .Select(context => new ComponentDeclaration(symbol, context, cancellationToken))
                 .ToImmutableArray();
         }
 
