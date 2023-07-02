@@ -86,6 +86,12 @@ namespace Entitas.Generators.Tests
         [Fact]
         public Task ContextFromDifferentAssemblyNamespacedComponent() => VerifyComponent("ContextFromDifferentAssemblyNamespacedComponent");
 
+        [Fact]
+        public Task UniqueNamespacedComponent() => VerifyComponent("UniqueNamespacedComponent");
+
+        [Fact]
+        public Task UniqueOneFieldNamespacedComponent() => VerifyComponent("UniqueOneFieldNamespacedComponent");
+
         /*
          *
          * Invalid usages

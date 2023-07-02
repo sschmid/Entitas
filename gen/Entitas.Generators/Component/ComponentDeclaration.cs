@@ -17,6 +17,7 @@ namespace Entitas.Generators
         public readonly string Context;
         public readonly string ComponentPrefix;
         public readonly string ContextAwareComponentPrefix;
+        public readonly bool IsUnique;
 
         public ComponentDeclaration(INamedTypeSymbol symbol, string context, CancellationToken cancellationToken)
         {
@@ -42,6 +43,9 @@ namespace Entitas.Generators
 
             ComponentPrefix = Name.RemoveSuffix("Component");
             ContextAwareComponentPrefix = Context.Replace(".", string.Empty) + ComponentPrefix;
+
+            IsUnique = symbol.GetAttributes().Any(attribute =>
+                attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.UniqueAttribute");
 
             static bool IsAutoProperty(ISymbol symbol, CancellationToken cancellationToken)
             {
@@ -82,6 +86,23 @@ namespace Entitas.Generators
         public int GetHashCode(ComponentDeclaration component)
         {
             return HashCode.Combine(component.FullName, component.Members, component.Context);
+        }
+    }
+
+    class FullNameAndMembersAndContextAndIsUniqueComparer : IEqualityComparer<ComponentDeclaration>
+    {
+        public bool Equals(ComponentDeclaration x, ComponentDeclaration y)
+        {
+            return
+                x.FullName == y.FullName &&
+                x.Members.SequenceEqual(y.Members) &&
+                x.Context == y.Context &&
+                x.IsUnique == y.IsUnique;
+        }
+
+        public int GetHashCode(ComponentDeclaration component)
+        {
+            return HashCode.Combine(component.FullName, component.Members, component.Context, component.IsUnique);
         }
     }
 }

@@ -23,6 +23,9 @@ namespace Entitas.Generators
             var fullNameOrMembersOrContextChanged = allComponents.WithComparer(new FullNameAndMembersAndContextComparer());
             initContext.RegisterSourceOutput(fullNameOrMembersOrContextChanged, OnFullNameOrMembersOrContextChanged);
 
+            var fullNameOrMembersOrContextOrIsUniqueChanged = allComponents.WithComparer(new FullNameAndMembersAndContextAndIsUniqueComparer());
+            initContext.RegisterSourceOutput(fullNameOrMembersOrContextOrIsUniqueChanged, OnFullNameOrMembersOrContextOrIsUniqueChanged);
+
             var contextInitializationMethods = initContext.SyntaxProvider
                 .CreateSyntaxProvider(IsContextInitializationMethodCandidate, CreateContextInitializationMethodDeclaration)
                 .Where(method => method is not null)
@@ -184,20 +187,6 @@ namespace Entitas.Generators
                     }
 
                     """;
-
-
-                static string ComponentMethodArgs(ComponentDeclaration component)
-                {
-                    return string.Join(", ", component.Members.Select(member => $"{member.Type} {member.ValidLowerFirstName}"));
-                }
-
-                static string ComponentValueAssignments(ComponentDeclaration component)
-                {
-                    return string.Join("\n", component.Members.Select(member =>
-                        $$"""
-                                component.{{member.Name}} = {{member.ValidLowerFirstName}};
-                        """));
-                }
             }
             else
             {
@@ -244,6 +233,106 @@ namespace Entitas.Generators
                 $"using global::{component.Context};\n" +
                 $"using static global::{CombinedNamespace(component.Namespace, component.ContextAwareComponentPrefix)}ComponentIndex;\n\n" +
                 NamespaceDeclaration(component.Namespace, content));
+        }
+
+        static void OnFullNameOrMembersOrContextOrIsUniqueChanged(SourceProductionContext spc, ComponentDeclaration component)
+        {
+            if (component.IsUnique)
+                ContextExtension(spc, component);
+        }
+
+        static void ContextExtension(SourceProductionContext spc, ComponentDeclaration component)
+        {
+            var className = $"{component.ContextAwareComponentPrefix}ContextExtension";
+            string content;
+            if (component.Members.Length > 0)
+            {
+                content = $$"""
+                    public static class {{className}}
+                    {
+                        public static bool Has{{component.ComponentPrefix}}(this {{component.Context}}Context context, {{ComponentMethodArgs(component)}})
+                        {
+                            return context.Get{{component.ComponentPrefix}}Entity() != null;
+                        }
+
+                        public static Entity Set{{component.ComponentPrefix}}(this {{component.Context}}Context context, {{ComponentMethodArgs(component)}})
+                        {
+                            var entity = context.Get{{component.ComponentPrefix}}Entity();
+                            if (entity == null)
+                                entity = context.CreateEntity().Add{{component.ComponentPrefix}}({{ComponentMethodParams(component)}});
+                            else
+                                entity.Replace{{component.ComponentPrefix}}({{ComponentMethodParams(component)}});
+
+                            return entity;
+                        }
+
+                        public static void Unset{{component.ComponentPrefix}}(this {{component.Context}}Context context)
+                        {
+                            context.Get{{component.ComponentPrefix}}Entity()?.Destroy();
+                        }
+
+                        public static Entity Get{{component.ComponentPrefix}}Entity(this {{component.Context}}Context context)
+                        {
+                            return context.GetGroup(Matcher.AllOf(stackalloc[] { Index })).GetSingleEntity();
+                        }
+                    }
+
+                    """;
+            }
+            else
+            {
+                content = $$"""
+                    public static class {{className}}
+                    {
+                        public static bool Has{{component.ComponentPrefix}}(this {{component.Context}}Context context)
+                        {
+                            return context.Get{{component.ComponentPrefix}}Entity() != null;
+                        }
+
+                        public static Entity Set{{component.ComponentPrefix}}(this {{component.Context}}Context context)
+                        {
+                            return context.Get{{component.ComponentPrefix}}Entity() ?? context.CreateEntity().Add{{component.ComponentPrefix}}();
+                        }
+
+                        public static void Unset{{component.ComponentPrefix}}(this {{component.Context}}Context context)
+                        {
+                            context.Get{{component.ComponentPrefix}}Entity()?.Destroy();
+                        }
+
+                        public static Entity Get{{component.ComponentPrefix}}Entity(this {{component.Context}}Context context)
+                        {
+                            return context.GetGroup(Matcher.AllOf(stackalloc[] { Index })).GetSingleEntity();
+                        }
+                    }
+
+                    """;
+            }
+
+            spc.AddSource(
+                GeneratedPath($"{component.FullName}.{component.Context}.ContextExtension"),
+                GeneratedFileHeader(GeneratorSource(nameof(ContextExtension))) +
+                DisableNullable() +
+                $"using global::{component.Context};\n" +
+                $"using static global::{CombinedNamespace(component.Namespace, component.ContextAwareComponentPrefix)}ComponentIndex;\n\n" +
+                NamespaceDeclaration(component.Namespace, content));
+        }
+
+        static string ComponentMethodArgs(ComponentDeclaration component)
+        {
+            return string.Join(", ", component.Members.Select(member => $"{member.Type} {member.ValidLowerFirstName}"));
+        }
+
+        static string ComponentMethodParams(ComponentDeclaration component)
+        {
+            return string.Join(", ", component.Members.Select(member => $"{member.ValidLowerFirstName}"));
+        }
+
+        static string ComponentValueAssignments(ComponentDeclaration component)
+        {
+            return string.Join("\n", component.Members.Select(member =>
+                $$"""
+                        component.{{member.Name}} = {{member.ValidLowerFirstName}};
+                """));
         }
 
         static void OnLookupChanged(SourceProductionContext spc, (ContextInitializationMethodDeclaration Left, ImmutableArray<ComponentDeclaration> Right) pair)

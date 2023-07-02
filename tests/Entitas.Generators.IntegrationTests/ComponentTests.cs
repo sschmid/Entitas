@@ -101,5 +101,71 @@ namespace Entitas.Generators.IntegrationTests
 
             entity1.GetMovable().Should().BeSameAs(entity2.GetMovable());
         }
+
+        [Fact]
+        public void SetsUniqueEntity()
+        {
+            _context.HasLoading().Should().BeFalse();
+            var entity = _context.SetLoading();
+            _context.HasLoading().Should().BeTrue();
+            entity.HasLoading().Should().BeTrue();
+        }
+
+        [Fact]
+        public void SettingUniqueEntityTwiceReturnsEntity()
+        {
+            _context.SetLoading().Should().BeSameAs(_context.SetLoading());
+        }
+
+        [Fact]
+        public void UnsetsAndDestroysUniqueEntity()
+        {
+            var entity = _context.SetLoading();
+            _context.UnsetLoading();
+            _context.HasLoading().Should().BeFalse();
+            entity.isEnabled.Should().BeFalse();
+        }
+
+        [Fact]
+        public void CanUnsetsEvenIfNotSetBefore()
+        {
+            _context.UnsetLoading();
+            _context.HasLoading().Should().BeFalse();
+        }
+
+        [Fact]
+        public void HasNoUniqueEntity()
+        {
+            _context.HasLoading().Should().BeFalse();
+        }
+
+        [Fact]
+        public void GetsUniqueEntity()
+        {
+            _context.SetLoading().Should().BeSameAs(_context.GetLoadingEntity());
+        }
+
+        [Fact]
+        public void NoUniqueEntityReturnsNull()
+        {
+            _context.GetLoadingEntity().Should().BeNull();
+        }
+
+        [Fact]
+        public void SetsValuesOfUniqueEntity()
+        {
+            var user = _context.SetUser("Test", 42).GetUser();
+            user.Name.Should().Be("Test");
+            user.Age.Should().Be(42);
+        }
+
+        [Fact]
+        public void SetsNewValuesOfUniqueEntity()
+        {
+            _context.SetUser("Test", 42);
+            var user = _context.SetUser("Replaced", 24).GetUser();
+            user.Name.Should().Be("Replaced");
+            user.Age.Should().Be(24);
+        }
     }
 }
