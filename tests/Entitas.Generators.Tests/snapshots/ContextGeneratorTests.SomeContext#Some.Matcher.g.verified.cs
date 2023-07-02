@@ -44,7 +44,6 @@ public static class Matcher
 
     public static global::Entitas.INoneOfMatcher<Entity> NoneOf(this global::Entitas.IAnyOfMatcher<Entity> matcher, params ComponentIndex[] indices)
     {
-        var indexes =
 #if NON_UNITY
         var indexes = global::System.Runtime.CompilerServices.Unsafe.As<ComponentIndex[], int[]>(ref indices);
 #else
