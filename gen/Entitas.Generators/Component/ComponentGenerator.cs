@@ -105,15 +105,18 @@ namespace Entitas.Generators
             if (!symbol.ContainingType.IsStatic || symbol.ContainingType.DeclaredAccessibility != Accessibility.Public)
                 return null;
 
-            var attribute = symbol
-                .GetAttributes()
-                .SingleOrDefault(attribute => attribute.AttributeClass?.ToDisplayString()
-                    .HasAttributeSuffix(".ContextInitialization") ?? false);
+            var context = symbol.GetAttributes()
+                .Where(attribute => attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.ContextInitializationAttribute")
+                .Select(attribute => attribute.ConstructorArguments.SingleOrDefault())
+                .Where(arg => arg.Type?.ToDisplayString() == "System.Type" && arg.Value is INamedTypeSymbol)
+                .Select(arg => ((INamedTypeSymbol)arg.Value!).ToDisplayString())
+                .Distinct()
+                .SingleOrDefault();
 
-            if (attribute is null)
+            if (context is null)
                 return null;
 
-            return new ContextInitializationMethodDeclaration(symbol, attribute);
+            return new ContextInitializationMethodDeclaration(symbol, context);
         }
 
         static void OnFullNameOrContextChanged(SourceProductionContext spc, ComponentDeclaration component)
@@ -348,7 +351,7 @@ namespace Entitas.Generators
         static void ContextInitializationMethod(SourceProductionContext spc, ContextInitializationMethodDeclaration method, ImmutableArray<ComponentDeclaration> components)
         {
             spc.AddSource(
-                GeneratedPath($"{method.FullContextPrefix}.ContextInitializationMethod"),
+                GeneratedPath(CombinedNamespace(method.Namespace, $"{method.Name}.ContextInitializationMethod")),
                 GeneratedFileHeader(GeneratorSource(nameof(ContextInitializationMethod))) +
                 $"using global::{method.FullContextPrefix};\n\n" +
                 NamespaceDeclaration(method.Namespace,

@@ -12,13 +12,13 @@ namespace Entitas.Generators
 
         public readonly string FullContextPrefix;
 
-        public ContextInitializationMethodDeclaration(IMethodSymbol symbol, AttributeData attribute)
+        public ContextInitializationMethodDeclaration(IMethodSymbol symbol, string context)
         {
             Namespace = !symbol.ContainingNamespace.IsGlobalNamespace ? symbol.ContainingNamespace.ToDisplayString() : null;
             Class = symbol.ContainingType.Name;
             Name = symbol.Name;
-            FullContextPrefix = attribute.AttributeClass!.ToDisplayString().RemoveAttributeSuffix(".ContextInitialization");
-            Context = FullContextPrefix + "Context";
+            Context = context;
+            FullContextPrefix = context.RemoveSuffix("Context");
         }
 
         public bool Equals(ContextInitializationMethodDeclaration other) =>
