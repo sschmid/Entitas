@@ -276,7 +276,7 @@ namespace Entitas.Generators
 
                         public static Entity Get{{component.ComponentPrefix}}Entity(this {{component.Context}}Context context)
                         {
-                            return context.GetGroup(Matcher.AllOf(stackalloc[] { Index })).GetSingleEntity();
+                            return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
                         }
                     }
 
@@ -304,7 +304,7 @@ namespace Entitas.Generators
 
                         public static Entity Get{{component.ComponentPrefix}}Entity(this {{component.Context}}Context context)
                         {
-                            return context.GetGroup(Matcher.AllOf(stackalloc[] { Index })).GetSingleEntity();
+                            return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
                         }
                     }
 

@@ -34,7 +34,7 @@ public static class MyAppMainUniqueNamespacedContextExtension
 
     public static Entity GetUniqueNamespacedEntity(this MyApp.MainContext context)
     {
-        return context.GetGroup(Matcher.AllOf(stackalloc[] { Index })).GetSingleEntity();
+        return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
     }
 }
 }

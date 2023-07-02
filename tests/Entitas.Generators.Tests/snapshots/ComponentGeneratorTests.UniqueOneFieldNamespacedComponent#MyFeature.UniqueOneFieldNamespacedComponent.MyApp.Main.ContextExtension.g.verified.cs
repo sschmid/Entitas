@@ -40,7 +40,7 @@ public static class MyAppMainUniqueOneFieldNamespacedContextExtension
 
     public static Entity GetUniqueOneFieldNamespacedEntity(this MyApp.MainContext context)
     {
-        return context.GetGroup(Matcher.AllOf(stackalloc[] { Index })).GetSingleEntity();
+        return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
     }
 }
 }
