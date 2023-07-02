@@ -21,7 +21,10 @@ public static class MyAppMainOneFieldEntityExtension
     public static Entity AddOneField(this Entity entity, string value)
     {
         var index = Index.Value;
-        var component = (OneFieldComponent)entity.CreateComponent(index, typeof(OneFieldComponent));
+        var componentPool = entity.GetComponentPool(index);
+        var component = componentPool.Count > 0
+            ? (OneFieldComponent)componentPool.Pop()
+            : new OneFieldComponent();
         component.Value = value;
         entity.AddComponent(index, component);
         return entity;
@@ -30,7 +33,10 @@ public static class MyAppMainOneFieldEntityExtension
     public static Entity ReplaceOneField(this Entity entity, string value)
     {
         var index = Index.Value;
-        var component = (OneFieldComponent)entity.CreateComponent(index, typeof(OneFieldComponent));
+        var componentPool = entity.GetComponentPool(index);
+        var component = componentPool.Count > 0
+            ? (OneFieldComponent)componentPool.Pop()
+            : new OneFieldComponent();
         component.Value = value;
         entity.ReplaceComponent(index, component);
         return entity;

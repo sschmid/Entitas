@@ -23,7 +23,10 @@ public static class MyAppMainMultipleFieldsNamespacedEntityExtension
     public static Entity AddMultipleFieldsNamespaced(this Entity entity, string value1, string value2, string value3)
     {
         var index = Index.Value;
-        var component = (MultipleFieldsNamespacedComponent)entity.CreateComponent(index, typeof(MultipleFieldsNamespacedComponent));
+        var componentPool = entity.GetComponentPool(index);
+        var component = componentPool.Count > 0
+            ? (MultipleFieldsNamespacedComponent)componentPool.Pop()
+            : new MultipleFieldsNamespacedComponent();
         component.Value1 = value1;
         component.Value2 = value2;
         component.Value3 = value3;
@@ -34,7 +37,10 @@ public static class MyAppMainMultipleFieldsNamespacedEntityExtension
     public static Entity ReplaceMultipleFieldsNamespaced(this Entity entity, string value1, string value2, string value3)
     {
         var index = Index.Value;
-        var component = (MultipleFieldsNamespacedComponent)entity.CreateComponent(index, typeof(MultipleFieldsNamespacedComponent));
+        var componentPool = entity.GetComponentPool(index);
+        var component = componentPool.Count > 0
+            ? (MultipleFieldsNamespacedComponent)componentPool.Pop()
+            : new MultipleFieldsNamespacedComponent();
         component.Value1 = value1;
         component.Value2 = value2;
         component.Value3 = value3;

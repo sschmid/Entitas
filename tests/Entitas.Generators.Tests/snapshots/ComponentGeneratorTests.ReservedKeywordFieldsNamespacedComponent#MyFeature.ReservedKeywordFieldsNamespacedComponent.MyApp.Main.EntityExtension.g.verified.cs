@@ -23,7 +23,10 @@ public static class MyAppMainReservedKeywordFieldsNamespacedEntityExtension
     public static Entity AddReservedKeywordFieldsNamespaced(this Entity entity, string @namespace, string @class, string @public)
     {
         var index = Index.Value;
-        var component = (ReservedKeywordFieldsNamespacedComponent)entity.CreateComponent(index, typeof(ReservedKeywordFieldsNamespacedComponent));
+        var componentPool = entity.GetComponentPool(index);
+        var component = componentPool.Count > 0
+            ? (ReservedKeywordFieldsNamespacedComponent)componentPool.Pop()
+            : new ReservedKeywordFieldsNamespacedComponent();
         component.Namespace = @namespace;
         component.Class = @class;
         component.Public = @public;
@@ -34,7 +37,10 @@ public static class MyAppMainReservedKeywordFieldsNamespacedEntityExtension
     public static Entity ReplaceReservedKeywordFieldsNamespaced(this Entity entity, string @namespace, string @class, string @public)
     {
         var index = Index.Value;
-        var component = (ReservedKeywordFieldsNamespacedComponent)entity.CreateComponent(index, typeof(ReservedKeywordFieldsNamespacedComponent));
+        var componentPool = entity.GetComponentPool(index);
+        var component = componentPool.Count > 0
+            ? (ReservedKeywordFieldsNamespacedComponent)componentPool.Pop()
+            : new ReservedKeywordFieldsNamespacedComponent();
         component.Namespace = @namespace;
         component.Class = @class;
         component.Public = @public;

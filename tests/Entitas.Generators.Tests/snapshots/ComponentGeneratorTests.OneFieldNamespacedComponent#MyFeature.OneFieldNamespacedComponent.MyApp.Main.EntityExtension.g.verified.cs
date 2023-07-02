@@ -23,7 +23,10 @@ public static class MyAppMainOneFieldNamespacedEntityExtension
     public static Entity AddOneFieldNamespaced(this Entity entity, string value)
     {
         var index = Index.Value;
-        var component = (OneFieldNamespacedComponent)entity.CreateComponent(index, typeof(OneFieldNamespacedComponent));
+        var componentPool = entity.GetComponentPool(index);
+        var component = componentPool.Count > 0
+            ? (OneFieldNamespacedComponent)componentPool.Pop()
+            : new OneFieldNamespacedComponent();
         component.Value = value;
         entity.AddComponent(index, component);
         return entity;
@@ -32,7 +35,10 @@ public static class MyAppMainOneFieldNamespacedEntityExtension
     public static Entity ReplaceOneFieldNamespaced(this Entity entity, string value)
     {
         var index = Index.Value;
-        var component = (OneFieldNamespacedComponent)entity.CreateComponent(index, typeof(OneFieldNamespacedComponent));
+        var componentPool = entity.GetComponentPool(index);
+        var component = componentPool.Count > 0
+            ? (OneFieldNamespacedComponent)componentPool.Pop()
+            : new OneFieldNamespacedComponent();
         component.Value = value;
         entity.ReplaceComponent(index, component);
         return entity;

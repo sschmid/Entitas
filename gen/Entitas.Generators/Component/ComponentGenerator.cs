@@ -162,7 +162,10 @@ namespace Entitas.Generators
                         public static Entity Add{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
                         {
                             var index = Index.Value;
-                            var component = ({{component.Name}})entity.CreateComponent(index, typeof({{component.Name}}));
+                            var componentPool = entity.GetComponentPool(index);
+                            var component = componentPool.Count > 0
+                                ? ({{component.Name}})componentPool.Pop()
+                                : new {{component.Name}}();
                     {{ComponentValueAssignments(component)}}
                             entity.AddComponent(index, component);
                             return entity;
@@ -171,7 +174,10 @@ namespace Entitas.Generators
                         public static Entity Replace{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
                         {
                             var index = Index.Value;
-                            var component = ({{component.Name}})entity.CreateComponent(index, typeof({{component.Name}}));
+                            var componentPool = entity.GetComponentPool(index);
+                            var component = componentPool.Count > 0
+                                ? ({{component.Name}})componentPool.Pop()
+                                : new {{component.Name}}();
                     {{ComponentValueAssignments(component)}}
                             entity.ReplaceComponent(index, component);
                             return entity;

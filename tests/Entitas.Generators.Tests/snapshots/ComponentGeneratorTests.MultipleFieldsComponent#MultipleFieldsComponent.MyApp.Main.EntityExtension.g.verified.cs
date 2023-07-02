@@ -21,7 +21,10 @@ public static class MyAppMainMultipleFieldsEntityExtension
     public static Entity AddMultipleFields(this Entity entity, string value1, string value2, string value3)
     {
         var index = Index.Value;
-        var component = (MultipleFieldsComponent)entity.CreateComponent(index, typeof(MultipleFieldsComponent));
+        var componentPool = entity.GetComponentPool(index);
+        var component = componentPool.Count > 0
+            ? (MultipleFieldsComponent)componentPool.Pop()
+            : new MultipleFieldsComponent();
         component.Value1 = value1;
         component.Value2 = value2;
         component.Value3 = value3;
@@ -32,7 +35,10 @@ public static class MyAppMainMultipleFieldsEntityExtension
     public static Entity ReplaceMultipleFields(this Entity entity, string value1, string value2, string value3)
     {
         var index = Index.Value;
-        var component = (MultipleFieldsComponent)entity.CreateComponent(index, typeof(MultipleFieldsComponent));
+        var componentPool = entity.GetComponentPool(index);
+        var component = componentPool.Count > 0
+            ? (MultipleFieldsComponent)componentPool.Pop()
+            : new MultipleFieldsComponent();
         component.Value1 = value1;
         component.Value2 = value2;
         component.Value3 = value3;
