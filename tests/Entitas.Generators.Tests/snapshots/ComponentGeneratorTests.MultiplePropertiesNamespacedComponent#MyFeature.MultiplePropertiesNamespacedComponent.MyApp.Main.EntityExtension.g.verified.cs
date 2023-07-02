@@ -23,7 +23,10 @@ public static class MyAppMainMultiplePropertiesNamespacedEntityExtension
     public static Entity AddMultiplePropertiesNamespaced(this Entity entity, string value1, string value2, string value3)
     {
         var index = Index.Value;
-        var component = (MultiplePropertiesNamespacedComponent)entity.CreateComponent(index, typeof(MultiplePropertiesNamespacedComponent));
+        var componentPool = entity.GetComponentPool(index);
+        var component = componentPool.Count > 0
+            ? (MultiplePropertiesNamespacedComponent)componentPool.Pop()
+            : new MultiplePropertiesNamespacedComponent();
         component.Value1 = value1;
         component.Value2 = value2;
         component.Value3 = value3;
@@ -34,7 +37,10 @@ public static class MyAppMainMultiplePropertiesNamespacedEntityExtension
     public static Entity ReplaceMultiplePropertiesNamespaced(this Entity entity, string value1, string value2, string value3)
     {
         var index = Index.Value;
-        var component = (MultiplePropertiesNamespacedComponent)entity.CreateComponent(index, typeof(MultiplePropertiesNamespacedComponent));
+        var componentPool = entity.GetComponentPool(index);
+        var component = componentPool.Count > 0
+            ? (MultiplePropertiesNamespacedComponent)componentPool.Pop()
+            : new MultiplePropertiesNamespacedComponent();
         component.Value1 = value1;
         component.Value2 = value2;
         component.Value3 = value3;

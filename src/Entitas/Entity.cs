@@ -319,7 +319,9 @@ namespace Entitas
         public T CreateComponent<T>(int index) where T : new()
         {
             var componentPool = GetComponentPool(index);
-            return componentPool.Count > 0 ? (T)componentPool.Pop() : new T();
+            return componentPool.Count > 0
+                ? (T)componentPool.Pop()
+                : new T();
         }
 
         /// Returns the number of objects that retain this entity.
@@ -419,7 +421,7 @@ namespace Entitas
 
                     _toStringBuilder.Append(component.ToString());
 
-                    if (i < lastSeparator) 
+                    if (i < lastSeparator)
                         _toStringBuilder.Append(separator);
                 }
 
