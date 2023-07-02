@@ -39,32 +39,11 @@ namespace Entitas.Generators
                 : content;
         }
 
-        public static string NamespaceDeclaration(string? @namespace, string suffix, string content)
-        {
-            return NamespaceDeclaration(CombinedNamespace(@namespace, suffix), content);
-        }
-
-        public static string AddSuffix(this string str, string suffix)
-        {
-            return str.EndsWith(suffix, StringComparison.Ordinal) ? str : str + suffix;
-        }
-
         public static string RemoveSuffix(this string str, string suffix)
-        {
-            return str.EndsWith(suffix, StringComparison.Ordinal) ? str.Substring(0, str.Length - suffix.Length) : str;
-        }
-
-        public static bool HasAttributeSuffix(this string str, string suffix)
-        {
-            return str.EndsWith(suffix, StringComparison.Ordinal) ||
-                   str.EndsWith(suffix + "Attribute", StringComparison.Ordinal);
-        }
-
-        public static string RemoveAttributeSuffix(this string str, string suffix)
         {
             return str.EndsWith(suffix, StringComparison.Ordinal)
                 ? str.Substring(0, str.Length - suffix.Length)
-                : str.RemoveSuffix(suffix + "Attribute");
+                : str;
         }
 
         public static string DisableNullable()

@@ -60,7 +60,6 @@ namespace Entitas.Generators
         static void OnContextChanged(SourceProductionContext spc, ContextDeclaration context)
         {
             ComponentIndex(spc, context);
-            ContextInitializationAttribute(spc, context);
             Entity(spc, context);
             Matcher(spc, context);
             Context(spc, context);
@@ -87,19 +86,6 @@ namespace Entitas.Generators
                     #nullable disable
                         public override int GetHashCode() => Value;
                     }
-
-                    """));
-        }
-
-        static void ContextInitializationAttribute(SourceProductionContext spc, ContextDeclaration context)
-        {
-            spc.AddSource(ContextAwarePath(context, "ContextInitializationAttribute"),
-                GeneratedFileHeader(GeneratorSource(nameof(ContextInitializationAttribute))) +
-                NamespaceDeclaration(context.FullContextPrefix,
-                    """
-                    [global::System.Diagnostics.Conditional("false")]
-                    [global::System.AttributeUsage(global::System.AttributeTargets.Method, AllowMultiple = true)]
-                    public sealed class ContextInitializationAttribute : global::System.Attribute { }
 
                     """));
         }

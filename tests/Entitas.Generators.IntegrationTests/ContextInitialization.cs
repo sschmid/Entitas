@@ -1,11 +1,13 @@
+using Entitas.Generators.Attributes;
+
 namespace MyApp
 {
     public static partial class ContextInitialization
     {
-        [MyApp.Main.ContextInitialization]
+        [ContextInitialization(typeof(MainContext))]
         public static partial void InitializeMain();
 
-        [Other.ContextInitializationAttribute]
+        [ContextInitialization(typeof(OtherContext))]
         public static partial void InitializeOther();
     }
 }
