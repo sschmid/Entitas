@@ -12,25 +12,25 @@ namespace Some
 {
 public static class Matcher
 {
-    public static global::Entitas.IAllOfMatcher<Entity> AllOf(ComponentIndex[] indices)
+    public static global::Entitas.IAllOfMatcher<Entity> AllOf(params ComponentIndex[] indices)
     {
         var indexes = global::System.Runtime.CompilerServices.Unsafe.As<ComponentIndex[], int[]>(ref indices);
         return global::Entitas.Matcher<Entity>.AllOf(indexes);
     }
 
-    public static global::Entitas.IAnyOfMatcher<Entity> AnyOf(ComponentIndex[] indices)
+    public static global::Entitas.IAnyOfMatcher<Entity> AnyOf(params ComponentIndex[] indices)
     {
         var indexes = global::System.Runtime.CompilerServices.Unsafe.As<ComponentIndex[], int[]>(ref indices);
         return global::Entitas.Matcher<Entity>.AnyOf(indexes);
     }
 
-    public static global::Entitas.IAnyOfMatcher<Entity> AnyOf(this global::Entitas.IAllOfMatcher<Entity> matcher, ComponentIndex[] indices)
+    public static global::Entitas.IAnyOfMatcher<Entity> AnyOf(this global::Entitas.IAllOfMatcher<Entity> matcher, params ComponentIndex[] indices)
     {
         var indexes = global::System.Runtime.CompilerServices.Unsafe.As<ComponentIndex[], int[]>(ref indices);
         return matcher.AnyOf(indexes);
     }
 
-    public static global::Entitas.INoneOfMatcher<Entity> NoneOf(this global::Entitas.IAnyOfMatcher<Entity> matcher, ComponentIndex[] indices)
+    public static global::Entitas.INoneOfMatcher<Entity> NoneOf(this global::Entitas.IAnyOfMatcher<Entity> matcher, params ComponentIndex[] indices)
     {
         var indexes = global::System.Runtime.CompilerServices.Unsafe.As<ComponentIndex[], int[]>(ref indices);
         return matcher.NoneOf(indexes);
