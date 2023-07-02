@@ -12,33 +12,28 @@ namespace MyApp.Namespaced
 {
 public static class Matcher
 {
-    public static global::Entitas.IAllOfMatcher<Entity> AllOf(global::System.Span<ComponentIndex> indices)
+    public static global::Entitas.IAllOfMatcher<Entity> AllOf(ComponentIndex[] indices)
     {
-        return global::Entitas.Matcher<Entity>.AllOf(ToIntArray(indices));
+        var indexes = global::System.Runtime.CompilerServices.Unsafe.As<ComponentIndex[], int[]>(ref indices);
+        return global::Entitas.Matcher<Entity>.AllOf(indexes);
     }
 
-    public static global::Entitas.IAnyOfMatcher<Entity> AnyOf(global::System.Span<ComponentIndex> indices)
+    public static global::Entitas.IAnyOfMatcher<Entity> AnyOf(ComponentIndex[] indices)
     {
-        return global::Entitas.Matcher<Entity>.AnyOf(ToIntArray(indices));
+        var indexes = global::System.Runtime.CompilerServices.Unsafe.As<ComponentIndex[], int[]>(ref indices);
+        return global::Entitas.Matcher<Entity>.AnyOf(indexes);
     }
 
-    public static global::Entitas.IAnyOfMatcher<Entity> AnyOf(this global::Entitas.IAllOfMatcher<Entity> matcher, global::System.Span<ComponentIndex> indices)
+    public static global::Entitas.IAnyOfMatcher<Entity> AnyOf(this global::Entitas.IAllOfMatcher<Entity> matcher, ComponentIndex[] indices)
     {
-        return matcher.AnyOf(ToIntArray(indices));
+        var indexes = global::System.Runtime.CompilerServices.Unsafe.As<ComponentIndex[], int[]>(ref indices);
+        return matcher.AnyOf(indexes);
     }
 
-    public static global::Entitas.INoneOfMatcher<Entity> NoneOf(this global::Entitas.IAnyOfMatcher<Entity> matcher, global::System.Span<ComponentIndex> indices)
+    public static global::Entitas.INoneOfMatcher<Entity> NoneOf(this global::Entitas.IAnyOfMatcher<Entity> matcher, ComponentIndex[] indices)
     {
-        return matcher.NoneOf(ToIntArray(indices));
-    }
-
-    static int[] ToIntArray(global::System.Span<ComponentIndex> indices)
-    {
-        var ints = new int[indices.Length];
-        for (var i = 0; i < indices.Length; i++)
-            ints[i] = indices[i].Value;
-
-        return ints;
+        var indexes = global::System.Runtime.CompilerServices.Unsafe.As<ComponentIndex[], int[]>(ref indices);
+        return matcher.NoneOf(indexes);
     }
 }
 }

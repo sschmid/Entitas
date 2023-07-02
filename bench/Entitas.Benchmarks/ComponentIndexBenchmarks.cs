@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
 
@@ -10,7 +11,7 @@ namespace Entitas.Benchmarks
     public class ComponentIndexBenchmarks
     {
         [Benchmark]
-        public int[] IntArray()
+        public int[] ComponentIndexToIntArray()
         {
             var componentIndexes = new[]
             {
@@ -35,9 +36,9 @@ namespace Entitas.Benchmarks
         }
 
         [Benchmark]
-        public int[] Span()
+        public int[] SpanComponentIndexToIntArray()
         {
-            Span<ComponentIndex> indexes = stackalloc ComponentIndex[]
+            Span<ComponentIndex> componentIndexes = stackalloc ComponentIndex[]
             {
                 new ComponentIndex(0),
                 new ComponentIndex(1),
@@ -47,7 +48,7 @@ namespace Entitas.Benchmarks
                 new ComponentIndex(5)
             };
 
-            return AllOfSpan(indexes);
+            return AllOfSpan(componentIndexes);
 
             int[] AllOfSpan(Span<ComponentIndex> indexes)
             {
@@ -60,7 +61,7 @@ namespace Entitas.Benchmarks
         }
 
         [Benchmark]
-        public int[] RefSpan()
+        public int[] RefSpanComponentIndexToIntArray()
         {
             Span<ComponentIndex> componentIndexes = stackalloc ComponentIndex[]
             {
@@ -82,6 +83,24 @@ namespace Entitas.Benchmarks
 
                 return ints;
             }
+        }
+
+        [Benchmark]
+        public int[] ComponentIndexUnsafeToIntArray()
+        {
+            var componentIndexes = new[]
+            {
+                new ComponentIndex(0),
+                new ComponentIndex(1),
+                new ComponentIndex(2),
+                new ComponentIndex(3),
+                new ComponentIndex(4),
+                new ComponentIndex(5)
+            };
+
+            return AllOfRefSpan(Unsafe.As<ComponentIndex[], int[]>(ref componentIndexes));
+
+            int[] AllOfRefSpan(int[] indexes) => indexes;
         }
     }
 
