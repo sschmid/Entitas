@@ -112,5 +112,8 @@ namespace Entitas.Generators.Tests
 
         [Fact]
         public Task ContextInitialization() => VerifyContext("ContextInitialization");
+
+        [Fact]
+        public Task ContextInitializationFromDifferentAssembly() => VerifyContext("ContextInitializationFromDifferentAssembly");
     }
 }
