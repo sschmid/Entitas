@@ -48,9 +48,9 @@ namespace Entitas.Benchmarks
                 new ComponentIndex(5)
             };
 
-            return AllOfSpan(componentIndexes);
+            return AllOf(componentIndexes);
 
-            int[] AllOfSpan(Span<ComponentIndex> indexes)
+            int[] AllOf(Span<ComponentIndex> indexes)
             {
                 var ints = new int[indexes.Length];
                 for (var i = 0; i < indexes.Length; i++)
@@ -73,9 +73,9 @@ namespace Entitas.Benchmarks
                 new ComponentIndex(5)
             };
 
-            return AllOfRefSpan(ref componentIndexes);
+            return AllOf(ref componentIndexes);
 
-            int[] AllOfRefSpan(ref Span<ComponentIndex> indexes)
+            int[] AllOf(ref Span<ComponentIndex> indexes)
             {
                 var ints = new int[indexes.Length];
                 for (var i = 0; i < indexes.Length; i++)
@@ -98,9 +98,9 @@ namespace Entitas.Benchmarks
                 new ComponentIndex(5)
             };
 
-            return AllOfRefSpan(Unsafe.As<ComponentIndex[], int[]>(ref componentIndexes));
+            return AllOf(Unsafe.As<ComponentIndex[], int[]>(ref componentIndexes));
 
-            int[] AllOfRefSpan(int[] indexes) => indexes;
+            int[] AllOf(int[] indexes) => indexes;
         }
     }
 
