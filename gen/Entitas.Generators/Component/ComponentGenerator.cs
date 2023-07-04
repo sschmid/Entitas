@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
@@ -13,17 +14,18 @@ namespace Entitas.Generators
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
-            var allComponents = initContext.SyntaxProvider
+            var components = initContext.SyntaxProvider
                 .CreateSyntaxProvider(IsComponentCandidate, CreateComponentDeclarations)
-                .SelectMany((components, _) => components);
+                .Where(components => components is not null)
+                .SelectMany((components, _) => components!.Value);
 
-            var fullNameOrContextChanged = allComponents.WithComparer(new FullNameAndContextComparer());
+            var fullNameOrContextChanged = components.WithComparer(new FullNameAndContextComparer());
             initContext.RegisterSourceOutput(fullNameOrContextChanged, OnFullNameOrContextChanged);
 
-            var fullNameOrMembersOrContextChanged = allComponents.WithComparer(new FullNameAndMembersAndContextComparer());
+            var fullNameOrMembersOrContextChanged = components.WithComparer(new FullNameAndMembersAndContextComparer());
             initContext.RegisterSourceOutput(fullNameOrMembersOrContextChanged, OnFullNameOrMembersOrContextChanged);
 
-            var fullNameOrMembersOrContextOrIsUniqueChanged = allComponents.WithComparer(new FullNameAndMembersAndContextAndIsUniqueComparer());
+            var fullNameOrMembersOrContextOrIsUniqueChanged = components.WithComparer(new FullNameAndMembersAndContextAndIsUniqueComparer());
             initContext.RegisterSourceOutput(fullNameOrMembersOrContextOrIsUniqueChanged, OnFullNameOrMembersOrContextOrIsUniqueChanged);
 
             var contextInitializationMethods = initContext.SyntaxProvider
@@ -31,14 +33,45 @@ namespace Entitas.Generators
                 .Where(method => method is not null)
                 .Select((method, _) => method!.Value);
 
-            var componentsOrderChanged = fullNameOrContextChanged
-                .Collect()
-                .Select((components, _) => components
-                    .OrderBy(component => component.FullName)
-                    .ToImmutableArray());
+            var componentsFromAllAssemblies = initContext.CompilationProvider
+                .Select(static (compilation, cancellationToken) => GetOrderedComponentsFromAllAssemblies(compilation, cancellationToken))
+                .WithComparer(new FullNameAndContextCompilationComparer());
 
-            var lookupChanged = contextInitializationMethods.Combine(componentsOrderChanged);
-            initContext.RegisterSourceOutput(lookupChanged, OnLookupChanged);
+            var contextInitializationChanged = contextInitializationMethods.Combine(componentsFromAllAssemblies);
+            initContext.RegisterSourceOutput(contextInitializationChanged, OnContextInitializationChanged);
+        }
+
+        static ImmutableArray<ComponentDeclaration> GetOrderedComponentsFromAllAssemblies(Compilation compilation, CancellationToken cancellationToken)
+        {
+            var componentInterface = compilation.GetTypeByMetadataName("Entitas.IComponent");
+            if (componentInterface is null)
+                return ImmutableArray<ComponentDeclaration>.Empty;
+
+            var allComponents = new List<ComponentDeclaration>();
+            var stack = new Stack<INamespaceSymbol>();
+            stack.Push(compilation.GlobalNamespace);
+
+            while (stack.Count > 0)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                foreach (var member in stack.Pop().GetMembers())
+                {
+                    if (member is INamespaceSymbol ns)
+                    {
+                        stack.Push(ns);
+                    }
+                    else if (member is INamedTypeSymbol type)
+                    {
+                        var components = CreateComponentDeclarations(type, componentInterface, cancellationToken);
+                        if (components is not null)
+                            allComponents.AddRange(components);
+                    }
+                }
+            }
+
+            return allComponents
+                .OrderBy(component => component.FullName)
+                .ToImmutableArray();
         }
 
         static bool IsComponentCandidate(SyntaxNode node, CancellationToken _)
@@ -60,20 +93,25 @@ namespace Entitas.Generators
                    && !candidate.Modifiers.Any(SyntaxKind.PartialKeyword);
         }
 
-        static ImmutableArray<ComponentDeclaration> CreateComponentDeclarations(GeneratorSyntaxContext syntaxContext, CancellationToken cancellationToken)
+        static ImmutableArray<ComponentDeclaration>? CreateComponentDeclarations(GeneratorSyntaxContext syntaxContext, CancellationToken cancellationToken)
         {
             var candidate = (ClassDeclarationSyntax)syntaxContext.Node;
             var symbol = syntaxContext.SemanticModel.GetDeclaredSymbol(candidate, cancellationToken);
             if (symbol is null)
-                return ImmutableArray<ComponentDeclaration>.Empty;
+                return null;
 
-            var interfaceType = syntaxContext.SemanticModel.Compilation.GetTypeByMetadataName("Entitas.IComponent");
-            if (interfaceType is null)
-                return ImmutableArray<ComponentDeclaration>.Empty;
+            var componentInterface = syntaxContext.SemanticModel.Compilation.GetTypeByMetadataName("Entitas.IComponent");
+            if (componentInterface is null)
+                return null;
 
-            var isComponent = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(interfaceType, SymbolEqualityComparer.Default));
+            return CreateComponentDeclarations(symbol, componentInterface, cancellationToken);
+        }
+
+        static ImmutableArray<ComponentDeclaration>? CreateComponentDeclarations(INamedTypeSymbol symbol, INamedTypeSymbol componentInterface, CancellationToken cancellationToken)
+        {
+            var isComponent = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(componentInterface, SymbolEqualityComparer.Default));
             if (!isComponent)
-                return ImmutableArray<ComponentDeclaration>.Empty;
+                return null;
 
             return symbol.GetAttributes()
                 .Where(attribute => attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.ContextAttribute")
@@ -344,7 +382,7 @@ namespace Entitas.Generators
                 """));
         }
 
-        static void OnLookupChanged(SourceProductionContext spc, (ContextInitializationMethodDeclaration Left, ImmutableArray<ComponentDeclaration> Right) pair)
+        static void OnContextInitializationChanged(SourceProductionContext spc, (ContextInitializationMethodDeclaration Left, ImmutableArray<ComponentDeclaration> Right) pair)
         {
             var (method, components) = pair;
             var componentsForContext = components
