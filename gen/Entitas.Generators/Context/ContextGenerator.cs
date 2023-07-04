@@ -46,11 +46,11 @@ namespace Entitas.Generators
             if (symbol is null)
                 return null;
 
-            var interfaceType = syntaxContext.SemanticModel.Compilation.GetTypeByMetadataName("Entitas.IContext");
-            if (interfaceType is null)
+            var componentInterface = syntaxContext.SemanticModel.Compilation.GetTypeByMetadataName("Entitas.IContext");
+            if (componentInterface is null)
                 return null;
 
-            var isContext = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(interfaceType, SymbolEqualityComparer.Default));
+            var isContext = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(componentInterface, SymbolEqualityComparer.Default));
             if (!isContext)
                 return null;
 

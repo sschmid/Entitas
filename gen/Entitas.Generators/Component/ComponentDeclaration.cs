@@ -50,10 +50,10 @@ namespace Entitas.Generators
             static bool IsAutoProperty(ISymbol symbol, CancellationToken cancellationToken)
             {
                 return symbol is IPropertySymbol { SetMethod: not null, GetMethod: not null } property
-                       && !property.GetMethod.DeclaringSyntaxReferences.First()
-                           .GetSyntax(cancellationToken).DescendantNodes().Any(node => node is MethodDeclarationSyntax)
-                       && !property.SetMethod.DeclaringSyntaxReferences.First()
-                           .GetSyntax(cancellationToken).DescendantNodes().Any(node => node is MethodDeclarationSyntax);
+                       && !property.GetMethod?.DeclaringSyntaxReferences.FirstOrDefault()?
+                           .GetSyntax(cancellationToken).DescendantNodes().Any(node => node is MethodDeclarationSyntax) == true
+                       && !property.SetMethod?.DeclaringSyntaxReferences.FirstOrDefault()?
+                           .GetSyntax(cancellationToken).DescendantNodes().Any(node => node is MethodDeclarationSyntax) == true;
             }
         }
     }
@@ -103,6 +103,21 @@ namespace Entitas.Generators
         public int GetHashCode(ComponentDeclaration component)
         {
             return HashCode.Combine(component.FullName, component.Members, component.Context, component.IsUnique);
+        }
+    }
+
+    class FullNameAndContextCompilationComparer : IEqualityComparer<ImmutableArray<ComponentDeclaration>>
+    {
+        readonly FullNameAndContextComparer _comparer = new FullNameAndContextComparer();
+
+        public bool Equals(ImmutableArray<ComponentDeclaration> x, ImmutableArray<ComponentDeclaration> y)
+        {
+            return x.SequenceEqual(y, _comparer);
+        }
+
+        public int GetHashCode(ImmutableArray<ComponentDeclaration> components)
+        {
+            return components.GetHashCode();
         }
     }
 }
