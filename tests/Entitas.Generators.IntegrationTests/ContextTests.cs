@@ -14,7 +14,7 @@ namespace Entitas.Generators.IntegrationTests
         [Fact]
         public void GeneratesContext()
         {
-            var context = new MyApp.MainContext();
+            var context = new MainContext();
             context.Should().NotBeNull();
             context.Should().BeAssignableTo<Context<MyApp.Main.Entity>>();
         }
