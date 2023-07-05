@@ -16,8 +16,8 @@ namespace Entitas.Generators
         {
             var components = initContext.SyntaxProvider
                 .CreateSyntaxProvider(IsComponentCandidate, CreateComponentDeclarations)
-                .Where(components => components is not null)
-                .SelectMany((components, _) => components!.Value);
+                .Where(static components => components is not null)
+                .SelectMany(static (components, _) => components!.Value);
 
             var fullNameOrContextChanged = components.WithComparer(new FullNameAndContextComparer());
             initContext.RegisterSourceOutput(fullNameOrContextChanged, OnFullNameOrContextChanged);
@@ -28,56 +28,18 @@ namespace Entitas.Generators
             var fullNameOrMembersOrContextOrIsUniqueChanged = components.WithComparer(new FullNameAndMembersAndContextAndIsUniqueComparer());
             initContext.RegisterSourceOutput(fullNameOrMembersOrContextOrIsUniqueChanged, OnFullNameOrMembersOrContextOrIsUniqueChanged);
 
-            var contextInitializationMethods = initContext.SyntaxProvider
+            var contextInitializationChanged = initContext.SyntaxProvider
                 .CreateSyntaxProvider(IsContextInitializationMethodCandidate, CreateContextInitializationMethodDeclaration)
-                .Where(method => method is not null)
-                .Select((method, _) => method!.Value);
+                .Where(static method => method is not null)
+                .Select(static (method, _) => method!.Value);
 
-            var componentsFromAllAssemblies = initContext.CompilationProvider
-                .Select(static (compilation, cancellationToken) => GetOrderedComponentsFromAllAssemblies(compilation, cancellationToken))
-                .WithComparer(new FullNameAndContextCompilationComparer());
-
-            var contextInitializationChanged = contextInitializationMethods.Combine(componentsFromAllAssemblies);
-            initContext.RegisterSourceOutput(contextInitializationChanged, OnContextInitializationChanged);
-        }
-
-        static ImmutableArray<ComponentDeclaration> GetOrderedComponentsFromAllAssemblies(Compilation compilation, CancellationToken cancellationToken)
-        {
-            var componentInterface = compilation.GetTypeByMetadataName("Entitas.IComponent");
-            if (componentInterface is null)
-                return ImmutableArray<ComponentDeclaration>.Empty;
-
-            var allComponents = new List<ComponentDeclaration>();
-            var stack = new Stack<INamespaceSymbol>();
-            stack.Push(compilation.GlobalNamespace);
-
-            while (stack.Count > 0)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                foreach (var member in stack.Pop().GetMembers())
-                {
-                    if (member is INamespaceSymbol ns)
-                    {
-                        stack.Push(ns);
-                    }
-                    else if (member is INamedTypeSymbol type)
-                    {
-                        var components = CreateComponentDeclarations(type, componentInterface, cancellationToken);
-                        if (components is not null)
-                            allComponents.AddRange(components);
-                    }
-                }
-            }
-
-            return allComponents
-                .OrderBy(component => component.FullName)
-                .ToImmutableArray();
+            initContext.RegisterImplementationSourceOutput(contextInitializationChanged, OnContextInitializationChanged);
         }
 
         static bool IsComponentCandidate(SyntaxNode node, CancellationToken _)
         {
             return node is ClassDeclarationSyntax { BaseList.Types.Count: > 0 } candidate
-                   && candidate.BaseList.Types.Any(baseType => baseType.Type switch
+                   && candidate.BaseList.Types.Any(static baseType => baseType.Type switch
                    {
                        IdentifierNameSyntax identifierNameSyntax => identifierNameSyntax.Identifier is { Text: "IComponent" },
                        QualifiedNameSyntax qualifiedNameSyntax => qualifiedNameSyntax is
@@ -104,28 +66,30 @@ namespace Entitas.Generators
             if (componentInterface is null)
                 return null;
 
-            return CreateComponentDeclarations(symbol, componentInterface, cancellationToken);
-        }
-
-        static ImmutableArray<ComponentDeclaration>? CreateComponentDeclarations(INamedTypeSymbol symbol, INamedTypeSymbol componentInterface, CancellationToken cancellationToken)
-        {
-            var isComponent = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(componentInterface, SymbolEqualityComparer.Default));
+            var isComponent = symbol.Interfaces.Contains(componentInterface);
             if (!isComponent)
                 return null;
 
-            return symbol.GetAttributes()
-                .Where(attribute => attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.ContextAttribute")
-                .Select(attribute => attribute.ConstructorArguments.SingleOrDefault())
-                .Where(arg => arg.Type?.ToDisplayString() == "System.Type" && arg.Value is INamedTypeSymbol)
-                .Select(arg => ((INamedTypeSymbol)arg.Value!).ToDisplayString().RemoveSuffix("Context"))
-                .Distinct()
+            return GetContexts(symbol)
                 .Select(context => new ComponentDeclaration(symbol, context, cancellationToken))
                 .ToImmutableArray();
+        }
+
+        static IEnumerable<string> GetContexts(INamedTypeSymbol symbol)
+        {
+            return symbol.GetAttributes()
+                .Where(static attribute => attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.ContextAttribute")
+                .Select(static attribute => attribute.ConstructorArguments.SingleOrDefault())
+                .Where(static arg => arg.Type?.ToDisplayString() == "System.Type" && arg.Value is INamedTypeSymbol)
+                .Select(static arg => ((INamedTypeSymbol)arg.Value!).ToDisplayString())
+                .Distinct();
         }
 
         static bool IsContextInitializationMethodCandidate(SyntaxNode node, CancellationToken _)
         {
             return node is MethodDeclarationSyntax { AttributeLists.Count: > 0 } candidate
+                   && candidate.AttributeLists.Any(static attributeList => attributeList.Attributes
+                       .Any(static attribute => attribute.Name is IdentifierNameSyntax { Identifier.Text: "ContextInitialization" or "ContextInitializationAttribute" }))
                    && candidate.Modifiers.Any(SyntaxKind.PublicKeyword)
                    && candidate.Modifiers.Any(SyntaxKind.StaticKeyword)
                    && candidate.Modifiers.Any(SyntaxKind.PartialKeyword)
@@ -144,17 +108,59 @@ namespace Entitas.Generators
                 return null;
 
             var context = symbol.GetAttributes()
-                .Where(attribute => attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.ContextInitializationAttribute")
-                .Select(attribute => attribute.ConstructorArguments.SingleOrDefault())
-                .Where(arg => arg.Type?.ToDisplayString() == "System.Type" && arg.Value is INamedTypeSymbol)
-                .Select(arg => ((INamedTypeSymbol)arg.Value!).ToDisplayString())
+                .Where(static attribute => attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.ContextInitializationAttribute")
+                .Select(static attribute => attribute.ConstructorArguments.SingleOrDefault())
+                .Where(static arg => arg.Type?.ToDisplayString() == "System.Type" && arg.Value is INamedTypeSymbol)
+                .Select(static arg => ((INamedTypeSymbol)arg.Value!).ToDisplayString())
                 .Distinct()
                 .SingleOrDefault();
 
             if (context is null)
                 return null;
 
-            return new ContextInitializationMethodDeclaration(symbol, context);
+            var components = GetOrderedComponentsFromAllAssemblies(context, syntaxContext.SemanticModel.Compilation, cancellationToken);
+            if (components is null)
+                return null;
+
+            return new ContextInitializationMethodDeclaration(symbol, context, components.Value);
+        }
+
+        static ImmutableArray<ComponentDeclaration>? GetOrderedComponentsFromAllAssemblies(string context, Compilation compilation, CancellationToken cancellationToken)
+        {
+            var componentInterface = compilation.GetTypeByMetadataName("Entitas.IComponent");
+            if (componentInterface is null)
+                return null;
+
+            var allComponents = new List<ComponentDeclaration>();
+            var stack = new Stack<INamespaceSymbol>();
+            stack.Push(compilation.GlobalNamespace);
+
+            while (stack.Count > 0)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                foreach (var member in stack.Pop().GetMembers())
+                {
+                    if (member is INamespaceSymbol ns)
+                    {
+                        stack.Push(ns);
+                    }
+                    else if (member is INamedTypeSymbol symbol)
+                    {
+                        var isComponent = symbol.Interfaces.Contains(componentInterface);
+                        if (!isComponent)
+                            continue;
+
+                        if (!GetContexts(symbol).Contains(context))
+                            continue;
+
+                        allComponents.Add(new ComponentDeclaration(symbol, context, cancellationToken));
+                    }
+                }
+            }
+
+            return allComponents
+                .OrderBy(static component => component.FullName)
+                .ToImmutableArray();
         }
 
         static void OnFullNameOrContextChanged(SourceProductionContext spc, ComponentDeclaration component)
@@ -165,9 +171,9 @@ namespace Entitas.Generators
         static void ComponentIndex(SourceProductionContext spc, ComponentDeclaration component)
         {
             spc.AddSource(
-                GeneratedPath($"{component.FullName}.{component.Context}.ComponentIndex"),
+                GeneratedPath($"{component.FullName}.{component.ContextPrefix}.ComponentIndex"),
                 GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
-                $"using global::{component.Context};\n\n" +
+                $"using global::{component.ContextPrefix};\n\n" +
                 NamespaceDeclaration(component.Namespace,
                     $$"""
                     public static class {{component.ContextAwareComponentPrefix}}ComponentIndex
@@ -275,9 +281,9 @@ namespace Entitas.Generators
             }
 
             spc.AddSource(
-                GeneratedPath($"{component.FullName}.{component.Context}.EntityExtension"),
+                GeneratedPath($"{component.FullName}.{component.ContextPrefix}.EntityExtension"),
                 GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
-                $"using global::{component.Context};\n" +
+                $"using global::{component.ContextPrefix};\n" +
                 $"using static global::{CombinedNamespace(component.Namespace, component.ContextAwareComponentPrefix)}ComponentIndex;\n\n" +
                 NamespaceDeclaration(component.Namespace, content));
         }
@@ -297,12 +303,12 @@ namespace Entitas.Generators
                 content = $$"""
                     public static class {{className}}
                     {
-                        public static bool Has{{component.ComponentPrefix}}(this {{component.Context}}Context context, {{ComponentMethodArgs(component)}})
+                        public static bool Has{{component.ComponentPrefix}}(this {{component.Context}} context, {{ComponentMethodArgs(component)}})
                         {
                             return context.Get{{component.ComponentPrefix}}Entity() != null;
                         }
 
-                        public static Entity Set{{component.ComponentPrefix}}(this {{component.Context}}Context context, {{ComponentMethodArgs(component)}})
+                        public static Entity Set{{component.ComponentPrefix}}(this {{component.Context}} context, {{ComponentMethodArgs(component)}})
                         {
                             var entity = context.Get{{component.ComponentPrefix}}Entity();
                             if (entity == null)
@@ -313,12 +319,12 @@ namespace Entitas.Generators
                             return entity;
                         }
 
-                        public static void Unset{{component.ComponentPrefix}}(this {{component.Context}}Context context)
+                        public static void Unset{{component.ComponentPrefix}}(this {{component.Context}} context)
                         {
                             context.Get{{component.ComponentPrefix}}Entity()?.Destroy();
                         }
 
-                        public static Entity Get{{component.ComponentPrefix}}Entity(this {{component.Context}}Context context)
+                        public static Entity Get{{component.ComponentPrefix}}Entity(this {{component.Context}} context)
                         {
                             return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
                         }
@@ -331,22 +337,22 @@ namespace Entitas.Generators
                 content = $$"""
                     public static class {{className}}
                     {
-                        public static bool Has{{component.ComponentPrefix}}(this {{component.Context}}Context context)
+                        public static bool Has{{component.ComponentPrefix}}(this {{component.Context}} context)
                         {
                             return context.Get{{component.ComponentPrefix}}Entity() != null;
                         }
 
-                        public static Entity Set{{component.ComponentPrefix}}(this {{component.Context}}Context context)
+                        public static Entity Set{{component.ComponentPrefix}}(this {{component.Context}} context)
                         {
                             return context.Get{{component.ComponentPrefix}}Entity() ?? context.CreateEntity().Add{{component.ComponentPrefix}}();
                         }
 
-                        public static void Unset{{component.ComponentPrefix}}(this {{component.Context}}Context context)
+                        public static void Unset{{component.ComponentPrefix}}(this {{component.Context}} context)
                         {
                             context.Get{{component.ComponentPrefix}}Entity()?.Destroy();
                         }
 
-                        public static Entity Get{{component.ComponentPrefix}}Entity(this {{component.Context}}Context context)
+                        public static Entity Get{{component.ComponentPrefix}}Entity(this {{component.Context}} context)
                         {
                             return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
                         }
@@ -356,43 +362,38 @@ namespace Entitas.Generators
             }
 
             spc.AddSource(
-                GeneratedPath($"{component.FullName}.{component.Context}.ContextExtension"),
+                GeneratedPath($"{component.FullName}.{component.ContextPrefix}.ContextExtension"),
                 GeneratedFileHeader(GeneratorSource(nameof(ContextExtension))) +
                 DisableNullable() +
-                $"using global::{component.Context};\n" +
+                $"using global::{component.ContextPrefix};\n" +
                 $"using static global::{CombinedNamespace(component.Namespace, component.ContextAwareComponentPrefix)}ComponentIndex;\n\n" +
                 NamespaceDeclaration(component.Namespace, content));
         }
 
         static string ComponentMethodArgs(ComponentDeclaration component)
         {
-            return string.Join(", ", component.Members.Select(member => $"{member.Type} {member.ValidLowerFirstName}"));
+            return string.Join(", ", component.Members.Select(static member => $"{member.Type} {member.ValidLowerFirstName}"));
         }
 
         static string ComponentMethodParams(ComponentDeclaration component)
         {
-            return string.Join(", ", component.Members.Select(member => $"{member.ValidLowerFirstName}"));
+            return string.Join(", ", component.Members.Select(static member => $"{member.ValidLowerFirstName}"));
         }
 
         static string ComponentValueAssignments(ComponentDeclaration component)
         {
-            return string.Join("\n", component.Members.Select(member =>
+            return string.Join("\n", component.Members.Select(static member =>
                 $$"""
                         component.{{member.Name}} = {{member.ValidLowerFirstName}};
                 """));
         }
 
-        static void OnContextInitializationChanged(SourceProductionContext spc, (ContextInitializationMethodDeclaration Left, ImmutableArray<ComponentDeclaration> Right) pair)
+        static void OnContextInitializationChanged(SourceProductionContext spc, ContextInitializationMethodDeclaration method)
         {
-            var (method, components) = pair;
-            var componentsForContext = components
-                .Where(component => component.Context == method.FullContextPrefix)
-                .ToImmutableArray();
-
-            ContextInitializationMethod(spc, method, componentsForContext);
+            ContextInitializationMethod(spc, method);
         }
 
-        static void ContextInitializationMethod(SourceProductionContext spc, ContextInitializationMethodDeclaration method, ImmutableArray<ComponentDeclaration> components)
+        static void ContextInitializationMethod(SourceProductionContext spc, ContextInitializationMethodDeclaration method)
         {
             spc.AddSource(
                 GeneratedPath(CombinedNamespace(method.Namespace, $"{method.Name}.ContextInitializationMethod")),
@@ -404,16 +405,16 @@ namespace Entitas.Generators
                     {
                         public static partial void {{method.Name}}()
                         {
-                    {{ComponentIndexAssignments(method, components)}}
+                    {{ComponentIndexAssignments(method, method.Components)}}
 
                             {{method.Context}}.ComponentNames = new string[]
                             {
-                    {{ComponentNames(components)}}
+                    {{ComponentNames(method.Components)}}
                             };
 
                             {{method.Context}}.ComponentTypes = new global::System.Type[]
                             {
-                    {{ComponentTypes(components)}}
+                    {{ComponentTypes(method.Components)}}
                             };
                         }
                     }
@@ -431,12 +432,12 @@ namespace Entitas.Generators
 
             static string ComponentNames(ImmutableArray<ComponentDeclaration> components)
             {
-                return string.Join(",\n", components.Select(component => $"            \"{component.FullName.RemoveSuffix("Component")}\""));
+                return string.Join(",\n", components.Select(static component => $"            \"{component.FullName.RemoveSuffix("Component")}\""));
             }
 
             static string ComponentTypes(ImmutableArray<ComponentDeclaration> components)
             {
-                return string.Join(",\n", components.Select(component => $"            typeof(global::{component.FullName})"));
+                return string.Join(",\n", components.Select(static component => $"            typeof(global::{component.FullName})"));
             }
         }
 

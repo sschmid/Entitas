@@ -14,8 +14,8 @@ namespace Entitas.Generators
         {
             var contextChanged = initContext.SyntaxProvider
                 .CreateSyntaxProvider(IsContextCandidate, CreateContextDeclaration)
-                .Where(context => context is not null)
-                .Select((context, _) => context!.Value);
+                .Where(static context => context is not null)
+                .Select(static (context, _) => context!.Value);
 
             initContext.RegisterSourceOutput(contextChanged, OnContextChanged);
         }
@@ -23,7 +23,7 @@ namespace Entitas.Generators
         static bool IsContextCandidate(SyntaxNode node, CancellationToken _)
         {
             return node is ClassDeclarationSyntax { BaseList.Types.Count: > 0 } candidate
-                   && candidate.BaseList.Types.Any(baseType => baseType.Type switch
+                   && candidate.BaseList.Types.Any(static baseType => baseType.Type switch
                    {
                        IdentifierNameSyntax identifierNameSyntax => identifierNameSyntax.Identifier is { Text: "IContext" },
                        QualifiedNameSyntax qualifiedNameSyntax => qualifiedNameSyntax is
@@ -50,7 +50,7 @@ namespace Entitas.Generators
             if (componentInterface is null)
                 return null;
 
-            var isContext = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(componentInterface, SymbolEqualityComparer.Default));
+            var isContext = symbol.Interfaces.Contains(componentInterface);
             if (!isContext)
                 return null;
 
