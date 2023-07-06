@@ -146,7 +146,7 @@ namespace Entitas.Generators.IntegrationTests
         }
 
         [Fact]
-        public void NoUniqueEntityReturnsNull()
+        public void NotSetUniqueEntityReturnsNull()
         {
             _context.GetLoadingEntity().Should().BeNull();
         }
@@ -166,6 +166,21 @@ namespace Entitas.Generators.IntegrationTests
             var user = _context.SetUser("Replaced", 24).GetUser();
             user.Name.Should().Be("Replaced");
             user.Age.Should().Be(24);
+        }
+
+        [Fact]
+        public void GetsComponentOfUniqueEntity()
+        {
+            _context.SetUser("Test", 42);
+            var user = _context.GetUser();
+            user.Name.Should().Be("Test");
+            user.Age.Should().Be(42);
+        }
+
+        [Fact]
+        public void NotSetComponentUniqueEntityReturnsNull()
+        {
+            _context.GetUser().Should().BeNull();
         }
     }
 }

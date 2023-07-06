@@ -36,5 +36,11 @@ public static class MyAppMainUniqueNamespacedContextExtension
     {
         return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
     }
+
+    public static UniqueNamespacedComponent GetUniqueNamespaced(this MyApp.MainContext context)
+    {
+        var entity = context.GetUniqueNamespacedEntity();
+        return entity != null ? entity.GetUniqueNamespaced() : null;
+    }
 }
 }
