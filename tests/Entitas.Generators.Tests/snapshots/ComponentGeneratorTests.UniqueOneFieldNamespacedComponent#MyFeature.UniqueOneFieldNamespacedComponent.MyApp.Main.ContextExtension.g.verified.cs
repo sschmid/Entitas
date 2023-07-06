@@ -42,5 +42,11 @@ public static class MyAppMainUniqueOneFieldNamespacedContextExtension
     {
         return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
     }
+
+    public static UniqueOneFieldNamespacedComponent GetUniqueOneFieldNamespaced(this MyApp.MainContext context)
+    {
+        var entity = context.GetUniqueOneFieldNamespacedEntity();
+        return entity != null ? entity.GetUniqueOneFieldNamespaced() : null;
+    }
 }
 }

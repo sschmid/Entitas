@@ -328,6 +328,12 @@ namespace Entitas.Generators
                         {
                             return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
                         }
+
+                        public static {{component.Name}} Get{{component.ComponentPrefix}}(this {{component.Context}} context)
+                        {
+                            var entity = context.Get{{component.ComponentPrefix}}Entity();
+                            return entity != null ? entity.Get{{component.ComponentPrefix}}() : null;
+                        }
                     }
 
                     """;
@@ -355,6 +361,12 @@ namespace Entitas.Generators
                         public static Entity Get{{component.ComponentPrefix}}Entity(this {{component.Context}} context)
                         {
                             return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
+                        }
+
+                        public static {{component.Name}} Get{{component.ComponentPrefix}}(this {{component.Context}} context)
+                        {
+                            var entity = context.Get{{component.ComponentPrefix}}Entity();
+                            return entity != null ? entity.Get{{component.ComponentPrefix}}() : null;
                         }
                     }
 
