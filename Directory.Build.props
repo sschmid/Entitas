@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <DefaultNetTargetFramework>net7.0</DefaultNetTargetFramework>
+    <DefaultNetTargetFramework>net6.0</DefaultNetTargetFramework>
     <DefaultTargetFramework>netstandard2.1</DefaultTargetFramework>
-    <DefaultTestTargetFramework>net7.0</DefaultTestTargetFramework>
+    <DefaultTestTargetFramework>net6.0</DefaultTestTargetFramework>
     <Deterministic>true</Deterministic>
     <LangVersion>default</LangVersion>
     <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
@@ -26,7 +26,7 @@
 
   <Import Project="Unity3D.props" />
   <PropertyGroup Label="Unity3D">
-    <UnityVersion>2022.3.0f1</UnityVersion>
+    <UnityVersion>2021.3.0f1</UnityVersion>
     <UnityEditor>$(UnityHubPath)/$(UnityVersion)/$(UnityEditorPath)</UnityEditor>
     <UnityEngine>$(UnityHubPath)/$(UnityVersion)/$(UnityEnginePath)</UnityEngine>
   </PropertyGroup>
