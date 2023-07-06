@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -71,8 +70,13 @@ namespace Entitas.Generators
             x.FullName == y.FullName &&
             x.Context == y.Context;
 
-        public int GetHashCode(ComponentDeclaration component) =>
-            HashCode.Combine(component.FullName, component.Context);
+        public int GetHashCode(ComponentDeclaration obj)
+        {
+            unchecked
+            {
+                return (obj.FullName.GetHashCode() * 397) ^ obj.Context.GetHashCode();
+            }
+        }
     }
 
     class FullNameAndMembersAndContextComparer : IEqualityComparer<ComponentDeclaration>
@@ -82,8 +86,16 @@ namespace Entitas.Generators
             x.Members.SequenceEqual(y.Members) &&
             x.Context == y.Context;
 
-        public int GetHashCode(ComponentDeclaration component) =>
-            HashCode.Combine(component.FullName, component.Members, component.Context);
+        public int GetHashCode(ComponentDeclaration obj)
+        {
+            unchecked
+            {
+                var hashCode = obj.FullName.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.Members.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.Context.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 
     class FullNameAndMembersAndContextAndIsUniqueComparer : IEqualityComparer<ComponentDeclaration>
@@ -94,7 +106,16 @@ namespace Entitas.Generators
             x.Context == y.Context &&
             x.IsUnique == y.IsUnique;
 
-        public int GetHashCode(ComponentDeclaration component) =>
-            HashCode.Combine(component.FullName, component.Members, component.Context, component.IsUnique);
+        public int GetHashCode(ComponentDeclaration obj)
+        {
+            unchecked
+            {
+                var hashCode = obj.FullName.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.Members.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.Context.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.IsUnique.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 }

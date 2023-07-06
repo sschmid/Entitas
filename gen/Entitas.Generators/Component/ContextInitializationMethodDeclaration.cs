@@ -41,6 +41,18 @@ namespace Entitas.Generators
             Components.SequenceEqual(other.Components, _comparer);
 
         public override bool Equals(object? obj) => obj is ContextInitializationMethodDeclaration other && Equals(other);
-        public override int GetHashCode() => HashCode.Combine(Namespace, Class, Name, Context, Components);
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = (Namespace != null ? Namespace.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Class.GetHashCode();
+                hashCode = (hashCode * 397) ^ Name.GetHashCode();
+                hashCode = (hashCode * 397) ^ Context.GetHashCode();
+                hashCode = (hashCode * 397) ^ Components.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 }

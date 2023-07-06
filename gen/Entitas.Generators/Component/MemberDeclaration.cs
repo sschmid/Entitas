@@ -38,6 +38,13 @@ namespace Entitas.Generators
             Name == other.Name;
 
         public override bool Equals(object? obj) => obj is MemberDeclaration other && Equals(other);
-        public override int GetHashCode() => HashCode.Combine(Type, Name);
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (Type.GetHashCode() * 397) ^ Name.GetHashCode();
+            }
+        }
     }
 }
