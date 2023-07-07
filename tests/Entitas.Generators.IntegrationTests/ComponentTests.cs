@@ -16,53 +16,46 @@ namespace Entitas.Generators.IntegrationTests
         }
 
         [Fact]
-        public void DoesNotHaveComponent()
+        public void SetsComponent()
         {
             var entity = _context.CreateEntity();
-            entity.HasPosition().Should().BeFalse();
+            entity.SetPosition(1, 2);
+            entity.HasComponent(MyAppMainPositionComponentIndex.Index.Value)
+                .Should().BeTrue();
         }
 
         [Fact]
-        public void AddComponent()
+        public void GetsComponent()
         {
             var entity = _context.CreateEntity();
-            entity.AddPosition(1, 2);
-            entity.HasComponent(MyAppMainPositionComponentIndex.Index.Value);
-        }
+            entity.SetPosition(1, 2);
 
-        [Fact]
-        public void HasComponent()
-        {
-            var entity = _context.CreateEntity();
-            entity.AddPosition(1, 2);
-            entity.HasPosition().Should().BeTrue();
-        }
-
-        [Fact]
-        public void GetComponent()
-        {
-            var entity = _context.CreateEntity();
-            entity.AddPosition(1, 2);
-
-            var position = entity.GetPosition();
+            var position = entity.GetPosition()!;
             position.X.Should().Be(1);
             position.Y.Should().Be(2);
         }
 
         [Fact]
-        public void ReplaceComponent()
+        public void GettingNonExistingComponentReturnNull()
         {
             var entity = _context.CreateEntity();
-            entity.AddPosition(1, 2);
-            entity.ReplacePosition(3, 4);
+            entity.GetPosition().Should().BeNull();
+        }
 
-            var position = entity.GetPosition();
+        [Fact]
+        public void ReplacesComponent()
+        {
+            var entity = _context.CreateEntity();
+            entity.SetPosition(1, 2);
+            entity.SetPosition(3, 4);
+
+            var position = entity.GetPosition()!;
             position.X.Should().Be(3);
             position.Y.Should().Be(4);
         }
 
         [Fact]
-        public void AddComponentUsesComponentPool()
+        public void SetComponentUsesComponentPool()
         {
             var component = new PositionComponent { X = 1, Y = 2 };
             var entity = _context.CreateEntity();
@@ -70,45 +63,54 @@ namespace Entitas.Generators.IntegrationTests
                 .GetComponentPool(MyAppMainPositionComponentIndex.Index.Value)
                 .Push(component);
 
-            entity.AddPosition(3, 4);
+            entity.SetPosition(3, 4);
             entity.GetPosition().Should().BeSameAs(component);
         }
 
         [Fact]
-        public void ReplaceComponentUsesComponentPool()
+        public void UnsetsComponent()
         {
-            var component = new PositionComponent { X = 1, Y = 2 };
             var entity = _context.CreateEntity();
-            entity.AddPosition(3, 4);
-            entity
-                .GetComponentPool(MyAppMainPositionComponentIndex.Index.Value)
-                .Push(component);
-
-            entity.ReplacePosition(5, 6);
-            entity.GetPosition().Should().BeSameAs(component);
+            entity.SetPosition(1, 2);
+            entity.UnsetPosition();
+            entity.HasComponent(MyAppMainPositionComponentIndex.Index.Value)
+                .Should().BeFalse();
         }
 
         [Fact]
-        public void UsesSingleComponent()
+        public void UnsettingNonExistingComponentDoesNothing()
+        {
+            _context.CreateEntity().UnsetPosition();
+        }
+
+        [Fact]
+        public void FlagComponentsUseSingleComponent()
         {
             var entity1 = _context
                 .CreateEntity()
-                .AddMovable();
+                .SetMovable();
 
             var entity2 = _context
                 .CreateEntity()
-                .AddMovable();
+                .SetMovable();
 
             entity1.GetMovable().Should().BeSameAs(entity2.GetMovable());
         }
 
+        /*
+         * Unique
+         */
+
         [Fact]
         public void SetsUniqueEntity()
         {
-            _context.HasLoading().Should().BeFalse();
-            var entity = _context.SetLoading();
-            _context.HasLoading().Should().BeTrue();
-            entity.HasLoading().Should().BeTrue();
+            _context.GetLoadingEntity().Should().BeNull();
+            _context.GetLoading().Should().BeNull();
+
+            _context.SetLoading();
+
+            _context.GetLoadingEntity().Should().NotBeNull();
+            _context.GetLoading().Should().NotBeNull();
         }
 
         [Fact]
@@ -118,25 +120,18 @@ namespace Entitas.Generators.IntegrationTests
         }
 
         [Fact]
-        public void UnsetsAndDestroysUniqueEntity()
+        public void UnsettingDestroysUniqueEntity()
         {
             var entity = _context.SetLoading();
             _context.UnsetLoading();
-            _context.HasLoading().Should().BeFalse();
+            _context.GetLoadingEntity().Should().BeNull();
             entity.isEnabled.Should().BeFalse();
         }
 
         [Fact]
-        public void CanUnsetsEvenIfNotSetBefore()
+        public void UnsettingNonExistingEntityDoesNothing()
         {
             _context.UnsetLoading();
-            _context.HasLoading().Should().BeFalse();
-        }
-
-        [Fact]
-        public void HasNoUniqueEntity()
-        {
-            _context.HasLoading().Should().BeFalse();
         }
 
         [Fact]
@@ -154,7 +149,8 @@ namespace Entitas.Generators.IntegrationTests
         [Fact]
         public void SetsValuesOfUniqueEntity()
         {
-            var user = _context.SetUser("Test", 42).GetUser();
+            _context.SetUser("Test", 42);
+            var user = _context.GetUserEntity()!.GetUser()!;
             user.Name.Should().Be("Test");
             user.Age.Should().Be(42);
         }
@@ -163,7 +159,8 @@ namespace Entitas.Generators.IntegrationTests
         public void SetsNewValuesOfUniqueEntity()
         {
             _context.SetUser("Test", 42);
-            var user = _context.SetUser("Replaced", 24).GetUser();
+            _context.SetUser("Replaced", 24);
+            var user = _context.GetUserEntity()!.GetUser()!;
             user.Name.Should().Be("Replaced");
             user.Age.Should().Be(24);
         }
@@ -172,7 +169,7 @@ namespace Entitas.Generators.IntegrationTests
         public void GetsComponentOfUniqueEntity()
         {
             _context.SetUser("Test", 42);
-            var user = _context.GetUser();
+            var user = _context.GetUser()!;
             user.Name.Should().Be("Test");
             user.Age.Should().Be(42);
         }

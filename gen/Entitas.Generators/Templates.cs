@@ -46,9 +46,9 @@ namespace Entitas.Generators
                 : str;
         }
 
-        public static string DisableNullable()
+        public static string EnableNullable()
         {
-            return "#nullable disable\n\n";
+            return "#nullable enable\n\n";
         }
     }
 }

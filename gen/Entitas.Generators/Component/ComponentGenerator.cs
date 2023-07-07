@@ -198,24 +198,7 @@ namespace Entitas.Generators
                 content = $$"""
                     public static class {{className}}
                     {
-                        public static bool Has{{component.ComponentPrefix}}(this Entity entity)
-                        {
-                            return entity.HasComponent(Index.Value);
-                        }
-
-                        public static Entity Add{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
-                        {
-                            var index = Index.Value;
-                            var componentPool = entity.GetComponentPool(index);
-                            var component = componentPool.Count > 0
-                                ? ({{component.Name}})componentPool.Pop()
-                                : new {{component.Name}}();
-                    {{ComponentValueAssignments(component)}}
-                            entity.AddComponent(index, component);
-                            return entity;
-                        }
-
-                        public static Entity Replace{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
+                        public static Entity Set{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
                         {
                             var index = Index.Value;
                             var componentPool = entity.GetComponentPool(index);
@@ -227,15 +210,19 @@ namespace Entitas.Generators
                             return entity;
                         }
 
-                        public static Entity Remove{{component.ComponentPrefix}}(this Entity entity)
+                        public static Entity Unset{{component.ComponentPrefix}}(this Entity entity)
                         {
-                            entity.RemoveComponent(Index.Value);
+                            if (entity.HasComponent(Index.Value))
+                                entity.RemoveComponent(Index.Value);
+
                             return entity;
                         }
 
-                        public static {{component.Name}} Get{{component.ComponentPrefix}}(this Entity entity)
+                        public static {{component.Name}}? Get{{component.ComponentPrefix}}(this Entity entity)
                         {
-                            return ({{component.Name}})entity.GetComponent(Index.Value);
+                            return entity.HasComponent(Index.Value)
+                                ? ({{component.Name}})entity.GetComponent(Index.Value)
+                                : null;
                         }
                     }
 
@@ -248,32 +235,25 @@ namespace Entitas.Generators
                     {
                         static readonly {{component.Name}} Single{{component.Name}} = new {{component.Name}}();
 
-                        public static bool Has{{component.ComponentPrefix}}(this Entity entity)
-                        {
-                            return entity.HasComponent(Index.Value);
-                        }
-
-                        public static Entity Add{{component.ComponentPrefix}}(this Entity entity)
-                        {
-                            entity.AddComponent(Index.Value, Single{{component.Name}});
-                            return entity;
-                        }
-
-                        public static Entity Replace{{component.ComponentPrefix}}(this Entity entity)
+                        public static Entity Set{{component.ComponentPrefix}}(this Entity entity)
                         {
                             entity.ReplaceComponent(Index.Value, Single{{component.Name}});
                             return entity;
                         }
 
-                        public static Entity Remove{{component.ComponentPrefix}}(this Entity entity)
+                        public static Entity Unset{{component.ComponentPrefix}}(this Entity entity)
                         {
-                            entity.RemoveComponent(Index.Value);
+                            if (entity.HasComponent(Index.Value))
+                                entity.RemoveComponent(Index.Value);
+
                             return entity;
                         }
 
-                        public static {{component.Name}} Get{{component.ComponentPrefix}}(this Entity entity)
+                        public static {{component.Name}}? Get{{component.ComponentPrefix}}(this Entity entity)
                         {
-                            return ({{component.Name}})entity.GetComponent(Index.Value);
+                            return entity.HasComponent(Index.Value)
+                                ? ({{component.Name}})entity.GetComponent(Index.Value)
+                                : null;
                         }
                     }
 
@@ -283,6 +263,7 @@ namespace Entitas.Generators
             spc.AddSource(
                 GeneratedPath($"{component.FullName}.{component.ContextPrefix}.EntityExtension"),
                 GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
+                EnableNullable() +
                 $"using global::{component.ContextPrefix};\n" +
                 $"using static global::{CombinedNamespace(component.Namespace, component.ContextAwareComponentPrefix)}ComponentIndex;\n\n" +
                 NamespaceDeclaration(component.Namespace, content));
@@ -303,19 +284,10 @@ namespace Entitas.Generators
                 content = $$"""
                     public static class {{className}}
                     {
-                        public static bool Has{{component.ComponentPrefix}}(this {{component.Context}} context, {{ComponentMethodArgs(component)}})
-                        {
-                            return context.Get{{component.ComponentPrefix}}Entity() != null;
-                        }
-
                         public static Entity Set{{component.ComponentPrefix}}(this {{component.Context}} context, {{ComponentMethodArgs(component)}})
                         {
-                            var entity = context.Get{{component.ComponentPrefix}}Entity();
-                            if (entity == null)
-                                entity = context.CreateEntity().Add{{component.ComponentPrefix}}({{ComponentMethodParams(component)}});
-                            else
-                                entity.Replace{{component.ComponentPrefix}}({{ComponentMethodParams(component)}});
-
+                            var entity = context.Get{{component.ComponentPrefix}}Entity() ?? context.CreateEntity();
+                            entity.Set{{component.ComponentPrefix}}({{ComponentMethodParams(component)}});
                             return entity;
                         }
 
@@ -324,15 +296,14 @@ namespace Entitas.Generators
                             context.Get{{component.ComponentPrefix}}Entity()?.Destroy();
                         }
 
-                        public static Entity Get{{component.ComponentPrefix}}Entity(this {{component.Context}} context)
+                        public static Entity? Get{{component.ComponentPrefix}}Entity(this {{component.Context}} context)
                         {
                             return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
                         }
 
-                        public static {{component.Name}} Get{{component.ComponentPrefix}}(this {{component.Context}} context)
+                        public static {{component.Name}}? Get{{component.ComponentPrefix}}(this {{component.Context}} context)
                         {
-                            var entity = context.Get{{component.ComponentPrefix}}Entity();
-                            return entity != null ? entity.Get{{component.ComponentPrefix}}() : null;
+                            return context.Get{{component.ComponentPrefix}}Entity()?.Get{{component.ComponentPrefix}}();
                         }
                     }
 
@@ -343,14 +314,9 @@ namespace Entitas.Generators
                 content = $$"""
                     public static class {{className}}
                     {
-                        public static bool Has{{component.ComponentPrefix}}(this {{component.Context}} context)
-                        {
-                            return context.Get{{component.ComponentPrefix}}Entity() != null;
-                        }
-
                         public static Entity Set{{component.ComponentPrefix}}(this {{component.Context}} context)
                         {
-                            return context.Get{{component.ComponentPrefix}}Entity() ?? context.CreateEntity().Add{{component.ComponentPrefix}}();
+                            return context.Get{{component.ComponentPrefix}}Entity() ?? context.CreateEntity().Set{{component.ComponentPrefix}}();
                         }
 
                         public static void Unset{{component.ComponentPrefix}}(this {{component.Context}} context)
@@ -358,15 +324,14 @@ namespace Entitas.Generators
                             context.Get{{component.ComponentPrefix}}Entity()?.Destroy();
                         }
 
-                        public static Entity Get{{component.ComponentPrefix}}Entity(this {{component.Context}} context)
+                        public static Entity? Get{{component.ComponentPrefix}}Entity(this {{component.Context}} context)
                         {
                             return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
                         }
 
-                        public static {{component.Name}} Get{{component.ComponentPrefix}}(this {{component.Context}} context)
+                        public static {{component.Name}}? Get{{component.ComponentPrefix}}(this {{component.Context}} context)
                         {
-                            var entity = context.Get{{component.ComponentPrefix}}Entity();
-                            return entity != null ? entity.Get{{component.ComponentPrefix}}() : null;
+                            return context.Get{{component.ComponentPrefix}}Entity()?.Get{{component.ComponentPrefix}}();
                         }
                     }
 
@@ -376,7 +341,7 @@ namespace Entitas.Generators
             spc.AddSource(
                 GeneratedPath($"{component.FullName}.{component.ContextPrefix}.ContextExtension"),
                 GeneratedFileHeader(GeneratorSource(nameof(ContextExtension))) +
-                DisableNullable() +
+                EnableNullable() +
                 $"using global::{component.ContextPrefix};\n" +
                 $"using static global::{CombinedNamespace(component.Namespace, component.ContextAwareComponentPrefix)}ComponentIndex;\n\n" +
                 NamespaceDeclaration(component.Namespace, content));
