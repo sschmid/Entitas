@@ -8,6 +8,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+#nullable enable
+
 using global::MyApp.Main;
 using static global::MyAppMainSomeComponentIndex;
 
@@ -15,31 +17,24 @@ public static class MyAppMainSomeEntityExtension
 {
     static readonly SomeComponent SingleSomeComponent = new SomeComponent();
 
-    public static bool HasSome(this Entity entity)
-    {
-        return entity.HasComponent(Index.Value);
-    }
-
-    public static Entity AddSome(this Entity entity)
-    {
-        entity.AddComponent(Index.Value, SingleSomeComponent);
-        return entity;
-    }
-
-    public static Entity ReplaceSome(this Entity entity)
+    public static Entity SetSome(this Entity entity)
     {
         entity.ReplaceComponent(Index.Value, SingleSomeComponent);
         return entity;
     }
 
-    public static Entity RemoveSome(this Entity entity)
+    public static Entity UnsetSome(this Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        if (entity.HasComponent(Index.Value))
+            entity.RemoveComponent(Index.Value);
+
         return entity;
     }
 
-    public static SomeComponent GetSome(this Entity entity)
+    public static SomeComponent? GetSome(this Entity entity)
     {
-        return (SomeComponent)entity.GetComponent(Index.Value);
+        return entity.HasComponent(Index.Value)
+            ? (SomeComponent)entity.GetComponent(Index.Value)
+            : null;
     }
 }

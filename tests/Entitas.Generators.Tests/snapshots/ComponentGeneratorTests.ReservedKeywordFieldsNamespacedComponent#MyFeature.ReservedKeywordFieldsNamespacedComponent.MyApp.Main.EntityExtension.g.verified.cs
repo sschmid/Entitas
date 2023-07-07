@@ -8,6 +8,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+#nullable enable
+
 using global::MyApp.Main;
 using static global::MyFeature.MyAppMainReservedKeywordFieldsNamespacedComponentIndex;
 
@@ -15,26 +17,7 @@ namespace MyFeature
 {
 public static class MyAppMainReservedKeywordFieldsNamespacedEntityExtension
 {
-    public static bool HasReservedKeywordFieldsNamespaced(this Entity entity)
-    {
-        return entity.HasComponent(Index.Value);
-    }
-
-    public static Entity AddReservedKeywordFieldsNamespaced(this Entity entity, string @namespace, string @class, string @public)
-    {
-        var index = Index.Value;
-        var componentPool = entity.GetComponentPool(index);
-        var component = componentPool.Count > 0
-            ? (ReservedKeywordFieldsNamespacedComponent)componentPool.Pop()
-            : new ReservedKeywordFieldsNamespacedComponent();
-        component.Namespace = @namespace;
-        component.Class = @class;
-        component.Public = @public;
-        entity.AddComponent(index, component);
-        return entity;
-    }
-
-    public static Entity ReplaceReservedKeywordFieldsNamespaced(this Entity entity, string @namespace, string @class, string @public)
+    public static Entity SetReservedKeywordFieldsNamespaced(this Entity entity, string @namespace, string @class, string @public)
     {
         var index = Index.Value;
         var componentPool = entity.GetComponentPool(index);
@@ -48,15 +31,19 @@ public static class MyAppMainReservedKeywordFieldsNamespacedEntityExtension
         return entity;
     }
 
-    public static Entity RemoveReservedKeywordFieldsNamespaced(this Entity entity)
+    public static Entity UnsetReservedKeywordFieldsNamespaced(this Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        if (entity.HasComponent(Index.Value))
+            entity.RemoveComponent(Index.Value);
+
         return entity;
     }
 
-    public static ReservedKeywordFieldsNamespacedComponent GetReservedKeywordFieldsNamespaced(this Entity entity)
+    public static ReservedKeywordFieldsNamespacedComponent? GetReservedKeywordFieldsNamespaced(this Entity entity)
     {
-        return (ReservedKeywordFieldsNamespacedComponent)entity.GetComponent(Index.Value);
+        return entity.HasComponent(Index.Value)
+            ? (ReservedKeywordFieldsNamespacedComponent)entity.GetComponent(Index.Value)
+            : null;
     }
 }
 }

@@ -8,6 +8,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+#nullable enable
+
 using global::MyApp.Main;
 using static global::MyFeature.MyAppMainSomeNamespacedComponentIndex;
 
@@ -17,32 +19,25 @@ public static class MyAppMainSomeNamespacedEntityExtension
 {
     static readonly SomeNamespacedComponent SingleSomeNamespacedComponent = new SomeNamespacedComponent();
 
-    public static bool HasSomeNamespaced(this Entity entity)
-    {
-        return entity.HasComponent(Index.Value);
-    }
-
-    public static Entity AddSomeNamespaced(this Entity entity)
-    {
-        entity.AddComponent(Index.Value, SingleSomeNamespacedComponent);
-        return entity;
-    }
-
-    public static Entity ReplaceSomeNamespaced(this Entity entity)
+    public static Entity SetSomeNamespaced(this Entity entity)
     {
         entity.ReplaceComponent(Index.Value, SingleSomeNamespacedComponent);
         return entity;
     }
 
-    public static Entity RemoveSomeNamespaced(this Entity entity)
+    public static Entity UnsetSomeNamespaced(this Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        if (entity.HasComponent(Index.Value))
+            entity.RemoveComponent(Index.Value);
+
         return entity;
     }
 
-    public static SomeNamespacedComponent GetSomeNamespaced(this Entity entity)
+    public static SomeNamespacedComponent? GetSomeNamespaced(this Entity entity)
     {
-        return (SomeNamespacedComponent)entity.GetComponent(Index.Value);
+        return entity.HasComponent(Index.Value)
+            ? (SomeNamespacedComponent)entity.GetComponent(Index.Value)
+            : null;
     }
 }
 }

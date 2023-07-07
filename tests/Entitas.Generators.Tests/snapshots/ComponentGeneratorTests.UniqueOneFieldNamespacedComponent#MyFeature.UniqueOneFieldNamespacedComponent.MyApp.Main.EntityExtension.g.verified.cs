@@ -8,6 +8,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+#nullable enable
+
 using global::MyApp.Main;
 using static global::MyFeature.MyAppMainUniqueOneFieldNamespacedComponentIndex;
 
@@ -15,24 +17,7 @@ namespace MyFeature
 {
 public static class MyAppMainUniqueOneFieldNamespacedEntityExtension
 {
-    public static bool HasUniqueOneFieldNamespaced(this Entity entity)
-    {
-        return entity.HasComponent(Index.Value);
-    }
-
-    public static Entity AddUniqueOneFieldNamespaced(this Entity entity, string value)
-    {
-        var index = Index.Value;
-        var componentPool = entity.GetComponentPool(index);
-        var component = componentPool.Count > 0
-            ? (UniqueOneFieldNamespacedComponent)componentPool.Pop()
-            : new UniqueOneFieldNamespacedComponent();
-        component.Value = value;
-        entity.AddComponent(index, component);
-        return entity;
-    }
-
-    public static Entity ReplaceUniqueOneFieldNamespaced(this Entity entity, string value)
+    public static Entity SetUniqueOneFieldNamespaced(this Entity entity, string value)
     {
         var index = Index.Value;
         var componentPool = entity.GetComponentPool(index);
@@ -44,15 +29,19 @@ public static class MyAppMainUniqueOneFieldNamespacedEntityExtension
         return entity;
     }
 
-    public static Entity RemoveUniqueOneFieldNamespaced(this Entity entity)
+    public static Entity UnsetUniqueOneFieldNamespaced(this Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        if (entity.HasComponent(Index.Value))
+            entity.RemoveComponent(Index.Value);
+
         return entity;
     }
 
-    public static UniqueOneFieldNamespacedComponent GetUniqueOneFieldNamespaced(this Entity entity)
+    public static UniqueOneFieldNamespacedComponent? GetUniqueOneFieldNamespaced(this Entity entity)
     {
-        return (UniqueOneFieldNamespacedComponent)entity.GetComponent(Index.Value);
+        return entity.HasComponent(Index.Value)
+            ? (UniqueOneFieldNamespacedComponent)entity.GetComponent(Index.Value)
+            : null;
     }
 }
 }

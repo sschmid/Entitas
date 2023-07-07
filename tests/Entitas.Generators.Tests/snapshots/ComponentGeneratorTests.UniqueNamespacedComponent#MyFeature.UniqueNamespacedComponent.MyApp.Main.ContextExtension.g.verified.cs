@@ -8,23 +8,17 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-#nullable disable
+#nullable enable
 
 using global::MyApp.Main;
-using static global::MyFeature.MyAppMainUniqueNamespacedComponentIndex;
 
 namespace MyFeature
 {
 public static class MyAppMainUniqueNamespacedContextExtension
 {
-    public static bool HasUniqueNamespaced(this MyApp.MainContext context)
-    {
-        return context.GetUniqueNamespacedEntity() != null;
-    }
-
     public static Entity SetUniqueNamespaced(this MyApp.MainContext context)
     {
-        return context.GetUniqueNamespacedEntity() ?? context.CreateEntity().AddUniqueNamespaced();
+        return context.GetUniqueNamespacedEntity() ?? context.CreateEntity().SetUniqueNamespaced();
     }
 
     public static void UnsetUniqueNamespaced(this MyApp.MainContext context)
@@ -32,15 +26,14 @@ public static class MyAppMainUniqueNamespacedContextExtension
         context.GetUniqueNamespacedEntity()?.Destroy();
     }
 
-    public static Entity GetUniqueNamespacedEntity(this MyApp.MainContext context)
+    public static Entity? GetUniqueNamespacedEntity(this MyApp.MainContext context)
     {
-        return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
+        return context.GetGroup(MyAppMainUniqueNamespacedMatcher.UniqueNamespaced).GetSingleEntity();
     }
 
-    public static UniqueNamespacedComponent GetUniqueNamespaced(this MyApp.MainContext context)
+    public static UniqueNamespacedComponent? GetUniqueNamespaced(this MyApp.MainContext context)
     {
-        var entity = context.GetUniqueNamespacedEntity();
-        return entity != null ? entity.GetUniqueNamespaced() : null;
+        return context.GetUniqueNamespacedEntity()?.GetUniqueNamespaced();
     }
 }
 }

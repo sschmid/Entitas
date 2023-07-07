@@ -8,6 +8,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+#nullable enable
+
 using global::MyApp.Main;
 using static global::MyFeature.MyAppMainOneFieldNamespacedComponentIndex;
 
@@ -15,24 +17,7 @@ namespace MyFeature
 {
 public static class MyAppMainOneFieldNamespacedEntityExtension
 {
-    public static bool HasOneFieldNamespaced(this Entity entity)
-    {
-        return entity.HasComponent(Index.Value);
-    }
-
-    public static Entity AddOneFieldNamespaced(this Entity entity, string value)
-    {
-        var index = Index.Value;
-        var componentPool = entity.GetComponentPool(index);
-        var component = componentPool.Count > 0
-            ? (OneFieldNamespacedComponent)componentPool.Pop()
-            : new OneFieldNamespacedComponent();
-        component.Value = value;
-        entity.AddComponent(index, component);
-        return entity;
-    }
-
-    public static Entity ReplaceOneFieldNamespaced(this Entity entity, string value)
+    public static Entity SetOneFieldNamespaced(this Entity entity, string value)
     {
         var index = Index.Value;
         var componentPool = entity.GetComponentPool(index);
@@ -44,15 +29,19 @@ public static class MyAppMainOneFieldNamespacedEntityExtension
         return entity;
     }
 
-    public static Entity RemoveOneFieldNamespaced(this Entity entity)
+    public static Entity UnsetOneFieldNamespaced(this Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        if (entity.HasComponent(Index.Value))
+            entity.RemoveComponent(Index.Value);
+
         return entity;
     }
 
-    public static OneFieldNamespacedComponent GetOneFieldNamespaced(this Entity entity)
+    public static OneFieldNamespacedComponent? GetOneFieldNamespaced(this Entity entity)
     {
-        return (OneFieldNamespacedComponent)entity.GetComponent(Index.Value);
+        return entity.HasComponent(Index.Value)
+            ? (OneFieldNamespacedComponent)entity.GetComponent(Index.Value)
+            : null;
     }
 }
 }

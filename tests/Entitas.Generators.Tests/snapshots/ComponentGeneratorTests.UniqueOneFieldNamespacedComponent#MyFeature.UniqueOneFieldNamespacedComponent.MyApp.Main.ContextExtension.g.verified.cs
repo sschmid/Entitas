@@ -8,28 +8,18 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-#nullable disable
+#nullable enable
 
 using global::MyApp.Main;
-using static global::MyFeature.MyAppMainUniqueOneFieldNamespacedComponentIndex;
 
 namespace MyFeature
 {
 public static class MyAppMainUniqueOneFieldNamespacedContextExtension
 {
-    public static bool HasUniqueOneFieldNamespaced(this MyApp.MainContext context, string value)
-    {
-        return context.GetUniqueOneFieldNamespacedEntity() != null;
-    }
-
     public static Entity SetUniqueOneFieldNamespaced(this MyApp.MainContext context, string value)
     {
-        var entity = context.GetUniqueOneFieldNamespacedEntity();
-        if (entity == null)
-            entity = context.CreateEntity().AddUniqueOneFieldNamespaced(value);
-        else
-            entity.ReplaceUniqueOneFieldNamespaced(value);
-
+        var entity = context.GetUniqueOneFieldNamespacedEntity() ?? context.CreateEntity();
+        entity.SetUniqueOneFieldNamespaced(value);
         return entity;
     }
 
@@ -38,15 +28,14 @@ public static class MyAppMainUniqueOneFieldNamespacedContextExtension
         context.GetUniqueOneFieldNamespacedEntity()?.Destroy();
     }
 
-    public static Entity GetUniqueOneFieldNamespacedEntity(this MyApp.MainContext context)
+    public static Entity? GetUniqueOneFieldNamespacedEntity(this MyApp.MainContext context)
     {
-        return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
+        return context.GetGroup(MyAppMainUniqueOneFieldNamespacedMatcher.UniqueOneFieldNamespaced).GetSingleEntity();
     }
 
-    public static UniqueOneFieldNamespacedComponent GetUniqueOneFieldNamespaced(this MyApp.MainContext context)
+    public static UniqueOneFieldNamespacedComponent? GetUniqueOneFieldNamespaced(this MyApp.MainContext context)
     {
-        var entity = context.GetUniqueOneFieldNamespacedEntity();
-        return entity != null ? entity.GetUniqueOneFieldNamespaced() : null;
+        return context.GetUniqueOneFieldNamespacedEntity()?.GetUniqueOneFieldNamespaced();
     }
 }
 }

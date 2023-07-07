@@ -8,6 +8,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+#nullable enable
+
 using global::MyApp.Main;
 using static global::MyFeature.MyAppMainDuplicatedContextsNamespacedComponentIndex;
 
@@ -17,32 +19,25 @@ public static class MyAppMainDuplicatedContextsNamespacedEntityExtension
 {
     static readonly DuplicatedContextsNamespacedComponent SingleDuplicatedContextsNamespacedComponent = new DuplicatedContextsNamespacedComponent();
 
-    public static bool HasDuplicatedContextsNamespaced(this Entity entity)
-    {
-        return entity.HasComponent(Index.Value);
-    }
-
-    public static Entity AddDuplicatedContextsNamespaced(this Entity entity)
-    {
-        entity.AddComponent(Index.Value, SingleDuplicatedContextsNamespacedComponent);
-        return entity;
-    }
-
-    public static Entity ReplaceDuplicatedContextsNamespaced(this Entity entity)
+    public static Entity SetDuplicatedContextsNamespaced(this Entity entity)
     {
         entity.ReplaceComponent(Index.Value, SingleDuplicatedContextsNamespacedComponent);
         return entity;
     }
 
-    public static Entity RemoveDuplicatedContextsNamespaced(this Entity entity)
+    public static Entity UnsetDuplicatedContextsNamespaced(this Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        if (entity.HasComponent(Index.Value))
+            entity.RemoveComponent(Index.Value);
+
         return entity;
     }
 
-    public static DuplicatedContextsNamespacedComponent GetDuplicatedContextsNamespaced(this Entity entity)
+    public static DuplicatedContextsNamespacedComponent? GetDuplicatedContextsNamespaced(this Entity entity)
     {
-        return (DuplicatedContextsNamespacedComponent)entity.GetComponent(Index.Value);
+        return entity.HasComponent(Index.Value)
+            ? (DuplicatedContextsNamespacedComponent)entity.GetComponent(Index.Value)
+            : null;
     }
 }
 }

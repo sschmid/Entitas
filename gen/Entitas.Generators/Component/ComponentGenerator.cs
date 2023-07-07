@@ -166,6 +166,7 @@ namespace Entitas.Generators
         static void OnFullNameOrContextChanged(SourceProductionContext spc, ComponentDeclaration component)
         {
             ComponentIndex(spc, component);
+            Matcher(spc, component);
         }
 
         static void ComponentIndex(SourceProductionContext spc, ComponentDeclaration component)
@@ -179,6 +180,39 @@ namespace Entitas.Generators
                     public static class {{component.ContextAwareComponentPrefix}}ComponentIndex
                     {
                         public static ComponentIndex Index;
+                    }
+
+                    """));
+        }
+
+        static void Matcher(SourceProductionContext spc, ComponentDeclaration component)
+        {
+            spc.AddSource(
+                GeneratedPath($"{component.FullName}.{component.ContextPrefix}.Matcher"),
+                GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
+                EnableNullable() +
+                $"using global::{component.ContextPrefix};\n" +
+                $"using static global::{CombinedNamespace(component.Namespace, component.ContextAwareComponentPrefix)}ComponentIndex;\n\n" +
+                NamespaceDeclaration(component.Namespace,
+                    $$"""
+                    public sealed class {{component.ContextAwareComponentPrefix}}Matcher
+                    {
+                        static global::Entitas.IMatcher<Entity>? _matcher;
+
+                        public static global::Entitas.IMatcher<Entity> {{component.ComponentPrefix}}
+                        {
+                            get
+                            {
+                                if (_matcher == null)
+                                {
+                                    var matcher = (global::Entitas.Matcher<Entity>)global::Entitas.Matcher<Entity>.AllOf(Index.Value);
+                                    matcher.componentNames = {{component.Context}}.ComponentNames;
+                                    _matcher = matcher;
+                                }
+
+                                return _matcher;
+                            }
+                        }
                     }
 
                     """));
@@ -298,7 +332,7 @@ namespace Entitas.Generators
 
                         public static Entity? Get{{component.ComponentPrefix}}Entity(this {{component.Context}} context)
                         {
-                            return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
+                            return context.GetGroup({{component.ContextAwareComponentPrefix}}Matcher.{{component.ComponentPrefix}}).GetSingleEntity();
                         }
 
                         public static {{component.Name}}? Get{{component.ComponentPrefix}}(this {{component.Context}} context)
@@ -326,7 +360,7 @@ namespace Entitas.Generators
 
                         public static Entity? Get{{component.ComponentPrefix}}Entity(this {{component.Context}} context)
                         {
-                            return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
+                            return context.GetGroup({{component.ContextAwareComponentPrefix}}Matcher.{{component.ComponentPrefix}}).GetSingleEntity();
                         }
 
                         public static {{component.Name}}? Get{{component.ComponentPrefix}}(this {{component.Context}} context)
@@ -342,8 +376,7 @@ namespace Entitas.Generators
                 GeneratedPath($"{component.FullName}.{component.ContextPrefix}.ContextExtension"),
                 GeneratedFileHeader(GeneratorSource(nameof(ContextExtension))) +
                 EnableNullable() +
-                $"using global::{component.ContextPrefix};\n" +
-                $"using static global::{CombinedNamespace(component.Namespace, component.ContextAwareComponentPrefix)}ComponentIndex;\n\n" +
+                $"using global::{component.ContextPrefix};\n\n" +
                 NamespaceDeclaration(component.Namespace, content));
         }
 

@@ -8,31 +8,14 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+#nullable enable
+
 using global::MyApp.Main;
 using static global::MyAppMainMultipleFieldsComponentIndex;
 
 public static class MyAppMainMultipleFieldsEntityExtension
 {
-    public static bool HasMultipleFields(this Entity entity)
-    {
-        return entity.HasComponent(Index.Value);
-    }
-
-    public static Entity AddMultipleFields(this Entity entity, string value1, string value2, string value3)
-    {
-        var index = Index.Value;
-        var componentPool = entity.GetComponentPool(index);
-        var component = componentPool.Count > 0
-            ? (MultipleFieldsComponent)componentPool.Pop()
-            : new MultipleFieldsComponent();
-        component.Value1 = value1;
-        component.Value2 = value2;
-        component.Value3 = value3;
-        entity.AddComponent(index, component);
-        return entity;
-    }
-
-    public static Entity ReplaceMultipleFields(this Entity entity, string value1, string value2, string value3)
+    public static Entity SetMultipleFields(this Entity entity, string value1, string value2, string value3)
     {
         var index = Index.Value;
         var componentPool = entity.GetComponentPool(index);
@@ -46,14 +29,18 @@ public static class MyAppMainMultipleFieldsEntityExtension
         return entity;
     }
 
-    public static Entity RemoveMultipleFields(this Entity entity)
+    public static Entity UnsetMultipleFields(this Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        if (entity.HasComponent(Index.Value))
+            entity.RemoveComponent(Index.Value);
+
         return entity;
     }
 
-    public static MultipleFieldsComponent GetMultipleFields(this Entity entity)
+    public static MultipleFieldsComponent? GetMultipleFields(this Entity entity)
     {
-        return (MultipleFieldsComponent)entity.GetComponent(Index.Value);
+        return entity.HasComponent(Index.Value)
+            ? (MultipleFieldsComponent)entity.GetComponent(Index.Value)
+            : null;
     }
 }

@@ -8,6 +8,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+#nullable enable
+
 using global::MyApp.Library;
 using static global::MyFeature.MyAppLibraryContextFromDifferentAssemblyNamespacedComponentIndex;
 
@@ -17,32 +19,25 @@ public static class MyAppLibraryContextFromDifferentAssemblyNamespacedEntityExte
 {
     static readonly ContextFromDifferentAssemblyNamespacedComponent SingleContextFromDifferentAssemblyNamespacedComponent = new ContextFromDifferentAssemblyNamespacedComponent();
 
-    public static bool HasContextFromDifferentAssemblyNamespaced(this Entity entity)
-    {
-        return entity.HasComponent(Index.Value);
-    }
-
-    public static Entity AddContextFromDifferentAssemblyNamespaced(this Entity entity)
-    {
-        entity.AddComponent(Index.Value, SingleContextFromDifferentAssemblyNamespacedComponent);
-        return entity;
-    }
-
-    public static Entity ReplaceContextFromDifferentAssemblyNamespaced(this Entity entity)
+    public static Entity SetContextFromDifferentAssemblyNamespaced(this Entity entity)
     {
         entity.ReplaceComponent(Index.Value, SingleContextFromDifferentAssemblyNamespacedComponent);
         return entity;
     }
 
-    public static Entity RemoveContextFromDifferentAssemblyNamespaced(this Entity entity)
+    public static Entity UnsetContextFromDifferentAssemblyNamespaced(this Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        if (entity.HasComponent(Index.Value))
+            entity.RemoveComponent(Index.Value);
+
         return entity;
     }
 
-    public static ContextFromDifferentAssemblyNamespacedComponent GetContextFromDifferentAssemblyNamespaced(this Entity entity)
+    public static ContextFromDifferentAssemblyNamespacedComponent? GetContextFromDifferentAssemblyNamespaced(this Entity entity)
     {
-        return (ContextFromDifferentAssemblyNamespacedComponent)entity.GetComponent(Index.Value);
+        return entity.HasComponent(Index.Value)
+            ? (ContextFromDifferentAssemblyNamespacedComponent)entity.GetComponent(Index.Value)
+            : null;
     }
 }
 }
