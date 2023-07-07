@@ -8,10 +8,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-#nullable disable
-
 using global::MyApp.Main;
-using static global::MyFeature.MyAppMainUniqueNamespacedComponentIndex;
 
 namespace MyFeature
 {
@@ -34,13 +31,12 @@ public static class MyAppMainUniqueNamespacedContextExtension
 
     public static Entity GetUniqueNamespacedEntity(this MyApp.MainContext context)
     {
-        return context.GetGroup(Matcher.AllOf(Index)).GetSingleEntity();
+        return context.GetGroup(MyAppMainUniqueNamespacedMatcher.UniqueNamespaced).GetSingleEntity();
     }
 
     public static UniqueNamespacedComponent GetUniqueNamespaced(this MyApp.MainContext context)
     {
-        var entity = context.GetUniqueNamespacedEntity();
-        return entity != null ? entity.GetUniqueNamespaced() : null;
+        return context.GetUniqueNamespacedEntity()?.GetUniqueNamespaced();
     }
 }
 }

@@ -45,10 +45,5 @@ namespace Entitas.Generators
                 ? str.Substring(0, str.Length - suffix.Length)
                 : str;
         }
-
-        public static string DisableNullable()
-        {
-            return "#nullable disable\n\n";
-        }
     }
 }
