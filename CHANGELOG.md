@@ -6,35 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### [Entitas/1.14.2] - 2022-11-11
-### Changed
-- Use version ranges for package references
-
-### [Entitas.Blueprints.CodeGeneration.Plugins/1.14.2] - 2022-11-11
-### Changed
-- Use version ranges for package references
-
-### [Entitas.CodeGeneration.Plugins/1.14.2] - 2022-11-11
-### Changed
-- Use version ranges for package references
-
-### [Entitas.Migration.Cli/1.14.2] - 2022-11-11
-### Changed
-- Use version ranges for package references
-
-### [Entitas.Roslyn.CodeGeneration.Plugins/1.14.2] - 2022-11-11
-### Changed
-- Use version ranges for package references
-
-### [Entitas.Unity.Editor/1.14.2] - 2022-11-11
-### Changed
-- Use version ranges for package references
-
-### [Entitas.VisualDebugging.Unity.Editor/1.14.2] - 2022-11-11
-### Changed
-- Use version ranges for package references
-
 ### Other
+- Use version ranges for package references in all projects
 - Upgrade all NuGet packages
 - Restructure project using tests folder
 - Use `Version` instead of `PackageVersion`
