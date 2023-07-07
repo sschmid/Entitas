@@ -5,6 +5,7 @@ using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Diagnostics;
 using static Entitas.Generators.Templates;
 
 namespace Entitas.Generators
@@ -14,8 +15,7 @@ namespace Entitas.Generators
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
-            var options = initContext.AnalyzerConfigOptionsProvider
-                .Select((provider, _) => new EntitasAnalyzerConfigOptions(provider.GlobalOptions));
+            var options = initContext.AnalyzerConfigOptionsProvider;
 
             var components = initContext.SyntaxProvider
                 .CreateSyntaxProvider(IsComponentCandidate, CreateComponentDeclarations)
@@ -74,7 +74,7 @@ namespace Entitas.Generators
                 return null;
 
             return GetContexts(symbol)
-                .Select(context => new ComponentDeclaration(symbol, context, cancellationToken))
+                .Select(context => new ComponentDeclaration(syntaxContext.Node, symbol, context, cancellationToken))
                 .ToImmutableArray();
         }
 
@@ -156,7 +156,7 @@ namespace Entitas.Generators
                         if (!GetContexts(symbol).Contains(context))
                             continue;
 
-                        allComponents.Add(new ComponentDeclaration(symbol, context, cancellationToken));
+                        allComponents.Add(new ComponentDeclaration(null, symbol, context, cancellationToken));
                     }
                 }
             }
@@ -166,22 +166,23 @@ namespace Entitas.Generators
                 .ToImmutableArray();
         }
 
-        static void OnFullNameOrContextChanged(SourceProductionContext spc, (ComponentDeclaration Component, EntitasAnalyzerConfigOptions Options) pair)
+        static void OnFullNameOrContextChanged(SourceProductionContext spc, (ComponentDeclaration Component, AnalyzerConfigOptionsProvider Options) pair)
         {
             var (component, options) = pair;
             ComponentIndex(spc, component, options);
             Matcher(spc, component);
         }
 
-        static void ComponentIndex(SourceProductionContext spc, ComponentDeclaration component, EntitasAnalyzerConfigOptions options)
+        static void ComponentIndex(SourceProductionContext spc, ComponentDeclaration component, AnalyzerConfigOptionsProvider options)
         {
+            var entitasOptions = new EntitasAnalyzerConfigOptions(options.GetOptions(component.Syntax!.SyntaxTree));
             spc.AddSource(
                 GeneratedPath($"{component.FullName}.{component.ContextPrefix}.ComponentIndex"),
                 GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
                 $"using global::{component.ContextPrefix};\n\n" +
                 NamespaceDeclaration(component.Namespace,
                     $$"""
-                    // {{options.TestValue}}
+                    // {{entitasOptions.TestValue}}
                     public static class {{component.ContextAwareComponentPrefix}}ComponentIndex
                     {
                         public static ComponentIndex Index;

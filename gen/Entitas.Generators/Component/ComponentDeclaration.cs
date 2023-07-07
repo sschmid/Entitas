@@ -9,6 +9,8 @@ namespace Entitas.Generators
 {
     readonly struct ComponentDeclaration
     {
+        public readonly SyntaxNode? Syntax;
+
         public readonly string? Namespace;
         public readonly string FullName;
         public readonly string Name;
@@ -21,8 +23,10 @@ namespace Entitas.Generators
         public readonly string ContextPrefix;
         public readonly string ContextAwareComponentPrefix;
 
-        public ComponentDeclaration(INamedTypeSymbol symbol, string context, CancellationToken cancellationToken)
+        public ComponentDeclaration(SyntaxNode? syntax, INamedTypeSymbol symbol, string context, CancellationToken cancellationToken)
         {
+            Syntax = syntax;
+
             Namespace = !symbol.ContainingNamespace.IsGlobalNamespace
                 ? symbol.ContainingNamespace.ToDisplayString()
                 : null;
