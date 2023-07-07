@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.14.2] - 2022-11-11
+
 ### Other
 - Use version ranges for package references in all projects
 - Upgrade all NuGet packages
@@ -2453,12 +2455,3 @@ pool.CreateEntity()
 ### Code Generator
 - Supports enums nested in components
 - Added option to [DontGenerate] to ignore generating index, too
-
-[Unreleased]: https://github.com/sschmid/Entitas/compare/Entitas/1.14.2...HEAD
-[Entitas/1.14.2]: https://github.com/sschmid/Entitas/compare/1.41.1...Entitas/1.14.2
-[Entitas.Blueprints.CodeGeneration.Plugins/1.14.2]: https://github.com/sschmid/Entitas/compare/1.41.1...Entitas.Blueprints.CodeGeneration.Plugins/1.14.2
-[Entitas.CodeGeneration.Plugins/1.14.2]: https://github.com/sschmid/Entitas/compare/1.41.1...Entitas.CodeGeneration.Plugins/1.14.2
-[Entitas.Migration.Cli/1.14.2]: https://github.com/sschmid/Entitas/compare/1.41.1...Entitas.Migration.Cli/1.14.2
-[Entitas.Roslyn.CodeGeneration.Plugins/1.14.2]: https://github.com/sschmid/Entitas/compare/1.41.1...Entitas.Roslyn.CodeGeneration.Plugins/1.14.2
-[Entitas.Unity.Editor/1.14.2]: https://github.com/sschmid/Entitas/compare/1.41.1...Entitas.Unity.Editor/1.14.2
-[Entitas.VisualDebugging.Unity.Editor/1.14.2]: https://github.com/sschmid/Entitas/compare/1.41.1...Entitas.VisualDebugging.Unity.Editor/1.14.2
