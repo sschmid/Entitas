@@ -34,6 +34,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Use version ranges for package references
 
+### Other
+- Upgrade all NuGet packages
+- Restructure project using tests folder
+- Use `Version` instead of `PackageVersion`
+- Add GitHub actions
+
+### bee
+- Upgrade to bee 1.3.1
+
 ## [1.14.1] - 2022-09-26
 
 ### Entitas
