@@ -14,13 +14,16 @@ namespace Entitas.Generators
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
+            var options = initContext.AnalyzerConfigOptionsProvider
+                .Select((provider, _) => new EntitasAnalyzerConfigOptions(provider.GlobalOptions));
+
             var components = initContext.SyntaxProvider
                 .CreateSyntaxProvider(IsComponentCandidate, CreateComponentDeclarations)
                 .Where(static components => components is not null)
                 .SelectMany(static (components, _) => components!.Value);
 
             var fullNameOrContextChanged = components.WithComparer(new FullNameAndContextComparer());
-            initContext.RegisterSourceOutput(fullNameOrContextChanged, OnFullNameOrContextChanged);
+            initContext.RegisterSourceOutput(fullNameOrContextChanged.Combine(options), OnFullNameOrContextChanged);
 
             var fullNameOrMembersOrContextChanged = components.WithComparer(new FullNameAndMembersAndContextComparer());
             initContext.RegisterSourceOutput(fullNameOrMembersOrContextChanged, OnFullNameOrMembersOrContextChanged);
@@ -163,13 +166,14 @@ namespace Entitas.Generators
                 .ToImmutableArray();
         }
 
-        static void OnFullNameOrContextChanged(SourceProductionContext spc, ComponentDeclaration component)
+        static void OnFullNameOrContextChanged(SourceProductionContext spc, (ComponentDeclaration Component, EntitasAnalyzerConfigOptions Options) pair)
         {
-            ComponentIndex(spc, component);
+            var (component, options) = pair;
+            ComponentIndex(spc, component, options);
             Matcher(spc, component);
         }
 
-        static void ComponentIndex(SourceProductionContext spc, ComponentDeclaration component)
+        static void ComponentIndex(SourceProductionContext spc, ComponentDeclaration component, EntitasAnalyzerConfigOptions options)
         {
             spc.AddSource(
                 GeneratedPath($"{component.FullName}.{component.ContextPrefix}.ComponentIndex"),
@@ -177,6 +181,7 @@ namespace Entitas.Generators
                 $"using global::{component.ContextPrefix};\n\n" +
                 NamespaceDeclaration(component.Namespace,
                     $$"""
+                    // {{options.TestValue}}
                     public static class {{component.ContextAwareComponentPrefix}}ComponentIndex
                     {
                         public static ComponentIndex Index;

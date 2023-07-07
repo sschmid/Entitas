@@ -1,10 +1,14 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Diagnostics;
 using MyFeature;
 using VerifyXunit;
 
@@ -32,7 +36,14 @@ namespace Entitas.Generators.Tests
                 references,
                 new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
-            var driver = CSharpGeneratorDriver.Create(generator).RunGenerators(compilation);
+            var driver = CSharpGeneratorDriver
+                .Create(generator)
+                .WithUpdatedAnalyzerConfigOptions(new TestAnalyzerConfigOptionsProvider(new Dictionary<string, string>
+                {
+                    { EntitasAnalyzerConfigOptions.TestValueKey, "true" }
+                }))
+                .RunGenerators(compilation);
+
             return Verifier.Verify(driver).UseDirectory("snapshots");
         }
 
@@ -49,5 +60,31 @@ namespace Entitas.Generators.Tests
                 Regex.Matches(code, pattern).Should().HaveCount(0);
             }
         }
+    }
+
+    sealed class TestAnalyzerConfigOptionsProvider : AnalyzerConfigOptionsProvider
+    {
+        public override AnalyzerConfigOptions GlobalOptions { get; }
+
+        public TestAnalyzerConfigOptionsProvider(Dictionary<string, string> options)
+        {
+            GlobalOptions = new DictionaryAnalyzerConfigOptions(options.ToImmutableDictionary());
+        }
+
+        public override AnalyzerConfigOptions GetOptions(SyntaxTree tree) => DictionaryAnalyzerConfigOptions.Empty;
+        public override AnalyzerConfigOptions GetOptions(AdditionalText textFile) => DictionaryAnalyzerConfigOptions.Empty;
+    }
+
+    sealed class DictionaryAnalyzerConfigOptions : AnalyzerConfigOptions
+    {
+        static readonly ImmutableDictionary<string, string> EmptyDictionary = ImmutableDictionary.Create<string, string>(KeyComparer);
+
+        public static DictionaryAnalyzerConfigOptions Empty { get; } = new DictionaryAnalyzerConfigOptions(EmptyDictionary);
+
+        readonly ImmutableDictionary<string, string> _options;
+
+        public DictionaryAnalyzerConfigOptions(ImmutableDictionary<string, string> options) => _options = options;
+
+        public override bool TryGetValue(string key, [NotNullWhen(true)] out string? value) => _options.TryGetValue(key, out value);
     }
 }

@@ -36,7 +36,7 @@ namespace Entitas.Generators.IntegrationTests
         }
 
         [Fact]
-        public void GettingNonExistingComponentReturnNull()
+        public void GettingNonExistingComponentReturnsNull()
         {
             var entity = _context.CreateEntity();
             entity.GetPosition().Should().BeNull();
