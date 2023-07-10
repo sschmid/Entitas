@@ -14,12 +14,28 @@ namespace MyFeature
 {
 public static class MyAppMainUniqueOneFieldNamespacedContextExtension
 {
-    public static bool HasUniqueOneFieldNamespaced(this MyApp.MainContext context, string value)
+    public static bool HasUniqueOneFieldNamespaced(this MyApp.MainContext context)
     {
         return context.GetUniqueOneFieldNamespacedEntity() != null;
     }
 
     public static Entity SetUniqueOneFieldNamespaced(this MyApp.MainContext context, string value)
+    {
+        if (context.HasUniqueOneFieldNamespaced())
+        {
+            throw new global::Entitas.EntitasException(
+                $"""
+                Could not set UniqueOneFieldNamespaced!
+                {context} already has an entity with MyFeature.UniqueOneFieldNamespacedComponent!"
+                """,
+                "You should check if the context already has a UniqueOneFieldNamespacedEntity before setting it or use context.ReplaceUniqueOneFieldNamespaced()."
+            );
+        }
+
+        return context.CreateEntity().AddUniqueOneFieldNamespaced(value);
+    }
+
+    public static Entity ReplaceUniqueOneFieldNamespaced(this MyApp.MainContext context, string value)
     {
         var entity = context.GetUniqueOneFieldNamespacedEntity();
         if (entity == null)
@@ -30,9 +46,9 @@ public static class MyAppMainUniqueOneFieldNamespacedContextExtension
         return entity;
     }
 
-    public static void UnsetUniqueOneFieldNamespaced(this MyApp.MainContext context)
+    public static void RemoveUniqueOneFieldNamespaced(this MyApp.MainContext context)
     {
-        context.GetUniqueOneFieldNamespacedEntity()?.Destroy();
+        context.GetUniqueOneFieldNamespacedEntity().Destroy();
     }
 
     public static Entity GetUniqueOneFieldNamespacedEntity(this MyApp.MainContext context)
@@ -42,7 +58,7 @@ public static class MyAppMainUniqueOneFieldNamespacedContextExtension
 
     public static UniqueOneFieldNamespacedComponent GetUniqueOneFieldNamespaced(this MyApp.MainContext context)
     {
-        return context.GetUniqueOneFieldNamespacedEntity()?.GetUniqueOneFieldNamespaced();
+        return context.GetUniqueOneFieldNamespacedEntity().GetUniqueOneFieldNamespaced();
     }
 }
 }

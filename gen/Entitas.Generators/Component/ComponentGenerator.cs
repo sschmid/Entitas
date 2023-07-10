@@ -336,12 +336,25 @@ namespace Entitas.Generators
                 content = $$"""
                     public static class {{className}}
                     {
-                        public static bool Has{{component.ComponentPrefix}}(this {{component.Context}} context, {{ComponentMethodArgs(component)}})
+                        public static bool Has{{component.ComponentPrefix}}(this {{component.Context}} context)
                         {
                             return context.Get{{component.ComponentPrefix}}Entity() != null;
                         }
 
                         public static Entity Set{{component.ComponentPrefix}}(this {{component.Context}} context, {{ComponentMethodArgs(component)}})
+                        {
+                            if (context.Has{{component.ComponentPrefix}}())
+                            {
+                                throw new global::Entitas.EntitasException(
+                                    $"Could not set {{component.ComponentPrefix}}!\n{context} already has an entity with {{component.FullName}}!",
+                                    "You should check if the context already has a {{component.ComponentPrefix}}Entity before setting it or use context.Replace{{component.ComponentPrefix}}()."
+                                );
+                            }
+
+                            return context.CreateEntity().Add{{component.ComponentPrefix}}({{ComponentMethodParams(component)}});
+                        }
+
+                        public static Entity Replace{{component.ComponentPrefix}}(this {{component.Context}} context, {{ComponentMethodArgs(component)}})
                         {
                             var entity = context.Get{{component.ComponentPrefix}}Entity();
                             if (entity == null)
@@ -352,9 +365,9 @@ namespace Entitas.Generators
                             return entity;
                         }
 
-                        public static void Unset{{component.ComponentPrefix}}(this {{component.Context}} context)
+                        public static void Remove{{component.ComponentPrefix}}(this {{component.Context}} context)
                         {
-                            context.Get{{component.ComponentPrefix}}Entity()?.Destroy();
+                            context.Get{{component.ComponentPrefix}}Entity().Destroy();
                         }
 
                         public static Entity Get{{component.ComponentPrefix}}Entity(this {{component.Context}} context)
@@ -364,7 +377,7 @@ namespace Entitas.Generators
 
                         public static {{component.Name}} Get{{component.ComponentPrefix}}(this {{component.Context}} context)
                         {
-                            return context.Get{{component.ComponentPrefix}}Entity()?.Get{{component.ComponentPrefix}}();
+                            return context.Get{{component.ComponentPrefix}}Entity().Get{{component.ComponentPrefix}}();
                         }
                     }
 
@@ -393,11 +406,6 @@ namespace Entitas.Generators
                         public static Entity Get{{component.ComponentPrefix}}Entity(this {{component.Context}} context)
                         {
                             return context.GetGroup({{component.ContextAwareComponentPrefix}}Matcher.{{component.ComponentPrefix}}).GetSingleEntity();
-                        }
-
-                        public static {{component.Name}} Get{{component.ComponentPrefix}}(this {{component.Context}} context)
-                        {
-                            return context.Get{{component.ComponentPrefix}}Entity()?.Get{{component.ComponentPrefix}}();
                         }
                     }
 

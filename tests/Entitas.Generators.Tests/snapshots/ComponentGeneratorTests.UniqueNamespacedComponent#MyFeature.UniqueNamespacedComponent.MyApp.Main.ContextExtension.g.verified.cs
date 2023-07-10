@@ -33,10 +33,5 @@ public static class MyAppMainUniqueNamespacedContextExtension
     {
         return context.GetGroup(MyAppMainUniqueNamespacedMatcher.UniqueNamespaced).GetSingleEntity();
     }
-
-    public static UniqueNamespacedComponent GetUniqueNamespaced(this MyApp.MainContext context)
-    {
-        return context.GetUniqueNamespacedEntity()?.GetUniqueNamespaced();
-    }
 }
 }

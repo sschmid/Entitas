@@ -1,3 +1,4 @@
+using System;
 using FluentAssertions;
 using MyApp;
 using MyFeature;
@@ -23,7 +24,7 @@ namespace Entitas.Generators.IntegrationTests
         }
 
         [Fact]
-        public void AddComponent()
+        public void AddsComponent()
         {
             var entity = _context.CreateEntity();
             entity.AddPosition(1, 2);
@@ -39,7 +40,7 @@ namespace Entitas.Generators.IntegrationTests
         }
 
         [Fact]
-        public void GetComponent()
+        public void GetsComponent()
         {
             var entity = _context.CreateEntity();
             entity.AddPosition(1, 2);
@@ -50,7 +51,7 @@ namespace Entitas.Generators.IntegrationTests
         }
 
         [Fact]
-        public void ReplaceComponent()
+        public void ReplacesComponent()
         {
             var entity = _context.CreateEntity();
             entity.AddPosition(1, 2);
@@ -102,74 +103,36 @@ namespace Entitas.Generators.IntegrationTests
             entity1.GetMovable().Should().BeSameAs(entity2.GetMovable());
         }
 
-        [Fact]
-        public void SetsUniqueEntity()
-        {
-            _context.HasLoading().Should().BeFalse();
-            var entity = _context.SetLoading();
-            _context.HasLoading().Should().BeTrue();
-            entity.HasLoading().Should().BeTrue();
-        }
-
-        [Fact]
-        public void SettingUniqueEntityTwiceReturnsEntity()
-        {
-            _context.SetLoading().Should().BeSameAs(_context.SetLoading());
-        }
-
-        [Fact]
-        public void UnsetsAndDestroysUniqueEntity()
-        {
-            var entity = _context.SetLoading();
-            _context.UnsetLoading();
-            _context.HasLoading().Should().BeFalse();
-            entity.isEnabled.Should().BeFalse();
-        }
-
-        [Fact]
-        public void CanUnsetsEvenIfNotSetBefore()
-        {
-            _context.UnsetLoading();
-            _context.HasLoading().Should().BeFalse();
-        }
+        /*
+         * Unique
+         */
 
         [Fact]
         public void HasNoUniqueEntity()
         {
+            // Flag
             _context.HasLoading().Should().BeFalse();
+
+            // Normal
+            _context.HasUser().Should().BeFalse();
         }
 
         [Fact]
-        public void GetsUniqueEntity()
+        public void SetsUniqueEntity()
         {
-            _context.SetLoading().Should().BeSameAs(_context.GetLoadingEntity());
-        }
+            // Flag
+            var flagEntity = _context.SetLoading();
+            _context.HasLoading().Should().BeTrue();
+            flagEntity.HasLoading().Should().BeTrue();
 
-        [Fact]
-        public void NotSetUniqueEntityReturnsNull()
-        {
-            _context.GetLoadingEntity().Should().BeNull();
+            // Normal
+            var entity = _context.SetUser("Test", 42);
+            _context.HasUser().Should().BeTrue();
+            entity.HasUser().Should().BeTrue();
         }
 
         [Fact]
         public void SetsValuesOfUniqueEntity()
-        {
-            var user = _context.SetUser("Test", 42).GetUser();
-            user.Name.Should().Be("Test");
-            user.Age.Should().Be(42);
-        }
-
-        [Fact]
-        public void SetsNewValuesOfUniqueEntity()
-        {
-            _context.SetUser("Test", 42);
-            var user = _context.SetUser("Replaced", 24).GetUser();
-            user.Name.Should().Be("Replaced");
-            user.Age.Should().Be(24);
-        }
-
-        [Fact]
-        public void GetsComponentOfUniqueEntity()
         {
             _context.SetUser("Test", 42);
             var user = _context.GetUser();
@@ -178,9 +141,96 @@ namespace Entitas.Generators.IntegrationTests
         }
 
         [Fact]
-        public void NotSetComponentUniqueEntityReturnsNull()
+        public void ThrowsWhenGettingUniqueComponentWhenNotSet()
         {
-            _context.GetUser().Should().BeNull();
+            FluentActions.Invoking(() => _context.GetUser())
+                .Should().Throw<NullReferenceException>();
+        }
+
+        [Fact]
+        public void SettingUniqueFlagEntityTwiceReturnsEntity()
+        {
+            _context.SetLoading().Should().BeSameAs(_context.SetLoading());
+        }
+
+        [Fact]
+        public void ThrowsWhenSettingUniqueEntityTwice()
+        {
+            _context.SetUser("Test", 42);
+            FluentActions.Invoking(() => _context.SetUser("Test", 42))
+                .Should().Throw<EntitasException>();
+        }
+
+        [Fact]
+        public void ReplacesUniqueEntity()
+        {
+            _context.SetUser("Test", 42);
+            _context.ReplaceUser("Replaced", 24);
+            _context.HasUser().Should().BeTrue();
+            var user = _context.GetUser();
+            user.Name.Should().Be("Replaced");
+            user.Age.Should().Be(24);
+        }
+
+        [Fact]
+        public void ReplaceAddsUniqueEntity()
+        {
+            _context.ReplaceUser("Replaced", 24);
+            _context.HasUser().Should().BeTrue();
+            var user = _context.GetUser();
+            user.Name.Should().Be("Replaced");
+            user.Age.Should().Be(24);
+        }
+
+        [Fact]
+        public void UnsetsAndDestroysUniqueFlagEntity()
+        {
+            var entity = _context.SetLoading();
+            _context.UnsetLoading();
+            _context.HasLoading().Should().BeFalse();
+            entity.isEnabled.Should().BeFalse();
+        }
+
+        [Fact]
+        public void RemovesAndDestroysUniqueEntity()
+        {
+            var entity = _context.SetUser("Test", 42);
+            _context.RemoveUser();
+            _context.HasLoading().Should().BeFalse();
+            entity.isEnabled.Should().BeFalse();
+        }
+
+        [Fact]
+        public void CanUnsetUniqueFlagEntityWhenNotSet()
+        {
+            _context.UnsetLoading();
+        }
+
+        [Fact]
+        public void ThrowsWhenRemovingUniqueEntityWhenNotSet()
+        {
+            FluentActions.Invoking(() => _context.RemoveUser())
+                .Should().Throw<NullReferenceException>();
+        }
+
+        [Fact]
+        public void GetsUniqueEntity()
+        {
+            // Flag
+            _context.SetLoading().Should().BeSameAs(_context.GetLoadingEntity());
+
+            // Normal
+            _context.SetUser("Test", 42).Should().BeSameAs(_context.GetUserEntity());
+        }
+
+        [Fact]
+        public void NotSetUniqueEntityReturnsNull()
+        {
+            // Flag
+            _context.GetLoadingEntity().Should().BeNull();
+
+            // Normal
+            _context.GetUserEntity().Should().BeNull();
         }
     }
 }
