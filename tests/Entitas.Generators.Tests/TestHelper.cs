@@ -38,12 +38,26 @@ namespace Entitas.Generators.Tests
 
         public static void AssertUsesGlobalNamespaces(string code)
         {
+            var ignores = new[]
+            {
+                "global::Entitas.EntitasException"
+            };
+
+            foreach (var ignore in ignores)
+            {
+                code = code.Replace(ignore, string.Empty);
+            }
+
             var patterns = new[]
             {
                 "System",
                 "Entitas"
-            }.Select(word => $"(?<!\\busing )(?<!\\bstatic )(?<!\\bnamespace )(?<!\\bglobal::)(?<!\"){word}");
-
+            }.Select(word => $@"(?<!\busing )" +
+                             $@"(?<!\bstatic )" +
+                             $@"(?<!\bnamespace )" +
+                             $@"(?<!\bglobal::)" +
+                             $@"(?<!"")" +
+                             $"{word}");
             foreach (var pattern in patterns)
             {
                 Regex.Matches(code, pattern).Should().HaveCount(0);
