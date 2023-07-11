@@ -128,7 +128,7 @@ namespace Entitas.Generators
 
         public EventStrings(EventDeclaration @event, string componentPrefix, string contextAwareComponentPrefix)
         {
-            EventTargetPrefix = @event.EventTarget == 0 ? string.Empty : "Any";
+            EventTargetPrefix = @event.EventTarget == 0 ? "Any" : string.Empty;
             EventTypeSuffix = @event.EventType == 0 ? "Added" : "Removed";
             EventPrefix = $"{EventTargetPrefix}{componentPrefix}{EventTypeSuffix}Listener";
             EventListener = $"{EventTargetPrefix}{contextAwareComponentPrefix}{EventTypeSuffix}Listener";
