@@ -17,31 +17,37 @@ public static partial class ContextInitialization
     public static partial void Initialize()
     {
         global::MyAppMainMultipleFieldsComponentIndex.Index = new ComponentIndex(0);
-        global::MyFeature.MyAppMainDuplicatedContextsNamespacedComponentIndex.Index = new ComponentIndex(1);
-        global::MyFeature.MyAppMainEventNamespacedComponentIndex.Index = new ComponentIndex(2);
-        global::MyFeature.MyAppMainMultipleFieldsNamespacedComponentIndex.Index = new ComponentIndex(3);
-        global::MyFeature.MyAppMainMultiplePropertiesNamespacedComponentIndex.Index = new ComponentIndex(4);
-        global::MyFeature.MyAppMainNonPublicComponentIndex.Index = new ComponentIndex(5);
-        global::MyFeature.MyAppMainNoValidFieldsNamespacedComponentIndex.Index = new ComponentIndex(6);
-        global::MyFeature.MyAppMainOneFieldNamespacedComponentIndex.Index = new ComponentIndex(7);
-        global::MyFeature.MyAppMainReservedKeywordFieldsNamespacedComponentIndex.Index = new ComponentIndex(8);
-        global::MyFeature.MyAppMainSomeNamespacedComponentIndex.Index = new ComponentIndex(9);
-        global::MyFeature.MyAppMainUniqueNamespacedComponentIndex.Index = new ComponentIndex(10);
-        global::MyFeature.MyAppMainUniqueOneFieldNamespacedComponentIndex.Index = new ComponentIndex(11);
-        global::MyAppMainOneFieldComponentIndex.Index = new ComponentIndex(12);
-        global::MyAppMainSomeComponentIndex.Index = new ComponentIndex(13);
+        global::MyFeature.MyAppMainAnyEventNamespacedComponentIndex.Index = new ComponentIndex(1);
+        global::MyFeature.MyAppMainAnyAnyEventNamespacedAddedListenerComponentIndex.Index = new ComponentIndex(2);
+        global::MyFeature.MyAppMainDuplicatedContextsNamespacedComponentIndex.Index = new ComponentIndex(3);
+        global::MyFeature.MyAppMainMultipleFieldsNamespacedComponentIndex.Index = new ComponentIndex(4);
+        global::MyFeature.MyAppMainMultiplePropertiesNamespacedComponentIndex.Index = new ComponentIndex(5);
+        global::MyFeature.MyAppMainSelfEventNamespacedRemovedListenerComponentIndex.Index = new ComponentIndex(6);
+        global::MyFeature.MyAppMainNonPublicComponentIndex.Index = new ComponentIndex(7);
+        global::MyFeature.MyAppMainNoValidFieldsNamespacedComponentIndex.Index = new ComponentIndex(8);
+        global::MyFeature.MyAppMainOneFieldNamespacedComponentIndex.Index = new ComponentIndex(9);
+        global::MyFeature.MyAppMainReservedKeywordFieldsNamespacedComponentIndex.Index = new ComponentIndex(10);
+        global::MyFeature.MyAppMainSelfEventNamespacedComponentIndex.Index = new ComponentIndex(11);
+        global::MyFeature.MyAppMainSomeNamespacedComponentIndex.Index = new ComponentIndex(12);
+        global::MyFeature.MyAppMainUniqueNamespacedComponentIndex.Index = new ComponentIndex(13);
+        global::MyFeature.MyAppMainUniqueOneFieldNamespacedComponentIndex.Index = new ComponentIndex(14);
+        global::MyAppMainOneFieldComponentIndex.Index = new ComponentIndex(15);
+        global::MyAppMainSomeComponentIndex.Index = new ComponentIndex(16);
 
         MyApp.MainContext.ComponentNames = new string[]
         {
             "MultipleFields",
+            "MyFeature.AnyEventNamespaced",
+            "MyFeature.AnyMyAppMainAnyEventNamespacedAddedListener",
             "MyFeature.DuplicatedContextsNamespaced",
-            "MyFeature.EventNamespaced",
             "MyFeature.MultipleFieldsNamespaced",
             "MyFeature.MultiplePropertiesNamespaced",
+            "MyFeature.MyAppMainSelfEventNamespacedRemovedListener",
             "MyFeature.NonPublic",
             "MyFeature.NoValidFieldsNamespaced",
             "MyFeature.OneFieldNamespaced",
             "MyFeature.ReservedKeywordFieldsNamespaced",
+            "MyFeature.SelfEventNamespaced",
             "MyFeature.SomeNamespaced",
             "MyFeature.UniqueNamespaced",
             "MyFeature.UniqueOneFieldNamespaced",
@@ -52,14 +58,17 @@ public static partial class ContextInitialization
         MyApp.MainContext.ComponentTypes = new global::System.Type[]
         {
             typeof(global::MultipleFieldsComponent),
+            typeof(global::MyFeature.AnyEventNamespacedComponent),
+            typeof(global::MyFeature.AnyMyAppMainAnyEventNamespacedAddedListenerComponent),
             typeof(global::MyFeature.DuplicatedContextsNamespacedComponent),
-            typeof(global::MyFeature.EventNamespacedComponent),
             typeof(global::MyFeature.MultipleFieldsNamespacedComponent),
             typeof(global::MyFeature.MultiplePropertiesNamespacedComponent),
+            typeof(global::MyFeature.MyAppMainSelfEventNamespacedRemovedListenerComponent),
             typeof(global::MyFeature.NonPublicComponent),
             typeof(global::MyFeature.NoValidFieldsNamespacedComponent),
             typeof(global::MyFeature.OneFieldNamespacedComponent),
             typeof(global::MyFeature.ReservedKeywordFieldsNamespacedComponent),
+            typeof(global::MyFeature.SelfEventNamespacedComponent),
             typeof(global::MyFeature.SomeNamespacedComponent),
             typeof(global::MyFeature.UniqueNamespacedComponent),
             typeof(global::MyFeature.UniqueOneFieldNamespacedComponent),

@@ -5,8 +5,8 @@ using MyApp;
 namespace MyFeature
 {
     [Context(typeof(MainContext))]
-    [Event(EventTarget.Any)]
-    public sealed class EventNamespacedComponent : IComponent
+    [Event(EventTarget.Any, EventType.Added, 1)]
+    public sealed class AnyEventNamespacedComponent : IComponent
     {
         public string Value;
     }

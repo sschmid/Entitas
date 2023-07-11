@@ -144,7 +144,22 @@ namespace Entitas.Generators
                         if (!ComponentDeclaration.GetContexts(symbol).Contains(context))
                             continue;
 
-                        allComponents.Add(new ComponentDeclaration(symbol, cancellationToken));
+                        var component = new ComponentDeclaration(symbol, cancellationToken);
+                        allComponents.Add(component);
+
+                        var contextPrefix = component.ContextPrefix(context);
+                        var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
+                        foreach (var @event in component.Events)
+                        {
+                            var eventStrings = new EventStrings(@event, component.ComponentPrefix, contextAwareComponentPrefix);
+                            var eventComponent = ComponentDeclaration.FromEvent(component,
+                                CombinedNamespace(component.Namespace, eventStrings.EventListenerComponent),
+                                eventStrings.EventListenerComponent,
+                                ImmutableArray.Create(new MemberDeclaration($"global::System.Collections.Generic.List<{eventStrings.EventListenerInterface}>", "Value")),
+                                eventStrings.EventPrefix);
+
+                            allComponents.Add(eventComponent);
+                        }
                     }
                 }
             }
