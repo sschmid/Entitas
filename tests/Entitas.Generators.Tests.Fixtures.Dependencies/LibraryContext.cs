@@ -1,21 +1,31 @@
+using Entitas;
+
 namespace MyApp
 {
-    public sealed partial class LibraryContext : Entitas.Context<Library.Entity>
+    partial class LibraryContext : IContext { }
+}
+
+namespace MyApp
+{
+    public sealed partial class LibraryContext : global::Entitas.Context<Library.Entity>
     {
+        public static string[] ComponentNames;
+        public static global::System.Type[] ComponentTypes;
+
         public LibraryContext()
             : base(
-                Library.ComponentsLookup.ComponentTypes.Length,
+                ComponentTypes.Length,
                 0,
-                new Entitas.ContextInfo(
+                new global::Entitas.ContextInfo(
                     "MyApp.LibraryContext",
-                    Library.ComponentsLookup.ComponentNames,
-                    Library.ComponentsLookup.ComponentTypes
+                    ComponentNames,
+                    ComponentTypes
                 ),
                 entity =>
 #if (ENTITAS_FAST_AND_UNSAFE)
-                new Entitas.UnsafeAERC(),
+                    new global::Entitas.UnsafeAERC(),
 #else
-                    new Entitas.SafeAERC(entity),
+                    new global::Entitas.SafeAERC(entity),
 #endif
                 () => new Library.Entity()
             ) { }
