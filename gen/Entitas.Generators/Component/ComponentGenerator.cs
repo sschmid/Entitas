@@ -547,6 +547,12 @@ namespace Entitas.Generators
                     context
                 );
 
+                Matcher(
+                    spc,
+                    eventComponent,
+                    context
+                );
+
                 EntityExtension(
                     spc,
                     eventComponent,
