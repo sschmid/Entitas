@@ -94,6 +94,15 @@ namespace Entitas.Generators.Tests
 
         /*
          *
+         * Events
+         *
+         */
+
+        [Fact]
+        public Task EventNamespacedComponent() => VerifyComponent("EventNamespacedComponent");
+
+        /*
+         *
          * Invalid usages
          *
          */

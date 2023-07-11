@@ -12,14 +12,14 @@ namespace Entitas.Generators
         // Computed
         public readonly string ValidLowerFirstName;
 
-        public MemberDeclaration(IFieldSymbol field) : this(field.Type.ToDisplayString(), field) { }
+        public MemberDeclaration(IFieldSymbol field) : this(field.Type.ToDisplayString(), field.Name) { }
 
-        public MemberDeclaration(IPropertySymbol property) : this(property.Type.ToDisplayString(), property) { }
+        public MemberDeclaration(IPropertySymbol property) : this(property.Type.ToDisplayString(), property.Name) { }
 
-        public MemberDeclaration(string type, ISymbol symbol)
+        public MemberDeclaration(string type, string name)
         {
             Type = type;
-            Name = symbol.Name;
+            Name = name;
 
             // Computed
             ValidLowerFirstName = ToValidLowerFirst(Name);
