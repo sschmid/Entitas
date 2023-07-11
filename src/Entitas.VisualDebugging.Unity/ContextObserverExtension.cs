@@ -4,7 +4,7 @@ namespace Entitas.VisualDebugging.Unity
 {
     public static class ContextObserverExtension
     {
-#if (ENTITAS_DISABLE_VISUAL_DEBUGGING || !UNITY_EDITOR)
+#if ENTITAS_DISABLE_VISUAL_DEBUGGING || !UNITY_EDITOR
         [System.Diagnostics.Conditional("false")]
 #endif
         public static void CreateContextObserver(this IContext context)
