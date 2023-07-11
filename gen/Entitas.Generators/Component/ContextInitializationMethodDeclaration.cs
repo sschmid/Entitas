@@ -16,7 +16,7 @@ namespace Entitas.Generators
         // Computed
         public readonly string FullContextPrefix;
 
-        readonly FullNameAndContextComparer _comparer = new FullNameAndContextComparer();
+        readonly FullNameAndContextsComparer _comparer = new FullNameAndContextsComparer();
 
         public ContextInitializationMethodDeclaration(IMethodSymbol symbol, string context, ImmutableArray<ComponentDeclaration> components)
         {

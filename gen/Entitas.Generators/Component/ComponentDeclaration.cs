@@ -13,15 +13,24 @@ namespace Entitas.Generators
         public readonly string FullName;
         public readonly string Name;
         public readonly ImmutableArray<MemberDeclaration> Members;
-        public readonly string Context;
+        public readonly ImmutableArray<string> Contexts;
         public readonly bool IsUnique;
 
         // Computed
         public readonly string ComponentPrefix;
-        public readonly string ContextPrefix;
-        public readonly string ContextAwareComponentPrefix;
 
-        public ComponentDeclaration(INamedTypeSymbol symbol, string context, CancellationToken cancellationToken)
+        internal static ImmutableArray<string> GetContexts(INamedTypeSymbol symbol)
+        {
+            return symbol.GetAttributes()
+                .Where(static attribute => attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.ContextAttribute")
+                .Select(static attribute => attribute.ConstructorArguments.SingleOrDefault())
+                .Where(static arg => arg.Type?.ToDisplayString() == "System.Type" && arg.Value is INamedTypeSymbol)
+                .Select(static arg => ((INamedTypeSymbol)arg.Value!).ToDisplayString())
+                .Distinct()
+                .ToImmutableArray();
+        }
+
+        public ComponentDeclaration(INamedTypeSymbol symbol, CancellationToken cancellationToken)
         {
             Namespace = !symbol.ContainingNamespace.IsGlobalNamespace
                 ? symbol.ContainingNamespace.ToDisplayString()
@@ -44,14 +53,13 @@ namespace Entitas.Generators
                 .OfType<MemberDeclaration>()
                 .ToImmutableArray();
 
-            Context = context;
+            Contexts = GetContexts(symbol);
+
             IsUnique = symbol.GetAttributes().Any(static attribute =>
                 attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.UniqueAttribute");
 
             // Computed
             ComponentPrefix = Name.RemoveSuffix("Component");
-            ContextPrefix = context.RemoveSuffix("Context");
-            ContextAwareComponentPrefix = ContextPrefix.Replace(".", string.Empty) + ComponentPrefix;
 
             static bool IsAutoProperty(ISymbol symbol, CancellationToken cancellationToken)
             {
@@ -64,27 +72,27 @@ namespace Entitas.Generators
         }
     }
 
-    class FullNameAndContextComparer : IEqualityComparer<ComponentDeclaration>
+    class FullNameAndContextsComparer : IEqualityComparer<ComponentDeclaration>
     {
         public bool Equals(ComponentDeclaration x, ComponentDeclaration y) =>
             x.FullName == y.FullName &&
-            x.Context == y.Context;
+            x.Contexts.SequenceEqual(y.Contexts);
 
         public int GetHashCode(ComponentDeclaration obj)
         {
             unchecked
             {
-                return (obj.FullName.GetHashCode() * 397) ^ obj.Context.GetHashCode();
+                return (obj.FullName.GetHashCode() * 397) ^ obj.Contexts.GetHashCode();
             }
         }
     }
 
-    class FullNameAndMembersAndContextComparer : IEqualityComparer<ComponentDeclaration>
+    class FullNameAndMembersAndContextsComparer : IEqualityComparer<ComponentDeclaration>
     {
         public bool Equals(ComponentDeclaration x, ComponentDeclaration y) =>
             x.FullName == y.FullName &&
             x.Members.SequenceEqual(y.Members) &&
-            x.Context == y.Context;
+            x.Contexts.SequenceEqual(y.Contexts);
 
         public int GetHashCode(ComponentDeclaration obj)
         {
@@ -92,18 +100,18 @@ namespace Entitas.Generators
             {
                 var hashCode = obj.FullName.GetHashCode();
                 hashCode = (hashCode * 397) ^ obj.Members.GetHashCode();
-                hashCode = (hashCode * 397) ^ obj.Context.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.Contexts.GetHashCode();
                 return hashCode;
             }
         }
     }
 
-    class FullNameAndMembersAndContextAndIsUniqueComparer : IEqualityComparer<ComponentDeclaration>
+    class FullNameAndMembersAndContextsAndIsUniqueComparer : IEqualityComparer<ComponentDeclaration>
     {
         public bool Equals(ComponentDeclaration x, ComponentDeclaration y) =>
             x.FullName == y.FullName &&
             x.Members.SequenceEqual(y.Members) &&
-            x.Context == y.Context &&
+            x.Contexts.SequenceEqual(y.Contexts) &&
             x.IsUnique == y.IsUnique;
 
         public int GetHashCode(ComponentDeclaration obj)
@@ -112,7 +120,7 @@ namespace Entitas.Generators
             {
                 var hashCode = obj.FullName.GetHashCode();
                 hashCode = (hashCode * 397) ^ obj.Members.GetHashCode();
-                hashCode = (hashCode * 397) ^ obj.Context.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.Contexts.GetHashCode();
                 hashCode = (hashCode * 397) ^ obj.IsUnique.GetHashCode();
                 return hashCode;
             }
