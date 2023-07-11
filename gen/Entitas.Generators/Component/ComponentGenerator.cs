@@ -172,13 +172,14 @@ namespace Entitas.Generators
         {
             var contextPrefix = component.ContextPrefix(context);
             var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
+            var className = $"{contextAwareComponentPrefix}ComponentIndex";
             spc.AddSource(
-                GeneratedPath($"{component.FullName}.{contextPrefix}.ComponentIndex"),
+                GeneratedPath(CombinedNamespace(component.Namespace, className)),
                 GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
                 $"using global::{contextPrefix};\n\n" +
                 NamespaceDeclaration(component.Namespace,
                     $$"""
-                    public static class {{contextAwareComponentPrefix}}ComponentIndex
+                    public static class {{className}}
                     {
                         public static ComponentIndex Index;
                     }
@@ -192,14 +193,15 @@ namespace Entitas.Generators
             {
                 var contextPrefix = component.ContextPrefix(context);
                 var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
+                var className = $"{contextAwareComponentPrefix}Matcher";
                 spc.AddSource(
-                    GeneratedPath($"{component.FullName}.{contextPrefix}.Matcher"),
+                    GeneratedPath(CombinedNamespace(component.Namespace, className)),
                     GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
                     $"using global::{contextPrefix};\n" +
                     $"using static global::{CombinedNamespace(component.Namespace, contextAwareComponentPrefix)}ComponentIndex;\n\n" +
                     NamespaceDeclaration(component.Namespace,
                         $$"""
-                        public sealed class {{contextAwareComponentPrefix}}Matcher
+                        public sealed class {{className}}
                         {
                             static global::Entitas.IMatcher<Entity> _matcher;
 
@@ -330,7 +332,7 @@ namespace Entitas.Generators
             }
 
             spc.AddSource(
-                GeneratedPath($"{component.FullName}.{contextPrefix}.EntityExtension"),
+                GeneratedPath(CombinedNamespace(component.Namespace, className)),
                 GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
                 $"using global::{contextPrefix};\n" +
                 $"using static global::{CombinedNamespace(component.Namespace, contextAwareComponentPrefix)}ComponentIndex;\n\n" +
@@ -433,7 +435,7 @@ namespace Entitas.Generators
                 }
 
                 spc.AddSource(
-                    GeneratedPath($"{component.FullName}.{contextPrefix}.ContextExtension"),
+                    GeneratedPath(CombinedNamespace(component.Namespace, className)),
                     GeneratedFileHeader(GeneratorSource(nameof(ContextExtension))) +
                     $"using global::{contextPrefix};\n\n" +
                     NamespaceDeclaration(component.Namespace, content));
@@ -458,7 +460,7 @@ namespace Entitas.Generators
                 {
                     var eventStrings = new EventStrings(@event, component.ComponentPrefix, contextAwareComponentPrefix);
                     spc.AddSource(
-                        GeneratedPath($"{component.FullName}.{contextPrefix}.{eventStrings.EventListenerInterface}"),
+                        GeneratedPath(CombinedNamespace(component.Namespace, eventStrings.EventListenerComponent)),
                         GeneratedFileHeader(GeneratorSource(nameof(Events))) +
                         $"using global::{contextPrefix};\n\n" +
                         NamespaceDeclaration(component.Namespace,
@@ -543,7 +545,7 @@ namespace Entitas.Generators
         static void ContextInitializationMethod(SourceProductionContext spc, ContextInitializationMethodDeclaration method)
         {
             spc.AddSource(
-                GeneratedPath(CombinedNamespace(method.Namespace, $"{method.Name}.ContextInitializationMethod")),
+                GeneratedPath(CombinedNamespace(method.Namespace, $"{method.Class}.{method.Name}.ContextInitialization")),
                 GeneratedFileHeader(GeneratorSource(nameof(ContextInitializationMethod))) +
                 $"using global::{method.FullContextPrefix};\n\n" +
                 NamespaceDeclaration(method.Namespace,
