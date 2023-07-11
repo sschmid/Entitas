@@ -191,38 +191,43 @@ namespace Entitas.Generators
         {
             foreach (var context in component.Contexts)
             {
-                var contextPrefix = component.ContextPrefix(context);
-                var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
-                var className = $"{contextAwareComponentPrefix}Matcher";
-                spc.AddSource(
-                    GeneratedPath(CombinedNamespace(component.Namespace, className)),
-                    GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
-                    $"using global::{contextPrefix};\n" +
-                    $"using static global::{CombinedNamespace(component.Namespace, contextAwareComponentPrefix)}ComponentIndex;\n\n" +
-                    NamespaceDeclaration(component.Namespace,
-                        $$"""
-                        public sealed class {{className}}
+                Matcher(spc, component, context);
+            }
+        }
+
+        static void Matcher(SourceProductionContext spc, ComponentDeclaration component, string context)
+        {
+            var contextPrefix = component.ContextPrefix(context);
+            var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
+            var className = $"{contextAwareComponentPrefix}Matcher";
+            spc.AddSource(
+                GeneratedPath(CombinedNamespace(component.Namespace, className)),
+                GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
+                $"using global::{contextPrefix};\n" +
+                $"using static global::{CombinedNamespace(component.Namespace, contextAwareComponentPrefix)}ComponentIndex;\n\n" +
+                NamespaceDeclaration(component.Namespace,
+                    $$"""
+                    public sealed class {{className}}
+                    {
+                        static global::Entitas.IMatcher<Entity> _matcher;
+
+                        public static global::Entitas.IMatcher<Entity> {{component.ComponentPrefix}}
                         {
-                            static global::Entitas.IMatcher<Entity> _matcher;
-
-                            public static global::Entitas.IMatcher<Entity> {{component.ComponentPrefix}}
+                            get
                             {
-                                get
+                                if (_matcher == null)
                                 {
-                                    if (_matcher == null)
-                                    {
-                                        var matcher = (global::Entitas.Matcher<Entity>)global::Entitas.Matcher<Entity>.AllOf(Index.Value);
-                                        matcher.componentNames = {{context}}.ComponentNames;
-                                        _matcher = matcher;
-                                    }
-
-                                    return _matcher;
+                                    var matcher = (global::Entitas.Matcher<Entity>)global::Entitas.Matcher<Entity>.AllOf(Index.Value);
+                                    matcher.componentNames = {{context}}.ComponentNames;
+                                    _matcher = matcher;
                                 }
+
+                                return _matcher;
                             }
                         }
+                    }
 
-                        """));
-            }
+                    """));
         }
 
         static void OnFullNameOrMembersOrContextsChanged(SourceProductionContext spc, ComponentDeclaration component)
@@ -342,104 +347,111 @@ namespace Entitas.Generators
         static void OnFullNameOrMembersOrContextsOrIsUniqueChanged(SourceProductionContext spc, ComponentDeclaration component)
         {
             if (component.IsUnique)
+            {
                 ContextExtension(spc, component);
+            }
         }
 
         static void ContextExtension(SourceProductionContext spc, ComponentDeclaration component)
         {
             foreach (var context in component.Contexts)
             {
-                var contextPrefix = component.ContextPrefix(context);
-                var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
-                var className = $"{contextAwareComponentPrefix}ContextExtension";
-                string content;
-                if (component.Members.Length > 0)
-                {
-                    content = $$"""
-                        public static class {{className}}
-                        {
-                            public static bool Has{{component.ComponentPrefix}}(this {{context}} context)
-                            {
-                                return context.Get{{component.ComponentPrefix}}Entity() != null;
-                            }
-
-                            public static Entity Set{{component.ComponentPrefix}}(this {{context}} context, {{ComponentMethodParams(component)}})
-                            {
-                                if (context.Has{{component.ComponentPrefix}}())
-                                {
-                                    throw new global::Entitas.EntitasException(
-                                        $"Could not set {{component.ComponentPrefix}}!\n{context} already has an entity with {{component.FullName}}!",
-                                        "You should check if the context already has a {{component.ComponentPrefix}}Entity before setting it or use context.Replace{{component.ComponentPrefix}}()."
-                                    );
-                                }
-
-                                return context.CreateEntity().Add{{component.ComponentPrefix}}({{ComponentMethodArgs(component)}});
-                            }
-
-                            public static Entity Replace{{component.ComponentPrefix}}(this {{context}} context, {{ComponentMethodParams(component)}})
-                            {
-                                var entity = context.Get{{component.ComponentPrefix}}Entity();
-                                if (entity == null)
-                                    entity = context.CreateEntity().Add{{component.ComponentPrefix}}({{ComponentMethodArgs(component)}});
-                                else
-                                    entity.Replace{{component.ComponentPrefix}}({{ComponentMethodArgs(component)}});
-
-                                return entity;
-                            }
-
-                            public static void Remove{{component.ComponentPrefix}}(this {{context}} context)
-                            {
-                                context.Get{{component.ComponentPrefix}}Entity().Destroy();
-                            }
-
-                            public static Entity Get{{component.ComponentPrefix}}Entity(this {{context}} context)
-                            {
-                                return context.GetGroup({{contextAwareComponentPrefix}}Matcher.{{component.ComponentPrefix}}).GetSingleEntity();
-                            }
-
-                            public static {{component.Name}} Get{{component.ComponentPrefix}}(this {{context}} context)
-                            {
-                                return context.Get{{component.ComponentPrefix}}Entity().Get{{component.ComponentPrefix}}();
-                            }
-                        }
-
-                        """;
-                }
-                else
-                {
-                    content = $$"""
-                        public static class {{className}}
-                        {
-                            public static bool Has{{component.ComponentPrefix}}(this {{context}} context)
-                            {
-                                return context.Get{{component.ComponentPrefix}}Entity() != null;
-                            }
-
-                            public static Entity Set{{component.ComponentPrefix}}(this {{context}} context)
-                            {
-                                return context.Get{{component.ComponentPrefix}}Entity() ?? context.CreateEntity().Add{{component.ComponentPrefix}}();
-                            }
-
-                            public static void Unset{{component.ComponentPrefix}}(this {{context}} context)
-                            {
-                                context.Get{{component.ComponentPrefix}}Entity()?.Destroy();
-                            }
-
-                            public static Entity Get{{component.ComponentPrefix}}Entity(this {{context}} context)
-                            {
-                                return context.GetGroup({{contextAwareComponentPrefix}}Matcher.{{component.ComponentPrefix}}).GetSingleEntity();
-                            }
-                        }
-
-                        """;
-                }
-
-                spc.AddSource(
-                    GeneratedPath(CombinedNamespace(component.Namespace, className)),
-                    GeneratedFileHeader(GeneratorSource(nameof(ContextExtension))) +
-                    $"using global::{contextPrefix};\n\n" +
-                    NamespaceDeclaration(component.Namespace, content));
+                ContextExtension(spc, component, context);
             }
+        }
+
+        static void ContextExtension(SourceProductionContext spc, ComponentDeclaration component, string context)
+        {
+            var contextPrefix = component.ContextPrefix(context);
+            var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
+            var className = $"{contextAwareComponentPrefix}ContextExtension";
+            string content;
+            if (component.Members.Length > 0)
+            {
+                content = $$"""
+                    public static class {{className}}
+                    {
+                        public static bool Has{{component.ComponentPrefix}}(this {{context}} context)
+                        {
+                            return context.Get{{component.ComponentPrefix}}Entity() != null;
+                        }
+
+                        public static Entity Set{{component.ComponentPrefix}}(this {{context}} context, {{ComponentMethodParams(component)}})
+                        {
+                            if (context.Has{{component.ComponentPrefix}}())
+                            {
+                                throw new global::Entitas.EntitasException(
+                                    $"Could not set {{component.ComponentPrefix}}!\n{context} already has an entity with {{component.FullName}}!",
+                                    "You should check if the context already has a {{component.ComponentPrefix}}Entity before setting it or use context.Replace{{component.ComponentPrefix}}()."
+                                );
+                            }
+
+                            return context.CreateEntity().Add{{component.ComponentPrefix}}({{ComponentMethodArgs(component)}});
+                        }
+
+                        public static Entity Replace{{component.ComponentPrefix}}(this {{context}} context, {{ComponentMethodParams(component)}})
+                        {
+                            var entity = context.Get{{component.ComponentPrefix}}Entity();
+                            if (entity == null)
+                                entity = context.CreateEntity().Add{{component.ComponentPrefix}}({{ComponentMethodArgs(component)}});
+                            else
+                                entity.Replace{{component.ComponentPrefix}}({{ComponentMethodArgs(component)}});
+
+                            return entity;
+                        }
+
+                        public static void Remove{{component.ComponentPrefix}}(this {{context}} context)
+                        {
+                            context.Get{{component.ComponentPrefix}}Entity().Destroy();
+                        }
+
+                        public static Entity Get{{component.ComponentPrefix}}Entity(this {{context}} context)
+                        {
+                            return context.GetGroup({{contextAwareComponentPrefix}}Matcher.{{component.ComponentPrefix}}).GetSingleEntity();
+                        }
+
+                        public static {{component.Name}} Get{{component.ComponentPrefix}}(this {{context}} context)
+                        {
+                            return context.Get{{component.ComponentPrefix}}Entity().Get{{component.ComponentPrefix}}();
+                        }
+                    }
+
+                    """;
+            }
+            else
+            {
+                content = $$"""
+                    public static class {{className}}
+                    {
+                        public static bool Has{{component.ComponentPrefix}}(this {{context}} context)
+                        {
+                            return context.Get{{component.ComponentPrefix}}Entity() != null;
+                        }
+
+                        public static Entity Set{{component.ComponentPrefix}}(this {{context}} context)
+                        {
+                            return context.Get{{component.ComponentPrefix}}Entity() ?? context.CreateEntity().Add{{component.ComponentPrefix}}();
+                        }
+
+                        public static void Unset{{component.ComponentPrefix}}(this {{context}} context)
+                        {
+                            context.Get{{component.ComponentPrefix}}Entity()?.Destroy();
+                        }
+
+                        public static Entity Get{{component.ComponentPrefix}}Entity(this {{context}} context)
+                        {
+                            return context.GetGroup({{contextAwareComponentPrefix}}Matcher.{{component.ComponentPrefix}}).GetSingleEntity();
+                        }
+                    }
+
+                    """;
+            }
+
+            spc.AddSource(
+                GeneratedPath(CombinedNamespace(component.Namespace, className)),
+                GeneratedFileHeader(GeneratorSource(nameof(ContextExtension))) +
+                $"using global::{contextPrefix};\n\n" +
+                NamespaceDeclaration(component.Namespace, content));
         }
 
         static void OnFullNameOrContextsOrEventsChanged(SourceProductionContext spc, ComponentDeclaration component)
@@ -454,71 +466,76 @@ namespace Entitas.Generators
         {
             foreach (var context in component.Contexts)
             {
-                var contextPrefix = component.ContextPrefix(context);
-                var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
-                foreach (var @event in component.Events)
-                {
-                    var eventStrings = new EventStrings(@event, component.ComponentPrefix, contextAwareComponentPrefix);
-                    spc.AddSource(
-                        GeneratedPath(CombinedNamespace(component.Namespace, eventStrings.EventListenerComponent)),
-                        GeneratedFileHeader(GeneratorSource(nameof(Events))) +
-                        $"using global::{contextPrefix};\n\n" +
-                        NamespaceDeclaration(component.Namespace,
-                            $$"""
-                            public interface {{eventStrings.EventListenerInterface}}
+                Events(spc, component, context);
+            }
+        }
+
+        static void Events(SourceProductionContext spc, ComponentDeclaration component, string context)
+        {
+            var contextPrefix = component.ContextPrefix(context);
+            var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
+            foreach (var @event in component.Events)
+            {
+                var eventStrings = new EventStrings(@event, component.ComponentPrefix, contextAwareComponentPrefix);
+                spc.AddSource(
+                    GeneratedPath(CombinedNamespace(component.Namespace, eventStrings.EventListenerComponent)),
+                    GeneratedFileHeader(GeneratorSource(nameof(Events))) +
+                    $"using global::{contextPrefix};\n\n" +
+                    NamespaceDeclaration(component.Namespace,
+                        $$"""
+                        public interface {{eventStrings.EventListenerInterface}}
+                        {
+                            void {{eventStrings.EventMethod}}(Entity entity, {{ComponentMethodParams(component)}});
+                        }
+
+                        public sealed class {{eventStrings.EventListenerComponent}} : global::Entitas.IComponent
+                        {
+                            public global::System.Collections.Generic.List<{{eventStrings.EventListenerInterface}}> Value;
+                        }
+
+                        public static class {{eventStrings.EventListener}}EventEntityExtension
+                        {
+                            public static void Add{{eventStrings.EventPrefix}}(this Entity entity, {{eventStrings.EventListenerInterface}} value)
                             {
-                                void {{eventStrings.EventMethod}}(Entity entity, {{ComponentMethodParams(component)}});
+                                var listeners = entity.Has{{eventStrings.EventPrefix}}()
+                                    ? entity.Get{{eventStrings.EventPrefix}}().Value
+                                    : new global::System.Collections.Generic.List<{{eventStrings.EventListenerInterface}}>();
+                                listeners.Add(value);
+                                entity.Replace{{eventStrings.EventPrefix}}(listeners);
                             }
 
-                            public sealed class {{eventStrings.EventListenerComponent}} : global::Entitas.IComponent
+                            public static void Remove{{eventStrings.EventPrefix}}(this Entity entity, {{eventStrings.EventListenerInterface}} value, bool removeComponentWhenEmpty = true)
                             {
-                                public global::System.Collections.Generic.List<{{eventStrings.EventListenerInterface}}> Value;
-                            }
-
-                            public static class {{eventStrings.EventListener}}EventEntityExtension
-                            {
-                                public static void Add{{eventStrings.EventPrefix}}(this Entity entity, {{eventStrings.EventListenerInterface}} value)
+                                var listeners = entity.Get{{eventStrings.EventPrefix}}().Value;
+                                listeners.Remove(value);
+                                if (removeComponentWhenEmpty && listeners.Count == 0)
                                 {
-                                    var listeners = entity.Has{{eventStrings.EventPrefix}}()
-                                        ? entity.Get{{eventStrings.EventPrefix}}().Value
-                                        : new global::System.Collections.Generic.List<{{eventStrings.EventListenerInterface}}>();
-                                    listeners.Add(value);
+                                    entity.Remove{{eventStrings.EventPrefix}}();
+                                }
+                                else
+                                {
                                     entity.Replace{{eventStrings.EventPrefix}}(listeners);
                                 }
-
-                                public static void Remove{{eventStrings.EventPrefix}}(this Entity entity, {{eventStrings.EventListenerInterface}} value, bool removeComponentWhenEmpty = true)
-                                {
-                                    var listeners = entity.Get{{eventStrings.EventPrefix}}().Value;
-                                    listeners.Remove(value);
-                                    if (removeComponentWhenEmpty && listeners.Count == 0)
-                                    {
-                                        entity.Remove{{eventStrings.EventPrefix}}();
-                                    }
-                                    else
-                                    {
-                                        entity.Replace{{eventStrings.EventPrefix}}(listeners);
-                                    }
-                                }
                             }
-                            """));
+                        }
+                        """));
 
-                    var eventComponent = ComponentDeclaration.FromEvent(component,
-                        CombinedNamespace(component.Namespace, eventStrings.EventListenerComponent),
-                        eventStrings.EventListenerComponent,
-                        ImmutableArray.Create(new MemberDeclaration($"global::System.Collections.Generic.List<{eventStrings.EventListenerInterface}>", "Value")),
-                        eventStrings.EventPrefix);
+                var eventComponent = ComponentDeclaration.FromEvent(component,
+                    CombinedNamespace(component.Namespace, eventStrings.EventListenerComponent),
+                    eventStrings.EventListenerComponent,
+                    ImmutableArray.Create(new MemberDeclaration($"global::System.Collections.Generic.List<{eventStrings.EventListenerInterface}>", "Value")),
+                    eventStrings.EventPrefix);
 
-                    ComponentIndex(
-                        spc,
-                        eventComponent,
-                        context
-                    );
+                ComponentIndex(
+                    spc,
+                    eventComponent,
+                    context
+                );
 
-                    EntityExtension(
-                        spc,
-                        eventComponent,
-                        context);
-                }
+                EntityExtension(
+                    spc,
+                    eventComponent,
+                    context);
             }
         }
 
