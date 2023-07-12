@@ -2,6 +2,7 @@ using System.IO;
 using System.Threading.Tasks;
 using VerifyXunit;
 using Xunit;
+using static Entitas.Generators.Tests.TestHelper;
 
 namespace Entitas.Generators.Tests
 {
@@ -25,8 +26,12 @@ namespace Entitas.Generators.Tests
         [Fact]
         public void UsesGlobalNamespace()
         {
-            TestHelper.AssertUsesGlobalNamespaces(File.ReadAllText(Path.Combine(ProjectRoot,
-                "gen/Entitas.Generators/Component/ComponentGenerator.cs")));
+            AssertUsesGlobalNamespaces("gen/Entitas.Generators/Component/ComponentGenerator.cs");
+            AssertUsesGlobalNamespaces("gen/Entitas.Generators/Component/ComponentGenerator.ComponentIndex.cs");
+            AssertUsesGlobalNamespaces("gen/Entitas.Generators/Component/ComponentGenerator.ContextExtension.cs");
+            AssertUsesGlobalNamespaces("gen/Entitas.Generators/Component/ComponentGenerator.EntityExtension.cs");
+            AssertUsesGlobalNamespaces("gen/Entitas.Generators/Component/ComponentGenerator.Events.cs");
+            AssertUsesGlobalNamespaces("gen/Entitas.Generators/Component/ComponentGenerator.Matcher.cs");
         }
 
         /*

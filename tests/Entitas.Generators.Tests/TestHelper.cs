@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ namespace Entitas.Generators.Tests
 {
     public static class TestHelper
     {
+        static readonly string ProjectRoot = TestExtensions.GetProjectRoot();
+
         // https://andrewlock.net/creating-a-source-generator-part-2-testing-an-incremental-generator-with-snapshot-testing/
         public static Task Verify(string source, IIncrementalGenerator generator)
         {
@@ -36,8 +39,10 @@ namespace Entitas.Generators.Tests
             return Verifier.Verify(driver).UseDirectory("snapshots");
         }
 
-        public static void AssertUsesGlobalNamespaces(string code)
+        public static void AssertUsesGlobalNamespaces(string path)
         {
+            var code = File.ReadAllText(Path.Combine(ProjectRoot, path));
+
             var ignores = new[]
             {
                 "global::Entitas.EntitasException"
@@ -58,9 +63,10 @@ namespace Entitas.Generators.Tests
                              $@"(?<!\bglobal::)" +
                              $@"(?<!"")" +
                              $"{word}");
+
             foreach (var pattern in patterns)
             {
-                Regex.Matches(code, pattern).Should().HaveCount(0);
+                Regex.Matches(code, pattern).Should().HaveCount(0, $"because {path} should not use {pattern}");
             }
         }
     }

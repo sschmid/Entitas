@@ -31,23 +31,6 @@ namespace Entitas.Generators
                 .ToImmutableArray();
         }
 
-        internal static ComponentDeclaration FromEvent(ComponentDeclaration component, string fullName, string name, ImmutableArray<MemberDeclaration> members, string componentPrefix)
-        {
-            return new ComponentDeclaration(component, fullName, name, members, componentPrefix);
-        }
-
-        ComponentDeclaration(ComponentDeclaration component, string fullName, string name, ImmutableArray<MemberDeclaration> members, string componentPrefix)
-        {
-            Namespace = component.Namespace;
-            FullName = fullName;
-            Name = name;
-            Members = members;
-            Contexts = component.Contexts;
-            IsUnique = false;
-            Events = ImmutableArray<EventDeclaration>.Empty;
-            ComponentPrefix = componentPrefix;
-        }
-
         public ComponentDeclaration(INamedTypeSymbol symbol, CancellationToken cancellationToken)
         {
             Namespace = !symbol.ContainingNamespace.IsGlobalNamespace
@@ -103,6 +86,23 @@ namespace Entitas.Generators
                        && !property.SetMethod?.DeclaringSyntaxReferences.FirstOrDefault()?
                            .GetSyntax(cancellationToken).DescendantNodes().Any(static node => node is MethodDeclarationSyntax) == true;
             }
+        }
+
+        ComponentDeclaration(ComponentDeclaration component, string fullName, string name, ImmutableArray<MemberDeclaration> members, string componentPrefix)
+        {
+            Namespace = component.Namespace;
+            FullName = fullName;
+            Name = name;
+            Members = members;
+            Contexts = component.Contexts;
+            IsUnique = false;
+            Events = ImmutableArray<EventDeclaration>.Empty;
+            ComponentPrefix = componentPrefix;
+        }
+
+        internal ComponentDeclaration ToEvent(string fullName, string name, ImmutableArray<MemberDeclaration> members, string componentPrefix)
+        {
+            return new ComponentDeclaration(this, fullName, name, members, componentPrefix);
         }
 
         internal string ContextPrefix(string context)
