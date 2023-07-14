@@ -1,3 +1,6 @@
 using Entitas;
 
-public sealed class NoContextComponent : IComponent { }
+namespace MyFeature
+{
+    public sealed class NoContextComponent : IComponent { }
+}
