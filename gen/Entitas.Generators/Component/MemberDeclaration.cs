@@ -8,8 +8,6 @@ namespace Entitas.Generators
     {
         public readonly string Type;
         public readonly string Name;
-
-        // Computed
         public readonly string ValidLowerFirstName;
 
         public MemberDeclaration(IFieldSymbol field) : this(field.Type.ToDisplayString(), field.Name) { }
@@ -20,8 +18,6 @@ namespace Entitas.Generators
         {
             Type = type;
             Name = name;
-
-            // Computed
             ValidLowerFirstName = ToValidLowerFirst(Name);
         }
 

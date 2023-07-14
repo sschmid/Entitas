@@ -17,8 +17,6 @@ namespace Entitas.Generators
         public readonly ImmutableArray<string> Contexts;
         public readonly bool IsUnique;
         public readonly ImmutableArray<EventDeclaration> Events;
-
-        // Computed
         public readonly string Prefix;
 
         internal static ImmutableArray<string> GetContexts(INamedTypeSymbol symbol)
@@ -35,10 +33,7 @@ namespace Entitas.Generators
         public ComponentDeclaration(SyntaxNode? node, INamedTypeSymbol symbol, CancellationToken cancellationToken)
         {
             Node = node;
-            Namespace = !symbol.ContainingNamespace.IsGlobalNamespace
-                ? symbol.ContainingNamespace.ToDisplayString()
-                : null;
-
+            Namespace = !symbol.ContainingNamespace.IsGlobalNamespace ? symbol.ContainingNamespace.ToDisplayString() : null;
             FullName = symbol.ToDisplayString();
             Name = symbol.Name;
 
@@ -57,14 +52,14 @@ namespace Entitas.Generators
                 .ToImmutableArray();
 
             Contexts = GetContexts(symbol);
+            IsUnique = symbol.GetAttributes().Any(static attribute => attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.UniqueAttribute");
 
-            IsUnique = symbol.GetAttributes().Any(static attribute =>
-                attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.UniqueAttribute");
+            var prefix = Name.RemoveSuffix("Component");
 
             Events = symbol.GetAttributes()
                 .Where(static attribute => attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.EventAttribute")
                 .Select(static attribute => attribute.ConstructorArguments)
-                .Select<ImmutableArray<TypedConstant>, EventDeclaration?>(static args =>
+                .Select<ImmutableArray<TypedConstant>, EventDeclaration?>(args =>
                 {
                     var eventTarget = args.Length > 0 && args[0].Type?.ToDisplayString() == "Entitas.Generators.Attributes.EventTarget" && args[0].Value is int eventTargetValue ? eventTargetValue : -1;
                     if (eventTarget == -1)
@@ -72,13 +67,12 @@ namespace Entitas.Generators
 
                     var eventType = args.Length > 1 && args[1].Type?.ToDisplayString() == "Entitas.Generators.Attributes.EventType" && args[1].Value is int eventTypeValue ? eventTypeValue : 0;
                     var order = args.Length > 2 && args[2].Type?.ToDisplayString() == "int" && args[2].Value is int orderValue ? orderValue : 0;
-                    return new EventDeclaration(eventTarget, eventType, order);
+                    return new EventDeclaration(eventTarget, eventType, order, prefix);
                 })
                 .OfType<EventDeclaration>()
                 .ToImmutableArray();
 
-            // Computed
-            Prefix = Name.RemoveSuffix("Component");
+            Prefix = prefix;
 
             static bool IsAutoProperty(ISymbol symbol, CancellationToken cancellationToken)
             {
@@ -121,32 +115,6 @@ namespace Entitas.Generators
         internal string ContextAwareComponentPrefix(string contextPrefix)
         {
             return ContextAware(contextPrefix) + Prefix;
-        }
-    }
-
-    readonly struct EventStrings
-    {
-        public readonly string EventTargetPrefix;
-        public readonly string EventTypeSuffix;
-        public readonly string EventPrefix;
-        public readonly string EventListener;
-        public readonly string ContextAwareEvent;
-        public readonly string ContextAwareEventListener;
-        public readonly string EventMethod;
-        public readonly string ContextAwareEventListenerInterface;
-        public readonly string ContextAwareEventListenerComponent;
-
-        public EventStrings(EventDeclaration @event, string componentPrefix, string contextAware)
-        {
-            EventTargetPrefix = @event.EventTarget == 0 ? "Any" : string.Empty;
-            EventTypeSuffix = @event.EventType == 0 ? "Added" : "Removed";
-            EventPrefix = $"{EventTargetPrefix}{componentPrefix}{EventTypeSuffix}"; // e.g. AnyPositionAdded
-            EventListener = $"{EventPrefix}Listener"; // e.g. AnyPositionAddedListener
-            EventMethod = $"On{EventPrefix}"; // e.g. OnAnyPositionAdded
-            ContextAwareEvent = $"{contextAware}{EventPrefix}"; // e.g. MyAppMainAnyPositionAdded
-            ContextAwareEventListener = $"{ContextAwareEvent}Listener"; // e.g. MyAppMainAnyPositionAddedListener
-            ContextAwareEventListenerInterface = $"I{ContextAwareEventListener}"; // e.g. IMyAppMainAnyPositionAddedListener
-            ContextAwareEventListenerComponent = $"{ContextAwareEventListener}Component"; // e.g. MyAppMainAnyPositionAddedListenerComponent
         }
     }
 

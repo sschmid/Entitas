@@ -146,12 +146,11 @@ namespace Entitas.Generators
                             var component = new ComponentDeclaration(null, symbol, cancellationToken);
                             allComponents.Add(component);
 
-                            var contextPrefix = component.ContextPrefix(context);
-                            var contextAware = component.ContextAware(contextPrefix);
+                            var contextAware = component.ContextAware(component.ContextPrefix(context));
                             foreach (var @event in component.Events)
                             {
-                                var eventStrings = new EventStrings(@event, component.Prefix, contextAware);
-                                allComponents.Add(ToEvent(component, eventStrings));
+                                @event.ContextAware(contextAware);
+                                allComponents.Add(ToEvent(component, @event));
                             }
                         }
                     }
@@ -227,13 +226,13 @@ namespace Entitas.Generators
             EventSystemsContextExtension(spc, method, optionsProvider);
         }
 
-        static ComponentDeclaration ToEvent(ComponentDeclaration component, EventStrings eventStrings)
+        static ComponentDeclaration ToEvent(ComponentDeclaration component, EventDeclaration @event)
         {
             return component.ToEvent(
-                CombinedNamespace(component.Namespace, eventStrings.ContextAwareEventListenerComponent),
-                eventStrings.ContextAwareEventListenerComponent,
-                ImmutableArray.Create(new MemberDeclaration($"global::System.Collections.Generic.List<{eventStrings.ContextAwareEventListenerInterface}>", "Value")),
-                eventStrings.EventListener);
+                CombinedNamespace(component.Namespace, @event.ContextAwareEventListenerComponent),
+                @event.ContextAwareEventListenerComponent,
+                ImmutableArray.Create(new MemberDeclaration($"global::System.Collections.Generic.List<{@event.ContextAwareEventListenerInterface}>", "Value")),
+                @event.EventListener);
         }
 
         static string ComponentMethodParams(ComponentDeclaration component)
