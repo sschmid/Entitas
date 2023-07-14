@@ -15,8 +15,6 @@ namespace Entitas.Generators
         public readonly string ContextFullName;
         public readonly string ContextName;
         public readonly ImmutableArray<ComponentDeclaration> Components;
-
-        // Computed
         public readonly string FullContextPrefix;
 
         readonly FullNameAndContextsComparer _comparer = new FullNameAndContextsComparer();
@@ -38,8 +36,6 @@ namespace Entitas.Generators
             ContextName = contextSymbol.Name;
 
             Components = components;
-
-            // Computed
             FullContextPrefix = ContextFullName.RemoveSuffix("Context");
         }
 

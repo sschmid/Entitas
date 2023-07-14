@@ -39,9 +39,8 @@ namespace Entitas.Generators
                     .Select(pair =>
                     {
                         var (component, @event) = pair;
-                        var contextAware = component.ContextAware(contextPrefix);
-                        var eventStrings = new EventStrings(@event, component.Prefix, contextAware);
-                        return $"        systems.Add(new {CombinedNamespace(component.Namespace, eventStrings.ContextAwareEvent)}EventSystem(context)); // order: {@event.Order}";
+                        @event.ContextAware(component.ContextAware(contextPrefix));
+                        return $"        systems.Add(new {CombinedNamespace(component.Namespace, @event.ContextAwareEvent)}EventSystem(context)); // order: {@event.Order}";
                     }));
             }
         }

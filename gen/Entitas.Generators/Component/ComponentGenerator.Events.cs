@@ -19,8 +19,7 @@ namespace Entitas.Generators
             var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
             foreach (var @event in component.Events)
             {
-                var eventStrings = new EventStrings(@event, component.Prefix, contextAware);
-
+                @event.ContextAware(contextAware);
                 var optionalComponentMethodParams = string.Empty;
                 var optionalComponentValueMethodArgs = string.Empty;
                 var componentDeclaration = string.Empty;
@@ -44,44 +43,44 @@ namespace Entitas.Generators
 
                 if (@event.EventTarget == 1)
                 {
-                    filter += $" && entity.Has{eventStrings.EventListener}()";
+                    filter += $" && entity.Has{@event.EventListener}()";
                 }
 
                 var content = $$"""
-                    public interface {{eventStrings.ContextAwareEventListenerInterface}}
+                    public interface {{@event.ContextAwareEventListenerInterface}}
                     {
-                        void {{eventStrings.EventMethod}}(Entity entity{{optionalComponentMethodParams}});
+                        void {{@event.EventMethod}}(Entity entity{{optionalComponentMethodParams}});
                     }
 
-                    public sealed class {{eventStrings.ContextAwareEventListenerComponent}} : global::Entitas.IComponent
+                    public sealed class {{@event.ContextAwareEventListenerComponent}} : global::Entitas.IComponent
                     {
-                        public global::System.Collections.Generic.List<{{eventStrings.ContextAwareEventListenerInterface}}> Value;
+                        public global::System.Collections.Generic.List<{{@event.ContextAwareEventListenerInterface}}> Value;
                     }
 
-                    public static class {{eventStrings.ContextAwareEventListener}}EventEntityExtension
+                    public static class {{@event.ContextAwareEventListener}}EventEntityExtension
                     {
-                        public static Entity Add{{eventStrings.EventListener}}(this Entity entity, {{eventStrings.ContextAwareEventListenerInterface}} value)
+                        public static Entity Add{{@event.EventListener}}(this Entity entity, {{@event.ContextAwareEventListenerInterface}} value)
                         {
-                            var listeners = entity.Has{{eventStrings.EventListener}}()
-                                ? entity.Get{{eventStrings.EventListener}}().Value
-                                : new global::System.Collections.Generic.List<{{eventStrings.ContextAwareEventListenerInterface}}>();
+                            var listeners = entity.Has{{@event.EventListener}}()
+                                ? entity.Get{{@event.EventListener}}().Value
+                                : new global::System.Collections.Generic.List<{{@event.ContextAwareEventListenerInterface}}>();
                             listeners.Add(value);
-                            return entity.Replace{{eventStrings.EventListener}}(listeners);
+                            return entity.Replace{{@event.EventListener}}(listeners);
                         }
 
-                        public static void Remove{{eventStrings.EventListener}}(this Entity entity, {{eventStrings.ContextAwareEventListenerInterface}} value, bool removeListenerWhenEmpty = true)
+                        public static void Remove{{@event.EventListener}}(this Entity entity, {{@event.ContextAwareEventListenerInterface}} value, bool removeListenerWhenEmpty = true)
                         {
-                            var listeners = entity.Get{{eventStrings.EventListener}}().Value;
+                            var listeners = entity.Get{{@event.EventListener}}().Value;
                             listeners.Remove(value);
                             if (removeListenerWhenEmpty && listeners.Count == 0)
                             {
-                                entity.Remove{{eventStrings.EventListener}}();
+                                entity.Remove{{@event.EventListener}}();
                                 if (entity.IsEmpty())
                                     entity.Destroy();
                             }
                             else
                             {
-                                entity.Replace{{eventStrings.EventListener}}(listeners);
+                                entity.Replace{{@event.EventListener}}(listeners);
                             }
                         }
                     }
@@ -92,17 +91,17 @@ namespace Entitas.Generators
                 if (@event.EventTarget == 0)
                 {
                     content += $$"""
-                        public sealed class {{eventStrings.ContextAwareEvent}}EventSystem : global::Entitas.ReactiveSystem<Entity>
+                        public sealed class {{@event.ContextAwareEvent}}EventSystem : global::Entitas.ReactiveSystem<Entity>
                         {
                             readonly global::Entitas.IGroup<Entity> _listeners;
                             readonly global::System.Collections.Generic.List<Entity> _entityBuffer;
-                            readonly global::System.Collections.Generic.List<{{eventStrings.ContextAwareEventListenerInterface}}> _listenerBuffer;
+                            readonly global::System.Collections.Generic.List<{{@event.ContextAwareEventListenerInterface}}> _listenerBuffer;
 
-                            public {{eventStrings.ContextAwareEvent}}EventSystem({{context}} context) : base(context)
+                            public {{@event.ContextAwareEvent}}EventSystem({{context}} context) : base(context)
                             {
-                                _listeners = context.GetGroup({{eventStrings.ContextAwareEventListener}}Matcher.{{eventStrings.EventListener}});
+                                _listeners = context.GetGroup({{@event.ContextAwareEventListener}}Matcher.{{@event.EventListener}});
                                 _entityBuffer = new global::System.Collections.Generic.List<Entity>();
-                                _listenerBuffer = new global::System.Collections.Generic.List<{{eventStrings.ContextAwareEventListenerInterface}}>();
+                                _listenerBuffer = new global::System.Collections.Generic.List<{{@event.ContextAwareEventListenerInterface}}>();
                             }
 
                             protected override global::Entitas.ICollector<Entity> GetTrigger(global::Entitas.IContext<Entity> context)
@@ -124,10 +123,10 @@ namespace Entitas.Generators
                                     foreach (var listenerEntity in _listeners.GetEntities(_entityBuffer))
                                     {
                                         _listenerBuffer.Clear();
-                                        _listenerBuffer.AddRange(listenerEntity.Get{{eventStrings.EventListener}}().Value);
+                                        _listenerBuffer.AddRange(listenerEntity.Get{{@event.EventListener}}().Value);
                                         foreach (var listener in _listenerBuffer)
                                         {
-                                            listener.{{eventStrings.EventMethod}}(entity{{optionalComponentValueMethodArgs}});
+                                            listener.{{@event.EventMethod}}(entity{{optionalComponentValueMethodArgs}});
                                         }
                                     }
                                 }
@@ -139,13 +138,13 @@ namespace Entitas.Generators
                 else
                 {
                     content += $$"""
-                        public sealed class {{eventStrings.ContextAwareEvent}}EventSystem : global::Entitas.ReactiveSystem<Entity>
+                        public sealed class {{@event.ContextAwareEvent}}EventSystem : global::Entitas.ReactiveSystem<Entity>
                         {
-                            readonly global::System.Collections.Generic.List<{{eventStrings.ContextAwareEventListenerInterface}}> _listenerBuffer;
+                            readonly global::System.Collections.Generic.List<{{@event.ContextAwareEventListenerInterface}}> _listenerBuffer;
 
-                            public {{eventStrings.ContextAwareEvent}}EventSystem({{context}} context) : base(context)
+                            public {{@event.ContextAwareEvent}}EventSystem({{context}} context) : base(context)
                             {
-                                _listenerBuffer = new global::System.Collections.Generic.List<{{eventStrings.ContextAwareEventListenerInterface}}>();
+                                _listenerBuffer = new global::System.Collections.Generic.List<{{@event.ContextAwareEventListenerInterface}}>();
                             }
 
                             protected override global::Entitas.ICollector<Entity> GetTrigger(global::Entitas.IContext<Entity> context)
@@ -165,10 +164,10 @@ namespace Entitas.Generators
                                 foreach (var entity in entities)
                                 {{{componentDeclaration}}
                                     _listenerBuffer.Clear();
-                                    _listenerBuffer.AddRange(entity.Get{{eventStrings.EventListener}}().Value);
+                                    _listenerBuffer.AddRange(entity.Get{{@event.EventListener}}().Value);
                                     foreach (var listener in _listenerBuffer)
                                     {
-                                        listener.{{eventStrings.EventMethod}}(entity{{optionalComponentValueMethodArgs}});
+                                        listener.{{@event.EventMethod}}(entity{{optionalComponentValueMethodArgs}});
                                     }
                                 }
                             }
@@ -178,12 +177,12 @@ namespace Entitas.Generators
                 }
 
                 spc.AddSource(
-                    GeneratedPath(CombinedNamespace(component.Namespace, eventStrings.ContextAwareEventListenerComponent)),
+                    GeneratedPath(CombinedNamespace(component.Namespace, @event.ContextAwareEventListenerComponent)),
                     GeneratedFileHeader(GeneratorSource(nameof(Events))) +
                     $"using global::{contextPrefix};\n\n" +
                     NamespaceDeclaration(component.Namespace, content));
 
-                var eventComponent = ToEvent(component, eventStrings);
+                var eventComponent = ToEvent(component, @event);
                 OnFullNameOrContextsChanged(spc, eventComponent, context, optionsProvider);
                 OnFullNameOrMembersOrContextsChanged(spc, eventComponent, context, optionsProvider);
             }
