@@ -15,7 +15,7 @@ namespace Entitas.Generators
             var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
             foreach (var @event in component.Events)
             {
-                var eventStrings = new EventStrings(@event, component.ComponentPrefix, contextAware);
+                var eventStrings = new EventStrings(@event, component.Prefix, contextAware);
 
                 var optionalComponentMethodParams = string.Empty;
                 var optionalComponentValueMethodArgs = string.Empty;
@@ -28,14 +28,14 @@ namespace Entitas.Generators
                     {
                         optionalComponentMethodParams = $", {ComponentMethodParams(component)}";
                         optionalComponentValueMethodArgs = $", {ComponentValueMethodArgs(component)}";
-                        componentDeclaration = $"\n            var component = entity.Get{component.ComponentPrefix}();";
+                        componentDeclaration = $"\n            var component = entity.Get{component.Prefix}();";
                     }
 
-                    filter = $"entity.Has{component.ComponentPrefix}()";
+                    filter = $"entity.Has{component.Prefix}()";
                 }
                 else
                 {
-                    filter = $"!entity.Has{component.ComponentPrefix}()";
+                    filter = $"!entity.Has{component.Prefix}()";
                 }
 
                 if (@event.EventTarget == 1)
@@ -98,7 +98,7 @@ namespace Entitas.Generators
                             protected override global::Entitas.ICollector<Entity> GetTrigger(global::Entitas.IContext<Entity> context)
                             {
                                 return global::Entitas.CollectorContextExtension.CreateCollector(
-                                    context, global::Entitas.TriggerOnEventMatcherExtension.Added({{contextAwareComponentPrefix}}Matcher.{{component.ComponentPrefix}})
+                                    context, global::Entitas.TriggerOnEventMatcherExtension.Added({{contextAwareComponentPrefix}}Matcher.{{component.Prefix}})
                                 );
                             }
 
@@ -141,7 +141,7 @@ namespace Entitas.Generators
                             protected override global::Entitas.ICollector<Entity> GetTrigger(global::Entitas.IContext<Entity> context)
                             {
                                 return global::Entitas.CollectorContextExtension.CreateCollector(
-                                    context, global::Entitas.TriggerOnEventMatcherExtension.Added({{contextAwareComponentPrefix}}Matcher.{{component.ComponentPrefix}})
+                                    context, global::Entitas.TriggerOnEventMatcherExtension.Added({{contextAwareComponentPrefix}}Matcher.{{component.Prefix}})
                                 );
                             }
 

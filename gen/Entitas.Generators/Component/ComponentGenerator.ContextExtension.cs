@@ -19,48 +19,48 @@ namespace Entitas.Generators
                 content = $$"""
                     public static class {{className}}
                     {
-                        public static bool Has{{component.ComponentPrefix}}(this {{context}} context)
+                        public static bool Has{{component.Prefix}}(this {{context}} context)
                         {
-                            return context.Get{{component.ComponentPrefix}}Entity() != null;
+                            return context.Get{{component.Prefix}}Entity() != null;
                         }
 
-                        public static Entity Set{{component.ComponentPrefix}}(this {{context}} context, {{ComponentMethodParams(component)}})
+                        public static Entity Set{{component.Prefix}}(this {{context}} context, {{ComponentMethodParams(component)}})
                         {
-                            if (context.Has{{component.ComponentPrefix}}())
+                            if (context.Has{{component.Prefix}}())
                             {
                                 throw new global::Entitas.EntitasException(
-                                    $"Could not set {{component.ComponentPrefix}}!\n{context} already has an entity with {{component.FullName}}!",
-                                    "You should check if the context already has a {{component.ComponentPrefix}}Entity before setting it or use context.Replace{{component.ComponentPrefix}}()."
+                                    $"Could not set {{component.Prefix}}!\n{context} already has an entity with {{component.FullName}}!",
+                                    "You should check if the context already has a {{component.Prefix}}Entity before setting it or use context.Replace{{component.Prefix}}()."
                                 );
                             }
 
-                            return context.CreateEntity().Add{{component.ComponentPrefix}}({{ComponentMethodArgs(component)}});
+                            return context.CreateEntity().Add{{component.Prefix}}({{ComponentMethodArgs(component)}});
                         }
 
-                        public static Entity Replace{{component.ComponentPrefix}}(this {{context}} context, {{ComponentMethodParams(component)}})
+                        public static Entity Replace{{component.Prefix}}(this {{context}} context, {{ComponentMethodParams(component)}})
                         {
-                            var entity = context.Get{{component.ComponentPrefix}}Entity();
+                            var entity = context.Get{{component.Prefix}}Entity();
                             if (entity == null)
-                                entity = context.CreateEntity().Add{{component.ComponentPrefix}}({{ComponentMethodArgs(component)}});
+                                entity = context.CreateEntity().Add{{component.Prefix}}({{ComponentMethodArgs(component)}});
                             else
-                                entity.Replace{{component.ComponentPrefix}}({{ComponentMethodArgs(component)}});
+                                entity.Replace{{component.Prefix}}({{ComponentMethodArgs(component)}});
 
                             return entity;
                         }
 
-                        public static void Remove{{component.ComponentPrefix}}(this {{context}} context)
+                        public static void Remove{{component.Prefix}}(this {{context}} context)
                         {
-                            context.Get{{component.ComponentPrefix}}Entity().Destroy();
+                            context.Get{{component.Prefix}}Entity().Destroy();
                         }
 
-                        public static Entity Get{{component.ComponentPrefix}}Entity(this {{context}} context)
+                        public static Entity Get{{component.Prefix}}Entity(this {{context}} context)
                         {
-                            return context.GetGroup({{contextAwareComponentPrefix}}Matcher.{{component.ComponentPrefix}}).GetSingleEntity();
+                            return context.GetGroup({{contextAwareComponentPrefix}}Matcher.{{component.Prefix}}).GetSingleEntity();
                         }
 
-                        public static {{component.Name}} Get{{component.ComponentPrefix}}(this {{context}} context)
+                        public static {{component.Name}} Get{{component.Prefix}}(this {{context}} context)
                         {
-                            return context.Get{{component.ComponentPrefix}}Entity().Get{{component.ComponentPrefix}}();
+                            return context.Get{{component.Prefix}}Entity().Get{{component.Prefix}}();
                         }
                     }
 
@@ -71,24 +71,24 @@ namespace Entitas.Generators
                 content = $$"""
                     public static class {{className}}
                     {
-                        public static bool Has{{component.ComponentPrefix}}(this {{context}} context)
+                        public static bool Has{{component.Prefix}}(this {{context}} context)
                         {
-                            return context.Get{{component.ComponentPrefix}}Entity() != null;
+                            return context.Get{{component.Prefix}}Entity() != null;
                         }
 
-                        public static Entity Set{{component.ComponentPrefix}}(this {{context}} context)
+                        public static Entity Set{{component.Prefix}}(this {{context}} context)
                         {
-                            return context.Get{{component.ComponentPrefix}}Entity() ?? context.CreateEntity().Add{{component.ComponentPrefix}}();
+                            return context.Get{{component.Prefix}}Entity() ?? context.CreateEntity().Add{{component.Prefix}}();
                         }
 
-                        public static void Unset{{component.ComponentPrefix}}(this {{context}} context)
+                        public static void Unset{{component.Prefix}}(this {{context}} context)
                         {
-                            context.Get{{component.ComponentPrefix}}Entity()?.Destroy();
+                            context.Get{{component.Prefix}}Entity()?.Destroy();
                         }
 
-                        public static Entity Get{{component.ComponentPrefix}}Entity(this {{context}} context)
+                        public static Entity Get{{component.Prefix}}Entity(this {{context}} context)
                         {
-                            return context.GetGroup({{contextAwareComponentPrefix}}Matcher.{{component.ComponentPrefix}}).GetSingleEntity();
+                            return context.GetGroup({{contextAwareComponentPrefix}}Matcher.{{component.Prefix}}).GetSingleEntity();
                         }
                     }
 

@@ -150,7 +150,7 @@ namespace Entitas.Generators
                             var contextAware = component.ContextAware(contextPrefix);
                             foreach (var @event in component.Events)
                             {
-                                var eventStrings = new EventStrings(@event, component.ComponentPrefix, contextAware);
+                                var eventStrings = new EventStrings(@event, component.Prefix, contextAware);
                                 allComponents.Add(ToEvent(component, eventStrings));
                             }
                         }
