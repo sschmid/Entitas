@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using VerifyXunit;
@@ -14,14 +15,40 @@ namespace Entitas.Generators.Tests
         static readonly string FixturesPath = Path.Combine(ProjectRoot,
             "tests", "Entitas.Generators.Tests.Fixtures");
 
-        static Task Verify(string fixture) => TestHelper.Verify(File.ReadAllText(
-            Path.Combine(FixturesPath, $"{fixture}.cs")), new ComponentGenerator());
+        static Task Verify(string fixture, Dictionary<string, string> options) => TestHelper.Verify(File.ReadAllText(
+            Path.Combine(FixturesPath, $"{fixture}.cs")), new ComponentGenerator(), options);
 
-        static Task VerifyComponent(string fixture) => TestHelper.Verify(File.ReadAllText(
-            Path.Combine(FixturesPath, "Components", $"{fixture}.cs")), new ComponentGenerator());
+        static Task VerifyComponent(string fixture, Dictionary<string, string> options) => TestHelper.Verify(File.ReadAllText(
+            Path.Combine(FixturesPath, "Components", $"{fixture}.cs")), new ComponentGenerator(), options);
 
-        static Task VerifyContext(string fixture) => TestHelper.Verify(File.ReadAllText(
-            Path.Combine(FixturesPath, "Contexts", $"{fixture}.txt")), new ComponentGenerator());
+        static Task VerifyContext(string fixture, Dictionary<string, string> options) => TestHelper.Verify(File.ReadAllText(
+            Path.Combine(FixturesPath, "Contexts", $"{fixture}.txt")), new ComponentGenerator(), options);
+
+        static readonly Dictionary<string, string> DefaultOptions = new Dictionary<string, string>();
+
+        static readonly Dictionary<string, string> NoComponentIndexNoMatcherOptions = new Dictionary<string, string>
+        {
+            { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" }
+        };
+
+        static readonly Dictionary<string, string> EventsOnlyOptions = new Dictionary<string, string>
+        {
+            { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" }
+        };
+
+        static readonly Dictionary<string, string> ContextInitializationOptions = new Dictionary<string, string>
+        {
+            { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEventsKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEventSystemsContextExtensionKey, "false" }
+        };
 
         [Fact]
         public void UsesGlobalNamespace()
@@ -41,10 +68,10 @@ namespace Entitas.Generators.Tests
          */
 
         [Fact]
-        public Task SomeNamespacedClass() => Verify("SomeNamespacedClass");
+        public Task SomeNamespacedClass() => Verify("SomeNamespacedClass", DefaultOptions);
 
         [Fact]
-        public Task Class() => Verify("SomeClass");
+        public Task Class() => Verify("SomeClass", DefaultOptions);
 
         /*
          *
@@ -53,49 +80,49 @@ namespace Entitas.Generators.Tests
          */
 
         [Fact]
-        public Task NonPublicComponent() => VerifyComponent("NonPublicComponent");
+        public Task NonPublicComponent() => VerifyComponent("NonPublicComponent", DefaultOptions);
 
         [Fact]
-        public Task NamespacedComponent() => VerifyComponent("SomeNamespacedComponent");
+        public Task NamespacedComponent() => VerifyComponent("SomeNamespacedComponent", DefaultOptions);
 
         [Fact]
-        public Task Component() => VerifyComponent("SomeComponent");
+        public Task Component() => VerifyComponent("SomeComponent", DefaultOptions);
 
         [Fact]
-        public Task NoContextNamespacedComponent() => VerifyComponent("NoContextNamespacedComponent");
+        public Task NoContextNamespacedComponent() => VerifyComponent("NoContextNamespacedComponent", DefaultOptions);
 
         [Fact]
-        public Task NoContextComponent() => VerifyComponent("NoContextComponent");
+        public Task NoContextComponent() => VerifyComponent("NoContextComponent", DefaultOptions);
 
         [Fact]
-        public Task OneFieldNamespacedComponent() => VerifyComponent("OneFieldNamespacedComponent");
+        public Task OneFieldNamespacedComponent() => VerifyComponent("OneFieldNamespacedComponent", NoComponentIndexNoMatcherOptions);
 
         [Fact]
-        public Task OneFieldComponent() => VerifyComponent("OneFieldComponent");
+        public Task OneFieldComponent() => VerifyComponent("OneFieldComponent", NoComponentIndexNoMatcherOptions);
 
         [Fact]
-        public Task MultipleFieldsNamespacedComponent() => VerifyComponent("MultipleFieldsNamespacedComponent");
+        public Task MultipleFieldsNamespacedComponent() => VerifyComponent("MultipleFieldsNamespacedComponent", NoComponentIndexNoMatcherOptions);
 
         [Fact]
-        public Task MultipleFieldsComponent() => VerifyComponent("MultipleFieldsComponent");
+        public Task MultipleFieldsComponent() => VerifyComponent("MultipleFieldsComponent", NoComponentIndexNoMatcherOptions);
 
         [Fact]
-        public Task ReservedKeywordFieldsNamespacedComponent() => VerifyComponent("ReservedKeywordFieldsNamespacedComponent");
+        public Task ReservedKeywordFieldsNamespacedComponent() => VerifyComponent("ReservedKeywordFieldsNamespacedComponent", NoComponentIndexNoMatcherOptions);
 
         [Fact]
-        public Task NoValidFieldsNamespacedComponent() => VerifyComponent("NoValidFieldsNamespacedComponent");
+        public Task NoValidFieldsNamespacedComponent() => VerifyComponent("NoValidFieldsNamespacedComponent", NoComponentIndexNoMatcherOptions);
 
         [Fact]
-        public Task MultiplePropertiesNamespacedComponent() => VerifyComponent("MultiplePropertiesNamespacedComponent");
+        public Task MultiplePropertiesNamespacedComponent() => VerifyComponent("MultiplePropertiesNamespacedComponent", NoComponentIndexNoMatcherOptions);
 
         [Fact]
-        public Task ContextFromDifferentAssemblyNamespacedComponent() => VerifyComponent("ContextFromDifferentAssemblyNamespacedComponent");
+        public Task ContextFromDifferentAssemblyNamespacedComponent() => VerifyComponent("ContextFromDifferentAssemblyNamespacedComponent", NoComponentIndexNoMatcherOptions);
 
         [Fact]
-        public Task UniqueNamespacedComponent() => VerifyComponent("UniqueNamespacedComponent");
+        public Task UniqueNamespacedComponent() => VerifyComponent("UniqueNamespacedComponent", NoComponentIndexNoMatcherOptions);
 
         [Fact]
-        public Task UniqueOneFieldNamespacedComponent() => VerifyComponent("UniqueOneFieldNamespacedComponent");
+        public Task UniqueOneFieldNamespacedComponent() => VerifyComponent("UniqueOneFieldNamespacedComponent", NoComponentIndexNoMatcherOptions);
 
         /*
          *
@@ -104,16 +131,16 @@ namespace Entitas.Generators.Tests
          */
 
         [Fact]
-        public Task EventNamespacedComponent() => VerifyComponent("EventNamespacedComponent");
+        public Task EventNamespacedComponent() => VerifyComponent("EventNamespacedComponent", EventsOnlyOptions);
 
         [Fact]
-        public Task EventComponent() => VerifyComponent("EventComponent");
+        public Task EventComponent() => VerifyComponent("EventComponent", EventsOnlyOptions);
 
         [Fact]
-        public Task FlagEventNamespacedComponent() => VerifyComponent("FlagEventNamespacedComponent");
+        public Task FlagEventNamespacedComponent() => VerifyComponent("FlagEventNamespacedComponent", EventsOnlyOptions);
 
         [Fact]
-        public Task FlagEventComponent() => VerifyComponent("FlagEventComponent");
+        public Task FlagEventComponent() => VerifyComponent("FlagEventComponent", EventsOnlyOptions);
 
         /*
          *
@@ -122,7 +149,7 @@ namespace Entitas.Generators.Tests
          */
 
         [Fact]
-        public Task DuplicatedContextsNamespacedComponent() => VerifyComponent("DuplicatedContextsNamespacedComponent");
+        public Task DuplicatedContextsNamespacedComponent() => VerifyComponent("DuplicatedContextsNamespacedComponent", NoComponentIndexNoMatcherOptions);
 
         /*
          *
@@ -131,12 +158,12 @@ namespace Entitas.Generators.Tests
          */
 
         [Fact]
-        public Task EmptyContextInitialization() => VerifyContext("EmptyContextInitialization");
+        public Task EmptyContextInitialization() => VerifyContext("EmptyContextInitialization", ContextInitializationOptions);
 
         [Fact]
-        public Task ContextInitialization() => VerifyContext("ContextInitialization");
+        public Task ContextInitialization() => VerifyContext("ContextInitialization", ContextInitializationOptions);
 
         [Fact]
-        public Task ContextInitializationFromDifferentAssembly() => VerifyContext("ContextInitializationFromDifferentAssembly");
+        public Task ContextInitializationFromDifferentAssembly() => VerifyContext("ContextInitializationFromDifferentAssembly", ContextInitializationOptions);
     }
 }

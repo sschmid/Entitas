@@ -7,6 +7,7 @@ namespace Entitas.Generators
 {
     readonly struct ContextInitializationMethodDeclaration : IEquatable<ContextInitializationMethodDeclaration>
     {
+        public readonly SyntaxNode Node;
         public readonly string? Namespace;
         public readonly string Class;
         public readonly string Name;
@@ -20,8 +21,9 @@ namespace Entitas.Generators
 
         readonly FullNameAndContextsComparer _comparer = new FullNameAndContextsComparer();
 
-        public ContextInitializationMethodDeclaration(IMethodSymbol symbol, ISymbol contextSymbol, ImmutableArray<ComponentDeclaration> components)
+        public ContextInitializationMethodDeclaration(SyntaxNode node, IMethodSymbol symbol, ISymbol contextSymbol, ImmutableArray<ComponentDeclaration> components)
         {
+            Node = node;
             Namespace = !symbol.ContainingNamespace.IsGlobalNamespace
                 ? symbol.ContainingNamespace.ToDisplayString()
                 : null;

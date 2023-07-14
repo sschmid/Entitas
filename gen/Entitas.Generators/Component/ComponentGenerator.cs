@@ -5,6 +5,7 @@ using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Diagnostics;
 using static Entitas.Generators.Templates;
 
 namespace Entitas.Generators
@@ -14,29 +15,31 @@ namespace Entitas.Generators
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
+            var options = initContext.AnalyzerConfigOptionsProvider;
+
             var components = initContext.SyntaxProvider
                 .CreateSyntaxProvider(IsComponentCandidate, CreateComponentDeclaration)
                 .Where(static component => component is not null)
                 .Select(static (component, _) => component!.Value);
 
             var fullNameOrContextsChanged = components.WithComparer(new FullNameAndContextsComparer());
-            initContext.RegisterSourceOutput(fullNameOrContextsChanged, OnFullNameOrContextsChanged);
+            initContext.RegisterSourceOutput(fullNameOrContextsChanged.Combine(options), OnFullNameOrContextsChanged);
 
             var fullNameOrMembersOrContextsChanged = components.WithComparer(new FullNameAndMembersAndContextsComparer());
-            initContext.RegisterSourceOutput(fullNameOrMembersOrContextsChanged, OnFullNameOrMembersOrContextsChanged);
+            initContext.RegisterSourceOutput(fullNameOrMembersOrContextsChanged.Combine(options), OnFullNameOrMembersOrContextsChanged);
 
             var fullNameOrMembersOrContextsOrIsUniqueChanged = components.WithComparer(new FullNameAndMembersAndContextsAndIsUniqueComparer());
-            initContext.RegisterSourceOutput(fullNameOrMembersOrContextsOrIsUniqueChanged, OnFullNameOrMembersOrContextsOrIsUniqueChanged);
+            initContext.RegisterSourceOutput(fullNameOrMembersOrContextsOrIsUniqueChanged.Combine(options), OnFullNameOrMembersOrContextsOrIsUniqueChanged);
 
             var fullNameOrContextsOrEventsChanged = components.WithComparer(new FullNameAndContextsAndEventsComparer());
-            initContext.RegisterSourceOutput(fullNameOrContextsOrEventsChanged, OnFullNameOrContextsOrEventsChanged);
+            initContext.RegisterSourceOutput(fullNameOrContextsOrEventsChanged.Combine(options), OnFullNameOrContextsOrEventsChanged);
 
             var contextInitializationChanged = initContext.SyntaxProvider
                 .CreateSyntaxProvider(IsContextInitializationMethodCandidate, CreateContextInitializationMethodDeclaration)
                 .Where(static method => method is not null)
                 .Select(static (method, _) => method!.Value);
 
-            initContext.RegisterImplementationSourceOutput(contextInitializationChanged, OnContextInitializationChanged);
+            initContext.RegisterImplementationSourceOutput(contextInitializationChanged.Combine(options), OnContextInitializationChanged);
         }
 
         static bool IsComponentCandidate(SyntaxNode node, CancellationToken _)
@@ -73,7 +76,7 @@ namespace Entitas.Generators
             if (!isComponent)
                 return null;
 
-            return new ComponentDeclaration(symbol, cancellationToken);
+            return new ComponentDeclaration(candidate, symbol, cancellationToken);
         }
 
         static bool IsContextInitializationMethodCandidate(SyntaxNode node, CancellationToken _)
@@ -110,7 +113,7 @@ namespace Entitas.Generators
                 return null;
 
             var components = GetOrderedComponentsFromAllAssemblies(context.ToDisplayString(), syntaxContext.SemanticModel.Compilation, cancellationToken);
-            return new ContextInitializationMethodDeclaration(symbol, context, components);
+            return new ContextInitializationMethodDeclaration(candidate, symbol, context, components);
 
             static ImmutableArray<ComponentDeclaration> GetOrderedComponentsFromAllAssemblies(string context, Compilation compilation, CancellationToken cancellationToken)
             {
@@ -140,7 +143,7 @@ namespace Entitas.Generators
                             if (!ComponentDeclaration.GetContexts(symbol).Contains(context))
                                 continue;
 
-                            var component = new ComponentDeclaration(symbol, cancellationToken);
+                            var component = new ComponentDeclaration(null, symbol, cancellationToken);
                             allComponents.Add(component);
 
                             var contextPrefix = component.ContextPrefix(context);
@@ -160,63 +163,68 @@ namespace Entitas.Generators
             }
         }
 
-        static void OnFullNameOrContextsChanged(SourceProductionContext spc, ComponentDeclaration component)
+        static void OnFullNameOrContextsChanged(SourceProductionContext spc, (ComponentDeclaration Component, AnalyzerConfigOptionsProvider optionsProvider) pair)
         {
+            var (component, optionsProvider) = pair;
             foreach (var context in component.Contexts)
             {
-                OnFullNameOrContextsChanged(spc, component, context);
+                OnFullNameOrContextsChanged(spc, component, context, optionsProvider);
             }
         }
 
-        static void OnFullNameOrContextsChanged(SourceProductionContext spc, ComponentDeclaration component, string context)
+        static void OnFullNameOrContextsChanged(SourceProductionContext spc, ComponentDeclaration component, string context, AnalyzerConfigOptionsProvider optionsProvider)
         {
-            ComponentIndex(spc, component, context);
-            Matcher(spc, component, context);
+            ComponentIndex(spc, component, context, optionsProvider);
+            Matcher(spc, component, context, optionsProvider);
         }
 
-        static void OnFullNameOrMembersOrContextsChanged(SourceProductionContext spc, ComponentDeclaration component)
+        static void OnFullNameOrMembersOrContextsChanged(SourceProductionContext spc, (ComponentDeclaration Component, AnalyzerConfigOptionsProvider optionsProvider) pair)
         {
+            var (component, optionsProvider) = pair;
             foreach (var context in component.Contexts)
             {
-                OnFullNameOrMembersOrContextsChanged(spc, component, context);
+                OnFullNameOrMembersOrContextsChanged(spc, component, context, optionsProvider);
             }
         }
 
-        static void OnFullNameOrMembersOrContextsChanged(SourceProductionContext spc, ComponentDeclaration component, string context)
+        static void OnFullNameOrMembersOrContextsChanged(SourceProductionContext spc, ComponentDeclaration component, string context, AnalyzerConfigOptionsProvider optionsProvider)
         {
-            EntityExtension(spc, component, context);
+            EntityExtension(spc, component, context, optionsProvider);
         }
 
-        static void OnFullNameOrMembersOrContextsOrIsUniqueChanged(SourceProductionContext spc, ComponentDeclaration component)
+        static void OnFullNameOrMembersOrContextsOrIsUniqueChanged(SourceProductionContext spc, (ComponentDeclaration Component, AnalyzerConfigOptionsProvider optionsProvider) pair)
         {
+            var (component, optionsProvider) = pair;
             foreach (var context in component.Contexts)
             {
-                OnFullNameOrMembersOrContextsOrIsUniqueChanged(spc, component, context);
+                OnFullNameOrMembersOrContextsOrIsUniqueChanged(spc, component, context, optionsProvider);
             }
         }
 
-        static void OnFullNameOrMembersOrContextsOrIsUniqueChanged(SourceProductionContext spc, ComponentDeclaration component, string context)
+        static void OnFullNameOrMembersOrContextsOrIsUniqueChanged(SourceProductionContext spc, ComponentDeclaration component, string context, AnalyzerConfigOptionsProvider optionsProvider)
         {
-            ContextExtension(spc, component, context);
+            ContextExtension(spc, component, context, optionsProvider);
         }
 
-        static void OnFullNameOrContextsOrEventsChanged(SourceProductionContext spc, ComponentDeclaration component)
+        static void OnFullNameOrContextsOrEventsChanged(SourceProductionContext spc, (ComponentDeclaration Component, AnalyzerConfigOptionsProvider optionsProvider) pair)
         {
+            var (component, optionsProvider) = pair;
             foreach (var context in component.Contexts)
             {
-                OnFullNameOrContextsOrEventsChanged(spc, component, context);
+                OnFullNameOrContextsOrEventsChanged(spc, component, context, optionsProvider);
             }
         }
 
-        static void OnFullNameOrContextsOrEventsChanged(SourceProductionContext spc, ComponentDeclaration component, string context)
+        static void OnFullNameOrContextsOrEventsChanged(SourceProductionContext spc, ComponentDeclaration component, string context, AnalyzerConfigOptionsProvider optionsProvider)
         {
-            Events(spc, component, context);
+            Events(spc, component, context, optionsProvider);
         }
 
-        static void OnContextInitializationChanged(SourceProductionContext spc, ContextInitializationMethodDeclaration method)
+        static void OnContextInitializationChanged(SourceProductionContext spc, (ContextInitializationMethodDeclaration Method, AnalyzerConfigOptionsProvider optionsProvider) pair)
         {
-            ContextInitializationMethod(spc, method);
-            EventSystemsContextExtension(spc, method);
+            var (method, optionsProvider) = pair;
+            ContextInitializationMethod(spc, method, optionsProvider);
+            EventSystemsContextExtension(spc, method, optionsProvider);
         }
 
         static ComponentDeclaration ToEvent(ComponentDeclaration component, EventStrings eventStrings)

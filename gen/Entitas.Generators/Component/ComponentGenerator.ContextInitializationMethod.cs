@@ -1,14 +1,18 @@
 using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Diagnostics;
 using static Entitas.Generators.Templates;
 
 namespace Entitas.Generators
 {
     partial class ComponentGenerator
     {
-        static void ContextInitializationMethod(SourceProductionContext spc, ContextInitializationMethodDeclaration method)
+        static void ContextInitializationMethod(SourceProductionContext spc, ContextInitializationMethodDeclaration method, AnalyzerConfigOptionsProvider optionsProvider)
         {
+            if (!EntitasAnalyzerConfigOptions.ComponentContextInitializationMethod(optionsProvider, method.Node.SyntaxTree))
+                return;
+
             spc.AddSource(
                 GeneratedPath(CombinedNamespace(method.Namespace, $"{method.Class}.{method.Name}.ContextInitialization")),
                 GeneratedFileHeader(GeneratorSource(nameof(ContextInitializationMethod))) +

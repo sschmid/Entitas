@@ -1,12 +1,16 @@
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Diagnostics;
 using static Entitas.Generators.Templates;
 
 namespace Entitas.Generators
 {
     partial class ComponentGenerator
     {
-        static void Events(SourceProductionContext spc, ComponentDeclaration component, string context)
+        static void Events(SourceProductionContext spc, ComponentDeclaration component, string context, AnalyzerConfigOptionsProvider optionsProvider)
         {
+            if (!EntitasAnalyzerConfigOptions.ComponentEvents(optionsProvider, component.Node?.SyntaxTree))
+                return;
+
             if (component.Events.Length == 0)
                 return;
 
@@ -180,8 +184,8 @@ namespace Entitas.Generators
                     NamespaceDeclaration(component.Namespace, content));
 
                 var eventComponent = ToEvent(component, eventStrings);
-                OnFullNameOrContextsChanged(spc, eventComponent, context);
-                OnFullNameOrMembersOrContextsChanged(spc, eventComponent, context);
+                OnFullNameOrContextsChanged(spc, eventComponent, context, optionsProvider);
+                OnFullNameOrMembersOrContextsChanged(spc, eventComponent, context, optionsProvider);
             }
         }
     }

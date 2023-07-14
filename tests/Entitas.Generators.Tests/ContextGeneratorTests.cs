@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using VerifyXunit;
@@ -14,11 +15,13 @@ namespace Entitas.Generators.Tests
         static readonly string FixturesPath = Path.Combine(ProjectRoot,
             "tests", "Entitas.Generators.Tests.Fixtures");
 
-        static Task Verify(string fixture) => TestHelper.Verify(File.ReadAllText(
-            Path.Combine(FixturesPath, $"{fixture}.cs")), new ContextGenerator());
+        static Task Verify(string fixture, Dictionary<string, string> options) => TestHelper.Verify(File.ReadAllText(
+            Path.Combine(FixturesPath, $"{fixture}.cs")), new ContextGenerator(), options);
 
-        static Task VerifyContext(string fixture) => TestHelper.Verify(File.ReadAllText(
-            Path.Combine(FixturesPath, "Contexts", $"{fixture}.txt")), new ContextGenerator());
+        static Task VerifyContext(string fixture, Dictionary<string, string> options) => TestHelper.Verify(File.ReadAllText(
+            Path.Combine(FixturesPath, "Contexts", $"{fixture}.txt")), new ContextGenerator(), options);
+
+        static readonly Dictionary<string, string> DefaultOptions = new Dictionary<string, string>();
 
         [Fact]
         public void UsesGlobalNamespace()
@@ -27,12 +30,12 @@ namespace Entitas.Generators.Tests
         }
 
         [Fact]
-        public Task SomeClass() => Verify("SomeClass");
+        public Task SomeClass() => Verify("SomeClass", DefaultOptions);
 
         [Fact]
-        public Task NamespacedContext() => VerifyContext("NamespacedContext");
+        public Task NamespacedContext() => VerifyContext("NamespacedContext", DefaultOptions);
 
         [Fact]
-        public Task SomeContext() => VerifyContext("SomeContext");
+        public Task SomeContext() => VerifyContext("SomeContext", DefaultOptions);
     }
 }
