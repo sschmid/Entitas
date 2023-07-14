@@ -2,7 +2,7 @@
 set -uo pipefail
 IFS=$'\n\t'
 
-dir=Snapshots
+dir=snapshots
 files="$(cat snapshots-to-delete.txt)"
 
 for f in ${files}; do

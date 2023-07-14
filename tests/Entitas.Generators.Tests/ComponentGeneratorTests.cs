@@ -12,17 +12,16 @@ namespace Entitas.Generators.Tests
     {
         static readonly string ProjectRoot = TestExtensions.GetProjectRoot();
 
-        static readonly string FixturesPath = Path.Combine(ProjectRoot,
-            "tests", "Entitas.Generators.Tests.Fixtures");
+        static readonly string FixturesPath = Path.Combine(ProjectRoot, "tests", "Entitas.Generators.Tests.Fixtures");
 
-        static Task Verify(string fixture, Dictionary<string, string> options) => TestHelper.Verify(File.ReadAllText(
-            Path.Combine(FixturesPath, $"{fixture}.cs")), new ComponentGenerator(), options);
+        static Task Verify(string fixture, Dictionary<string, string> options)
+            => TestHelper.Verify(File.ReadAllText(Path.Combine(FixturesPath, $"{fixture}.cs")), new ComponentGenerator(), options);
 
-        static Task VerifyComponent(string fixture, Dictionary<string, string> options) => TestHelper.Verify(File.ReadAllText(
-            Path.Combine(FixturesPath, "Components", $"{fixture}.cs")), new ComponentGenerator(), options);
+        static Task VerifyComponent(string fixture, Dictionary<string, string> options)
+            => TestHelper.Verify(File.ReadAllText(Path.Combine(FixturesPath, "Components", $"{fixture}.cs")), new ComponentGenerator(), options);
 
-        static Task VerifyContext(string fixture, Dictionary<string, string> options) => TestHelper.Verify(File.ReadAllText(
-            Path.Combine(FixturesPath, "Contexts", $"{fixture}.txt")), new ComponentGenerator(), options);
+        static Task VerifyContext(string fixture, Dictionary<string, string> options)
+            => TestHelper.Verify(File.ReadAllText(Path.Combine(FixturesPath, "Contexts", $"{fixture}.txt")), new ComponentGenerator(), options);
 
         static readonly Dictionary<string, string> DefaultOptions = new Dictionary<string, string>();
 
@@ -75,7 +74,7 @@ namespace Entitas.Generators.Tests
 
         /*
          *
-         * Valid components
+         * Invalid components
          *
          */
 
@@ -83,16 +82,19 @@ namespace Entitas.Generators.Tests
         public Task NonPublicComponent() => VerifyComponent("NonPublicComponent", DefaultOptions);
 
         [Fact]
+        public Task NoContextComponent() => VerifyComponent("NoContextComponent", DefaultOptions);
+
+        /*
+         *
+         * Valid components
+         *
+         */
+
+        [Fact]
         public Task NamespacedComponent() => VerifyComponent("SomeNamespacedComponent", DefaultOptions);
 
         [Fact]
         public Task Component() => VerifyComponent("SomeComponent", DefaultOptions);
-
-        [Fact]
-        public Task NoContextNamespacedComponent() => VerifyComponent("NoContextNamespacedComponent", DefaultOptions);
-
-        [Fact]
-        public Task NoContextComponent() => VerifyComponent("NoContextComponent", DefaultOptions);
 
         [Fact]
         public Task OneFieldNamespacedComponent() => VerifyComponent("OneFieldNamespacedComponent", NoComponentIndexNoMatcherOptions);
@@ -144,7 +146,7 @@ namespace Entitas.Generators.Tests
 
         /*
          *
-         * Invalid usages
+         * Invalid usages (but works anyway)
          *
          */
 
