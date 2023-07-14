@@ -10,7 +10,9 @@ namespace Entitas.Generators
         public readonly string? Namespace;
         public readonly string Class;
         public readonly string Name;
-        public readonly string Context;
+        public readonly string? ContextNamespace;
+        public readonly string ContextFullName;
+        public readonly string ContextName;
         public readonly ImmutableArray<ComponentDeclaration> Components;
 
         // Computed
@@ -18,7 +20,7 @@ namespace Entitas.Generators
 
         readonly FullNameAndContextsComparer _comparer = new FullNameAndContextsComparer();
 
-        public ContextInitializationMethodDeclaration(IMethodSymbol symbol, string context, ImmutableArray<ComponentDeclaration> components)
+        public ContextInitializationMethodDeclaration(IMethodSymbol symbol, ISymbol contextSymbol, ImmutableArray<ComponentDeclaration> components)
         {
             Namespace = !symbol.ContainingNamespace.IsGlobalNamespace
                 ? symbol.ContainingNamespace.ToDisplayString()
@@ -26,18 +28,24 @@ namespace Entitas.Generators
 
             Class = symbol.ContainingType.Name;
             Name = symbol.Name;
-            Context = context;
+
+            ContextNamespace = !contextSymbol.ContainingNamespace.IsGlobalNamespace
+                ? symbol.ContainingNamespace.ToDisplayString()
+                : null;
+            ContextFullName = contextSymbol.ToDisplayString();
+            ContextName = contextSymbol.Name;
+
             Components = components;
 
             // Computed
-            FullContextPrefix = context.RemoveSuffix("Context");
+            FullContextPrefix = ContextFullName.RemoveSuffix("Context");
         }
 
         public bool Equals(ContextInitializationMethodDeclaration other) =>
             Namespace == other.Namespace &&
             Class == other.Class &&
             Name == other.Name &&
-            Context == other.Context &&
+            ContextFullName == other.ContextFullName &&
             Components.SequenceEqual(other.Components, _comparer);
 
         public override bool Equals(object? obj) => obj is ContextInitializationMethodDeclaration other && Equals(other);
@@ -49,7 +57,7 @@ namespace Entitas.Generators
                 var hashCode = (Namespace != null ? Namespace.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ Class.GetHashCode();
                 hashCode = (hashCode * 397) ^ Name.GetHashCode();
-                hashCode = (hashCode * 397) ^ Context.GetHashCode();
+                hashCode = (hashCode * 397) ^ ContextFullName.GetHashCode();
                 hashCode = (hashCode * 397) ^ Components.GetHashCode();
                 return hashCode;
             }

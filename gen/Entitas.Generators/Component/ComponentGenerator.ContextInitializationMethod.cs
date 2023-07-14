@@ -21,12 +21,12 @@ namespace Entitas.Generators
                         {
                     {{ComponentIndexAssignments(method, method.Components)}}
 
-                            {{method.Context}}.ComponentNames = new string[]
+                            global::{{method.ContextFullName}}.ComponentNames = new string[]
                             {
                     {{ComponentNames(method.Components)}}
                             };
 
-                            {{method.Context}}.ComponentTypes = new global::System.Type[]
+                            global::{{method.ContextFullName}}.ComponentTypes = new global::System.Type[]
                             {
                     {{ComponentTypes(method.Components)}}
                             };

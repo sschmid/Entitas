@@ -102,24 +102,21 @@ namespace Entitas.Generators
                 .Where(static attribute => attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.ContextInitializationAttribute")
                 .Select(static attribute => attribute.ConstructorArguments.SingleOrDefault())
                 .Where(static arg => arg.Type?.ToDisplayString() == "System.Type" && arg.Value is INamedTypeSymbol)
-                .Select(static arg => ((INamedTypeSymbol)arg.Value!).ToDisplayString())
-                .Distinct()
+                .Select(static arg => (INamedTypeSymbol)arg.Value!)
+                .Distinct(SymbolEqualityComparer.Default)
                 .SingleOrDefault();
 
             if (context is null)
                 return null;
 
-            var components = GetOrderedComponentsFromAllAssemblies(context, syntaxContext.SemanticModel.Compilation, cancellationToken);
-            if (components is null)
-                return null;
+            var components = GetOrderedComponentsFromAllAssemblies(context.ToDisplayString(), syntaxContext.SemanticModel.Compilation, cancellationToken);
+            return new ContextInitializationMethodDeclaration(symbol, context, components);
 
-            return new ContextInitializationMethodDeclaration(symbol, context, components.Value);
-
-            static ImmutableArray<ComponentDeclaration>? GetOrderedComponentsFromAllAssemblies(string context, Compilation compilation, CancellationToken cancellationToken)
+            static ImmutableArray<ComponentDeclaration> GetOrderedComponentsFromAllAssemblies(string context, Compilation compilation, CancellationToken cancellationToken)
             {
                 var componentInterface = compilation.GetTypeByMetadataName("Entitas.IComponent");
                 if (componentInterface is null)
-                    return null;
+                    return ImmutableArray<ComponentDeclaration>.Empty;
 
                 var allComponents = new List<ComponentDeclaration>();
                 var stack = new Stack<INamespaceSymbol>();
@@ -219,6 +216,7 @@ namespace Entitas.Generators
         static void OnContextInitializationChanged(SourceProductionContext spc, ContextInitializationMethodDeclaration method)
         {
             ContextInitializationMethod(spc, method);
+            EventSystemsContextExtension(spc, method);
         }
 
         static ComponentDeclaration ToEvent(ComponentDeclaration component, EventStrings eventStrings)
