@@ -107,7 +107,13 @@ namespace Entitas.Generators.Tests
         public Task EventNamespacedComponent() => VerifyComponent("EventNamespacedComponent");
 
         [Fact]
+        public Task EventComponent() => VerifyComponent("EventComponent");
+
+        [Fact]
         public Task FlagEventNamespacedComponent() => VerifyComponent("FlagEventNamespacedComponent");
+
+        [Fact]
+        public Task FlagEventComponent() => VerifyComponent("FlagEventComponent");
 
         /*
          *

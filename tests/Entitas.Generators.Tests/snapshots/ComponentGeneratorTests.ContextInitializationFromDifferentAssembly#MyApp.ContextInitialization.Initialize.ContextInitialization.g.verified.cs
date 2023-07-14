@@ -19,22 +19,22 @@ public static partial class ContextInitialization
         global::MyFeature.MyAppLibraryContextFromDifferentAssemblyNamespacedComponentIndex.Index = new ComponentIndex(0);
         global::MyOtherFeature.MyAppLibraryCollisionComponentIndex.Index = new ComponentIndex(1);
         global::MyOtherFeature.MyAppLibraryHealthComponentIndex.Index = new ComponentIndex(2);
-        global::MyOtherFeature.MyAppLibraryCollisionRemovedListenerComponentIndex.Index = new ComponentIndex(3);
+        global::MyOtherFeature.MyAppLibraryCollisionAddedListenerComponentIndex.Index = new ComponentIndex(3);
 
-        MyApp.LibraryContext.ComponentNames = new string[]
+        global::MyApp.LibraryContext.ComponentNames = new string[]
         {
             "MyFeature.ContextFromDifferentAssemblyNamespaced",
             "MyOtherFeature.Collision",
             "MyOtherFeature.Health",
-            "MyOtherFeature.MyAppLibraryCollisionRemovedListener"
+            "MyOtherFeature.MyAppLibraryCollisionAddedListener"
         };
 
-        MyApp.LibraryContext.ComponentTypes = new global::System.Type[]
+        global::MyApp.LibraryContext.ComponentTypes = new global::System.Type[]
         {
             typeof(global::MyFeature.ContextFromDifferentAssemblyNamespacedComponent),
             typeof(global::MyOtherFeature.CollisionComponent),
             typeof(global::MyOtherFeature.HealthComponent),
-            typeof(global::MyOtherFeature.MyAppLibraryCollisionRemovedListenerComponent)
+            typeof(global::MyOtherFeature.MyAppLibraryCollisionAddedListenerComponent)
         };
     }
 }

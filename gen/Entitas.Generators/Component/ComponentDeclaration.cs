@@ -69,7 +69,7 @@ namespace Entitas.Generators
                         return null;
 
                     var eventType = args.Length > 1 && args[1].Type?.ToDisplayString() == "Entitas.Generators.Attributes.EventType" && args[1].Value is int eventTypeValue ? eventTypeValue : 0;
-                    var order = args.Length > 2 && args[2].Type?.ToDisplayString() == "System.Int32" && args[2].Value is int orderValue ? orderValue : 0;
+                    var order = args.Length > 2 && args[2].Type?.ToDisplayString() == "int" && args[2].Value is int orderValue ? orderValue : 0;
                     return new EventDeclaration(eventTarget, eventType, order);
                 })
                 .OfType<EventDeclaration>()
