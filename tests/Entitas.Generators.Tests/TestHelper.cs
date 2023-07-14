@@ -62,6 +62,7 @@ namespace Entitas.Generators.Tests
                              $@"(?<!\bnamespace )" +
                              $@"(?<!\bglobal::)" +
                              $@"(?<!"")" +
+                             $@"(?<!\w)" +
                              $"{word}");
 
             foreach (var pattern in patterns)

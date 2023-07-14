@@ -39,7 +39,7 @@ namespace Entitas.Generators
             {
                 return string.Join("\n", components.Select((component, i) =>
                 {
-                    var contextPrefix = "global::" + CombinedNamespace(component.Namespace, method.FullContextPrefix.Replace(".", string.Empty));
+                    var contextPrefix = "global::" + CombinedNamespace(component.Namespace, component.ContextAware(method.FullContextPrefix).Replace(".", string.Empty));
                     return $"        {contextPrefix}{component.ComponentPrefix}ComponentIndex.Index = new ComponentIndex({i});";
                 }));
             }

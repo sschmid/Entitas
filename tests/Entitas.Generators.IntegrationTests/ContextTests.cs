@@ -18,5 +18,15 @@ namespace Entitas.Generators.IntegrationTests
             context.Should().NotBeNull();
             context.Should().BeAssignableTo<Context<MyApp.Main.Entity>>();
         }
+
+        [Fact]
+        public void CreatesEntity()
+        {
+            var context = new MainContext();
+            var entity = context.CreateEntity();
+            entity.Should().NotBeNull();
+            entity.Should().BeAssignableTo<MyApp.Main.Entity>();
+            entity.totalComponents.Should().Be(context.totalComponents);
+        }
     }
 }

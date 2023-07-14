@@ -104,10 +104,10 @@ namespace Entitas.Generators.Tests
          */
 
         [Fact]
-        public Task AnyEventNamespacedComponent() => VerifyComponent("AnyEventNamespacedComponent");
+        public Task EventNamespacedComponent() => VerifyComponent("EventNamespacedComponent");
 
         [Fact]
-        public Task SelfEventNamespacedComponent() => VerifyComponent("SelfEventNamespacedComponent");
+        public Task FlagEventNamespacedComponent() => VerifyComponent("FlagEventNamespacedComponent");
 
         /*
          *

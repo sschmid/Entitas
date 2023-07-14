@@ -110,9 +110,14 @@ namespace Entitas.Generators
             return context.RemoveSuffix("Context");
         }
 
+        internal string ContextAware(string contextPrefix)
+        {
+            return contextPrefix.Replace(".", string.Empty);
+        }
+
         internal string ContextAwareComponentPrefix(string contextPrefix)
         {
-            return contextPrefix.Replace(".", string.Empty) + ComponentPrefix;
+            return ContextAware(contextPrefix) + ComponentPrefix;
         }
     }
 
@@ -122,19 +127,23 @@ namespace Entitas.Generators
         public readonly string EventTypeSuffix;
         public readonly string EventPrefix;
         public readonly string EventListener;
+        public readonly string ContextAwareEvent;
+        public readonly string ContextAwareEventListener;
         public readonly string EventMethod;
-        public readonly string EventListenerInterface;
-        public readonly string EventListenerComponent;
+        public readonly string ContextAwareEventListenerInterface;
+        public readonly string ContextAwareEventListenerComponent;
 
-        public EventStrings(EventDeclaration @event, string componentPrefix, string contextAwareComponentPrefix)
+        public EventStrings(EventDeclaration @event, string componentPrefix, string contextAware)
         {
             EventTargetPrefix = @event.EventTarget == 0 ? "Any" : string.Empty;
             EventTypeSuffix = @event.EventType == 0 ? "Added" : "Removed";
-            EventPrefix = $"{EventTargetPrefix}{componentPrefix}{EventTypeSuffix}Listener";
-            EventListener = $"{EventTargetPrefix}{contextAwareComponentPrefix}{EventTypeSuffix}Listener";
-            EventMethod = $"On{EventTargetPrefix + componentPrefix}{EventTypeSuffix}";
-            EventListenerInterface = $"I{EventListener}";
-            EventListenerComponent = $"{EventListener}Component";
+            EventPrefix = $"{EventTargetPrefix}{componentPrefix}{EventTypeSuffix}"; // e.g. AnyPositionAdded
+            EventListener = $"{EventPrefix}Listener"; // e.g. AnyPositionAddedListener
+            EventMethod = $"On{EventPrefix}"; // e.g. OnAnyPositionAdded
+            ContextAwareEvent = $"{contextAware}{EventPrefix}"; // e.g. MyAppMainAnyPositionAdded
+            ContextAwareEventListener = $"{ContextAwareEvent}Listener"; // e.g. MyAppMainAnyPositionAddedListener
+            ContextAwareEventListenerInterface = $"I{ContextAwareEventListener}"; // e.g. IMyAppMainAnyPositionAddedListener
+            ContextAwareEventListenerComponent = $"{ContextAwareEventListener}Component"; // e.g. MyAppMainAnyPositionAddedListenerComponent
         }
     }
 

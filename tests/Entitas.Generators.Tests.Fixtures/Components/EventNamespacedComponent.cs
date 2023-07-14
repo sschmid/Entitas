@@ -6,7 +6,10 @@ namespace MyFeature
 {
     [Context(typeof(MainContext))]
     [Event(EventTarget.Any, EventType.Added, 1)]
-    public sealed class AnyEventNamespacedComponent : IComponent
+    [Event(EventTarget.Any, EventType.Removed, 2)]
+    [Event(EventTarget.Self, EventType.Added, 3)]
+    [Event(EventTarget.Self, EventType.Removed, 4)]
+    public sealed class EventNamespacedComponent : IComponent
     {
         public string Value;
     }
