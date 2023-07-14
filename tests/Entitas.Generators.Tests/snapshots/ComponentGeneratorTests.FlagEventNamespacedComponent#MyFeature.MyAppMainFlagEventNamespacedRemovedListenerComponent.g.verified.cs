@@ -33,14 +33,20 @@ public static class MyAppMainFlagEventNamespacedRemovedListenerEventEntityExtens
         return entity.ReplaceFlagEventNamespacedRemovedListener(listeners);
     }
 
-    public static void RemoveFlagEventNamespacedRemovedListener(this Entity entity, IMyAppMainFlagEventNamespacedRemovedListener value, bool destroyListenerWhenEmpty = true)
+    public static void RemoveFlagEventNamespacedRemovedListener(this Entity entity, IMyAppMainFlagEventNamespacedRemovedListener value, bool removeListenerWhenEmpty = true)
     {
         var listeners = entity.GetFlagEventNamespacedRemovedListener().Value;
         listeners.Remove(value);
-        if (destroyListenerWhenEmpty && listeners.Count == 0)
-            entity.Destroy();
+        if (removeListenerWhenEmpty && listeners.Count == 0)
+        {
+            entity.RemoveFlagEventNamespacedRemovedListener();
+            if (entity.IsEmpty())
+                entity.Destroy();
+        }
         else
+        {
             entity.ReplaceFlagEventNamespacedRemovedListener(listeners);
+        }
     }
 }
 
