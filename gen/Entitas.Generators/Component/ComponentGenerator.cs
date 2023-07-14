@@ -147,10 +147,10 @@ namespace Entitas.Generators
                             allComponents.Add(component);
 
                             var contextPrefix = component.ContextPrefix(context);
-                            var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
+                            var contextAware = component.ContextAware(contextPrefix);
                             foreach (var @event in component.Events)
                             {
-                                var eventStrings = new EventStrings(@event, component.ComponentPrefix, contextAwareComponentPrefix);
+                                var eventStrings = new EventStrings(@event, component.ComponentPrefix, contextAware);
                                 allComponents.Add(ToEvent(component, eventStrings));
                             }
                         }
@@ -224,10 +224,10 @@ namespace Entitas.Generators
         static ComponentDeclaration ToEvent(ComponentDeclaration component, EventStrings eventStrings)
         {
             return component.ToEvent(
-                CombinedNamespace(component.Namespace, eventStrings.EventListenerComponent),
-                eventStrings.EventListenerComponent,
-                ImmutableArray.Create(new MemberDeclaration($"global::System.Collections.Generic.List<{eventStrings.EventListenerInterface}>", "Value")),
-                eventStrings.EventPrefix);
+                CombinedNamespace(component.Namespace, eventStrings.ContextAwareEventListenerComponent),
+                eventStrings.ContextAwareEventListenerComponent,
+                ImmutableArray.Create(new MemberDeclaration($"global::System.Collections.Generic.List<{eventStrings.ContextAwareEventListenerInterface}>", "Value")),
+                eventStrings.EventListener);
         }
 
         static string ComponentMethodParams(ComponentDeclaration component)
@@ -238,6 +238,11 @@ namespace Entitas.Generators
         static string ComponentMethodArgs(ComponentDeclaration component)
         {
             return string.Join(", ", component.Members.Select(static member => $"{member.ValidLowerFirstName}"));
+        }
+
+        static string ComponentValueMethodArgs(ComponentDeclaration component)
+        {
+            return string.Join(", ", component.Members.Select(static member => $"component.{member.Name}"));
         }
 
         static string ComponentValueAssignments(ComponentDeclaration component)
