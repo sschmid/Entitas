@@ -9,6 +9,7 @@ namespace Entitas.Generators
 {
     readonly struct ComponentDeclaration
     {
+        public readonly SyntaxNode? Node;
         public readonly string? Namespace;
         public readonly string FullName;
         public readonly string Name;
@@ -31,8 +32,9 @@ namespace Entitas.Generators
                 .ToImmutableArray();
         }
 
-        public ComponentDeclaration(INamedTypeSymbol symbol, CancellationToken cancellationToken)
+        public ComponentDeclaration(SyntaxNode? node, INamedTypeSymbol symbol, CancellationToken cancellationToken)
         {
+            Node = node;
             Namespace = !symbol.ContainingNamespace.IsGlobalNamespace
                 ? symbol.ContainingNamespace.ToDisplayString()
                 : null;
@@ -90,6 +92,7 @@ namespace Entitas.Generators
 
         ComponentDeclaration(ComponentDeclaration component, string fullName, string name, ImmutableArray<MemberDeclaration> members, string prefix)
         {
+            Node = component.Node;
             Namespace = component.Namespace;
             FullName = fullName;
             Name = name;

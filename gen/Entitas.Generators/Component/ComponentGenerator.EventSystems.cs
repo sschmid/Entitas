@@ -1,16 +1,20 @@
 using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Diagnostics;
 using static Entitas.Generators.Templates;
 
 namespace Entitas.Generators
 {
     partial class ComponentGenerator
     {
-        static void EventSystemsContextExtension(SourceProductionContext spc, ContextInitializationMethodDeclaration method)
+        static void EventSystemsContextExtension(SourceProductionContext spc, ContextInitializationMethodDeclaration method, AnalyzerConfigOptionsProvider optionsProvider)
         {
+            if (!EntitasAnalyzerConfigOptions.ComponentEventSystemsContextExtension(optionsProvider, method.Node.SyntaxTree))
+                return;
+
             spc.AddSource(
-                GeneratedPath($"{method.ContextFullName}.EventSystemsExtension"),
+                GeneratedPath($"{method.ContextFullName}EventSystemsExtension"),
                 GeneratedFileHeader(GeneratorSource(nameof(EventSystemsContextExtension))) +
                 $"using global::{method.FullContextPrefix};\n\n" +
                 NamespaceDeclaration(method.ContextNamespace,

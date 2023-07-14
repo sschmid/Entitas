@@ -1,12 +1,16 @@
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Diagnostics;
 using static Entitas.Generators.Templates;
 
 namespace Entitas.Generators
 {
     partial class ComponentGenerator
     {
-        static void EntityExtension(SourceProductionContext spc, ComponentDeclaration component, string context)
+        static void EntityExtension(SourceProductionContext spc, ComponentDeclaration component, string context, AnalyzerConfigOptionsProvider optionsProvider)
         {
+            if (!EntitasAnalyzerConfigOptions.ComponentEntityExtension(optionsProvider, component.Node?.SyntaxTree))
+                return;
+
             var contextPrefix = component.ContextPrefix(context);
             var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
             var className = $"{contextAwareComponentPrefix}EntityExtension";

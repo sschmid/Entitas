@@ -1,12 +1,16 @@
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Diagnostics;
 using static Entitas.Generators.Templates;
 
 namespace Entitas.Generators
 {
     partial class ComponentGenerator
     {
-        static void ContextExtension(SourceProductionContext spc, ComponentDeclaration component, string context)
+        static void ContextExtension(SourceProductionContext spc, ComponentDeclaration component, string context, AnalyzerConfigOptionsProvider optionsProvider)
         {
+            if (!EntitasAnalyzerConfigOptions.ComponentContextExtension(optionsProvider, component.Node?.SyntaxTree))
+                return;
+
             if (!component.IsUnique)
                 return;
 

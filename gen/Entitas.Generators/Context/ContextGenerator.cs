@@ -3,21 +3,24 @@ using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Diagnostics;
 using static Entitas.Generators.Templates;
 
 namespace Entitas.Generators
 {
     [Generator(LanguageNames.CSharp)]
-    public sealed class ContextGenerator : IIncrementalGenerator
+    public sealed partial class ContextGenerator : IIncrementalGenerator
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
+            var options = initContext.AnalyzerConfigOptionsProvider;
+
             var contextChanged = initContext.SyntaxProvider
                 .CreateSyntaxProvider(IsContextCandidate, CreateContextDeclaration)
                 .Where(static context => context is not null)
                 .Select(static (context, _) => context!.Value);
 
-            initContext.RegisterSourceOutput(contextChanged, OnContextChanged);
+            initContext.RegisterSourceOutput(contextChanged.Combine(options), OnContextChanged);
         }
 
         static bool IsContextCandidate(SyntaxNode node, CancellationToken _)
@@ -54,116 +57,16 @@ namespace Entitas.Generators
             if (!isContext)
                 return null;
 
-            return new ContextDeclaration(symbol);
+            return new ContextDeclaration(candidate, symbol);
         }
 
-        static void OnContextChanged(SourceProductionContext spc, ContextDeclaration context)
+        static void OnContextChanged(SourceProductionContext spc, (ContextDeclaration Context, AnalyzerConfigOptionsProvider OptionsProvider) pair)
         {
-            ComponentIndex(spc, context);
-            Entity(spc, context);
-            Matcher(spc, context);
-            Context(spc, context);
-        }
-
-        static void ComponentIndex(SourceProductionContext spc, ContextDeclaration context)
-        {
-            spc.AddSource(ContextAwarePath(context, "ComponentIndex"),
-                GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
-                NamespaceDeclaration(context.FullContextPrefix,
-                    """
-                    public readonly struct ComponentIndex : global::System.IEquatable<ComponentIndex>
-                    {
-                        public readonly int Value;
-
-                        public ComponentIndex(int value)
-                        {
-                            Value = value;
-                        }
-
-                        public bool Equals(ComponentIndex other) => Value == other.Value;
-                    #nullable enable
-                        public override bool Equals(object? obj) => obj is ComponentIndex other && Equals(other);
-                    #nullable disable
-                        public override int GetHashCode() => Value;
-                    }
-
-                    """));
-        }
-
-        static void Entity(SourceProductionContext spc, ContextDeclaration context)
-        {
-            spc.AddSource(ContextAwarePath(context, "Entity"),
-                GeneratedFileHeader(GeneratorSource(nameof(Entity))) +
-                NamespaceDeclaration(context.FullContextPrefix,
-                    """
-                    public sealed class Entity : global::Entitas.Entity { }
-
-                    """));
-        }
-
-        static void Matcher(SourceProductionContext spc, ContextDeclaration context)
-        {
-            spc.AddSource(ContextAwarePath(context, "Matcher"),
-                GeneratedFileHeader(GeneratorSource(nameof(Matcher))) +
-                NamespaceDeclaration(context.FullContextPrefix,
-                    """
-                    public static class Matcher
-                    {
-                        public static global::Entitas.IAllOfMatcher<Entity> AllOf(params int[] indices)
-                        {
-                            return global::Entitas.Matcher<Entity>.AllOf(indices);
-                        }
-
-                        public static global::Entitas.IAllOfMatcher<Entity> AllOf(params global::Entitas.IMatcher<Entity>[] matchers)
-                        {
-                            return global::Entitas.Matcher<Entity>.AllOf(matchers);
-                        }
-
-                        public static global::Entitas.IAnyOfMatcher<Entity> AnyOf(params int[] indices)
-                        {
-                            return global::Entitas.Matcher<Entity>.AnyOf(indices);
-                        }
-
-                        public static global::Entitas.IAnyOfMatcher<Entity> AnyOf(params global::Entitas.IMatcher<Entity>[] matchers)
-                        {
-                            return global::Entitas.Matcher<Entity>.AnyOf(matchers);
-                        }
-                    }
-
-                    """));
-        }
-
-        static void Context(SourceProductionContext spc, ContextDeclaration context)
-        {
-            spc.AddSource(GeneratedPath(context.FullName),
-                GeneratedFileHeader(GeneratorSource(nameof(Context))) +
-                NamespaceDeclaration(context.Namespace,
-                    $$"""
-                    public sealed partial class {{context.Name}} : global::Entitas.Context<{{context.ContextPrefix}}.Entity>
-                    {
-                        public static string[] ComponentNames;
-                        public static global::System.Type[] ComponentTypes;
-
-                        public {{context.Name}}()
-                            : base(
-                                ComponentTypes.Length,
-                                0,
-                                new global::Entitas.ContextInfo(
-                                    "{{context.FullName}}",
-                                    ComponentNames,
-                                    ComponentTypes
-                                ),
-                                entity =>
-                    #if (ENTITAS_FAST_AND_UNSAFE)
-                                    new global::Entitas.UnsafeAERC(),
-                    #else
-                                    new global::Entitas.SafeAERC(entity),
-                    #endif
-                                () => new {{context.ContextPrefix}}.Entity()
-                            ) { }
-                    }
-
-                    """));
+            var (context, optionsProvider) = pair;
+            ComponentIndex(spc, context, optionsProvider);
+            Entity(spc, context, optionsProvider);
+            Matcher(spc, context, optionsProvider);
+            Context(spc, context, optionsProvider);
         }
 
         static string ContextAwarePath(ContextDeclaration context, string hintName)

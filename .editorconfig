@@ -1,8 +1,21 @@
 root = true
 
 [*]
-charset=utf-8
-end_of_line=lf
-trim_trailing_whitespace=true
-insert_final_newline=true
-indent_style=space
+charset = utf-8
+end_of_line = lf
+trim_trailing_whitespace = true
+insert_final_newline = true
+indent_style = space
+
+# entitas_component_generator_component_index = false
+# entitas_component_generator_matcher = false
+# entitas_component_generator_entity_extension = false
+# entitas_component_generator_context_extension = false
+# entitas_component_generator_events = false
+# entitas_component_generator_context_initialization_method = false
+# entitas_component_generator_event_systems_context_extension = false
+
+# entitas_context_generator_component_index = false
+# entitas_context_generator_entity = false
+# entitas_context_generator_matcher = false
+# entitas_context_generator_context = false
