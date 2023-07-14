@@ -7,15 +7,15 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 indent_style = space
 
-# entitas_component_generator_component_index = false
-# entitas_component_generator_matcher = false
-# entitas_component_generator_entity_extension = false
-# entitas_component_generator_context_extension = false
-# entitas_component_generator_events = false
-# entitas_component_generator_context_initialization_method = false
-# entitas_component_generator_event_systems_context_extension = false
+# entitas_generator.component.component_index = false
+# entitas_generator.component.matcher = false
+# entitas_generator.component.entity_extension = false
+# entitas_generator.component.context_extension = false
+# entitas_generator.component.events = false
+# entitas_generator.component.context_initialization_method = false
+# entitas_generator.component.event_systems_context_extension = false
 
-# entitas_context_generator_component_index = false
-# entitas_context_generator_entity = false
-# entitas_context_generator_matcher = false
-# entitas_context_generator_context = false
+# entitas_generator.context.component_index = false
+# entitas_generator.context.entity = false
+# entitas_generator.context.matcher = false
+# entitas_generator.context.context = false
