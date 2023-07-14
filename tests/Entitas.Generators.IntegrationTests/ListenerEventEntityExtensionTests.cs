@@ -33,7 +33,20 @@ namespace Entitas.Generators.IntegrationTests
         }
 
         [Fact]
-        public void RemovesAndDestroysListener()
+        public void RemovesListenerWhenEntityIsNotEmpty()
+        {
+            var listener = _context
+                .CreateEntity()
+                .AddLoading()
+                .AddAnyLoadingAddedListener(_listener);
+
+            listener.RemoveAnyLoadingAddedListener(_listener, true);
+            listener.HasAnyLoadingAddedListener().Should().BeFalse();
+            listener.HasLoading().Should().BeTrue();
+        }
+
+        [Fact]
+        public void DestroysListenerWhenEntityIsEmpty()
         {
             var listener = _context
                 .CreateEntity()
@@ -44,6 +57,7 @@ namespace Entitas.Generators.IntegrationTests
             listener.isEnabled.Should().BeFalse();
         }
     }
+
 #nullable disable
 
     public class ListenerEventEntityExtensionListener : IMyAppMainAnyLoadingAddedListener

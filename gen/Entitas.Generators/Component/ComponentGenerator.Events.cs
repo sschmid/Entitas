@@ -65,14 +65,20 @@ namespace Entitas.Generators
                             return entity.Replace{{eventStrings.EventListener}}(listeners);
                         }
 
-                        public static void Remove{{eventStrings.EventListener}}(this Entity entity, {{eventStrings.ContextAwareEventListenerInterface}} value, bool destroyListenerWhenEmpty = true)
+                        public static void Remove{{eventStrings.EventListener}}(this Entity entity, {{eventStrings.ContextAwareEventListenerInterface}} value, bool removeListenerWhenEmpty = true)
                         {
                             var listeners = entity.Get{{eventStrings.EventListener}}().Value;
                             listeners.Remove(value);
-                            if (destroyListenerWhenEmpty && listeners.Count == 0)
-                                entity.Destroy();
+                            if (removeListenerWhenEmpty && listeners.Count == 0)
+                            {
+                                entity.Remove{{eventStrings.EventListener}}();
+                                if (entity.IsEmpty())
+                                    entity.Destroy();
+                            }
                             else
+                            {
                                 entity.Replace{{eventStrings.EventListener}}(listeners);
+                            }
                         }
                     }
 
