@@ -21,7 +21,7 @@ namespace Entitas.Generators
                     {
                         static global::Entitas.IMatcher<Entity> _matcher;
 
-                        public static global::Entitas.IMatcher<Entity> {{component.ComponentPrefix}}
+                        public static global::Entitas.IMatcher<Entity> {{component.Prefix}}
                         {
                             get
                             {

@@ -18,7 +18,7 @@ namespace Entitas.Generators
         public readonly ImmutableArray<EventDeclaration> Events;
 
         // Computed
-        public readonly string ComponentPrefix;
+        public readonly string Prefix;
 
         internal static ImmutableArray<string> GetContexts(INamedTypeSymbol symbol)
         {
@@ -76,7 +76,7 @@ namespace Entitas.Generators
                 .ToImmutableArray();
 
             // Computed
-            ComponentPrefix = Name.RemoveSuffix("Component");
+            Prefix = Name.RemoveSuffix("Component");
 
             static bool IsAutoProperty(ISymbol symbol, CancellationToken cancellationToken)
             {
@@ -88,7 +88,7 @@ namespace Entitas.Generators
             }
         }
 
-        ComponentDeclaration(ComponentDeclaration component, string fullName, string name, ImmutableArray<MemberDeclaration> members, string componentPrefix)
+        ComponentDeclaration(ComponentDeclaration component, string fullName, string name, ImmutableArray<MemberDeclaration> members, string prefix)
         {
             Namespace = component.Namespace;
             FullName = fullName;
@@ -97,7 +97,7 @@ namespace Entitas.Generators
             Contexts = component.Contexts;
             IsUnique = false;
             Events = ImmutableArray<EventDeclaration>.Empty;
-            ComponentPrefix = componentPrefix;
+            Prefix = prefix;
         }
 
         internal ComponentDeclaration ToEvent(string fullName, string name, ImmutableArray<MemberDeclaration> members, string componentPrefix)
@@ -117,7 +117,7 @@ namespace Entitas.Generators
 
         internal string ContextAwareComponentPrefix(string contextPrefix)
         {
-            return ContextAware(contextPrefix) + ComponentPrefix;
+            return ContextAware(contextPrefix) + Prefix;
         }
     }
 
