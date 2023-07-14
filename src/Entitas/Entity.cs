@@ -277,6 +277,16 @@ namespace Entitas
             return false;
         }
 
+        /// Determines whether this entity has any component
+        public bool IsEmpty()
+        {
+            for (var i = 0; i < _components.Length; i++)
+                if (_components[i] != null)
+                    return false;
+
+            return true;
+        }
+
         /// Removes all components.
         public void RemoveAllComponents()
         {

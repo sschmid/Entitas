@@ -167,6 +167,19 @@ namespace Entitas.Tests
         }
 
         [Fact]
+        public void IsEmpty()
+        {
+            _entity.IsEmpty().Should().BeTrue();
+        }
+
+        [Fact]
+        public void IsNotEmptyWhenAnyComponentWasAdded()
+        {
+            _entity.AddComponentA();
+            _entity.IsEmpty().Should().BeFalse();
+        }
+
+        [Fact]
         public void GetsAllComponents()
         {
             _entity.AddComponentA();
