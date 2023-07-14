@@ -12,12 +12,12 @@ namespace Entitas.Generators
         public readonly string EventTypeSuffix;
         public readonly string EventPrefix;
         public readonly string EventListener;
+        public readonly string EventMethod;
 
-        public string ContextAwareEvent;
-        public string ContextAwareEventListener;
-        public string EventMethod;
-        public string ContextAwareEventListenerInterface;
-        public string ContextAwareEventListenerComponent;
+        public string ContextAwareEvent = null!;
+        public string ContextAwareEventListener = null!;
+        public string ContextAwareEventListenerInterface = null!;
+        public string ContextAwareEventListenerComponent = null!;
 
         public EventDeclaration(int eventTarget, int eventType, int order, string componentPrefix)
         {

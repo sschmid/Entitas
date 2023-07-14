@@ -1,3 +1,5 @@
+#nullable disable
+
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
 
