@@ -33,14 +33,20 @@ public static class MyAppMainAnyEventNamespacedAddedListenerEventEntityExtension
         return entity.ReplaceAnyEventNamespacedAddedListener(listeners);
     }
 
-    public static void RemoveAnyEventNamespacedAddedListener(this Entity entity, IMyAppMainAnyEventNamespacedAddedListener value, bool destroyListenerWhenEmpty = true)
+    public static void RemoveAnyEventNamespacedAddedListener(this Entity entity, IMyAppMainAnyEventNamespacedAddedListener value, bool removeListenerWhenEmpty = true)
     {
         var listeners = entity.GetAnyEventNamespacedAddedListener().Value;
         listeners.Remove(value);
-        if (destroyListenerWhenEmpty && listeners.Count == 0)
-            entity.Destroy();
+        if (removeListenerWhenEmpty && listeners.Count == 0)
+        {
+            entity.RemoveAnyEventNamespacedAddedListener();
+            if (entity.IsEmpty())
+                entity.Destroy();
+        }
         else
+        {
             entity.ReplaceAnyEventNamespacedAddedListener(listeners);
+        }
     }
 }
 
