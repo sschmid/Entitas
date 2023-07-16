@@ -40,7 +40,7 @@ namespace Entitas.Generators
                     {
                         var (component, @event) = pair;
                         @event.ContextAware(ContextAware(contextPrefix));
-                        return $"        systems.Add(new {CombinedNamespace(component.Namespace, @event.ContextAwareEvent)}EventSystem(context)); // order: {@event.Order}";
+                        return $"        systems.Add(new {CombinedNamespace(component.Namespace, @event.ContextAwareEvent)}EventSystem(context)); // Order: {@event.Order}";
                     }));
             }
         }

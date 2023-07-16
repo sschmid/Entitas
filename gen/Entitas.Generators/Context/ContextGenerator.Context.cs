@@ -8,7 +8,7 @@ namespace Entitas.Generators
     {
         static void Context(SourceProductionContext spc, ContextDeclaration context, AnalyzerConfigOptionsProvider optionsProvider)
         {
-            if (!EntitasAnalyzerConfigOptions.ContextContext(optionsProvider, context.Node.SyntaxTree))
+            if (!EntitasAnalyzerConfigOptions.ContextContext(optionsProvider, context.SyntaxTree))
                 return;
 
             spc.AddSource(GeneratedPath(context.FullName),

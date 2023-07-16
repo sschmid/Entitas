@@ -57,7 +57,7 @@ namespace Entitas.Generators
             if (!isContext)
                 return null;
 
-            return new ContextDeclaration(candidate, symbol);
+            return new ContextDeclaration(candidate.SyntaxTree, symbol);
         }
 
         static void OnContextChanged(SourceProductionContext spc, (ContextDeclaration Context, AnalyzerConfigOptionsProvider OptionsProvider) pair)

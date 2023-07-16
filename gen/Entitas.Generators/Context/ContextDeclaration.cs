@@ -5,7 +5,7 @@ namespace Entitas.Generators
 {
     readonly struct ContextDeclaration : IEquatable<ContextDeclaration>
     {
-        public readonly SyntaxNode Node;
+        public readonly SyntaxTree SyntaxTree;
         public readonly string? Namespace;
         public readonly string FullName;
         public readonly string Name;
@@ -13,9 +13,9 @@ namespace Entitas.Generators
         public readonly string FullContextPrefix;
         public readonly string ContextPrefix;
 
-        public ContextDeclaration(SyntaxNode node, INamedTypeSymbol symbol)
+        public ContextDeclaration(SyntaxTree syntaxTree, INamedTypeSymbol symbol)
         {
-            Node = node;
+            SyntaxTree = syntaxTree;
             Namespace = !symbol.ContainingNamespace.IsGlobalNamespace ? symbol.ContainingNamespace.ToDisplayString() : null;
             FullName = symbol.ToDisplayString();
             Name = symbol.Name;

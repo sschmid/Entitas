@@ -8,7 +8,7 @@ namespace Entitas.Generators
     {
         static void ComponentIndex(SourceProductionContext spc, ContextDeclaration context, AnalyzerConfigOptionsProvider optionsProvider)
         {
-            if (!EntitasAnalyzerConfigOptions.ContextComponentIndex(optionsProvider, context.Node.SyntaxTree))
+            if (!EntitasAnalyzerConfigOptions.ContextComponentIndex(optionsProvider, context.SyntaxTree))
                 return;
 
             spc.AddSource(ContextAwarePath(context, "ComponentIndex"),
