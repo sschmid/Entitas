@@ -14,21 +14,25 @@ namespace Entitas.Generators.Tests
 
         static readonly string FixturesPath = Path.Combine(ProjectRoot, "tests", "Entitas.Generators.Tests.Fixtures");
 
-        static Task Verify(string fixture, Dictionary<string, string> options)
-            => TestHelper.Verify(File.ReadAllText(Path.Combine(FixturesPath, $"{fixture}.cs")), new ComponentGenerator(), options);
+        static Task Verify(string fixture, Dictionary<string, string> options) =>
+            TestHelper.Verify(File.ReadAllText(Path.Combine(FixturesPath, $"{fixture}.cs")), new ComponentGenerator(), options);
 
-        static Task VerifyComponent(string fixture, Dictionary<string, string> options)
-            => TestHelper.Verify(File.ReadAllText(Path.Combine(FixturesPath, "Components", $"{fixture}.cs")), new ComponentGenerator(), options);
+        static Task VerifyComponent(string fixture, Dictionary<string, string> options) =>
+            TestHelper.Verify(File.ReadAllText(Path.Combine(FixturesPath, "Components", $"{fixture}.cs")), new ComponentGenerator(), options);
 
-        static Task VerifyContext(string fixture, Dictionary<string, string> options)
-            => TestHelper.Verify(File.ReadAllText(Path.Combine(FixturesPath, "Contexts", $"{fixture}.txt")), new ComponentGenerator(), options);
+        static Task VerifyContext(string fixture, Dictionary<string, string> options) =>
+            TestHelper.Verify(File.ReadAllText(Path.Combine(FixturesPath, "Contexts", $"{fixture}.txt")), new ComponentGenerator(), options);
 
-        static readonly Dictionary<string, string> DefaultOptions = new Dictionary<string, string>();
+        static readonly Dictionary<string, string> DefaultOptions = new Dictionary<string, string>
+        {
+            { EntitasAnalyzerConfigOptions.ComponentEventSystemsContextExtensionKey, "false" }
+        };
 
         static readonly Dictionary<string, string> NoComponentIndexNoMatcherOptions = new Dictionary<string, string>
         {
             { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" }
+            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEventSystemsContextExtensionKey, "false" }
         };
 
         static readonly Dictionary<string, string> EventsOnlyOptions = new Dictionary<string, string>
@@ -36,7 +40,18 @@ namespace Entitas.Generators.Tests
             { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
             { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" },
             { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" }
+            { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEventSystemsContextExtensionKey, "false" }
+        };
+
+        static readonly Dictionary<string, string> EventSystemsOnlyOptions = new Dictionary<string, string>
+        {
+            { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEventsKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentContextInitializationMethodKey, "false" }
         };
 
         static readonly Dictionary<string, string> ContextInitializationOptions = new Dictionary<string, string>
@@ -143,6 +158,9 @@ namespace Entitas.Generators.Tests
 
         [Fact]
         public Task FlagEventComponent() => VerifyComponent("FlagEventComponent", EventsOnlyOptions);
+
+        [Fact]
+        public Task EventSystems() => VerifyComponent("EventComponent", EventSystemsOnlyOptions);
 
         /*
          *

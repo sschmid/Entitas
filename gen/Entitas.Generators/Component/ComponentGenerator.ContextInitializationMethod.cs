@@ -8,9 +8,9 @@ namespace Entitas.Generators
 {
     partial class ComponentGenerator
     {
-        static void ContextInitializationMethod(SourceProductionContext spc, ContextInitializationMethodDeclaration method, AnalyzerConfigOptionsProvider optionsProvider)
+        static void ContextInitializationMethod(SourceProductionContext spc, ContextInitializationMethodDeclaration method, ImmutableArray<ComponentDeclaration> components, AnalyzerConfigOptionsProvider optionsProvider)
         {
-            if (!EntitasAnalyzerConfigOptions.ComponentContextInitializationMethod(optionsProvider, method.Node.SyntaxTree))
+            if (!EntitasAnalyzerConfigOptions.ComponentContextInitializationMethod(optionsProvider, method.SyntaxTree))
                 return;
 
             spc.AddSource(
@@ -23,16 +23,16 @@ namespace Entitas.Generators
                     {
                         public static partial void {{method.Name}}()
                         {
-                    {{ComponentIndexAssignments(method, method.Components)}}
+                    {{ComponentIndexAssignments(method, components)}}
 
                             global::{{method.ContextFullName}}.ComponentNames = new string[]
                             {
-                    {{ComponentNames(method.Components)}}
+                    {{ComponentNames(components)}}
                             };
 
                             global::{{method.ContextFullName}}.ComponentTypes = new global::System.Type[]
                             {
-                    {{ComponentTypes(method.Components)}}
+                    {{ComponentTypes(components)}}
                             };
                         }
                     }
@@ -43,7 +43,7 @@ namespace Entitas.Generators
             {
                 return string.Join("\n", components.Select((component, i) =>
                 {
-                    var contextPrefix = "global::" + CombinedNamespace(component.Namespace, component.ContextAware(method.FullContextPrefix).Replace(".", string.Empty));
+                    var contextPrefix = "global::" + CombinedNamespace(component.Namespace, ContextAware(method.FullContextPrefix).Replace(".", string.Empty));
                     return $"        {contextPrefix}{component.Prefix}ComponentIndex.Index = new ComponentIndex({i});";
                 }));
             }

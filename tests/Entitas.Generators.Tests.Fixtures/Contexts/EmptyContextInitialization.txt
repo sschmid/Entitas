@@ -2,6 +2,8 @@ using Entitas.Generators.Attributes;
 
 namespace MyApp
 {
+    public sealed class NoContextComponent : IComponent { }
+
     public static partial class ContextInitialization
     {
         [ContextInitialization(typeof(MainContext))]

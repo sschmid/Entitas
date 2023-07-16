@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace Entitas.Generators
 {
-    readonly struct MemberDeclaration : IEquatable<MemberDeclaration>
+    public readonly struct MemberDeclaration : IEquatable<MemberDeclaration>
     {
         public readonly string Type;
         public readonly string Name;

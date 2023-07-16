@@ -8,9 +8,9 @@ namespace Entitas.Generators
 {
     partial class ComponentGenerator
     {
-        static void EventSystemsContextExtension(SourceProductionContext spc, ContextInitializationMethodDeclaration method, AnalyzerConfigOptionsProvider optionsProvider)
+        static void EventSystemsContextExtension(SourceProductionContext spc, ContextInitializationMethodDeclaration method, ImmutableArray<ComponentDeclaration> components, AnalyzerConfigOptionsProvider optionsProvider)
         {
-            if (!EntitasAnalyzerConfigOptions.ComponentEventSystemsContextExtension(optionsProvider, method.Node.SyntaxTree))
+            if (!EntitasAnalyzerConfigOptions.ComponentEventSystemsContextExtension(optionsProvider, method.SyntaxTree))
                 return;
 
             spc.AddSource(
@@ -24,7 +24,7 @@ namespace Entitas.Generators
                         public static global::Entitas.Systems CreateEventSystems(this {{method.ContextName}} context)
                         {
                             var systems = new global::Entitas.Systems();
-                    {{AddEventSystems(method.Components, method.FullContextPrefix)}}
+                    {{AddEventSystems(components, method.FullContextPrefix)}}
                             return systems;
                         }
                     }
@@ -39,7 +39,7 @@ namespace Entitas.Generators
                     .Select(pair =>
                     {
                         var (component, @event) = pair;
-                        @event.ContextAware(component.ContextAware(contextPrefix));
+                        @event.ContextAware(ContextAware(contextPrefix));
                         return $"        systems.Add(new {CombinedNamespace(component.Namespace, @event.ContextAwareEvent)}EventSystem(context)); // order: {@event.Order}";
                     }));
             }

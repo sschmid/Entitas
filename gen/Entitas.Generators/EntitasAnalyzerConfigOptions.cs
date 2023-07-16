@@ -34,7 +34,7 @@ namespace Entitas.Generators
 
         static bool IsTrue(AnalyzerConfigOptionsProvider optionsProvider, SyntaxTree? syntaxTree, string key)
         {
-            return syntaxTree is null || !optionsProvider.GetOptions(syntaxTree).TryGetValue(key, out var value) || value.Equals("true", StringComparison.OrdinalIgnoreCase);
+            return syntaxTree is not null && (!optionsProvider.GetOptions(syntaxTree).TryGetValue(key, out var value) || value.Equals("true", StringComparison.OrdinalIgnoreCase));
         }
     }
 }

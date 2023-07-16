@@ -14,11 +14,11 @@ namespace Entitas.Generators.Tests
 
         static readonly string FixturesPath = Path.Combine(ProjectRoot, "tests", "Entitas.Generators.Tests.Fixtures");
 
-        static Task Verify(string fixture, Dictionary<string, string> options)
-            => TestHelper.Verify(File.ReadAllText(Path.Combine(FixturesPath, $"{fixture}.cs")), new ContextGenerator(), options);
+        static Task Verify(string fixture, Dictionary<string, string> options) =>
+            TestHelper.Verify(File.ReadAllText(Path.Combine(FixturesPath, $"{fixture}.cs")), new ContextGenerator(), options);
 
-        static Task VerifyContext(string fixture, Dictionary<string, string> options)
-            => TestHelper.Verify(File.ReadAllText(Path.Combine(FixturesPath, "Contexts", $"{fixture}.txt")), new ContextGenerator(), options);
+        static Task VerifyContext(string fixture, Dictionary<string, string> options) =>
+            TestHelper.Verify(File.ReadAllText(Path.Combine(FixturesPath, "Contexts", $"{fixture}.txt")), new ContextGenerator(), options);
 
         static readonly Dictionary<string, string> DefaultOptions = new Dictionary<string, string>();
 
