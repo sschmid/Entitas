@@ -1,27 +1,22 @@
 using System;
-using System.Collections.Immutable;
-using System.Linq;
 using Microsoft.CodeAnalysis;
 
 namespace Entitas.Generators
 {
     readonly struct ContextInitializationMethodDeclaration : IEquatable<ContextInitializationMethodDeclaration>
     {
-        public readonly SyntaxNode Node;
+        public readonly SyntaxTree SyntaxTree;
         public readonly string? Namespace;
         public readonly string Class;
         public readonly string Name;
         public readonly string? ContextNamespace;
         public readonly string ContextFullName;
         public readonly string ContextName;
-        public readonly ImmutableArray<ComponentDeclaration> Components;
         public readonly string FullContextPrefix;
 
-        readonly FullNameAndContextsComparer _comparer = new FullNameAndContextsComparer();
-
-        public ContextInitializationMethodDeclaration(SyntaxNode node, IMethodSymbol symbol, ISymbol contextSymbol, ImmutableArray<ComponentDeclaration> components)
+        public ContextInitializationMethodDeclaration(SyntaxTree syntaxTree, IMethodSymbol symbol, ISymbol contextSymbol)
         {
-            Node = node;
+            SyntaxTree = syntaxTree;
             Namespace = !symbol.ContainingNamespace.IsGlobalNamespace
                 ? symbol.ContainingNamespace.ToDisplayString()
                 : null;
@@ -35,7 +30,6 @@ namespace Entitas.Generators
             ContextFullName = contextSymbol.ToDisplayString();
             ContextName = contextSymbol.Name;
 
-            Components = components;
             FullContextPrefix = ContextFullName.RemoveSuffix("Context");
         }
 
@@ -43,8 +37,7 @@ namespace Entitas.Generators
             Namespace == other.Namespace &&
             Class == other.Class &&
             Name == other.Name &&
-            ContextFullName == other.ContextFullName &&
-            Components.SequenceEqual(other.Components, _comparer);
+            ContextFullName == other.ContextFullName;
 
         public override bool Equals(object? obj) => obj is ContextInitializationMethodDeclaration other && Equals(other);
 
@@ -56,7 +49,6 @@ namespace Entitas.Generators
                 hashCode = (hashCode * 397) ^ Class.GetHashCode();
                 hashCode = (hashCode * 397) ^ Name.GetHashCode();
                 hashCode = (hashCode * 397) ^ ContextFullName.GetHashCode();
-                hashCode = (hashCode * 397) ^ Components.GetHashCode();
                 return hashCode;
             }
         }

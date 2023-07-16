@@ -8,14 +8,14 @@ namespace Entitas.Generators
     {
         static void Events(SourceProductionContext spc, ComponentDeclaration component, string context, AnalyzerConfigOptionsProvider optionsProvider)
         {
-            if (!EntitasAnalyzerConfigOptions.ComponentEvents(optionsProvider, component.Node?.SyntaxTree))
+            if (!EntitasAnalyzerConfigOptions.ComponentEvents(optionsProvider, component.SyntaxTree))
                 return;
 
             if (component.Events.Length == 0)
                 return;
 
-            var contextPrefix = component.ContextPrefix(context);
-            var contextAware = component.ContextAware(contextPrefix);
+            var contextPrefix = ContextPrefix(context);
+            var contextAware = ContextAware(contextPrefix);
             var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
             foreach (var @event in component.Events)
             {
@@ -183,8 +183,9 @@ namespace Entitas.Generators
                     NamespaceDeclaration(component.Namespace, content));
 
                 var eventComponent = ToEvent(component, @event);
-                OnFullNameOrContextsChanged(spc, eventComponent, context, optionsProvider);
-                OnFullNameOrMembersOrContextsChanged(spc, eventComponent, context, optionsProvider);
+                ComponentIndex(spc, eventComponent, context, optionsProvider);
+                Matcher(spc, eventComponent, context, optionsProvider);
+                EntityExtension(spc, eventComponent, context, optionsProvider);
             }
         }
     }

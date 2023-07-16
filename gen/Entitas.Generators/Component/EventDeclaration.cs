@@ -1,8 +1,8 @@
-using System;
+using System.Collections.Generic;
 
 namespace Entitas.Generators
 {
-    struct EventDeclaration : IEquatable<EventDeclaration>
+    public struct EventDeclaration
     {
         public readonly int EventTarget;
         public readonly int EventType;
@@ -39,21 +39,39 @@ namespace Entitas.Generators
             ContextAwareEventListenerInterface = $"I{ContextAwareEventListener}"; // e.g. IMyAppMainAnyPositionAddedListener
             ContextAwareEventListenerComponent = $"{ContextAwareEventListener}Component"; // e.g. MyAppMainAnyPositionAddedListenerComponent
         }
+    }
 
-        public bool Equals(EventDeclaration other) =>
-            EventTarget == other.EventTarget &&
-            EventType == other.EventType &&
-            Order == other.Order;
+    public class EventTargetAndEventTypeComparer : IEqualityComparer<EventDeclaration>
+    {
+        public bool Equals(EventDeclaration x, EventDeclaration y) =>
+            x.EventTarget == y.EventTarget &&
+            x.EventType == y.EventType;
 
-        public override bool Equals(object? obj) => obj is EventDeclaration other && Equals(other);
-
-        public override int GetHashCode()
+        public int GetHashCode(EventDeclaration obj)
         {
             unchecked
             {
-                var hashCode = EventTarget;
-                hashCode = (hashCode * 397) ^ EventType;
-                hashCode = (hashCode * 397) ^ Order;
+                var hashCode = obj.EventTarget.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.EventType.GetHashCode();
+                return hashCode;
+            }
+        }
+    }
+
+    public class EventTargetAndEventTypeAndOrderComparer : IEqualityComparer<EventDeclaration>
+    {
+        public bool Equals(EventDeclaration x, EventDeclaration y) =>
+            x.EventTarget == y.EventTarget &&
+            x.EventType == y.EventType &&
+            x.Order == y.Order;
+
+        public int GetHashCode(EventDeclaration obj)
+        {
+            unchecked
+            {
+                var hashCode = obj.EventTarget.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.EventType.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.Order.GetHashCode();
                 return hashCode;
             }
         }

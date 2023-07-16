@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace Entitas.Generators
 {
@@ -27,14 +28,14 @@ namespace Entitas.Generators
 
         public static string CombinedNamespace(string? @namespace, string suffix)
         {
-            return @namespace is not null
+            return !string.IsNullOrEmpty(@namespace)
                 ? $"{@namespace}.{suffix}"
                 : suffix;
         }
 
         public static string NamespaceDeclaration(string? @namespace, string content)
         {
-            return @namespace is not null
+            return !string.IsNullOrEmpty(@namespace)
                 ? $"namespace {@namespace}\n{{\n{content}}}\n"
                 : content;
         }
@@ -45,5 +46,27 @@ namespace Entitas.Generators
                 ? str.Substring(0, str.Length - suffix.Length)
                 : str;
         }
+
+        public static string ContextPrefix(string context)
+        {
+            return context.RemoveSuffix("Context");
+        }
+
+        public static string ContextAware(string contextPrefix)
+        {
+            return contextPrefix.Replace(".", string.Empty);
+        }
+
+        public static string ComponentMethodParams(ComponentDeclaration component) =>
+            string.Join(", ", component.Members.Select(static member => $"{member.Type} {member.ValidLowerFirstName}"));
+
+        public static string ComponentMethodArgs(ComponentDeclaration component) =>
+            string.Join(", ", component.Members.Select(static member => $"{member.ValidLowerFirstName}"));
+
+        public static string ComponentValueMethodArgs(ComponentDeclaration component) =>
+            string.Join(", ", component.Members.Select(static member => $"component.{member.Name}"));
+
+        public static string ComponentValueAssignments(ComponentDeclaration component) =>
+            string.Join("\n", component.Members.Select(static member => $"        component.{member.Name} = {member.ValidLowerFirstName};"));
     }
 }

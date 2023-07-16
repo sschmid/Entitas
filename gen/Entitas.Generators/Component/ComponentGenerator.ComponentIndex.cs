@@ -8,10 +8,10 @@ namespace Entitas.Generators
     {
         static void ComponentIndex(SourceProductionContext spc, ComponentDeclaration component, string context, AnalyzerConfigOptionsProvider optionsProvider)
         {
-            if (!EntitasAnalyzerConfigOptions.ComponentComponentIndex(optionsProvider, component.Node?.SyntaxTree))
+            if (!EntitasAnalyzerConfigOptions.ComponentComponentIndex(optionsProvider, component.SyntaxTree))
                 return;
 
-            var contextPrefix = component.ContextPrefix(context);
+            var contextPrefix = ContextPrefix(context);
             var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
             var className = $"{contextAwareComponentPrefix}ComponentIndex";
             spc.AddSource(
