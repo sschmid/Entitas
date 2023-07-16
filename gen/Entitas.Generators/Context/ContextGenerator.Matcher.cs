@@ -8,7 +8,7 @@ namespace Entitas.Generators
     {
         static void Matcher(SourceProductionContext spc, ContextDeclaration context, AnalyzerConfigOptionsProvider optionsProvider)
         {
-            if (!EntitasAnalyzerConfigOptions.ContextMatcher(optionsProvider, context.Node.SyntaxTree))
+            if (!EntitasAnalyzerConfigOptions.ContextMatcher(optionsProvider, context.SyntaxTree))
                 return;
 
             spc.AddSource(ContextAwarePath(context, "Matcher"),
