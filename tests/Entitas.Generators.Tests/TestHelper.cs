@@ -54,6 +54,7 @@ namespace Entitas.Generators.Tests
             var ignores = new[]
             {
                 "global::Entitas.EntitasException",
+                "global::Entitas.Systems",
                 "EntitasAnalyzerConfigOptions"
             };
 
@@ -76,7 +77,8 @@ namespace Entitas.Generators.Tests
 
             foreach (var pattern in patterns)
             {
-                Regex.Matches(code, pattern).Should().HaveCount(0, $"because {path} should not use {pattern}");
+                var matches = Regex.Matches(code, pattern);
+                matches.Should().HaveCount(0, $"because {path} should not use {pattern}\n{string.Join("\n", matches.Select(match => match.Value))}");
             }
         }
     }

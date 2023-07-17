@@ -64,15 +64,18 @@ namespace Entitas.Generators.Tests
             { EntitasAnalyzerConfigOptions.ComponentEventSystemsContextExtensionKey, "false" }
         };
 
-        [Fact]
-        public void UsesGlobalNamespace()
+        [Theory]
+        [InlineData("ComponentGenerator")]
+        [InlineData("ComponentGenerator.ComponentIndex")]
+        [InlineData("ComponentGenerator.ContextExtension")]
+        [InlineData("ComponentGenerator.ContextInitializationMethod")]
+        [InlineData("ComponentGenerator.EntityExtension")]
+        [InlineData("ComponentGenerator.Events")]
+        [InlineData("ComponentGenerator.EventSystems")]
+        [InlineData("ComponentGenerator.Matcher")]
+        public void UsesGlobalNamespace(string path)
         {
-            AssertUsesGlobalNamespaces("gen/Entitas.Generators/Component/ComponentGenerator.cs");
-            AssertUsesGlobalNamespaces("gen/Entitas.Generators/Component/ComponentGenerator.ComponentIndex.cs");
-            AssertUsesGlobalNamespaces("gen/Entitas.Generators/Component/ComponentGenerator.ContextExtension.cs");
-            AssertUsesGlobalNamespaces("gen/Entitas.Generators/Component/ComponentGenerator.EntityExtension.cs");
-            AssertUsesGlobalNamespaces("gen/Entitas.Generators/Component/ComponentGenerator.Events.cs");
-            AssertUsesGlobalNamespaces("gen/Entitas.Generators/Component/ComponentGenerator.Matcher.cs");
+            AssertUsesGlobalNamespaces(Path.Combine("gen", "Entitas.Generators", "Component", path + ".cs"));
         }
 
         /*

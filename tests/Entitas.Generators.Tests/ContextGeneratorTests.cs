@@ -22,10 +22,15 @@ namespace Entitas.Generators.Tests
 
         static readonly Dictionary<string, string> DefaultOptions = new Dictionary<string, string>();
 
-        [Fact]
-        public void UsesGlobalNamespace()
+        [Theory]
+        [InlineData("ContextGenerator")]
+        [InlineData("ContextGenerator.ComponentIndex")]
+        [InlineData("ContextGenerator.Context")]
+        [InlineData("ContextGenerator.Entity")]
+        [InlineData("ContextGenerator.Matcher")]
+        public void UsesGlobalNamespace(string path)
         {
-            AssertUsesGlobalNamespaces("gen/Entitas.Generators/Context/ContextGenerator.cs");
+            AssertUsesGlobalNamespaces(Path.Combine("gen", "Entitas.Generators", "Context", path + ".cs"));
         }
 
         [Fact]
