@@ -77,11 +77,11 @@ namespace Entitas.Generators
                     var (left, optionsProvider) = pair;
                     var (method, components) = left;
 
-                    var componentForContext = components
+                    var componentsForContext = components
                         .Where(component => component.Contexts.Contains(method.ContextFullName))
                         .ToImmutableArray();
 
-                    EventSystemsContextExtension(spc, method, componentForContext, optionsProvider);
+                    EventSystemsContextExtension(spc, method, componentsForContext, optionsProvider);
                 });
 
             initContext.RegisterImplementationSourceOutput(contextInitializationProvider
@@ -91,7 +91,12 @@ namespace Entitas.Generators
                 {
                     var (left, optionsProvider) = pair;
                     var (method, components) = left;
-                    ContextInitializationMethod(spc, method, components, optionsProvider);
+
+                    var componentsForContext = components
+                        .Where(component => component.Contexts.Contains(method.ContextFullName))
+                        .ToImmutableArray();
+
+                    ContextInitializationMethod(spc, method, componentsForContext, optionsProvider);
                 }
             );
         }
