@@ -17,7 +17,7 @@ public static class MainContextEntityIndexExtension
     public const string MyFeaturePrimaryEntityIndexNamespacedValue = "MyFeaturePrimaryEntityIndexNamespacedValue";
     public const string PrimaryEntityIndexValue = "PrimaryEntityIndexValue";
 
-    public static MainContext AddEntityIndexes(this MainContext context)
+    public static MainContext AddAllEntityIndexes(this MainContext context)
     {
         context.AddEntityIndex(new global::Entitas.EntityIndex<global::MyApp.Main.Entity, string>(
             EntityIndexValue,

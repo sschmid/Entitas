@@ -31,7 +31,7 @@ namespace Entitas.Generators
                     {
                     {{EntityIndexNames(componentMemberPairs)}}
 
-                        public static {{method.ContextName}} AddEntityIndexes(this {{method.ContextName}} context)
+                        public static {{method.ContextName}} AddAllEntityIndexes(this {{method.ContextName}} context)
                         {
                     {{AddEntityIndexes(componentMemberPairs, method)}}
                             return context;
