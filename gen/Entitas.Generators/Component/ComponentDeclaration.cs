@@ -18,6 +18,7 @@ namespace Entitas.Generators
         public readonly ImmutableArray<MemberDeclaration> Members;
         public readonly ImmutableArray<string> Contexts;
         public readonly bool IsUnique;
+        public readonly int CleanupMode;
         public readonly ImmutableArray<EventDeclaration> Events;
         public readonly string FullPrefix;
         public readonly string Prefix;
@@ -45,6 +46,13 @@ namespace Entitas.Generators
 
             Contexts = contexts;
             IsUnique = symbol.GetAttributes().Any(static attribute => attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.UniqueAttribute");
+
+            var cleanupMode = symbol
+                .GetAttributes()
+                .FirstOrDefault(static attribute => attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.CleanupAttribute")?
+                .ConstructorArguments.FirstOrDefault();
+
+            CleanupMode = cleanupMode?.Type?.ToDisplayString() == "Entitas.Generators.Attributes.CleanupMode" && cleanupMode.Value.Value is int mode ? mode : -1;
 
             var prefix = Name.RemoveSuffix("Component");
 
@@ -168,6 +176,27 @@ namespace Entitas.Generators
                 hashCode = (hashCode * 397) ^ obj.Members.GetHashCode();
                 hashCode = (hashCode * 397) ^ obj.Contexts.GetHashCode();
                 hashCode = (hashCode * 397) ^ obj.IsUnique.GetHashCode();
+                return hashCode;
+            }
+        }
+    }
+
+    public class FullNameAndContextsAndCleanupModeComparer : IEqualityComparer<ComponentDeclaration>
+    {
+        public static readonly FullNameAndContextsAndCleanupModeComparer Instance = new FullNameAndContextsAndCleanupModeComparer();
+
+        public bool Equals(ComponentDeclaration x, ComponentDeclaration y) =>
+            x.FullName == y.FullName &&
+            x.Contexts.SequenceEqual(y.Contexts) &&
+            x.CleanupMode == y.CleanupMode;
+
+        public int GetHashCode(ComponentDeclaration obj)
+        {
+            unchecked
+            {
+                var hashCode = obj.FullName.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.Contexts.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.CleanupMode.GetHashCode();
                 return hashCode;
             }
         }

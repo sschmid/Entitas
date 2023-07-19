@@ -12,6 +12,7 @@ namespace MyFeature
     [Event(EventTarget.Any, EventType.Removed, 2)]
     [Event(EventTarget.Self, EventType.Added, 3)]
     [Event(EventTarget.Self, EventType.Removed, 4)]
+    [Cleanup(CleanupMode.RemoveComponent)]
     public sealed class UserComponent : IComponent
     {
         [EntityIndex(true)]

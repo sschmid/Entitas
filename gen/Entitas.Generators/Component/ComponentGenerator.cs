@@ -53,6 +53,16 @@ namespace Entitas.Generators
                 });
 
             initContext.RegisterSourceOutput(
+                componentsProvider.WithComparer(FullNameAndContextsAndCleanupModeComparer.Instance).Combine(optionsProvider),
+                static (SourceProductionContext spc, (ComponentDeclaration Component, AnalyzerConfigOptionsProvider OptionsProvider) pair) =>
+                {
+                    foreach (var context in pair.Component.Contexts)
+                    {
+                        CleanupSystem(spc, pair.Component, context, pair.OptionsProvider);
+                    }
+                });
+
+            initContext.RegisterSourceOutput(
                 componentsProvider.WithComparer(new FullNameAndMembersAndContextsAndEventsComparer(TypeAndNameComparer.Instance, EventTargetAndEventTypeComparer.Instance)).Combine(optionsProvider),
                 static (SourceProductionContext spc, (ComponentDeclaration Component, AnalyzerConfigOptionsProvider OptionsProvider) pair) =>
                 {
