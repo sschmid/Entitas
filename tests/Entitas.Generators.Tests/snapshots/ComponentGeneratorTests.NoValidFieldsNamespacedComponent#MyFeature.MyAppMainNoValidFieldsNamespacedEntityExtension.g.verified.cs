@@ -8,41 +8,38 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-using static global::MyFeature.MyAppMainNoValidFieldsNamespacedComponentIndex;
-
 namespace MyFeature
 {
 public static class MyAppMainNoValidFieldsNamespacedEntityExtension
 {
     static readonly NoValidFieldsNamespacedComponent SingleNoValidFieldsNamespacedComponent = new NoValidFieldsNamespacedComponent();
 
-    public static bool HasNoValidFieldsNamespaced(this Entity entity)
+    public static bool HasNoValidFieldsNamespaced(this global::MyApp.Main.Entity entity)
     {
-        return entity.HasComponent(Index.Value);
+        return entity.HasComponent(MyAppMainNoValidFieldsNamespacedComponentIndex.Index.Value);
     }
 
-    public static Entity AddNoValidFieldsNamespaced(this Entity entity)
+    public static global::MyApp.Main.Entity AddNoValidFieldsNamespaced(this global::MyApp.Main.Entity entity)
     {
-        entity.AddComponent(Index.Value, SingleNoValidFieldsNamespacedComponent);
+        entity.AddComponent(MyAppMainNoValidFieldsNamespacedComponentIndex.Index.Value, SingleNoValidFieldsNamespacedComponent);
         return entity;
     }
 
-    public static Entity ReplaceNoValidFieldsNamespaced(this Entity entity)
+    public static global::MyApp.Main.Entity ReplaceNoValidFieldsNamespaced(this global::MyApp.Main.Entity entity)
     {
-        entity.ReplaceComponent(Index.Value, SingleNoValidFieldsNamespacedComponent);
+        entity.ReplaceComponent(MyAppMainNoValidFieldsNamespacedComponentIndex.Index.Value, SingleNoValidFieldsNamespacedComponent);
         return entity;
     }
 
-    public static Entity RemoveNoValidFieldsNamespaced(this Entity entity)
+    public static global::MyApp.Main.Entity RemoveNoValidFieldsNamespaced(this global::MyApp.Main.Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        entity.RemoveComponent(MyAppMainNoValidFieldsNamespacedComponentIndex.Index.Value);
         return entity;
     }
 
-    public static NoValidFieldsNamespacedComponent GetNoValidFieldsNamespaced(this Entity entity)
+    public static NoValidFieldsNamespacedComponent GetNoValidFieldsNamespaced(this global::MyApp.Main.Entity entity)
     {
-        return (NoValidFieldsNamespacedComponent)entity.GetComponent(Index.Value);
+        return (NoValidFieldsNamespacedComponent)entity.GetComponent(MyAppMainNoValidFieldsNamespacedComponentIndex.Index.Value);
     }
 }
 }

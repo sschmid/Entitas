@@ -8,21 +8,18 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-using static global::MyFeature.MyAppMainMultiplePropertiesNamespacedComponentIndex;
-
 namespace MyFeature
 {
 public static class MyAppMainMultiplePropertiesNamespacedEntityExtension
 {
-    public static bool HasMultiplePropertiesNamespaced(this Entity entity)
+    public static bool HasMultiplePropertiesNamespaced(this global::MyApp.Main.Entity entity)
     {
-        return entity.HasComponent(Index.Value);
+        return entity.HasComponent(MyAppMainMultiplePropertiesNamespacedComponentIndex.Index.Value);
     }
 
-    public static Entity AddMultiplePropertiesNamespaced(this Entity entity, string value1, string value2, string value3)
+    public static global::MyApp.Main.Entity AddMultiplePropertiesNamespaced(this global::MyApp.Main.Entity entity, string value1, string value2, string value3)
     {
-        var index = Index.Value;
+        var index = MyAppMainMultiplePropertiesNamespacedComponentIndex.Index.Value;
         var componentPool = entity.GetComponentPool(index);
         var component = componentPool.Count > 0
             ? (MultiplePropertiesNamespacedComponent)componentPool.Pop()
@@ -34,9 +31,9 @@ public static class MyAppMainMultiplePropertiesNamespacedEntityExtension
         return entity;
     }
 
-    public static Entity ReplaceMultiplePropertiesNamespaced(this Entity entity, string value1, string value2, string value3)
+    public static global::MyApp.Main.Entity ReplaceMultiplePropertiesNamespaced(this global::MyApp.Main.Entity entity, string value1, string value2, string value3)
     {
-        var index = Index.Value;
+        var index = MyAppMainMultiplePropertiesNamespacedComponentIndex.Index.Value;
         var componentPool = entity.GetComponentPool(index);
         var component = componentPool.Count > 0
             ? (MultiplePropertiesNamespacedComponent)componentPool.Pop()
@@ -48,15 +45,15 @@ public static class MyAppMainMultiplePropertiesNamespacedEntityExtension
         return entity;
     }
 
-    public static Entity RemoveMultiplePropertiesNamespaced(this Entity entity)
+    public static global::MyApp.Main.Entity RemoveMultiplePropertiesNamespaced(this global::MyApp.Main.Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        entity.RemoveComponent(MyAppMainMultiplePropertiesNamespacedComponentIndex.Index.Value);
         return entity;
     }
 
-    public static MultiplePropertiesNamespacedComponent GetMultiplePropertiesNamespaced(this Entity entity)
+    public static MultiplePropertiesNamespacedComponent GetMultiplePropertiesNamespaced(this global::MyApp.Main.Entity entity)
     {
-        return (MultiplePropertiesNamespacedComponent)entity.GetComponent(Index.Value);
+        return (MultiplePropertiesNamespacedComponent)entity.GetComponent(MyAppMainMultiplePropertiesNamespacedComponentIndex.Index.Value);
     }
 }
 }

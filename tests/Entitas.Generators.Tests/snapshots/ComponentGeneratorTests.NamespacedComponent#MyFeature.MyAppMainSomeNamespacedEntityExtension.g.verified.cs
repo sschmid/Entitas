@@ -8,41 +8,38 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-using static global::MyFeature.MyAppMainSomeNamespacedComponentIndex;
-
 namespace MyFeature
 {
 public static class MyAppMainSomeNamespacedEntityExtension
 {
     static readonly SomeNamespacedComponent SingleSomeNamespacedComponent = new SomeNamespacedComponent();
 
-    public static bool HasSomeNamespaced(this Entity entity)
+    public static bool HasSomeNamespaced(this global::MyApp.Main.Entity entity)
     {
-        return entity.HasComponent(Index.Value);
+        return entity.HasComponent(MyAppMainSomeNamespacedComponentIndex.Index.Value);
     }
 
-    public static Entity AddSomeNamespaced(this Entity entity)
+    public static global::MyApp.Main.Entity AddSomeNamespaced(this global::MyApp.Main.Entity entity)
     {
-        entity.AddComponent(Index.Value, SingleSomeNamespacedComponent);
+        entity.AddComponent(MyAppMainSomeNamespacedComponentIndex.Index.Value, SingleSomeNamespacedComponent);
         return entity;
     }
 
-    public static Entity ReplaceSomeNamespaced(this Entity entity)
+    public static global::MyApp.Main.Entity ReplaceSomeNamespaced(this global::MyApp.Main.Entity entity)
     {
-        entity.ReplaceComponent(Index.Value, SingleSomeNamespacedComponent);
+        entity.ReplaceComponent(MyAppMainSomeNamespacedComponentIndex.Index.Value, SingleSomeNamespacedComponent);
         return entity;
     }
 
-    public static Entity RemoveSomeNamespaced(this Entity entity)
+    public static global::MyApp.Main.Entity RemoveSomeNamespaced(this global::MyApp.Main.Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        entity.RemoveComponent(MyAppMainSomeNamespacedComponentIndex.Index.Value);
         return entity;
     }
 
-    public static SomeNamespacedComponent GetSomeNamespaced(this Entity entity)
+    public static SomeNamespacedComponent GetSomeNamespaced(this global::MyApp.Main.Entity entity)
     {
-        return (SomeNamespacedComponent)entity.GetComponent(Index.Value);
+        return (SomeNamespacedComponent)entity.GetComponent(MyAppMainSomeNamespacedComponentIndex.Index.Value);
     }
 }
 }

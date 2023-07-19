@@ -8,9 +8,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-
 public static class MyAppMainSomeComponentIndex
 {
-    public static ComponentIndex Index;
+    public static global::MyApp.Main.ComponentIndex Index;
 }

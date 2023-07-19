@@ -8,21 +8,18 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-using static global::MyFeature.MyAppMainReservedKeywordFieldsNamespacedComponentIndex;
-
 namespace MyFeature
 {
 public static class MyAppMainReservedKeywordFieldsNamespacedEntityExtension
 {
-    public static bool HasReservedKeywordFieldsNamespaced(this Entity entity)
+    public static bool HasReservedKeywordFieldsNamespaced(this global::MyApp.Main.Entity entity)
     {
-        return entity.HasComponent(Index.Value);
+        return entity.HasComponent(MyAppMainReservedKeywordFieldsNamespacedComponentIndex.Index.Value);
     }
 
-    public static Entity AddReservedKeywordFieldsNamespaced(this Entity entity, string @namespace, string @class, string @public)
+    public static global::MyApp.Main.Entity AddReservedKeywordFieldsNamespaced(this global::MyApp.Main.Entity entity, string @namespace, string @class, string @public)
     {
-        var index = Index.Value;
+        var index = MyAppMainReservedKeywordFieldsNamespacedComponentIndex.Index.Value;
         var componentPool = entity.GetComponentPool(index);
         var component = componentPool.Count > 0
             ? (ReservedKeywordFieldsNamespacedComponent)componentPool.Pop()
@@ -34,9 +31,9 @@ public static class MyAppMainReservedKeywordFieldsNamespacedEntityExtension
         return entity;
     }
 
-    public static Entity ReplaceReservedKeywordFieldsNamespaced(this Entity entity, string @namespace, string @class, string @public)
+    public static global::MyApp.Main.Entity ReplaceReservedKeywordFieldsNamespaced(this global::MyApp.Main.Entity entity, string @namespace, string @class, string @public)
     {
-        var index = Index.Value;
+        var index = MyAppMainReservedKeywordFieldsNamespacedComponentIndex.Index.Value;
         var componentPool = entity.GetComponentPool(index);
         var component = componentPool.Count > 0
             ? (ReservedKeywordFieldsNamespacedComponent)componentPool.Pop()
@@ -48,15 +45,15 @@ public static class MyAppMainReservedKeywordFieldsNamespacedEntityExtension
         return entity;
     }
 
-    public static Entity RemoveReservedKeywordFieldsNamespaced(this Entity entity)
+    public static global::MyApp.Main.Entity RemoveReservedKeywordFieldsNamespaced(this global::MyApp.Main.Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        entity.RemoveComponent(MyAppMainReservedKeywordFieldsNamespacedComponentIndex.Index.Value);
         return entity;
     }
 
-    public static ReservedKeywordFieldsNamespacedComponent GetReservedKeywordFieldsNamespaced(this Entity entity)
+    public static ReservedKeywordFieldsNamespacedComponent GetReservedKeywordFieldsNamespaced(this global::MyApp.Main.Entity entity)
     {
-        return (ReservedKeywordFieldsNamespacedComponent)entity.GetComponent(Index.Value);
+        return (ReservedKeywordFieldsNamespacedComponent)entity.GetComponent(MyAppMainReservedKeywordFieldsNamespacedComponentIndex.Index.Value);
     }
 }
 }

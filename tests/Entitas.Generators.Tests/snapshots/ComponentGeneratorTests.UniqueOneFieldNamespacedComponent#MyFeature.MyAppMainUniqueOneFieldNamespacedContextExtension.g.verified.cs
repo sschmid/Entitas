@@ -8,18 +8,16 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-
 namespace MyFeature
 {
 public static class MyAppMainUniqueOneFieldNamespacedContextExtension
 {
-    public static bool HasUniqueOneFieldNamespaced(this MyApp.MainContext context)
+    public static bool HasUniqueOneFieldNamespaced(this global::MyApp.MainContext context)
     {
         return context.GetUniqueOneFieldNamespacedEntity() != null;
     }
 
-    public static Entity SetUniqueOneFieldNamespaced(this MyApp.MainContext context, string value)
+    public static global::MyApp.Main.Entity SetUniqueOneFieldNamespaced(this global::MyApp.MainContext context, string value)
     {
         if (context.HasUniqueOneFieldNamespaced())
         {
@@ -32,7 +30,7 @@ public static class MyAppMainUniqueOneFieldNamespacedContextExtension
         return context.CreateEntity().AddUniqueOneFieldNamespaced(value);
     }
 
-    public static Entity ReplaceUniqueOneFieldNamespaced(this MyApp.MainContext context, string value)
+    public static global::MyApp.Main.Entity ReplaceUniqueOneFieldNamespaced(this global::MyApp.MainContext context, string value)
     {
         var entity = context.GetUniqueOneFieldNamespacedEntity();
         if (entity == null)
@@ -43,17 +41,17 @@ public static class MyAppMainUniqueOneFieldNamespacedContextExtension
         return entity;
     }
 
-    public static void RemoveUniqueOneFieldNamespaced(this MyApp.MainContext context)
+    public static void RemoveUniqueOneFieldNamespaced(this global::MyApp.MainContext context)
     {
         context.GetUniqueOneFieldNamespacedEntity().Destroy();
     }
 
-    public static Entity GetUniqueOneFieldNamespacedEntity(this MyApp.MainContext context)
+    public static global::MyApp.Main.Entity GetUniqueOneFieldNamespacedEntity(this global::MyApp.MainContext context)
     {
         return context.GetGroup(MyAppMainUniqueOneFieldNamespacedMatcher.UniqueOneFieldNamespaced).GetSingleEntity();
     }
 
-    public static UniqueOneFieldNamespacedComponent GetUniqueOneFieldNamespaced(this MyApp.MainContext context)
+    public static UniqueOneFieldNamespacedComponent GetUniqueOneFieldNamespaced(this global::MyApp.MainContext context)
     {
         return context.GetUniqueOneFieldNamespacedEntity().GetUniqueOneFieldNamespaced();
     }

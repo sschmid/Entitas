@@ -8,21 +8,18 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-using static global::MyFeature.MyAppMainMultipleFieldsNamespacedComponentIndex;
-
 namespace MyFeature
 {
 public static class MyAppMainMultipleFieldsNamespacedEntityExtension
 {
-    public static bool HasMultipleFieldsNamespaced(this Entity entity)
+    public static bool HasMultipleFieldsNamespaced(this global::MyApp.Main.Entity entity)
     {
-        return entity.HasComponent(Index.Value);
+        return entity.HasComponent(MyAppMainMultipleFieldsNamespacedComponentIndex.Index.Value);
     }
 
-    public static Entity AddMultipleFieldsNamespaced(this Entity entity, string value1, string value2, string value3)
+    public static global::MyApp.Main.Entity AddMultipleFieldsNamespaced(this global::MyApp.Main.Entity entity, string value1, string value2, string value3)
     {
-        var index = Index.Value;
+        var index = MyAppMainMultipleFieldsNamespacedComponentIndex.Index.Value;
         var componentPool = entity.GetComponentPool(index);
         var component = componentPool.Count > 0
             ? (MultipleFieldsNamespacedComponent)componentPool.Pop()
@@ -34,9 +31,9 @@ public static class MyAppMainMultipleFieldsNamespacedEntityExtension
         return entity;
     }
 
-    public static Entity ReplaceMultipleFieldsNamespaced(this Entity entity, string value1, string value2, string value3)
+    public static global::MyApp.Main.Entity ReplaceMultipleFieldsNamespaced(this global::MyApp.Main.Entity entity, string value1, string value2, string value3)
     {
-        var index = Index.Value;
+        var index = MyAppMainMultipleFieldsNamespacedComponentIndex.Index.Value;
         var componentPool = entity.GetComponentPool(index);
         var component = componentPool.Count > 0
             ? (MultipleFieldsNamespacedComponent)componentPool.Pop()
@@ -48,15 +45,15 @@ public static class MyAppMainMultipleFieldsNamespacedEntityExtension
         return entity;
     }
 
-    public static Entity RemoveMultipleFieldsNamespaced(this Entity entity)
+    public static global::MyApp.Main.Entity RemoveMultipleFieldsNamespaced(this global::MyApp.Main.Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        entity.RemoveComponent(MyAppMainMultipleFieldsNamespacedComponentIndex.Index.Value);
         return entity;
     }
 
-    public static MultipleFieldsNamespacedComponent GetMultipleFieldsNamespaced(this Entity entity)
+    public static MultipleFieldsNamespacedComponent GetMultipleFieldsNamespaced(this global::MyApp.Main.Entity entity)
     {
-        return (MultipleFieldsNamespacedComponent)entity.GetComponent(Index.Value);
+        return (MultipleFieldsNamespacedComponent)entity.GetComponent(MyAppMainMultipleFieldsNamespacedComponentIndex.Index.Value);
     }
 }
 }

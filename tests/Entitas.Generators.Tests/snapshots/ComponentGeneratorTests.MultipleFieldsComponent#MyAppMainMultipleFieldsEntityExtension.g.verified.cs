@@ -8,19 +8,16 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-using static global::MyAppMainMultipleFieldsComponentIndex;
-
 public static class MyAppMainMultipleFieldsEntityExtension
 {
-    public static bool HasMultipleFields(this Entity entity)
+    public static bool HasMultipleFields(this global::MyApp.Main.Entity entity)
     {
-        return entity.HasComponent(Index.Value);
+        return entity.HasComponent(MyAppMainMultipleFieldsComponentIndex.Index.Value);
     }
 
-    public static Entity AddMultipleFields(this Entity entity, string value1, string value2, string value3)
+    public static global::MyApp.Main.Entity AddMultipleFields(this global::MyApp.Main.Entity entity, string value1, string value2, string value3)
     {
-        var index = Index.Value;
+        var index = MyAppMainMultipleFieldsComponentIndex.Index.Value;
         var componentPool = entity.GetComponentPool(index);
         var component = componentPool.Count > 0
             ? (MultipleFieldsComponent)componentPool.Pop()
@@ -32,9 +29,9 @@ public static class MyAppMainMultipleFieldsEntityExtension
         return entity;
     }
 
-    public static Entity ReplaceMultipleFields(this Entity entity, string value1, string value2, string value3)
+    public static global::MyApp.Main.Entity ReplaceMultipleFields(this global::MyApp.Main.Entity entity, string value1, string value2, string value3)
     {
-        var index = Index.Value;
+        var index = MyAppMainMultipleFieldsComponentIndex.Index.Value;
         var componentPool = entity.GetComponentPool(index);
         var component = componentPool.Count > 0
             ? (MultipleFieldsComponent)componentPool.Pop()
@@ -46,14 +43,14 @@ public static class MyAppMainMultipleFieldsEntityExtension
         return entity;
     }
 
-    public static Entity RemoveMultipleFields(this Entity entity)
+    public static global::MyApp.Main.Entity RemoveMultipleFields(this global::MyApp.Main.Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        entity.RemoveComponent(MyAppMainMultipleFieldsComponentIndex.Index.Value);
         return entity;
     }
 
-    public static MultipleFieldsComponent GetMultipleFields(this Entity entity)
+    public static MultipleFieldsComponent GetMultipleFields(this global::MyApp.Main.Entity entity)
     {
-        return (MultipleFieldsComponent)entity.GetComponent(Index.Value);
+        return (MultipleFieldsComponent)entity.GetComponent(MyAppMainMultipleFieldsComponentIndex.Index.Value);
     }
 }

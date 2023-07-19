@@ -8,41 +8,38 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-using static global::MyFeature.MyAppMainUniqueNamespacedComponentIndex;
-
 namespace MyFeature
 {
 public static class MyAppMainUniqueNamespacedEntityExtension
 {
     static readonly UniqueNamespacedComponent SingleUniqueNamespacedComponent = new UniqueNamespacedComponent();
 
-    public static bool HasUniqueNamespaced(this Entity entity)
+    public static bool HasUniqueNamespaced(this global::MyApp.Main.Entity entity)
     {
-        return entity.HasComponent(Index.Value);
+        return entity.HasComponent(MyAppMainUniqueNamespacedComponentIndex.Index.Value);
     }
 
-    public static Entity AddUniqueNamespaced(this Entity entity)
+    public static global::MyApp.Main.Entity AddUniqueNamespaced(this global::MyApp.Main.Entity entity)
     {
-        entity.AddComponent(Index.Value, SingleUniqueNamespacedComponent);
+        entity.AddComponent(MyAppMainUniqueNamespacedComponentIndex.Index.Value, SingleUniqueNamespacedComponent);
         return entity;
     }
 
-    public static Entity ReplaceUniqueNamespaced(this Entity entity)
+    public static global::MyApp.Main.Entity ReplaceUniqueNamespaced(this global::MyApp.Main.Entity entity)
     {
-        entity.ReplaceComponent(Index.Value, SingleUniqueNamespacedComponent);
+        entity.ReplaceComponent(MyAppMainUniqueNamespacedComponentIndex.Index.Value, SingleUniqueNamespacedComponent);
         return entity;
     }
 
-    public static Entity RemoveUniqueNamespaced(this Entity entity)
+    public static global::MyApp.Main.Entity RemoveUniqueNamespaced(this global::MyApp.Main.Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        entity.RemoveComponent(MyAppMainUniqueNamespacedComponentIndex.Index.Value);
         return entity;
     }
 
-    public static UniqueNamespacedComponent GetUniqueNamespaced(this Entity entity)
+    public static UniqueNamespacedComponent GetUniqueNamespaced(this global::MyApp.Main.Entity entity)
     {
-        return (UniqueNamespacedComponent)entity.GetComponent(Index.Value);
+        return (UniqueNamespacedComponent)entity.GetComponent(MyAppMainUniqueNamespacedComponentIndex.Index.Value);
     }
 }
 }

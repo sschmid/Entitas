@@ -8,21 +8,18 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-using static global::MyFeature.MyAppMainOneFieldNamespacedComponentIndex;
-
 namespace MyFeature
 {
 public static class MyAppMainOneFieldNamespacedEntityExtension
 {
-    public static bool HasOneFieldNamespaced(this Entity entity)
+    public static bool HasOneFieldNamespaced(this global::MyApp.Main.Entity entity)
     {
-        return entity.HasComponent(Index.Value);
+        return entity.HasComponent(MyAppMainOneFieldNamespacedComponentIndex.Index.Value);
     }
 
-    public static Entity AddOneFieldNamespaced(this Entity entity, string value)
+    public static global::MyApp.Main.Entity AddOneFieldNamespaced(this global::MyApp.Main.Entity entity, string value)
     {
-        var index = Index.Value;
+        var index = MyAppMainOneFieldNamespacedComponentIndex.Index.Value;
         var componentPool = entity.GetComponentPool(index);
         var component = componentPool.Count > 0
             ? (OneFieldNamespacedComponent)componentPool.Pop()
@@ -32,9 +29,9 @@ public static class MyAppMainOneFieldNamespacedEntityExtension
         return entity;
     }
 
-    public static Entity ReplaceOneFieldNamespaced(this Entity entity, string value)
+    public static global::MyApp.Main.Entity ReplaceOneFieldNamespaced(this global::MyApp.Main.Entity entity, string value)
     {
-        var index = Index.Value;
+        var index = MyAppMainOneFieldNamespacedComponentIndex.Index.Value;
         var componentPool = entity.GetComponentPool(index);
         var component = componentPool.Count > 0
             ? (OneFieldNamespacedComponent)componentPool.Pop()
@@ -44,15 +41,15 @@ public static class MyAppMainOneFieldNamespacedEntityExtension
         return entity;
     }
 
-    public static Entity RemoveOneFieldNamespaced(this Entity entity)
+    public static global::MyApp.Main.Entity RemoveOneFieldNamespaced(this global::MyApp.Main.Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        entity.RemoveComponent(MyAppMainOneFieldNamespacedComponentIndex.Index.Value);
         return entity;
     }
 
-    public static OneFieldNamespacedComponent GetOneFieldNamespaced(this Entity entity)
+    public static OneFieldNamespacedComponent GetOneFieldNamespaced(this global::MyApp.Main.Entity entity)
     {
-        return (OneFieldNamespacedComponent)entity.GetComponent(Index.Value);
+        return (OneFieldNamespacedComponent)entity.GetComponent(MyAppMainOneFieldNamespacedComponentIndex.Index.Value);
     }
 }
 }

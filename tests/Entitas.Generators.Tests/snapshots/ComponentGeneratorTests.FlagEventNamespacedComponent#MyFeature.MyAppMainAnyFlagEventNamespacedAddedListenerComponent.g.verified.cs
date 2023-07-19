@@ -8,13 +8,11 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-
 namespace MyFeature
 {
 public interface IMyAppMainAnyFlagEventNamespacedAddedListener
 {
-    void OnAnyFlagEventNamespacedAdded(Entity entity);
+    void OnAnyFlagEventNamespacedAdded(global::MyApp.Main.Entity entity);
 }
 
 public sealed class MyAppMainAnyFlagEventNamespacedAddedListenerComponent : global::Entitas.IComponent
@@ -24,7 +22,7 @@ public sealed class MyAppMainAnyFlagEventNamespacedAddedListenerComponent : glob
 
 public static class MyAppMainAnyFlagEventNamespacedAddedListenerEventEntityExtension
 {
-    public static Entity AddAnyFlagEventNamespacedAddedListener(this Entity entity, IMyAppMainAnyFlagEventNamespacedAddedListener value)
+    public static global::MyApp.Main.Entity AddAnyFlagEventNamespacedAddedListener(this global::MyApp.Main.Entity entity, IMyAppMainAnyFlagEventNamespacedAddedListener value)
     {
         var listeners = entity.HasAnyFlagEventNamespacedAddedListener()
             ? entity.GetAnyFlagEventNamespacedAddedListener().Value
@@ -33,7 +31,7 @@ public static class MyAppMainAnyFlagEventNamespacedAddedListenerEventEntityExten
         return entity.ReplaceAnyFlagEventNamespacedAddedListener(listeners);
     }
 
-    public static void RemoveAnyFlagEventNamespacedAddedListener(this Entity entity, IMyAppMainAnyFlagEventNamespacedAddedListener value, bool removeListenerWhenEmpty = true)
+    public static void RemoveAnyFlagEventNamespacedAddedListener(this global::MyApp.Main.Entity entity, IMyAppMainAnyFlagEventNamespacedAddedListener value, bool removeListenerWhenEmpty = true)
     {
         var listeners = entity.GetAnyFlagEventNamespacedAddedListener().Value;
         listeners.Remove(value);
@@ -50,32 +48,32 @@ public static class MyAppMainAnyFlagEventNamespacedAddedListenerEventEntityExten
     }
 }
 
-public sealed class MyAppMainAnyFlagEventNamespacedAddedEventSystem : global::Entitas.ReactiveSystem<Entity>
+public sealed class MyAppMainAnyFlagEventNamespacedAddedEventSystem : global::Entitas.ReactiveSystem<global::MyApp.Main.Entity>
 {
-    readonly global::Entitas.IGroup<Entity> _listeners;
-    readonly global::System.Collections.Generic.List<Entity> _entityBuffer;
+    readonly global::Entitas.IGroup<global::MyApp.Main.Entity> _listeners;
+    readonly global::System.Collections.Generic.List<global::MyApp.Main.Entity> _entityBuffer;
     readonly global::System.Collections.Generic.List<IMyAppMainAnyFlagEventNamespacedAddedListener> _listenerBuffer;
 
     public MyAppMainAnyFlagEventNamespacedAddedEventSystem(MyApp.MainContext context) : base(context)
     {
         _listeners = context.GetGroup(MyAppMainAnyFlagEventNamespacedAddedListenerMatcher.AnyFlagEventNamespacedAddedListener);
-        _entityBuffer = new global::System.Collections.Generic.List<Entity>();
+        _entityBuffer = new global::System.Collections.Generic.List<global::MyApp.Main.Entity>();
         _listenerBuffer = new global::System.Collections.Generic.List<IMyAppMainAnyFlagEventNamespacedAddedListener>();
     }
 
-    protected override global::Entitas.ICollector<Entity> GetTrigger(global::Entitas.IContext<Entity> context)
+    protected override global::Entitas.ICollector<global::MyApp.Main.Entity> GetTrigger(global::Entitas.IContext<global::MyApp.Main.Entity> context)
     {
         return global::Entitas.CollectorContextExtension.CreateCollector(
             context, global::Entitas.TriggerOnEventMatcherExtension.Added(MyAppMainFlagEventNamespacedMatcher.FlagEventNamespaced)
         );
     }
 
-    protected override bool Filter(Entity entity)
+    protected override bool Filter(global::MyApp.Main.Entity entity)
     {
         return entity.HasFlagEventNamespaced();
     }
 
-    protected override void Execute(global::System.Collections.Generic.List<Entity> entities)
+    protected override void Execute(global::System.Collections.Generic.List<global::MyApp.Main.Entity> entities)
     {
         foreach (var entity in entities)
         {

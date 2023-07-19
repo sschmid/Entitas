@@ -8,20 +8,17 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-using static global::MyAppMainSomeComponentIndex;
-
 public sealed class MyAppMainSomeMatcher
 {
-    static global::Entitas.IMatcher<Entity> _matcher;
+    static global::Entitas.IMatcher<global::MyApp.Main.Entity> _matcher;
 
-    public static global::Entitas.IMatcher<Entity> Some
+    public static global::Entitas.IMatcher<global::MyApp.Main.Entity> Some
     {
         get
         {
             if (_matcher == null)
             {
-                var matcher = (global::Entitas.Matcher<Entity>)global::Entitas.Matcher<Entity>.AllOf(Index.Value);
+                var matcher = (global::Entitas.Matcher<global::MyApp.Main.Entity>)global::Entitas.Matcher<global::MyApp.Main.Entity>.AllOf(MyAppMainSomeComponentIndex.Index.Value);
                 matcher.componentNames = MyApp.MainContext.ComponentNames;
                 _matcher = matcher;
             }
