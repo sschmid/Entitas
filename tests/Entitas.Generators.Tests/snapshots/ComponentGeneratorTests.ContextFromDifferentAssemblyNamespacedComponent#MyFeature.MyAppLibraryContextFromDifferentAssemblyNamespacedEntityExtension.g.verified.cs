@@ -8,41 +8,38 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Library;
-using static global::MyFeature.MyAppLibraryContextFromDifferentAssemblyNamespacedComponentIndex;
-
 namespace MyFeature
 {
 public static class MyAppLibraryContextFromDifferentAssemblyNamespacedEntityExtension
 {
     static readonly ContextFromDifferentAssemblyNamespacedComponent SingleContextFromDifferentAssemblyNamespacedComponent = new ContextFromDifferentAssemblyNamespacedComponent();
 
-    public static bool HasContextFromDifferentAssemblyNamespaced(this Entity entity)
+    public static bool HasContextFromDifferentAssemblyNamespaced(this global::MyApp.Library.Entity entity)
     {
-        return entity.HasComponent(Index.Value);
+        return entity.HasComponent(MyAppLibraryContextFromDifferentAssemblyNamespacedComponentIndex.Index.Value);
     }
 
-    public static Entity AddContextFromDifferentAssemblyNamespaced(this Entity entity)
+    public static global::MyApp.Library.Entity AddContextFromDifferentAssemblyNamespaced(this global::MyApp.Library.Entity entity)
     {
-        entity.AddComponent(Index.Value, SingleContextFromDifferentAssemblyNamespacedComponent);
+        entity.AddComponent(MyAppLibraryContextFromDifferentAssemblyNamespacedComponentIndex.Index.Value, SingleContextFromDifferentAssemblyNamespacedComponent);
         return entity;
     }
 
-    public static Entity ReplaceContextFromDifferentAssemblyNamespaced(this Entity entity)
+    public static global::MyApp.Library.Entity ReplaceContextFromDifferentAssemblyNamespaced(this global::MyApp.Library.Entity entity)
     {
-        entity.ReplaceComponent(Index.Value, SingleContextFromDifferentAssemblyNamespacedComponent);
+        entity.ReplaceComponent(MyAppLibraryContextFromDifferentAssemblyNamespacedComponentIndex.Index.Value, SingleContextFromDifferentAssemblyNamespacedComponent);
         return entity;
     }
 
-    public static Entity RemoveContextFromDifferentAssemblyNamespaced(this Entity entity)
+    public static global::MyApp.Library.Entity RemoveContextFromDifferentAssemblyNamespaced(this global::MyApp.Library.Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        entity.RemoveComponent(MyAppLibraryContextFromDifferentAssemblyNamespacedComponentIndex.Index.Value);
         return entity;
     }
 
-    public static ContextFromDifferentAssemblyNamespacedComponent GetContextFromDifferentAssemblyNamespaced(this Entity entity)
+    public static ContextFromDifferentAssemblyNamespacedComponent GetContextFromDifferentAssemblyNamespaced(this global::MyApp.Library.Entity entity)
     {
-        return (ContextFromDifferentAssemblyNamespacedComponent)entity.GetComponent(Index.Value);
+        return (ContextFromDifferentAssemblyNamespacedComponent)entity.GetComponent(MyAppLibraryContextFromDifferentAssemblyNamespacedComponentIndex.Index.Value);
     }
 }
 }

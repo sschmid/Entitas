@@ -8,21 +8,18 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-using static global::MyFeature.MyAppMainUniqueOneFieldNamespacedComponentIndex;
-
 namespace MyFeature
 {
 public static class MyAppMainUniqueOneFieldNamespacedEntityExtension
 {
-    public static bool HasUniqueOneFieldNamespaced(this Entity entity)
+    public static bool HasUniqueOneFieldNamespaced(this global::MyApp.Main.Entity entity)
     {
-        return entity.HasComponent(Index.Value);
+        return entity.HasComponent(MyAppMainUniqueOneFieldNamespacedComponentIndex.Index.Value);
     }
 
-    public static Entity AddUniqueOneFieldNamespaced(this Entity entity, string value)
+    public static global::MyApp.Main.Entity AddUniqueOneFieldNamespaced(this global::MyApp.Main.Entity entity, string value)
     {
-        var index = Index.Value;
+        var index = MyAppMainUniqueOneFieldNamespacedComponentIndex.Index.Value;
         var componentPool = entity.GetComponentPool(index);
         var component = componentPool.Count > 0
             ? (UniqueOneFieldNamespacedComponent)componentPool.Pop()
@@ -32,9 +29,9 @@ public static class MyAppMainUniqueOneFieldNamespacedEntityExtension
         return entity;
     }
 
-    public static Entity ReplaceUniqueOneFieldNamespaced(this Entity entity, string value)
+    public static global::MyApp.Main.Entity ReplaceUniqueOneFieldNamespaced(this global::MyApp.Main.Entity entity, string value)
     {
-        var index = Index.Value;
+        var index = MyAppMainUniqueOneFieldNamespacedComponentIndex.Index.Value;
         var componentPool = entity.GetComponentPool(index);
         var component = componentPool.Count > 0
             ? (UniqueOneFieldNamespacedComponent)componentPool.Pop()
@@ -44,15 +41,15 @@ public static class MyAppMainUniqueOneFieldNamespacedEntityExtension
         return entity;
     }
 
-    public static Entity RemoveUniqueOneFieldNamespaced(this Entity entity)
+    public static global::MyApp.Main.Entity RemoveUniqueOneFieldNamespaced(this global::MyApp.Main.Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        entity.RemoveComponent(MyAppMainUniqueOneFieldNamespacedComponentIndex.Index.Value);
         return entity;
     }
 
-    public static UniqueOneFieldNamespacedComponent GetUniqueOneFieldNamespaced(this Entity entity)
+    public static UniqueOneFieldNamespacedComponent GetUniqueOneFieldNamespaced(this global::MyApp.Main.Entity entity)
     {
-        return (UniqueOneFieldNamespacedComponent)entity.GetComponent(Index.Value);
+        return (UniqueOneFieldNamespacedComponent)entity.GetComponent(MyAppMainUniqueOneFieldNamespacedComponentIndex.Index.Value);
     }
 }
 }

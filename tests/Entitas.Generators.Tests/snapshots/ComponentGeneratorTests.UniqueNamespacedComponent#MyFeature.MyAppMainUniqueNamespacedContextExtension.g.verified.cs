@@ -8,28 +8,26 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-
 namespace MyFeature
 {
 public static class MyAppMainUniqueNamespacedContextExtension
 {
-    public static bool HasUniqueNamespaced(this MyApp.MainContext context)
+    public static bool HasUniqueNamespaced(this global::MyApp.MainContext context)
     {
         return context.GetUniqueNamespacedEntity() != null;
     }
 
-    public static Entity SetUniqueNamespaced(this MyApp.MainContext context)
+    public static global::MyApp.Main.Entity SetUniqueNamespaced(this global::MyApp.MainContext context)
     {
         return context.GetUniqueNamespacedEntity() ?? context.CreateEntity().AddUniqueNamespaced();
     }
 
-    public static void UnsetUniqueNamespaced(this MyApp.MainContext context)
+    public static void UnsetUniqueNamespaced(this global::MyApp.MainContext context)
     {
         context.GetUniqueNamespacedEntity()?.Destroy();
     }
 
-    public static Entity GetUniqueNamespacedEntity(this MyApp.MainContext context)
+    public static global::MyApp.Main.Entity GetUniqueNamespacedEntity(this global::MyApp.MainContext context)
     {
         return context.GetGroup(MyAppMainUniqueNamespacedMatcher.UniqueNamespaced).GetSingleEntity();
     }

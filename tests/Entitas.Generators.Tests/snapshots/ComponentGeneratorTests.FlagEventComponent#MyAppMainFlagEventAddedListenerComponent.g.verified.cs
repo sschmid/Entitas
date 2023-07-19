@@ -8,11 +8,9 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-
 public interface IMyAppMainFlagEventAddedListener
 {
-    void OnFlagEventAdded(Entity entity);
+    void OnFlagEventAdded(global::MyApp.Main.Entity entity);
 }
 
 public sealed class MyAppMainFlagEventAddedListenerComponent : global::Entitas.IComponent
@@ -22,7 +20,7 @@ public sealed class MyAppMainFlagEventAddedListenerComponent : global::Entitas.I
 
 public static class MyAppMainFlagEventAddedListenerEventEntityExtension
 {
-    public static Entity AddFlagEventAddedListener(this Entity entity, IMyAppMainFlagEventAddedListener value)
+    public static global::MyApp.Main.Entity AddFlagEventAddedListener(this global::MyApp.Main.Entity entity, IMyAppMainFlagEventAddedListener value)
     {
         var listeners = entity.HasFlagEventAddedListener()
             ? entity.GetFlagEventAddedListener().Value
@@ -31,7 +29,7 @@ public static class MyAppMainFlagEventAddedListenerEventEntityExtension
         return entity.ReplaceFlagEventAddedListener(listeners);
     }
 
-    public static void RemoveFlagEventAddedListener(this Entity entity, IMyAppMainFlagEventAddedListener value, bool removeListenerWhenEmpty = true)
+    public static void RemoveFlagEventAddedListener(this global::MyApp.Main.Entity entity, IMyAppMainFlagEventAddedListener value, bool removeListenerWhenEmpty = true)
     {
         var listeners = entity.GetFlagEventAddedListener().Value;
         listeners.Remove(value);
@@ -48,7 +46,7 @@ public static class MyAppMainFlagEventAddedListenerEventEntityExtension
     }
 }
 
-public sealed class MyAppMainFlagEventAddedEventSystem : global::Entitas.ReactiveSystem<Entity>
+public sealed class MyAppMainFlagEventAddedEventSystem : global::Entitas.ReactiveSystem<global::MyApp.Main.Entity>
 {
     readonly global::System.Collections.Generic.List<IMyAppMainFlagEventAddedListener> _listenerBuffer;
 
@@ -57,19 +55,19 @@ public sealed class MyAppMainFlagEventAddedEventSystem : global::Entitas.Reactiv
         _listenerBuffer = new global::System.Collections.Generic.List<IMyAppMainFlagEventAddedListener>();
     }
 
-    protected override global::Entitas.ICollector<Entity> GetTrigger(global::Entitas.IContext<Entity> context)
+    protected override global::Entitas.ICollector<global::MyApp.Main.Entity> GetTrigger(global::Entitas.IContext<global::MyApp.Main.Entity> context)
     {
         return global::Entitas.CollectorContextExtension.CreateCollector(
             context, global::Entitas.TriggerOnEventMatcherExtension.Added(MyAppMainFlagEventMatcher.FlagEvent)
         );
     }
 
-    protected override bool Filter(Entity entity)
+    protected override bool Filter(global::MyApp.Main.Entity entity)
     {
         return entity.HasFlagEvent() && entity.HasFlagEventAddedListener();
     }
 
-    protected override void Execute(global::System.Collections.Generic.List<Entity> entities)
+    protected override void Execute(global::System.Collections.Generic.List<global::MyApp.Main.Entity> entities)
     {
         foreach (var entity in entities)
         {

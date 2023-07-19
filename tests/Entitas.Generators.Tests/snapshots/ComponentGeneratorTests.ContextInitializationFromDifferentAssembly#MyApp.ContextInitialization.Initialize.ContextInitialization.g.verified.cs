@@ -8,18 +8,16 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Library;
-
 namespace MyApp
 {
 public static partial class ContextInitialization
 {
     public static partial void Initialize()
     {
-        global::MyFeature.MyAppLibraryContextFromDifferentAssemblyNamespacedComponentIndex.Index = new ComponentIndex(0);
-        global::MyOtherFeature.MyAppLibraryCollisionComponentIndex.Index = new ComponentIndex(1);
-        global::MyOtherFeature.MyAppLibraryHealthComponentIndex.Index = new ComponentIndex(2);
-        global::MyOtherFeature.MyAppLibraryCollisionAddedListenerComponentIndex.Index = new ComponentIndex(3);
+        global::MyFeature.MyAppLibraryContextFromDifferentAssemblyNamespacedComponentIndex.Index = new global::MyApp.Library.ComponentIndex(0);
+        global::MyOtherFeature.MyAppLibraryCollisionComponentIndex.Index = new global::MyApp.Library.ComponentIndex(1);
+        global::MyOtherFeature.MyAppLibraryHealthComponentIndex.Index = new global::MyApp.Library.ComponentIndex(2);
+        global::MyOtherFeature.MyAppLibraryCollisionAddedListenerComponentIndex.Index = new global::MyApp.Library.ComponentIndex(3);
 
         global::MyApp.LibraryContext.ComponentNames = new string[]
         {

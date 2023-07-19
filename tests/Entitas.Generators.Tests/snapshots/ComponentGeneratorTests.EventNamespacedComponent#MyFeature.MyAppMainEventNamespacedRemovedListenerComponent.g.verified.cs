@@ -8,13 +8,11 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-
 namespace MyFeature
 {
 public interface IMyAppMainEventNamespacedRemovedListener
 {
-    void OnEventNamespacedRemoved(Entity entity);
+    void OnEventNamespacedRemoved(global::MyApp.Main.Entity entity);
 }
 
 public sealed class MyAppMainEventNamespacedRemovedListenerComponent : global::Entitas.IComponent
@@ -24,7 +22,7 @@ public sealed class MyAppMainEventNamespacedRemovedListenerComponent : global::E
 
 public static class MyAppMainEventNamespacedRemovedListenerEventEntityExtension
 {
-    public static Entity AddEventNamespacedRemovedListener(this Entity entity, IMyAppMainEventNamespacedRemovedListener value)
+    public static global::MyApp.Main.Entity AddEventNamespacedRemovedListener(this global::MyApp.Main.Entity entity, IMyAppMainEventNamespacedRemovedListener value)
     {
         var listeners = entity.HasEventNamespacedRemovedListener()
             ? entity.GetEventNamespacedRemovedListener().Value
@@ -33,7 +31,7 @@ public static class MyAppMainEventNamespacedRemovedListenerEventEntityExtension
         return entity.ReplaceEventNamespacedRemovedListener(listeners);
     }
 
-    public static void RemoveEventNamespacedRemovedListener(this Entity entity, IMyAppMainEventNamespacedRemovedListener value, bool removeListenerWhenEmpty = true)
+    public static void RemoveEventNamespacedRemovedListener(this global::MyApp.Main.Entity entity, IMyAppMainEventNamespacedRemovedListener value, bool removeListenerWhenEmpty = true)
     {
         var listeners = entity.GetEventNamespacedRemovedListener().Value;
         listeners.Remove(value);
@@ -50,7 +48,7 @@ public static class MyAppMainEventNamespacedRemovedListenerEventEntityExtension
     }
 }
 
-public sealed class MyAppMainEventNamespacedRemovedEventSystem : global::Entitas.ReactiveSystem<Entity>
+public sealed class MyAppMainEventNamespacedRemovedEventSystem : global::Entitas.ReactiveSystem<global::MyApp.Main.Entity>
 {
     readonly global::System.Collections.Generic.List<IMyAppMainEventNamespacedRemovedListener> _listenerBuffer;
 
@@ -59,19 +57,19 @@ public sealed class MyAppMainEventNamespacedRemovedEventSystem : global::Entitas
         _listenerBuffer = new global::System.Collections.Generic.List<IMyAppMainEventNamespacedRemovedListener>();
     }
 
-    protected override global::Entitas.ICollector<Entity> GetTrigger(global::Entitas.IContext<Entity> context)
+    protected override global::Entitas.ICollector<global::MyApp.Main.Entity> GetTrigger(global::Entitas.IContext<global::MyApp.Main.Entity> context)
     {
         return global::Entitas.CollectorContextExtension.CreateCollector(
             context, global::Entitas.TriggerOnEventMatcherExtension.Added(MyAppMainEventNamespacedMatcher.EventNamespaced)
         );
     }
 
-    protected override bool Filter(Entity entity)
+    protected override bool Filter(global::MyApp.Main.Entity entity)
     {
         return !entity.HasEventNamespaced() && entity.HasEventNamespacedRemovedListener();
     }
 
-    protected override void Execute(global::System.Collections.Generic.List<Entity> entities)
+    protected override void Execute(global::System.Collections.Generic.List<global::MyApp.Main.Entity> entities)
     {
         foreach (var entity in entities)
         {

@@ -8,19 +8,16 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-using static global::MyAppMainOneFieldComponentIndex;
-
 public static class MyAppMainOneFieldEntityExtension
 {
-    public static bool HasOneField(this Entity entity)
+    public static bool HasOneField(this global::MyApp.Main.Entity entity)
     {
-        return entity.HasComponent(Index.Value);
+        return entity.HasComponent(MyAppMainOneFieldComponentIndex.Index.Value);
     }
 
-    public static Entity AddOneField(this Entity entity, string value)
+    public static global::MyApp.Main.Entity AddOneField(this global::MyApp.Main.Entity entity, string value)
     {
-        var index = Index.Value;
+        var index = MyAppMainOneFieldComponentIndex.Index.Value;
         var componentPool = entity.GetComponentPool(index);
         var component = componentPool.Count > 0
             ? (OneFieldComponent)componentPool.Pop()
@@ -30,9 +27,9 @@ public static class MyAppMainOneFieldEntityExtension
         return entity;
     }
 
-    public static Entity ReplaceOneField(this Entity entity, string value)
+    public static global::MyApp.Main.Entity ReplaceOneField(this global::MyApp.Main.Entity entity, string value)
     {
-        var index = Index.Value;
+        var index = MyAppMainOneFieldComponentIndex.Index.Value;
         var componentPool = entity.GetComponentPool(index);
         var component = componentPool.Count > 0
             ? (OneFieldComponent)componentPool.Pop()
@@ -42,14 +39,14 @@ public static class MyAppMainOneFieldEntityExtension
         return entity;
     }
 
-    public static Entity RemoveOneField(this Entity entity)
+    public static global::MyApp.Main.Entity RemoveOneField(this global::MyApp.Main.Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        entity.RemoveComponent(MyAppMainOneFieldComponentIndex.Index.Value);
         return entity;
     }
 
-    public static OneFieldComponent GetOneField(this Entity entity)
+    public static OneFieldComponent GetOneField(this global::MyApp.Main.Entity entity)
     {
-        return (OneFieldComponent)entity.GetComponent(Index.Value);
+        return (OneFieldComponent)entity.GetComponent(MyAppMainOneFieldComponentIndex.Index.Value);
     }
 }

@@ -8,22 +8,19 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-using static global::MyFeature.MyAppMainSomeNamespacedComponentIndex;
-
 namespace MyFeature
 {
 public sealed class MyAppMainSomeNamespacedMatcher
 {
-    static global::Entitas.IMatcher<Entity> _matcher;
+    static global::Entitas.IMatcher<global::MyApp.Main.Entity> _matcher;
 
-    public static global::Entitas.IMatcher<Entity> SomeNamespaced
+    public static global::Entitas.IMatcher<global::MyApp.Main.Entity> SomeNamespaced
     {
         get
         {
             if (_matcher == null)
             {
-                var matcher = (global::Entitas.Matcher<Entity>)global::Entitas.Matcher<Entity>.AllOf(Index.Value);
+                var matcher = (global::Entitas.Matcher<global::MyApp.Main.Entity>)global::Entitas.Matcher<global::MyApp.Main.Entity>.AllOf(MyAppMainSomeNamespacedComponentIndex.Index.Value);
                 matcher.componentNames = MyApp.MainContext.ComponentNames;
                 _matcher = matcher;
             }

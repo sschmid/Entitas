@@ -8,11 +8,9 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-
 public interface IMyAppMainEventRemovedListener
 {
-    void OnEventRemoved(Entity entity);
+    void OnEventRemoved(global::MyApp.Main.Entity entity);
 }
 
 public sealed class MyAppMainEventRemovedListenerComponent : global::Entitas.IComponent
@@ -22,7 +20,7 @@ public sealed class MyAppMainEventRemovedListenerComponent : global::Entitas.ICo
 
 public static class MyAppMainEventRemovedListenerEventEntityExtension
 {
-    public static Entity AddEventRemovedListener(this Entity entity, IMyAppMainEventRemovedListener value)
+    public static global::MyApp.Main.Entity AddEventRemovedListener(this global::MyApp.Main.Entity entity, IMyAppMainEventRemovedListener value)
     {
         var listeners = entity.HasEventRemovedListener()
             ? entity.GetEventRemovedListener().Value
@@ -31,7 +29,7 @@ public static class MyAppMainEventRemovedListenerEventEntityExtension
         return entity.ReplaceEventRemovedListener(listeners);
     }
 
-    public static void RemoveEventRemovedListener(this Entity entity, IMyAppMainEventRemovedListener value, bool removeListenerWhenEmpty = true)
+    public static void RemoveEventRemovedListener(this global::MyApp.Main.Entity entity, IMyAppMainEventRemovedListener value, bool removeListenerWhenEmpty = true)
     {
         var listeners = entity.GetEventRemovedListener().Value;
         listeners.Remove(value);
@@ -48,7 +46,7 @@ public static class MyAppMainEventRemovedListenerEventEntityExtension
     }
 }
 
-public sealed class MyAppMainEventRemovedEventSystem : global::Entitas.ReactiveSystem<Entity>
+public sealed class MyAppMainEventRemovedEventSystem : global::Entitas.ReactiveSystem<global::MyApp.Main.Entity>
 {
     readonly global::System.Collections.Generic.List<IMyAppMainEventRemovedListener> _listenerBuffer;
 
@@ -57,19 +55,19 @@ public sealed class MyAppMainEventRemovedEventSystem : global::Entitas.ReactiveS
         _listenerBuffer = new global::System.Collections.Generic.List<IMyAppMainEventRemovedListener>();
     }
 
-    protected override global::Entitas.ICollector<Entity> GetTrigger(global::Entitas.IContext<Entity> context)
+    protected override global::Entitas.ICollector<global::MyApp.Main.Entity> GetTrigger(global::Entitas.IContext<global::MyApp.Main.Entity> context)
     {
         return global::Entitas.CollectorContextExtension.CreateCollector(
             context, global::Entitas.TriggerOnEventMatcherExtension.Added(MyAppMainEventMatcher.Event)
         );
     }
 
-    protected override bool Filter(Entity entity)
+    protected override bool Filter(global::MyApp.Main.Entity entity)
     {
         return !entity.HasEvent() && entity.HasEventRemovedListener();
     }
 
-    protected override void Execute(global::System.Collections.Generic.List<Entity> entities)
+    protected override void Execute(global::System.Collections.Generic.List<global::MyApp.Main.Entity> entities)
     {
         foreach (var entity in entities)
         {

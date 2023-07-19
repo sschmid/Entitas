@@ -8,38 +8,35 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-using static global::MyAppMainSomeComponentIndex;
-
 public static class MyAppMainSomeEntityExtension
 {
     static readonly SomeComponent SingleSomeComponent = new SomeComponent();
 
-    public static bool HasSome(this Entity entity)
+    public static bool HasSome(this global::MyApp.Main.Entity entity)
     {
-        return entity.HasComponent(Index.Value);
+        return entity.HasComponent(MyAppMainSomeComponentIndex.Index.Value);
     }
 
-    public static Entity AddSome(this Entity entity)
+    public static global::MyApp.Main.Entity AddSome(this global::MyApp.Main.Entity entity)
     {
-        entity.AddComponent(Index.Value, SingleSomeComponent);
+        entity.AddComponent(MyAppMainSomeComponentIndex.Index.Value, SingleSomeComponent);
         return entity;
     }
 
-    public static Entity ReplaceSome(this Entity entity)
+    public static global::MyApp.Main.Entity ReplaceSome(this global::MyApp.Main.Entity entity)
     {
-        entity.ReplaceComponent(Index.Value, SingleSomeComponent);
+        entity.ReplaceComponent(MyAppMainSomeComponentIndex.Index.Value, SingleSomeComponent);
         return entity;
     }
 
-    public static Entity RemoveSome(this Entity entity)
+    public static global::MyApp.Main.Entity RemoveSome(this global::MyApp.Main.Entity entity)
     {
-        entity.RemoveComponent(Index.Value);
+        entity.RemoveComponent(MyAppMainSomeComponentIndex.Index.Value);
         return entity;
     }
 
-    public static SomeComponent GetSome(this Entity entity)
+    public static SomeComponent GetSome(this global::MyApp.Main.Entity entity)
     {
-        return (SomeComponent)entity.GetComponent(Index.Value);
+        return (SomeComponent)entity.GetComponent(MyAppMainSomeComponentIndex.Index.Value);
     }
 }

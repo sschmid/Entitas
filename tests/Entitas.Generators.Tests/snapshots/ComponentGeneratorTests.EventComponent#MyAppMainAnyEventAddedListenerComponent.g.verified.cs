@@ -8,11 +8,9 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using global::MyApp.Main;
-
 public interface IMyAppMainAnyEventAddedListener
 {
-    void OnAnyEventAdded(Entity entity, string value);
+    void OnAnyEventAdded(global::MyApp.Main.Entity entity, string value);
 }
 
 public sealed class MyAppMainAnyEventAddedListenerComponent : global::Entitas.IComponent
@@ -22,7 +20,7 @@ public sealed class MyAppMainAnyEventAddedListenerComponent : global::Entitas.IC
 
 public static class MyAppMainAnyEventAddedListenerEventEntityExtension
 {
-    public static Entity AddAnyEventAddedListener(this Entity entity, IMyAppMainAnyEventAddedListener value)
+    public static global::MyApp.Main.Entity AddAnyEventAddedListener(this global::MyApp.Main.Entity entity, IMyAppMainAnyEventAddedListener value)
     {
         var listeners = entity.HasAnyEventAddedListener()
             ? entity.GetAnyEventAddedListener().Value
@@ -31,7 +29,7 @@ public static class MyAppMainAnyEventAddedListenerEventEntityExtension
         return entity.ReplaceAnyEventAddedListener(listeners);
     }
 
-    public static void RemoveAnyEventAddedListener(this Entity entity, IMyAppMainAnyEventAddedListener value, bool removeListenerWhenEmpty = true)
+    public static void RemoveAnyEventAddedListener(this global::MyApp.Main.Entity entity, IMyAppMainAnyEventAddedListener value, bool removeListenerWhenEmpty = true)
     {
         var listeners = entity.GetAnyEventAddedListener().Value;
         listeners.Remove(value);
@@ -48,32 +46,32 @@ public static class MyAppMainAnyEventAddedListenerEventEntityExtension
     }
 }
 
-public sealed class MyAppMainAnyEventAddedEventSystem : global::Entitas.ReactiveSystem<Entity>
+public sealed class MyAppMainAnyEventAddedEventSystem : global::Entitas.ReactiveSystem<global::MyApp.Main.Entity>
 {
-    readonly global::Entitas.IGroup<Entity> _listeners;
-    readonly global::System.Collections.Generic.List<Entity> _entityBuffer;
+    readonly global::Entitas.IGroup<global::MyApp.Main.Entity> _listeners;
+    readonly global::System.Collections.Generic.List<global::MyApp.Main.Entity> _entityBuffer;
     readonly global::System.Collections.Generic.List<IMyAppMainAnyEventAddedListener> _listenerBuffer;
 
     public MyAppMainAnyEventAddedEventSystem(MyApp.MainContext context) : base(context)
     {
         _listeners = context.GetGroup(MyAppMainAnyEventAddedListenerMatcher.AnyEventAddedListener);
-        _entityBuffer = new global::System.Collections.Generic.List<Entity>();
+        _entityBuffer = new global::System.Collections.Generic.List<global::MyApp.Main.Entity>();
         _listenerBuffer = new global::System.Collections.Generic.List<IMyAppMainAnyEventAddedListener>();
     }
 
-    protected override global::Entitas.ICollector<Entity> GetTrigger(global::Entitas.IContext<Entity> context)
+    protected override global::Entitas.ICollector<global::MyApp.Main.Entity> GetTrigger(global::Entitas.IContext<global::MyApp.Main.Entity> context)
     {
         return global::Entitas.CollectorContextExtension.CreateCollector(
             context, global::Entitas.TriggerOnEventMatcherExtension.Added(MyAppMainEventMatcher.Event)
         );
     }
 
-    protected override bool Filter(Entity entity)
+    protected override bool Filter(global::MyApp.Main.Entity entity)
     {
         return entity.HasEvent();
     }
 
-    protected override void Execute(global::System.Collections.Generic.List<Entity> entities)
+    protected override void Execute(global::System.Collections.Generic.List<global::MyApp.Main.Entity> entities)
     {
         foreach (var entity in entities)
         {
