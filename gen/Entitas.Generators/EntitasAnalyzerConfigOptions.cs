@@ -6,6 +6,7 @@ namespace Entitas.Generators
 {
     public static class EntitasAnalyzerConfigOptions
     {
+        public const string ComponentCleanupSystemsKey = "entitas_generator.component.cleanup_systems";
         public const string ComponentComponentIndexKey = "entitas_generator.component.component_index";
         public const string ComponentContextExtensionKey = "entitas_generator.component.context_extension";
         public const string ComponentContextInitializationMethodKey = "entitas_generator.component.context_initialization_method";
@@ -20,6 +21,7 @@ namespace Entitas.Generators
         public const string ContextEntityKey = "entitas_generator.context.entity";
         public const string ContextMatcherKey = "entitas_generator.context.matcher";
 
+        public static bool ComponentCleanupSystems(AnalyzerConfigOptionsProvider optionsProvider, SyntaxTree? syntaxTree) => IsTrue(optionsProvider, syntaxTree, ComponentCleanupSystemsKey);
         public static bool ComponentComponentIndex(AnalyzerConfigOptionsProvider optionsProvider, SyntaxTree? syntaxTree) => IsTrue(optionsProvider, syntaxTree, ComponentComponentIndexKey);
         public static bool ComponentContextExtension(AnalyzerConfigOptionsProvider optionsProvider, SyntaxTree? syntaxTree) => IsTrue(optionsProvider, syntaxTree, ComponentContextExtensionKey);
         public static bool ComponentContextInitializationMethod(AnalyzerConfigOptionsProvider optionsProvider, SyntaxTree? syntaxTree) => IsTrue(optionsProvider, syntaxTree, ComponentContextInitializationMethodKey);

@@ -35,6 +35,18 @@ namespace Entitas.Generators.Tests
             { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" }
         };
 
+        static readonly Dictionary<string, string> CleanupOnlyOptions = new Dictionary<string, string>
+        {
+            { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentContextInitializationMethodKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEntityIndexExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEventsKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEventSystemsExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" }
+        };
+
         static readonly Dictionary<string, string> EventsOnlyOptions = new Dictionary<string, string>
         {
             { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
@@ -155,6 +167,18 @@ namespace Entitas.Generators.Tests
 
         [Fact]
         public Task UniqueOneFieldNamespacedComponent() => VerifyComponent("UniqueOneFieldNamespacedComponent", NoComponentIndexNoMatcherOptions);
+
+        [Fact]
+        public Task CleanupRemoveNamespacedComponent() => VerifyComponent("CleanupRemoveNamespacedComponent", CleanupOnlyOptions);
+
+        [Fact]
+        public Task CleanupRemoveComponent() => VerifyComponent("CleanupRemoveComponent", CleanupOnlyOptions);
+
+        [Fact]
+        public Task CleanupDestroyEntityNamespacedComponent() => VerifyComponent("CleanupDestroyEntityNamespacedComponent", CleanupOnlyOptions);
+
+        [Fact]
+        public Task CleanupDestroyEntityComponent() => VerifyComponent("CleanupDestroyEntityComponent", CleanupOnlyOptions);
 
         /*
          *

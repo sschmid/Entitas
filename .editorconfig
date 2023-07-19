@@ -9,6 +9,7 @@ indent_style = space
 
 
 # [*.cs]
+# entitas_generator.component.cleanup_systems = false
 # entitas_generator.component.component_index = false
 # entitas_generator.component.context_extension = false
 # entitas_generator.component.context_initialization_method = false
