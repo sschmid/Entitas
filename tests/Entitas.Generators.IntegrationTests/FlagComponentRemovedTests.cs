@@ -32,10 +32,11 @@ namespace Entitas.Generators.IntegrationTests
         [Fact]
         public void PassesEntityWhenRemovedOnSameEntity()
         {
-            _entity
-                .AddLoading()
-                .RemoveLoading();
+            _entity.AddLoading();
+            _system.Execute();
+            _listener.Entity.Should().BeNull();
 
+            _entity.RemoveLoading();
             _system.Execute();
             _listener.Entity.Should().BeSameAs(_entity);
         }

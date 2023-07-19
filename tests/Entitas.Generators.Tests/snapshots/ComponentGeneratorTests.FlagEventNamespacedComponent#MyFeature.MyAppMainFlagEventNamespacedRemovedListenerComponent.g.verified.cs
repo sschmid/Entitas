@@ -60,7 +60,7 @@ public sealed class MyAppMainFlagEventNamespacedRemovedEventSystem : global::Ent
     protected override global::Entitas.ICollector<global::MyApp.Main.Entity> GetTrigger(global::Entitas.IContext<global::MyApp.Main.Entity> context)
     {
         return global::Entitas.CollectorContextExtension.CreateCollector(
-            context, global::Entitas.TriggerOnEventMatcherExtension.Added(MyAppMainFlagEventNamespacedMatcher.FlagEventNamespaced)
+            context, global::Entitas.TriggerOnEventMatcherExtension.Removed(MyAppMainFlagEventNamespacedMatcher.FlagEventNamespaced)
         );
     }
 

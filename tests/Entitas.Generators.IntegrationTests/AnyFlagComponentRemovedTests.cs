@@ -30,11 +30,11 @@ namespace Entitas.Generators.IntegrationTests
         [Fact]
         public void PassesEntityWhenRemoved()
         {
-            var entity = _context
-                .CreateEntity()
-                .AddLoading()
-                .RemoveLoading();
+            var entity = _context.CreateEntity().AddLoading();
+            _system.Execute();
+            _listener.Entity.Should().BeNull();
 
+            entity.RemoveLoading();
             _system.Execute();
             _listener.Entity.Should().BeSameAs(entity);
         }

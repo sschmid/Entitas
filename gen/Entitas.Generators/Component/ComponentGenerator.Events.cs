@@ -107,7 +107,7 @@ namespace Entitas.Generators
                             protected override global::Entitas.ICollector<global::{{contextPrefix}}.Entity> GetTrigger(global::Entitas.IContext<global::{{contextPrefix}}.Entity> context)
                             {
                                 return global::Entitas.CollectorContextExtension.CreateCollector(
-                                    context, global::Entitas.TriggerOnEventMatcherExtension.Added({{contextAwareComponentPrefix}}Matcher.{{component.Prefix}})
+                                    context, global::Entitas.TriggerOnEventMatcherExtension.{{@event.EventTypeSuffix}}({{contextAwareComponentPrefix}}Matcher.{{component.Prefix}})
                                 );
                             }
 
@@ -150,7 +150,7 @@ namespace Entitas.Generators
                             protected override global::Entitas.ICollector<global::{{contextPrefix}}.Entity> GetTrigger(global::Entitas.IContext<global::{{contextPrefix}}.Entity> context)
                             {
                                 return global::Entitas.CollectorContextExtension.CreateCollector(
-                                    context, global::Entitas.TriggerOnEventMatcherExtension.Added({{contextAwareComponentPrefix}}Matcher.{{component.Prefix}})
+                                    context, global::Entitas.TriggerOnEventMatcherExtension.{{@event.EventTypeSuffix}}({{contextAwareComponentPrefix}}Matcher.{{component.Prefix}})
                                 );
                             }
 
