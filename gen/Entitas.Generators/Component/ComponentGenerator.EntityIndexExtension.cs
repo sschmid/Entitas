@@ -25,7 +25,6 @@ namespace Entitas.Generators
             spc.AddSource(
                 GeneratedPath($"{method.ContextFullName}EntityIndexExtension"),
                 GeneratedFileHeader(GeneratorSource(nameof(EntityIndexExtension))) +
-                $"using global::{method.FullContextPrefix};\n\n" +
                 NamespaceDeclaration(method.ContextNamespace,
                     $$"""
                     public static class {{method.ContextName}}EntityIndexExtension
@@ -34,7 +33,7 @@ namespace Entitas.Generators
 
                         public static {{method.ContextName}} AddEntityIndexes(this {{method.ContextName}} context)
                         {
-                    {{AddEntityIndexes(componentMemberPairs, method.ContextFullName)}}
+                    {{AddEntityIndexes(componentMemberPairs, method)}}
                             return context;
                         }
                     }
@@ -51,16 +50,15 @@ namespace Entitas.Generators
                 }));
             }
 
-            static string AddEntityIndexes(ImmutableArray<(ComponentDeclaration Component, MemberDeclaration Member)> pairs, string context)
+            static string AddEntityIndexes(ImmutableArray<(ComponentDeclaration Component, MemberDeclaration Member)> pairs, ContextInitializationMethodDeclaration method)
             {
                 return string.Join("\n", pairs.Select(pair =>
                 {
                     var indexName = $"{pair.Component.FullPrefix}{pair.Member.Name}";
                     var indexType = pair.Member.EntityIndexType == 0 ? "EntityIndex" : "PrimaryEntityIndex";
-                    var contextPrefix = ContextPrefix(context);
-                    var contextAwareComponentPrefix = pair.Component.ContextAwareComponentPrefix(contextPrefix);
+                    var contextAwareComponentPrefix = pair.Component.ContextAwareComponentPrefix(method.FullContextPrefix);
                     return $$"""
-                                    context.AddEntityIndex(new global::Entitas.{{indexType}}<Entity, {{pair.Member.Type}}>(
+                                    context.AddEntityIndex(new global::Entitas.{{indexType}}<global::{{method.FullContextPrefix}}.Entity, {{pair.Member.Type}}>(
                                         {{indexName}},
                                         context.GetGroup(global::{{CombinedNamespace(pair.Component.Namespace, contextAwareComponentPrefix)}}Matcher.{{pair.Component.Prefix}}),
                                         (entity, component) => ((global::{{pair.Component.FullName}})component).{{pair.Member.Name}}));
@@ -78,15 +76,15 @@ namespace Entitas.Generators
                         {
                         {{string.Join("\n\n", group.Select(pair => pair.Member.EntityIndexType == 0
                             ? $$"""
-                                    public static global::System.Collections.Generic.HashSet<Entity> GetEntitiesWith{{pair.Component.Prefix}}{{pair.Member.Name}}(this global::{{method.ContextFullName}} context, {{pair.Member.Type}} {{pair.Member.ValidLowerFirstName}})
+                                    public static global::System.Collections.Generic.HashSet<global::{{method.FullContextPrefix}}.Entity> GetEntitiesWith{{pair.Component.Prefix}}{{pair.Member.Name}}(this global::{{method.ContextFullName}} context, {{pair.Member.Type}} {{pair.Member.ValidLowerFirstName}})
                                     {
-                                        return ((global::Entitas.EntityIndex<Entity, {{pair.Member.Type}}>)context.GetEntityIndex(global::{{method.ContextFullName}}EntityIndexExtension.{{pair.Component.FullPrefix}}{{pair.Member.Name}})).GetEntities({{pair.Member.ValidLowerFirstName}});
+                                        return ((global::Entitas.EntityIndex<global::{{method.FullContextPrefix}}.Entity, {{pair.Member.Type}}>)context.GetEntityIndex(global::{{method.ContextFullName}}EntityIndexExtension.{{pair.Component.FullPrefix}}{{pair.Member.Name}})).GetEntities({{pair.Member.ValidLowerFirstName}});
                                     }
                                 """
                             : $$"""
-                                    public static Entity GetEntityWith{{pair.Component.Prefix}}{{pair.Member.Name}}(this global::{{method.ContextFullName}} context, {{pair.Member.Type}} {{pair.Member.ValidLowerFirstName}})
+                                    public static global::{{method.FullContextPrefix}}.Entity GetEntityWith{{pair.Component.Prefix}}{{pair.Member.Name}}(this global::{{method.ContextFullName}} context, {{pair.Member.Type}} {{pair.Member.ValidLowerFirstName}})
                                     {
-                                        return ((global::Entitas.PrimaryEntityIndex<Entity, {{pair.Member.Type}}>)context.GetEntityIndex(global::{{method.ContextFullName}}EntityIndexExtension.{{pair.Component.FullPrefix}}{{pair.Member.Name}})).GetEntity({{pair.Member.ValidLowerFirstName}});
+                                        return ((global::Entitas.PrimaryEntityIndex<global::{{method.FullContextPrefix}}.Entity, {{pair.Member.Type}}>)context.GetEntityIndex(global::{{method.ContextFullName}}EntityIndexExtension.{{pair.Component.FullPrefix}}{{pair.Member.Name}})).GetEntity({{pair.Member.ValidLowerFirstName}});
                                     }
                                 """))}}
                         }

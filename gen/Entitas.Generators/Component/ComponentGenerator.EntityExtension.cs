@@ -14,20 +14,21 @@ namespace Entitas.Generators
             var contextPrefix = ContextPrefix(context);
             var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
             var className = $"{contextAwareComponentPrefix}EntityExtension";
+            var index = $"{contextAwareComponentPrefix}ComponentIndex.Index.Value";
             string content;
             if (component.Members.Length > 0)
             {
                 content = $$"""
                     public static class {{className}}
                     {
-                        public static bool Has{{component.Prefix}}(this Entity entity)
+                        public static bool Has{{component.Prefix}}(this global::{{contextPrefix}}.Entity entity)
                         {
-                            return entity.HasComponent(Index.Value);
+                            return entity.HasComponent({{index}});
                         }
 
-                        public static Entity Add{{component.Prefix}}(this Entity entity, {{ComponentMethodParams(component)}})
+                        public static global::{{contextPrefix}}.Entity Add{{component.Prefix}}(this global::{{contextPrefix}}.Entity entity, {{ComponentMethodParams(component)}})
                         {
-                            var index = Index.Value;
+                            var index = {{index}};
                             var componentPool = entity.GetComponentPool(index);
                             var component = componentPool.Count > 0
                                 ? ({{component.Name}})componentPool.Pop()
@@ -37,9 +38,9 @@ namespace Entitas.Generators
                             return entity;
                         }
 
-                        public static Entity Replace{{component.Prefix}}(this Entity entity, {{ComponentMethodParams(component)}})
+                        public static global::{{contextPrefix}}.Entity Replace{{component.Prefix}}(this global::{{contextPrefix}}.Entity entity, {{ComponentMethodParams(component)}})
                         {
-                            var index = Index.Value;
+                            var index = {{index}};
                             var componentPool = entity.GetComponentPool(index);
                             var component = componentPool.Count > 0
                                 ? ({{component.Name}})componentPool.Pop()
@@ -49,15 +50,15 @@ namespace Entitas.Generators
                             return entity;
                         }
 
-                        public static Entity Remove{{component.Prefix}}(this Entity entity)
+                        public static global::{{contextPrefix}}.Entity Remove{{component.Prefix}}(this global::{{contextPrefix}}.Entity entity)
                         {
-                            entity.RemoveComponent(Index.Value);
+                            entity.RemoveComponent({{index}});
                             return entity;
                         }
 
-                        public static {{component.Name}} Get{{component.Prefix}}(this Entity entity)
+                        public static {{component.Name}} Get{{component.Prefix}}(this global::{{contextPrefix}}.Entity entity)
                         {
-                            return ({{component.Name}})entity.GetComponent(Index.Value);
+                            return ({{component.Name}})entity.GetComponent({{index}});
                         }
                     }
 
@@ -70,32 +71,32 @@ namespace Entitas.Generators
                     {
                         static readonly {{component.Name}} Single{{component.Name}} = new {{component.Name}}();
 
-                        public static bool Has{{component.Prefix}}(this Entity entity)
+                        public static bool Has{{component.Prefix}}(this global::{{contextPrefix}}.Entity entity)
                         {
-                            return entity.HasComponent(Index.Value);
+                            return entity.HasComponent({{index}});
                         }
 
-                        public static Entity Add{{component.Prefix}}(this Entity entity)
+                        public static global::{{contextPrefix}}.Entity Add{{component.Prefix}}(this global::{{contextPrefix}}.Entity entity)
                         {
-                            entity.AddComponent(Index.Value, Single{{component.Name}});
+                            entity.AddComponent({{index}}, Single{{component.Name}});
                             return entity;
                         }
 
-                        public static Entity Replace{{component.Prefix}}(this Entity entity)
+                        public static global::{{contextPrefix}}.Entity Replace{{component.Prefix}}(this global::{{contextPrefix}}.Entity entity)
                         {
-                            entity.ReplaceComponent(Index.Value, Single{{component.Name}});
+                            entity.ReplaceComponent({{index}}, Single{{component.Name}});
                             return entity;
                         }
 
-                        public static Entity Remove{{component.Prefix}}(this Entity entity)
+                        public static global::{{contextPrefix}}.Entity Remove{{component.Prefix}}(this global::{{contextPrefix}}.Entity entity)
                         {
-                            entity.RemoveComponent(Index.Value);
+                            entity.RemoveComponent({{index}});
                             return entity;
                         }
 
-                        public static {{component.Name}} Get{{component.Prefix}}(this Entity entity)
+                        public static {{component.Name}} Get{{component.Prefix}}(this global::{{contextPrefix}}.Entity entity)
                         {
-                            return ({{component.Name}})entity.GetComponent(Index.Value);
+                            return ({{component.Name}})entity.GetComponent({{index}});
                         }
                     }
 
@@ -105,8 +106,6 @@ namespace Entitas.Generators
             spc.AddSource(
                 GeneratedPath(CombinedNamespace(component.Namespace, className)),
                 GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
-                $"using global::{contextPrefix};\n" +
-                $"using static global::{CombinedNamespace(component.Namespace, contextAwareComponentPrefix)}ComponentIndex;\n\n" +
                 NamespaceDeclaration(component.Namespace, content));
         }
     }

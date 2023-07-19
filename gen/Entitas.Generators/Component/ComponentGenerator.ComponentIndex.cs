@@ -17,12 +17,11 @@ namespace Entitas.Generators
             spc.AddSource(
                 GeneratedPath(CombinedNamespace(component.Namespace, className)),
                 GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
-                $"using global::{contextPrefix};\n\n" +
                 NamespaceDeclaration(component.Namespace,
                     $$"""
                     public static class {{className}}
                     {
-                        public static ComponentIndex Index;
+                        public static global::{{contextPrefix}}.ComponentIndex Index;
                     }
 
                     """));

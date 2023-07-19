@@ -14,24 +14,23 @@ namespace Entitas.Generators
             var contextPrefix = ContextPrefix(context);
             var contextAwareComponentPrefix = component.ContextAwareComponentPrefix(contextPrefix);
             var className = $"{contextAwareComponentPrefix}Matcher";
+            var index = $"{contextAwareComponentPrefix}ComponentIndex.Index.Value";
             spc.AddSource(
                 GeneratedPath(CombinedNamespace(component.Namespace, className)),
                 GeneratedFileHeader(GeneratorSource(nameof(Matcher))) +
-                $"using global::{contextPrefix};\n" +
-                $"using static global::{CombinedNamespace(component.Namespace, contextAwareComponentPrefix)}ComponentIndex;\n\n" +
                 NamespaceDeclaration(component.Namespace,
                     $$"""
                     public sealed class {{className}}
                     {
-                        static global::Entitas.IMatcher<Entity> _matcher;
+                        static global::Entitas.IMatcher<global::{{contextPrefix}}.Entity> _matcher;
 
-                        public static global::Entitas.IMatcher<Entity> {{component.Prefix}}
+                        public static global::Entitas.IMatcher<global::{{contextPrefix}}.Entity> {{component.Prefix}}
                         {
                             get
                             {
                                 if (_matcher == null)
                                 {
-                                    var matcher = (global::Entitas.Matcher<Entity>)global::Entitas.Matcher<Entity>.AllOf(Index.Value);
+                                    var matcher = (global::Entitas.Matcher<global::{{contextPrefix}}.Entity>)global::Entitas.Matcher<global::{{contextPrefix}}.Entity>.AllOf({{index}});
                                     matcher.componentNames = {{context}}.ComponentNames;
                                     _matcher = matcher;
                                 }
