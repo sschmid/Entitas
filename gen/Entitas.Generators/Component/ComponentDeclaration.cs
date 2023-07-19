@@ -104,6 +104,8 @@ namespace Entitas.Generators
 
     public class FullNameAndContextsComparer : IEqualityComparer<ComponentDeclaration>
     {
+        public static readonly FullNameAndContextsComparer Instance = new FullNameAndContextsComparer();
+
         public bool Equals(ComponentDeclaration x, ComponentDeclaration y) =>
             x.FullName == y.FullName &&
             x.Contexts.SequenceEqual(y.Contexts);
