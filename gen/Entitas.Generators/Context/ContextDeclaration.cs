@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Entitas.Generators
 {
-    readonly struct ContextDeclaration : IEquatable<ContextDeclaration>
+    public readonly struct ContextDeclaration : IEquatable<ContextDeclaration>
     {
         public readonly SyntaxTree SyntaxTree;
         public readonly string? Namespace;

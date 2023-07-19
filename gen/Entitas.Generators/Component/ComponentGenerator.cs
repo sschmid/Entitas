@@ -77,70 +77,75 @@ namespace Entitas.Generators
             var contextInitializationProvider = initContext.SyntaxProvider
                 .CreateSyntaxProvider(IsContextInitializationMethodCandidate, CreateContextInitializationMethodDeclaration)
                 .Where(static method => method is not null)
-                .Select(static (method, _) => method!.Value);
+                .Select(static (method, _) => method!.Value)
+                .WithComparer(NamespaceAndClassAndNameAndContextFullNameComparer.Instance);
 
+            var contextInitializationMethodComparer = new FullNameAndContextsAndEventsComparer(EventTargetAndEventTypeComparer.Instance);
             initContext.RegisterImplementationSourceOutput(contextInitializationProvider
-                    .Combine(componentsInCompilationProvider.WithComparer(new ImmutableArrayComparer(new FullNameAndContextsAndEventsComparer(EventTargetAndEventTypeComparer.Instance))))
+                    .Combine(componentsInCompilationProvider.WithComparer(new ComponentsComparer(contextInitializationMethodComparer)))
+                    .Select(static ((ContextInitializationMethodDeclaration Method, ImmutableArray<ComponentDeclaration> Components) pair, CancellationToken _) =>
+                    {
+                        pair.Method.Components = pair.Components
+                            .Where(component => component.Contexts.Contains(pair.Method.ContextFullName))
+                            .ToImmutableArray();
+
+                        return pair.Method;
+                    })
+                    .WithComparer(new NamespaceAndClassAndNameAndContextFullNameAndComponentsComparer(contextInitializationMethodComparer))
                     .Combine(optionsProvider),
-                static (spc, pair) =>
-                {
-                    var (left, optionsProvider) = pair;
-                    var (method, components) = left;
+                static (SourceProductionContext spc, (ContextInitializationMethodDeclaration Method, AnalyzerConfigOptionsProvider OptionsProvider) pair) =>
+                    ContextInitializationMethod(spc, pair.Method, pair.OptionsProvider));
 
-                    var componentsForContext = components
-                        .Where(component => component.Contexts.Contains(method.ContextFullName))
-                        .ToImmutableArray();
-
-                    ContextInitializationMethod(spc, method, componentsForContext, optionsProvider);
-                }
-            );
-
+            var cleanupSystemsComparer = FullNameAndContextsAndCleanupModeComparer.Instance;
             initContext.RegisterSourceOutput(contextInitializationProvider
-                    .Combine(componentsInCompilationProvider.WithComparer(new ImmutableArrayComparer(FullNameAndContextsAndCleanupModeComparer.Instance)))
+                    .Combine(componentsInCompilationProvider.WithComparer(new ComponentsComparer(cleanupSystemsComparer)))
+                    .Select(static ((ContextInitializationMethodDeclaration Method, ImmutableArray<ComponentDeclaration> Components) pair, CancellationToken _) =>
+                    {
+                        pair.Method.Components = pair.Components
+                            .Where(static component => component.CleanupMode != -1)
+                            .Where(component => component.Contexts.Contains(pair.Method.ContextFullName))
+                            .ToImmutableArray();
+
+                        return pair.Method;
+                    })
+                    .WithComparer(new NamespaceAndClassAndNameAndContextFullNameAndComponentsComparer(cleanupSystemsComparer))
                     .Combine(optionsProvider),
-                static (spc, pair) =>
-                {
-                    var (left, optionsProvider) = pair;
-                    var (method, components) = left;
+                static (SourceProductionContext spc, (ContextInitializationMethodDeclaration Method, AnalyzerConfigOptionsProvider OptionsProvider) pair) =>
+                    CleanupSystems(spc, pair.Method, pair.OptionsProvider));
 
-                    var cleanupComponentsForContext = components
-                        .Where(component => component.Contexts.Contains(method.ContextFullName))
-                        .Where(static component => component.CleanupMode != -1)
-                        .ToImmutableArray();
-
-                    CleanupSystems(spc, method, cleanupComponentsForContext, optionsProvider);
-                });
-
+            var eventSystemsContextExtensionComparer = new FullNameAndContextsAndEventsComparer(EventTargetAndEventTypeAndOrderComparer.Instance);
             initContext.RegisterSourceOutput(contextInitializationProvider
-                    .Combine(componentsInCompilationProvider.WithComparer(new ImmutableArrayComparer(new FullNameAndContextsAndEventsComparer(EventTargetAndEventTypeAndOrderComparer.Instance))))
+                    .Combine(componentsInCompilationProvider.WithComparer(new ComponentsComparer(eventSystemsContextExtensionComparer)))
+                    .Select(static ((ContextInitializationMethodDeclaration Method, ImmutableArray<ComponentDeclaration> Components) pair, CancellationToken _) =>
+                    {
+                        pair.Method.Components = pair.Components
+                            .Where(component => component.Events.Length > 0)
+                            .Where(component => component.Contexts.Contains(pair.Method.ContextFullName))
+                            .ToImmutableArray();
+
+                        return pair.Method;
+                    })
+                    .WithComparer(new NamespaceAndClassAndNameAndContextFullNameAndComponentsComparer(eventSystemsContextExtensionComparer))
                     .Combine(optionsProvider),
-                static (spc, pair) =>
-                {
-                    var (left, optionsProvider) = pair;
-                    var (method, components) = left;
+                static (SourceProductionContext spc, (ContextInitializationMethodDeclaration Method, AnalyzerConfigOptionsProvider OptionsProvider) pair) =>
+                    EventSystemsContextExtension(spc, pair.Method, pair.OptionsProvider));
 
-                    var componentsForContext = components
-                        .Where(component => component.Contexts.Contains(method.ContextFullName))
-                        .ToImmutableArray();
-
-                    EventSystemsContextExtension(spc, method, componentsForContext, optionsProvider);
-                });
-
+            var entityIndexExtensionComparer = new FullNameAndMembersAndContextsComparer(TypeAndNameAndEntityIndexTypeComparer.Instance);
             initContext.RegisterSourceOutput(contextInitializationProvider
-                    .Combine(componentsInCompilationProvider.WithComparer(new ImmutableArrayComparer(new FullNameAndMembersAndContextsComparer(TypeAndNameAndEntityIndexTypeComparer.Instance))))
+                    .Combine(componentsInCompilationProvider.WithComparer(new ComponentsComparer(entityIndexExtensionComparer)))
+                    .Select(static ((ContextInitializationMethodDeclaration Method, ImmutableArray<ComponentDeclaration> Components) pair, CancellationToken _) =>
+                    {
+                        pair.Method.Components = pair.Components
+                            .Where(static component => component.Members.Any(static member => member.EntityIndexType != -1))
+                            .Where(component => component.Contexts.Contains(pair.Method.ContextFullName))
+                            .ToImmutableArray();
+
+                        return pair.Method;
+                    })
+                    .WithComparer(new NamespaceAndClassAndNameAndContextFullNameAndComponentsComparer(entityIndexExtensionComparer))
                     .Combine(optionsProvider),
-                static (spc, pair) =>
-                {
-                    var (left, optionsProvider) = pair;
-                    var (method, components) = left;
-
-                    var entityIndexComponentsForContext = components
-                        .Where(component => component.Contexts.Contains(method.ContextFullName))
-                        .Where(static component => component.Members.Any(static member => member.EntityIndexType != -1))
-                        .ToImmutableArray();
-
-                    EntityIndexExtension(spc, method, entityIndexComponentsForContext, optionsProvider);
-                });
+                static (SourceProductionContext spc, (ContextInitializationMethodDeclaration Method, AnalyzerConfigOptionsProvider OptionsProvider) pair) =>
+                    EntityIndexExtension(spc, pair.Method, pair.OptionsProvider));
         }
 
         static bool IsComponentCandidate(SyntaxNode node, CancellationToken _)

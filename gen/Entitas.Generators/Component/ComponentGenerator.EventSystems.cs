@@ -8,7 +8,7 @@ namespace Entitas.Generators
 {
     partial class ComponentGenerator
     {
-        static void EventSystemsContextExtension(SourceProductionContext spc, ContextInitializationMethodDeclaration method, ImmutableArray<ComponentDeclaration> components, AnalyzerConfigOptionsProvider optionsProvider)
+        static void EventSystemsContextExtension(SourceProductionContext spc, ContextInitializationMethodDeclaration method, AnalyzerConfigOptionsProvider optionsProvider)
         {
             if (!EntitasAnalyzerConfigOptions.ComponentEventSystemsContextExtension(optionsProvider, method.SyntaxTree))
                 return;
@@ -23,7 +23,7 @@ namespace Entitas.Generators
                         public static global::Entitas.Systems CreateEventSystems(this {{method.ContextName}} context)
                         {
                             var systems = new global::Entitas.Systems();
-                    {{AddEventSystems(components, method.FullContextPrefix)}}
+                    {{AddEventSystems(method.Components, method.FullContextPrefix)}}
                             return systems;
                         }
                     }

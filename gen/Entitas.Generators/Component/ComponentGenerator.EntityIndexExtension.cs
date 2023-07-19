@@ -8,15 +8,15 @@ namespace Entitas.Generators
 {
     partial class ComponentGenerator
     {
-        static void EntityIndexExtension(SourceProductionContext spc, ContextInitializationMethodDeclaration method, ImmutableArray<ComponentDeclaration> components, AnalyzerConfigOptionsProvider optionsProvider)
+        static void EntityIndexExtension(SourceProductionContext spc, ContextInitializationMethodDeclaration method, AnalyzerConfigOptionsProvider optionsProvider)
         {
-            if (components.Length == 0)
+            if (method.Components.Length == 0)
                 return;
 
             if (!EntitasAnalyzerConfigOptions.ComponentEntityIndexExtension(optionsProvider, method.SyntaxTree))
                 return;
 
-            var componentMemberPairs = components
+            var componentMemberPairs = method.Components
                 .SelectMany(component => component.Members
                     .Where(member => member.EntityIndexType != -1)
                     .Select(member => (Component: component, Member: member)))

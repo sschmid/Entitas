@@ -259,11 +259,11 @@ namespace Entitas.Generators
         }
     }
 
-    public class ImmutableArrayComparer : IEqualityComparer<ImmutableArray<ComponentDeclaration>>
+    public class ComponentsComparer : IEqualityComparer<ImmutableArray<ComponentDeclaration>>
     {
         readonly IEqualityComparer<ComponentDeclaration> _comparer;
 
-        public ImmutableArrayComparer(IEqualityComparer<ComponentDeclaration> comparer)
+        public ComponentsComparer(IEqualityComparer<ComponentDeclaration> comparer)
         {
             _comparer = comparer;
         }
