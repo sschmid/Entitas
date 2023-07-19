@@ -94,6 +94,7 @@ namespace Entitas.Generators
             Members = members;
             Contexts = component.Contexts;
             IsUnique = false;
+            CleanupMode = -1;
             Events = ImmutableArray<EventDeclaration>.Empty;
             FullPrefix = prefix;
             Prefix = prefix;

@@ -96,6 +96,22 @@ namespace Entitas.Generators
             );
 
             initContext.RegisterSourceOutput(contextInitializationProvider
+                    .Combine(componentsInCompilationProvider.WithComparer(new ImmutableArrayComparer(FullNameAndContextsAndCleanupModeComparer.Instance)))
+                    .Combine(optionsProvider),
+                static (spc, pair) =>
+                {
+                    var (left, optionsProvider) = pair;
+                    var (method, components) = left;
+
+                    var cleanupComponentsForContext = components
+                        .Where(component => component.Contexts.Contains(method.ContextFullName))
+                        .Where(static component => component.CleanupMode != -1)
+                        .ToImmutableArray();
+
+                    CleanupSystems(spc, method, cleanupComponentsForContext, optionsProvider);
+                });
+
+            initContext.RegisterSourceOutput(contextInitializationProvider
                     .Combine(componentsInCompilationProvider.WithComparer(new ImmutableArrayComparer(new FullNameAndContextsAndEventsComparer(EventTargetAndEventTypeAndOrderComparer.Instance))))
                     .Combine(optionsProvider),
                 static (spc, pair) =>
