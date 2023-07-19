@@ -22,7 +22,7 @@ namespace Entitas.Generators
                 .Select(static (component, _) => component!.Value);
 
             initContext.RegisterSourceOutput(
-                componentsProvider.WithComparer(new FullNameAndContextsComparer()).Combine(optionsProvider),
+                componentsProvider.WithComparer(FullNameAndContextsComparer.Instance).Combine(optionsProvider),
                 static (SourceProductionContext spc, (ComponentDeclaration Component, AnalyzerConfigOptionsProvider OptionsProvider) pair) =>
                 {
                     foreach (var context in pair.Component.Contexts)
@@ -53,7 +53,7 @@ namespace Entitas.Generators
                 });
 
             initContext.RegisterSourceOutput(
-                componentsProvider.WithComparer(new FullNameAndMembersAndContextsAndEventsComparer(TypeAndNameComparer.Instance, new EventTargetAndEventTypeComparer())).Combine(optionsProvider),
+                componentsProvider.WithComparer(new FullNameAndMembersAndContextsAndEventsComparer(TypeAndNameComparer.Instance, EventTargetAndEventTypeComparer.Instance)).Combine(optionsProvider),
                 static (SourceProductionContext spc, (ComponentDeclaration Component, AnalyzerConfigOptionsProvider OptionsProvider) pair) =>
                 {
                     foreach (var context in pair.Component.Contexts)
@@ -70,7 +70,7 @@ namespace Entitas.Generators
                 .Select(static (method, _) => method!.Value);
 
             initContext.RegisterImplementationSourceOutput(contextInitializationProvider
-                    .Combine(componentsInCompilationProvider.WithComparer(new ImmutableArrayComparer(new FullNameAndContextsAndEventsComparer(new EventTargetAndEventTypeComparer()))))
+                    .Combine(componentsInCompilationProvider.WithComparer(new ImmutableArrayComparer(new FullNameAndContextsAndEventsComparer(EventTargetAndEventTypeComparer.Instance))))
                     .Combine(optionsProvider),
                 static (spc, pair) =>
                 {
@@ -86,7 +86,7 @@ namespace Entitas.Generators
             );
 
             initContext.RegisterSourceOutput(contextInitializationProvider
-                    .Combine(componentsInCompilationProvider.WithComparer(new ImmutableArrayComparer(new FullNameAndContextsAndEventsComparer(new EventTargetAndEventTypeAndOrderComparer()))))
+                    .Combine(componentsInCompilationProvider.WithComparer(new ImmutableArrayComparer(new FullNameAndContextsAndEventsComparer(EventTargetAndEventTypeAndOrderComparer.Instance))))
                     .Combine(optionsProvider),
                 static (spc, pair) =>
                 {

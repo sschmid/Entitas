@@ -43,6 +43,8 @@ namespace Entitas.Generators
 
     public class EventTargetAndEventTypeComparer : IEqualityComparer<EventDeclaration>
     {
+        public static readonly EventTargetAndEventTypeComparer Instance = new EventTargetAndEventTypeComparer();
+
         public bool Equals(EventDeclaration x, EventDeclaration y) =>
             x.EventTarget == y.EventTarget &&
             x.EventType == y.EventType;
@@ -60,6 +62,8 @@ namespace Entitas.Generators
 
     public class EventTargetAndEventTypeAndOrderComparer : IEqualityComparer<EventDeclaration>
     {
+        public static readonly EventTargetAndEventTypeAndOrderComparer Instance = new EventTargetAndEventTypeAndOrderComparer();
+
         public bool Equals(EventDeclaration x, EventDeclaration y) =>
             x.EventTarget == y.EventTarget &&
             x.EventType == y.EventType &&
