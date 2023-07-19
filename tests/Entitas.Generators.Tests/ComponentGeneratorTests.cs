@@ -25,43 +25,54 @@ namespace Entitas.Generators.Tests
 
         static readonly Dictionary<string, string> DefaultOptions = new Dictionary<string, string>
         {
-            { EntitasAnalyzerConfigOptions.ComponentEventSystemsContextExtensionKey, "false" }
+            { EntitasAnalyzerConfigOptions.ComponentEventSystemsExtensionKey, "false" }
         };
 
         static readonly Dictionary<string, string> NoComponentIndexNoMatcherOptions = new Dictionary<string, string>
         {
             { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEventSystemsContextExtensionKey, "false" }
+            { EntitasAnalyzerConfigOptions.ComponentEventSystemsExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" }
         };
 
         static readonly Dictionary<string, string> EventsOnlyOptions = new Dictionary<string, string>
         {
             { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
             { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEventSystemsContextExtensionKey, "false" }
+            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEventSystemsExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" }
         };
 
         static readonly Dictionary<string, string> EventSystemsOnlyOptions = new Dictionary<string, string>
         {
             { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
             { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentContextInitializationMethodKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
             { EntitasAnalyzerConfigOptions.ComponentEventsKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentContextInitializationMethodKey, "false" }
+            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" }
+        };
+
+        static readonly Dictionary<string, string> EntityIndexOnlyOptions = new Dictionary<string, string>
+        {
+            { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentContextInitializationMethodKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEventsKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEventSystemsExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" }
         };
 
         static readonly Dictionary<string, string> ContextInitializationOptions = new Dictionary<string, string>
         {
             { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
             { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
             { EntitasAnalyzerConfigOptions.ComponentEventsKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEventSystemsContextExtensionKey, "false" }
+            { EntitasAnalyzerConfigOptions.ComponentEventSystemsExtensionKey, "false" },
+            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" }
         };
 
         [Theory]
@@ -70,6 +81,7 @@ namespace Entitas.Generators.Tests
         [InlineData("ComponentGenerator.ContextExtension")]
         [InlineData("ComponentGenerator.ContextInitializationMethod")]
         [InlineData("ComponentGenerator.EntityExtension")]
+        [InlineData("ComponentGenerator.EntityIndexExtension")]
         [InlineData("ComponentGenerator.Events")]
         [InlineData("ComponentGenerator.EventSystems")]
         [InlineData("ComponentGenerator.Matcher")]
@@ -164,6 +176,27 @@ namespace Entitas.Generators.Tests
 
         [Fact]
         public Task EventSystems() => VerifyComponent("EventComponent", EventSystemsOnlyOptions);
+
+        /*
+         *
+         * Entity Index
+         *
+         */
+
+        [Fact]
+        public Task NoEntityIndexNamespacedComponent() => VerifyComponent("SomeNamespacedComponent", EntityIndexOnlyOptions);
+
+        [Fact]
+        public Task EntityIndexNamespacedComponent() => VerifyComponent("EntityIndexNamespacedComponent", EntityIndexOnlyOptions);
+
+        [Fact]
+        public Task EntityIndexComponent() => VerifyComponent("EntityIndexComponent", EntityIndexOnlyOptions);
+
+        [Fact]
+        public Task PrimaryEntityIndexNamespacedComponent() => VerifyComponent("PrimaryEntityIndexNamespacedComponent", EntityIndexOnlyOptions);
+
+        [Fact]
+        public Task PrimaryEntityIndexComponent() => VerifyComponent("PrimaryEntityIndexComponent", EntityIndexOnlyOptions);
 
         /*
          *

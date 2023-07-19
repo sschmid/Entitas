@@ -1,24 +1,37 @@
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
 namespace Entitas.Generators
 {
-    public readonly struct MemberDeclaration : IEquatable<MemberDeclaration>
+    public readonly struct MemberDeclaration
     {
         public readonly string Type;
         public readonly string Name;
+        public readonly int EntityIndexType;
         public readonly string ValidLowerFirstName;
 
-        public MemberDeclaration(IFieldSymbol field) : this(field.Type.ToDisplayString(), field.Name) { }
+        public MemberDeclaration(IFieldSymbol field) : this(field.Type.ToDisplayString(), field.Name, GetEntityIndexType(field)) { }
 
-        public MemberDeclaration(IPropertySymbol property) : this(property.Type.ToDisplayString(), property.Name) { }
+        public MemberDeclaration(IPropertySymbol property) : this(property.Type.ToDisplayString(), property.Name, GetEntityIndexType(property)) { }
 
-        public MemberDeclaration(string type, string name)
+        public MemberDeclaration(string type, string name, int entityIndexType)
         {
             Type = type;
             Name = name;
+            EntityIndexType = entityIndexType;
             ValidLowerFirstName = ToValidLowerFirst(Name);
+        }
+
+        static int GetEntityIndexType(ISymbol symbol)
+        {
+            var attribute = symbol.GetAttributes().FirstOrDefault(static attribute => attribute.AttributeClass?.ToDisplayString() == "Entitas.Generators.Attributes.EntityIndexAttribute");
+            if (attribute is null)
+                return -1;
+
+            var arg = attribute.ConstructorArguments.FirstOrDefault();
+            return arg.Type?.ToDisplayString() == "bool" && arg.Value is bool isPrimary ? isPrimary ? 1 : 0 : 0;
         }
 
         static string ToValidLowerFirst(string value)
@@ -28,18 +41,42 @@ namespace Entitas.Generators
                 ? $"@{lowerFirst}"
                 : lowerFirst;
         }
+    }
 
-        public bool Equals(MemberDeclaration other) =>
-            Type == other.Type &&
-            Name == other.Name;
+    public class TypeAndNameComparer : IEqualityComparer<MemberDeclaration>
+    {
+        public static readonly TypeAndNameComparer Instance = new TypeAndNameComparer();
 
-        public override bool Equals(object? obj) => obj is MemberDeclaration other && Equals(other);
+        public bool Equals(MemberDeclaration x, MemberDeclaration y) =>
+            x.Type == y.Type &&
+            x.Name == y.Name;
 
-        public override int GetHashCode()
+        public int GetHashCode(MemberDeclaration obj)
         {
             unchecked
             {
-                return (Type.GetHashCode() * 397) ^ Name.GetHashCode();
+                return (obj.Type.GetHashCode() * 397) ^ obj.Name.GetHashCode();
+            }
+        }
+    }
+
+    public class TypeAndNameAndEntityIndexTypeComparer : IEqualityComparer<MemberDeclaration>
+    {
+        public static readonly TypeAndNameAndEntityIndexTypeComparer Instance = new TypeAndNameAndEntityIndexTypeComparer();
+
+        public bool Equals(MemberDeclaration x, MemberDeclaration y) =>
+            x.Type == y.Type &&
+            x.Name == y.Name &&
+            x.EntityIndexType == y.EntityIndexType;
+
+        public int GetHashCode(MemberDeclaration obj)
+        {
+            unchecked
+            {
+                var hashCode = obj.Type.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.Name.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.EntityIndexType;
+                return hashCode;
             }
         }
     }

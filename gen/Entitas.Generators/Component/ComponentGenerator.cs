@@ -33,7 +33,7 @@ namespace Entitas.Generators
                 });
 
             initContext.RegisterSourceOutput(
-                componentsProvider.WithComparer(new FullNameAndMembersAndContextsComparer()).Combine(optionsProvider),
+                componentsProvider.WithComparer(new FullNameAndMembersAndContextsComparer(TypeAndNameComparer.Instance)).Combine(optionsProvider),
                 static (SourceProductionContext spc, (ComponentDeclaration Component, AnalyzerConfigOptionsProvider OptionsProvider) pair) =>
                 {
                     foreach (var context in pair.Component.Contexts)
@@ -43,7 +43,7 @@ namespace Entitas.Generators
                 });
 
             initContext.RegisterSourceOutput(
-                componentsProvider.WithComparer(new FullNameAndMembersAndContextsAndIsUniqueComparer()).Combine(optionsProvider),
+                componentsProvider.WithComparer(new FullNameAndMembersAndContextsAndIsUniqueComparer(TypeAndNameComparer.Instance)).Combine(optionsProvider),
                 static (SourceProductionContext spc, (ComponentDeclaration Component, AnalyzerConfigOptionsProvider OptionsProvider) pair) =>
                 {
                     foreach (var context in pair.Component.Contexts)
@@ -53,7 +53,7 @@ namespace Entitas.Generators
                 });
 
             initContext.RegisterSourceOutput(
-                componentsProvider.WithComparer(new FullNameAndMembersAndContextsAndEventsComparer(new EventTargetAndEventTypeComparer())).Combine(optionsProvider),
+                componentsProvider.WithComparer(new FullNameAndMembersAndContextsAndEventsComparer(TypeAndNameComparer.Instance, new EventTargetAndEventTypeComparer())).Combine(optionsProvider),
                 static (SourceProductionContext spc, (ComponentDeclaration Component, AnalyzerConfigOptionsProvider OptionsProvider) pair) =>
                 {
                     foreach (var context in pair.Component.Contexts)
@@ -68,21 +68,6 @@ namespace Entitas.Generators
                 .CreateSyntaxProvider(IsContextInitializationMethodCandidate, CreateContextInitializationMethodDeclaration)
                 .Where(static method => method is not null)
                 .Select(static (method, _) => method!.Value);
-
-            initContext.RegisterSourceOutput(contextInitializationProvider
-                    .Combine(componentsInCompilationProvider.WithComparer(new ImmutableArrayComparer(new FullNameAndContextsAndEventsComparer(new EventTargetAndEventTypeAndOrderComparer()))))
-                    .Combine(optionsProvider),
-                static (spc, pair) =>
-                {
-                    var (left, optionsProvider) = pair;
-                    var (method, components) = left;
-
-                    var componentsForContext = components
-                        .Where(component => component.Contexts.Contains(method.ContextFullName))
-                        .ToImmutableArray();
-
-                    EventSystemsContextExtension(spc, method, componentsForContext, optionsProvider);
-                });
 
             initContext.RegisterImplementationSourceOutput(contextInitializationProvider
                     .Combine(componentsInCompilationProvider.WithComparer(new ImmutableArrayComparer(new FullNameAndContextsAndEventsComparer(new EventTargetAndEventTypeComparer()))))
@@ -99,6 +84,37 @@ namespace Entitas.Generators
                     ContextInitializationMethod(spc, method, componentsForContext, optionsProvider);
                 }
             );
+
+            initContext.RegisterSourceOutput(contextInitializationProvider
+                    .Combine(componentsInCompilationProvider.WithComparer(new ImmutableArrayComparer(new FullNameAndContextsAndEventsComparer(new EventTargetAndEventTypeAndOrderComparer()))))
+                    .Combine(optionsProvider),
+                static (spc, pair) =>
+                {
+                    var (left, optionsProvider) = pair;
+                    var (method, components) = left;
+
+                    var componentsForContext = components
+                        .Where(component => component.Contexts.Contains(method.ContextFullName))
+                        .ToImmutableArray();
+
+                    EventSystemsContextExtension(spc, method, componentsForContext, optionsProvider);
+                });
+
+            initContext.RegisterSourceOutput(contextInitializationProvider
+                    .Combine(componentsInCompilationProvider.WithComparer(new ImmutableArrayComparer(new FullNameAndMembersAndContextsComparer(TypeAndNameAndEntityIndexTypeComparer.Instance))))
+                    .Combine(optionsProvider),
+                static (spc, pair) =>
+                {
+                    var (left, optionsProvider) = pair;
+                    var (method, components) = left;
+
+                    var entityIndexComponentsForContext = components
+                        .Where(component => component.Contexts.Contains(method.ContextFullName))
+                        .Where(static component => component.Members.Any(static member => member.EntityIndexType != -1))
+                        .ToImmutableArray();
+
+                    EntityIndexExtension(spc, method, entityIndexComponentsForContext, optionsProvider);
+                });
         }
 
         static bool IsComponentCandidate(SyntaxNode node, CancellationToken _)
@@ -242,7 +258,7 @@ namespace Entitas.Generators
         static ComponentDeclaration ToEvent(ComponentDeclaration component, EventDeclaration @event) => component.ToEvent(
             CombinedNamespace(component.Namespace, @event.ContextAwareEventListenerComponent),
             @event.ContextAwareEventListenerComponent,
-            ImmutableArray.Create(new MemberDeclaration($"global::System.Collections.Generic.List<{@event.ContextAwareEventListenerInterface}>", "Value")),
+            ImmutableArray.Create(new MemberDeclaration($"global::System.Collections.Generic.List<{@event.ContextAwareEventListenerInterface}>", "Value", -1)),
             @event.EventListener);
 
         static string GeneratorSource(string source) => $"{typeof(ComponentGenerator).FullName}.{source}";

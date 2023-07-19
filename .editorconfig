@@ -7,15 +7,18 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 indent_style = space
 
-# entitas_generator.component.component_index = false
-# entitas_generator.component.matcher = false
-# entitas_generator.component.entity_extension = false
-# entitas_generator.component.context_extension = false
-# entitas_generator.component.events = false
-# entitas_generator.component.context_initialization_method = false
-# entitas_generator.component.event_systems_context_extension = false
 
+# [*.cs]
+# entitas_generator.component.component_index = false
+# entitas_generator.component.context_extension = false
+# entitas_generator.component.context_initialization_method = false
+# entitas_generator.component.entity_extension = false
+# entitas_generator.component.entity_index_extension = false
+# entitas_generator.component.events = false
+# entitas_generator.component.event_systems_extension = false
+# entitas_generator.component.matcher = false
+# 
 # entitas_generator.context.component_index = false
+# entitas_generator.context.context = false
 # entitas_generator.context.entity = false
 # entitas_generator.context.matcher = false
-# entitas_generator.context.context = false

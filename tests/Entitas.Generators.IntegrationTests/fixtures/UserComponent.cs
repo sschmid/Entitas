@@ -14,7 +14,10 @@ namespace MyFeature
     [Event(EventTarget.Self, EventType.Removed, 4)]
     public sealed class UserComponent : IComponent
     {
+        [EntityIndex(true)]
         public string Name;
+
+        [EntityIndex(false)]
         public int Age;
     }
 }

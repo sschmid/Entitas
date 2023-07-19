@@ -8,10 +8,10 @@ namespace Entitas.Generators
     {
         static void ContextExtension(SourceProductionContext spc, ComponentDeclaration component, string context, AnalyzerConfigOptionsProvider optionsProvider)
         {
-            if (!EntitasAnalyzerConfigOptions.ComponentContextExtension(optionsProvider, component.SyntaxTree))
+            if (!component.IsUnique)
                 return;
 
-            if (!component.IsUnique)
+            if (!EntitasAnalyzerConfigOptions.ComponentContextExtension(optionsProvider, component.SyntaxTree))
                 return;
 
             var contextPrefix = ContextPrefix(context);
