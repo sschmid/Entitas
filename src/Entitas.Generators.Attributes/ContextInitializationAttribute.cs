@@ -3,7 +3,7 @@ using System;
 namespace Entitas.Generators.Attributes
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public sealed class ContextInitializationAttribute : Attribute
+    public class ContextInitializationAttribute : Attribute
     {
         public readonly Type Type;
 

@@ -12,11 +12,14 @@ namespace Entitas.Generators
         public readonly SyntaxTree? SyntaxTree;
         public readonly string? Namespace;
         public readonly string FullName;
+
         public readonly string Name;
+
         public readonly ImmutableArray<MemberDeclaration> Members;
         public readonly ImmutableArray<string> Contexts;
         public readonly bool IsUnique;
         public readonly ImmutableArray<EventDeclaration> Events;
+        public readonly string FullPrefix;
         public readonly string Prefix;
 
         public ComponentDeclaration(SyntaxTree? syntaxTree, INamedTypeSymbol symbol, ImmutableArray<string> contexts, CancellationToken cancellationToken)
@@ -61,6 +64,7 @@ namespace Entitas.Generators
                 .OfType<EventDeclaration>()
                 .ToImmutableArray();
 
+            FullPrefix = FullName.Replace(".", string.Empty).RemoveSuffix("Component");
             Prefix = prefix;
 
             static bool IsAutoProperty(ISymbol symbol, CancellationToken cancellationToken)
@@ -83,6 +87,7 @@ namespace Entitas.Generators
             Contexts = component.Contexts;
             IsUnique = false;
             Events = ImmutableArray<EventDeclaration>.Empty;
+            FullPrefix = prefix;
             Prefix = prefix;
         }
 
@@ -114,9 +119,16 @@ namespace Entitas.Generators
 
     public class FullNameAndMembersAndContextsComparer : IEqualityComparer<ComponentDeclaration>
     {
+        readonly IEqualityComparer<MemberDeclaration> _memberComparer;
+
+        public FullNameAndMembersAndContextsComparer(IEqualityComparer<MemberDeclaration> memberComparer)
+        {
+            _memberComparer = memberComparer;
+        }
+
         public bool Equals(ComponentDeclaration x, ComponentDeclaration y) =>
             x.FullName == y.FullName &&
-            x.Members.SequenceEqual(y.Members) &&
+            x.Members.SequenceEqual(y.Members, _memberComparer) &&
             x.Contexts.SequenceEqual(y.Contexts);
 
         public int GetHashCode(ComponentDeclaration obj)
@@ -133,9 +145,16 @@ namespace Entitas.Generators
 
     public class FullNameAndMembersAndContextsAndIsUniqueComparer : IEqualityComparer<ComponentDeclaration>
     {
+        readonly IEqualityComparer<MemberDeclaration> _memberComparer;
+
+        public FullNameAndMembersAndContextsAndIsUniqueComparer(IEqualityComparer<MemberDeclaration> memberComparer)
+        {
+            _memberComparer = memberComparer;
+        }
+
         public bool Equals(ComponentDeclaration x, ComponentDeclaration y) =>
             x.FullName == y.FullName &&
-            x.Members.SequenceEqual(y.Members) &&
+            x.Members.SequenceEqual(y.Members, _memberComparer) &&
             x.Contexts.SequenceEqual(y.Contexts) &&
             x.IsUnique == y.IsUnique;
 
@@ -154,18 +173,20 @@ namespace Entitas.Generators
 
     public class FullNameAndMembersAndContextsAndEventsComparer : IEqualityComparer<ComponentDeclaration>
     {
-        readonly IEqualityComparer<EventDeclaration> _comparer;
+        readonly IEqualityComparer<MemberDeclaration> _memberComparer;
+        readonly IEqualityComparer<EventDeclaration> _eventComparer;
 
-        public FullNameAndMembersAndContextsAndEventsComparer(IEqualityComparer<EventDeclaration> comparer)
+        public FullNameAndMembersAndContextsAndEventsComparer(IEqualityComparer<MemberDeclaration> memberComparer, IEqualityComparer<EventDeclaration> eventComparer)
         {
-            _comparer = comparer;
+            _memberComparer = memberComparer;
+            _eventComparer = eventComparer;
         }
 
         public bool Equals(ComponentDeclaration x, ComponentDeclaration y) =>
             x.FullName == y.FullName &&
-            x.Members.SequenceEqual(y.Members) &&
+            x.Members.SequenceEqual(y.Members, _memberComparer) &&
             x.Contexts.SequenceEqual(y.Contexts) &&
-            x.Events.SequenceEqual(y.Events, _comparer);
+            x.Events.SequenceEqual(y.Events, _eventComparer);
 
         public int GetHashCode(ComponentDeclaration obj)
         {
@@ -182,17 +203,17 @@ namespace Entitas.Generators
 
     public class FullNameAndContextsAndEventsComparer : IEqualityComparer<ComponentDeclaration>
     {
-        readonly IEqualityComparer<EventDeclaration> _comparer;
+        readonly IEqualityComparer<EventDeclaration> _eventComparer;
 
-        public FullNameAndContextsAndEventsComparer(IEqualityComparer<EventDeclaration> comparer)
+        public FullNameAndContextsAndEventsComparer(IEqualityComparer<EventDeclaration> eventComparer)
         {
-            _comparer = comparer;
+            _eventComparer = eventComparer;
         }
 
         public bool Equals(ComponentDeclaration x, ComponentDeclaration y) =>
             x.FullName == y.FullName &&
             x.Contexts.SequenceEqual(y.Contexts) &&
-            x.Events.SequenceEqual(y.Events, _comparer);
+            x.Events.SequenceEqual(y.Events, _eventComparer);
 
         public int GetHashCode(ComponentDeclaration obj)
         {
