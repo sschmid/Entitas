@@ -1,9 +1,11 @@
-using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 
 namespace Entitas.Generators
 {
-    readonly struct ContextInitializationMethodDeclaration : IEquatable<ContextInitializationMethodDeclaration>
+    public struct ContextInitializationMethodDeclaration
     {
         public readonly SyntaxTree SyntaxTree;
         public readonly string? Namespace;
@@ -13,6 +15,8 @@ namespace Entitas.Generators
         public readonly string ContextFullName;
         public readonly string ContextName;
         public readonly string FullContextPrefix;
+
+        public ImmutableArray<ComponentDeclaration> Components;
 
         public ContextInitializationMethodDeclaration(SyntaxTree syntaxTree, IMethodSymbol symbol, ISymbol contextSymbol)
         {
@@ -32,23 +36,56 @@ namespace Entitas.Generators
 
             FullContextPrefix = ContextFullName.RemoveSuffix("Context");
         }
+    }
 
-        public bool Equals(ContextInitializationMethodDeclaration other) =>
-            Namespace == other.Namespace &&
-            Class == other.Class &&
-            Name == other.Name &&
-            ContextFullName == other.ContextFullName;
+    public class NamespaceAndClassAndNameAndContextFullNameComparer : IEqualityComparer<ContextInitializationMethodDeclaration>
+    {
+        public static readonly NamespaceAndClassAndNameAndContextFullNameComparer Instance = new NamespaceAndClassAndNameAndContextFullNameComparer();
 
-        public override bool Equals(object? obj) => obj is ContextInitializationMethodDeclaration other && Equals(other);
+        public bool Equals(ContextInitializationMethodDeclaration x, ContextInitializationMethodDeclaration y) =>
+            x.Namespace == y.Namespace &&
+            x.Class == y.Class &&
+            x.Name == y.Name &&
+            x.ContextFullName == y.ContextFullName;
 
-        public override int GetHashCode()
+        public int GetHashCode(ContextInitializationMethodDeclaration obj)
         {
             unchecked
             {
-                var hashCode = (Namespace != null ? Namespace.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ Class.GetHashCode();
-                hashCode = (hashCode * 397) ^ Name.GetHashCode();
-                hashCode = (hashCode * 397) ^ ContextFullName.GetHashCode();
+                var hashCode = obj.Namespace != null ? obj.Namespace.GetHashCode() : 0;
+                hashCode = (hashCode * 397) ^ obj.Class.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.Name.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.ContextFullName.GetHashCode();
+                return hashCode;
+            }
+        }
+    }
+
+    public class NamespaceAndClassAndNameAndContextFullNameAndComponentsComparer : IEqualityComparer<ContextInitializationMethodDeclaration>
+    {
+        readonly IEqualityComparer<ComponentDeclaration> _componentComparer;
+
+        public NamespaceAndClassAndNameAndContextFullNameAndComponentsComparer(IEqualityComparer<ComponentDeclaration> componentComparer)
+        {
+            _componentComparer = componentComparer;
+        }
+
+        public bool Equals(ContextInitializationMethodDeclaration x, ContextInitializationMethodDeclaration y) =>
+            x.Namespace == y.Namespace &&
+            x.Class == y.Class &&
+            x.Name == y.Name &&
+            x.ContextFullName == y.ContextFullName &&
+            x.Components.SequenceEqual(y.Components, _componentComparer);
+
+        public int GetHashCode(ContextInitializationMethodDeclaration obj)
+        {
+            unchecked
+            {
+                var hashCode = (obj.Namespace != null ? obj.Namespace.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ obj.Class.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.Name.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.ContextFullName.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.Components.GetHashCode();
                 return hashCode;
             }
         }

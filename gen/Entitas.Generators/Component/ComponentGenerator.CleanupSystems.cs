@@ -8,7 +8,7 @@ namespace Entitas.Generators
 {
     partial class ComponentGenerator
     {
-        static void CleanupSystems(SourceProductionContext spc, ContextInitializationMethodDeclaration method, ImmutableArray<ComponentDeclaration> components, AnalyzerConfigOptionsProvider optionsProvider)
+        static void CleanupSystems(SourceProductionContext spc, ContextInitializationMethodDeclaration method, AnalyzerConfigOptionsProvider optionsProvider)
         {
             if (!EntitasAnalyzerConfigOptions.ComponentCleanupSystems(optionsProvider, method.SyntaxTree))
                 return;
@@ -23,7 +23,7 @@ namespace Entitas.Generators
                         public static global::Entitas.Systems CreateCleanupSystems(this {{method.ContextName}} context)
                         {
                             var systems = new global::Entitas.Systems();
-                    {{AddCleanupSystems(components, method.FullContextPrefix)}}
+                    {{AddCleanupSystems(method.Components, method.FullContextPrefix)}}
                             return systems;
                         }
                     }

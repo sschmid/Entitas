@@ -8,7 +8,7 @@ namespace Entitas.Generators
 {
     partial class ComponentGenerator
     {
-        static void ContextInitializationMethod(SourceProductionContext spc, ContextInitializationMethodDeclaration method, ImmutableArray<ComponentDeclaration> components, AnalyzerConfigOptionsProvider optionsProvider)
+        static void ContextInitializationMethod(SourceProductionContext spc, ContextInitializationMethodDeclaration method, AnalyzerConfigOptionsProvider optionsProvider)
         {
             if (!EntitasAnalyzerConfigOptions.ComponentContextInitializationMethod(optionsProvider, method.SyntaxTree))
                 return;
@@ -22,16 +22,16 @@ namespace Entitas.Generators
                     {
                         public static partial void {{method.Name}}()
                         {
-                    {{ComponentIndexAssignments(method, components)}}
+                    {{ComponentIndexAssignments(method, method.Components)}}
 
                             global::{{method.ContextFullName}}.ComponentNames = new string[]
                             {
-                    {{ComponentNames(components)}}
+                    {{ComponentNames(method.Components)}}
                             };
 
                             global::{{method.ContextFullName}}.ComponentTypes = new global::System.Type[]
                             {
-                    {{ComponentTypes(components)}}
+                    {{ComponentTypes(method.Components)}}
                             };
                         }
                     }
