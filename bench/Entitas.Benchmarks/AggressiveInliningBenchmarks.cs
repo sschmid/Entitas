@@ -155,7 +155,7 @@ namespace Entitas.Benchmarks
                     componentTypes.Select(type => type.FullName).ToArray(),
                     componentTypes
                 ),
-                entity => new SafeAERC(entity),
+                SafeAERC.Delegate,
                 () => new TEntity()
             ) { }
     }

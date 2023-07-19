@@ -24,11 +24,10 @@ public sealed partial class NamespacedContext : global::Entitas.Context<Namespac
                 ComponentNames,
                 ComponentTypes
             ),
-            entity =>
 #if (ENTITAS_FAST_AND_UNSAFE)
-                new global::Entitas.UnsafeAERC(),
+            global::Entitas.UnsafeAERC.Delegate,
 #else
-                new global::Entitas.SafeAERC(entity),
+            global::Entitas.SafeAERC.Delegate,
 #endif
             () => new Namespaced.Entity()
         ) { }

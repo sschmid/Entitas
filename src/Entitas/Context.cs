@@ -98,7 +98,7 @@ namespace Entitas
                 _contextInfo = createDefaultContextInfo();
             }
 
-            _aercFactory = aercFactory ?? (entity => new SafeAERC(entity));
+            _aercFactory = aercFactory ?? SafeAERC.Delegate;
             _entityFactory = entityFactory;
 
             _groupsForIndex = new List<IGroup<TEntity>>[totalComponents];

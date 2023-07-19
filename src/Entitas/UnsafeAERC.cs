@@ -1,4 +1,6 @@
-﻿namespace Entitas
+﻿using System;
+
+namespace Entitas
 {
     /// Automatic Entity Reference Counting (AERC)
     /// is used internally to prevent pooling retained entities.
@@ -9,6 +11,8 @@
     /// about the owners.
     public sealed class UnsafeAERC : IAERC
     {
+        public static readonly Func<IEntity, IAERC> Delegate = entity => new UnsafeAERC();
+
         public int retainCount => _retainCount;
 
         int _retainCount;

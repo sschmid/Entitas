@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Entitas
@@ -11,6 +12,8 @@ namespace Entitas
     /// about the owners.
     public sealed class SafeAERC : IAERC
     {
+        public static readonly Func<IEntity, IAERC> Delegate = entity => new SafeAERC(entity);
+
         public int retainCount => _owners.Count;
         public HashSet<object> owners => _owners;
 
