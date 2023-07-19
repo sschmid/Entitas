@@ -16,7 +16,6 @@ namespace Entitas.Generators
             spc.AddSource(
                 GeneratedPath(CombinedNamespace(method.Namespace, $"{method.Class}.{method.Name}.ContextInitialization")),
                 GeneratedFileHeader(GeneratorSource(nameof(ContextInitializationMethod))) +
-                $"using global::{method.FullContextPrefix};\n\n" +
                 NamespaceDeclaration(method.Namespace,
                     $$"""
                     public static partial class {{method.Class}}
@@ -44,7 +43,7 @@ namespace Entitas.Generators
                 return string.Join("\n", components.Select((component, i) =>
                 {
                     var contextPrefix = "global::" + CombinedNamespace(component.Namespace, ContextAware(method.FullContextPrefix).Replace(".", string.Empty));
-                    return $"        {contextPrefix}{component.Prefix}ComponentIndex.Index = new ComponentIndex({i});";
+                    return $"        {contextPrefix}{component.Prefix}ComponentIndex.Index = new global::{method.FullContextPrefix}.ComponentIndex({i});";
                 }));
             }
 

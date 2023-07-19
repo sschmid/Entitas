@@ -16,7 +16,6 @@ namespace Entitas.Generators
             spc.AddSource(
                 GeneratedPath($"{method.ContextFullName}EventSystemsExtension"),
                 GeneratedFileHeader(GeneratorSource(nameof(EventSystemsContextExtension))) +
-                $"using global::{method.FullContextPrefix};\n\n" +
                 NamespaceDeclaration(method.ContextNamespace,
                     $$"""
                     public static class {{method.ContextName}}EventSystemsExtension
@@ -40,7 +39,7 @@ namespace Entitas.Generators
                     {
                         var (component, @event) = pair;
                         @event.ContextAware(ContextAware(contextPrefix));
-                        return $"        systems.Add(new {CombinedNamespace(component.Namespace, @event.ContextAwareEvent)}EventSystem(context)); // Order: {@event.Order}";
+                        return $"        systems.Add(new global::{CombinedNamespace(component.Namespace, @event.ContextAwareEvent)}EventSystem(context)); // Order: {@event.Order}";
                     }));
             }
         }

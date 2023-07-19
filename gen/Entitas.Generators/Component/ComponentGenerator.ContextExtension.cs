@@ -23,12 +23,12 @@ namespace Entitas.Generators
                 content = $$"""
                     public static class {{className}}
                     {
-                        public static bool Has{{component.Prefix}}(this {{context}} context)
+                        public static bool Has{{component.Prefix}}(this global::{{context}} context)
                         {
                             return context.Get{{component.Prefix}}Entity() != null;
                         }
 
-                        public static Entity Set{{component.Prefix}}(this {{context}} context, {{ComponentMethodParams(component)}})
+                        public static global::{{contextPrefix}}.Entity Set{{component.Prefix}}(this global::{{context}} context, {{ComponentMethodParams(component)}})
                         {
                             if (context.Has{{component.Prefix}}())
                             {
@@ -41,7 +41,7 @@ namespace Entitas.Generators
                             return context.CreateEntity().Add{{component.Prefix}}({{ComponentMethodArgs(component)}});
                         }
 
-                        public static Entity Replace{{component.Prefix}}(this {{context}} context, {{ComponentMethodParams(component)}})
+                        public static global::{{contextPrefix}}.Entity Replace{{component.Prefix}}(this global::{{context}} context, {{ComponentMethodParams(component)}})
                         {
                             var entity = context.Get{{component.Prefix}}Entity();
                             if (entity == null)
@@ -52,17 +52,17 @@ namespace Entitas.Generators
                             return entity;
                         }
 
-                        public static void Remove{{component.Prefix}}(this {{context}} context)
+                        public static void Remove{{component.Prefix}}(this global::{{context}} context)
                         {
                             context.Get{{component.Prefix}}Entity().Destroy();
                         }
 
-                        public static Entity Get{{component.Prefix}}Entity(this {{context}} context)
+                        public static global::{{contextPrefix}}.Entity Get{{component.Prefix}}Entity(this global::{{context}} context)
                         {
                             return context.GetGroup({{contextAwareComponentPrefix}}Matcher.{{component.Prefix}}).GetSingleEntity();
                         }
 
-                        public static {{component.Name}} Get{{component.Prefix}}(this {{context}} context)
+                        public static {{component.Name}} Get{{component.Prefix}}(this global::{{context}} context)
                         {
                             return context.Get{{component.Prefix}}Entity().Get{{component.Prefix}}();
                         }
@@ -75,22 +75,22 @@ namespace Entitas.Generators
                 content = $$"""
                     public static class {{className}}
                     {
-                        public static bool Has{{component.Prefix}}(this {{context}} context)
+                        public static bool Has{{component.Prefix}}(this global::{{context}} context)
                         {
                             return context.Get{{component.Prefix}}Entity() != null;
                         }
 
-                        public static Entity Set{{component.Prefix}}(this {{context}} context)
+                        public static global::{{contextPrefix}}.Entity Set{{component.Prefix}}(this global::{{context}} context)
                         {
                             return context.Get{{component.Prefix}}Entity() ?? context.CreateEntity().Add{{component.Prefix}}();
                         }
 
-                        public static void Unset{{component.Prefix}}(this {{context}} context)
+                        public static void Unset{{component.Prefix}}(this global::{{context}} context)
                         {
                             context.Get{{component.Prefix}}Entity()?.Destroy();
                         }
 
-                        public static Entity Get{{component.Prefix}}Entity(this {{context}} context)
+                        public static global::{{contextPrefix}}.Entity Get{{component.Prefix}}Entity(this global::{{context}} context)
                         {
                             return context.GetGroup({{contextAwareComponentPrefix}}Matcher.{{component.Prefix}}).GetSingleEntity();
                         }
@@ -102,7 +102,6 @@ namespace Entitas.Generators
             spc.AddSource(
                 GeneratedPath(CombinedNamespace(component.Namespace, className)),
                 GeneratedFileHeader(GeneratorSource(nameof(ContextExtension))) +
-                $"using global::{contextPrefix};\n\n" +
                 NamespaceDeclaration(component.Namespace, content));
         }
     }
