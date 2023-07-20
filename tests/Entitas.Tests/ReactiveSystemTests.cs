@@ -44,10 +44,10 @@ namespace Entitas.Tests
         {
             var system = CreateAddedSystem();
             var e = CreateEntityAB();
-            var retainCount = e.retainCount;
+            var retainCount = e.RetainCount;
             system.Execute();
             retainCount.Should().Be(3); // retained by context, group and collector
-            e.retainCount.Should().Be(2); // retained by context and group
+            e.RetainCount.Should().Be(2); // retained by context and group
         }
 
         [Fact]
@@ -164,13 +164,13 @@ namespace Entitas.Tests
             system.executeAction = entities =>
             {
                 didExecute += 1;
-                entities[0].retainCount.Should().Be(1);
+                entities[0].RetainCount.Should().Be(1);
             };
 
             e.Destroy();
             system.Execute();
             didExecute.Should().Be(1);
-            e.retainCount.Should().Be(0);
+            e.RetainCount.Should().Be(0);
         }
 
         [Fact]
@@ -251,7 +251,7 @@ namespace Entitas.Tests
             system.executeAction = delegate
             {
                 didExecute += 1;
-                e2.retainCount.Should().Be(3); // retained by context, group and collector
+                e2.RetainCount.Should().Be(3); // retained by context, group and collector
             };
 
             system.Execute();
@@ -262,8 +262,8 @@ namespace Entitas.Tests
             system.entities.Length.Should().Be(1);
             system.entities[0].Should().BeSameAs(e2);
 
-            e1.retainCount.Should().Be(2); // retained by context and group
-            e2.retainCount.Should().Be(2);
+            e1.RetainCount.Should().Be(2); // retained by context and group
+            e2.RetainCount.Should().Be(2);
         }
 
         [Fact]

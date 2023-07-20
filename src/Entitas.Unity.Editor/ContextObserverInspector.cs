@@ -14,11 +14,11 @@ namespace Entitas.Unity.Editor
 
             EditorLayout.BeginVerticalBox();
             {
-                EditorGUILayout.LabelField(contextObserver.context.contextInfo.name, EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Entities", contextObserver.context.count.ToString());
-                EditorGUILayout.LabelField("Reusable entities", contextObserver.context.reusableEntitiesCount.ToString());
+                EditorGUILayout.LabelField(contextObserver.context.ContextInfo.Name, EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Entities", contextObserver.context.Count.ToString());
+                EditorGUILayout.LabelField("Reusable entities", contextObserver.context.ReusableEntitiesCount.ToString());
 
-                var retainedEntitiesCount = contextObserver.context.retainedEntitiesCount;
+                var retainedEntitiesCount = contextObserver.context.RetainedEntitiesCount;
                 if (retainedEntitiesCount != 0)
                 {
                     var c = GUI.color;

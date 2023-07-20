@@ -45,16 +45,16 @@ namespace Entitas.Tests
         public void RetainsEntity()
         {
             var entity = CreateNameAgeEntity(_context);
-            entity.retainCount.Should().Be(3); // Context, Group, EntityIndex
-            (entity.aerc as SafeAERC)?.owners.Should().Contain(_index);
+            entity.RetainCount.Should().Be(3); // Context, Group, EntityIndex
+            (entity.Aerc as SafeAERC)?.Owners.Should().Contain(_index);
         }
 
         [Fact]
         public void MultiKeyRetainsEntity()
         {
             var entity = CreateNameAgeEntity(_multiKeyContext);
-            entity.retainCount.Should().Be(3); // Context, Group, EntityIndex
-            (entity.aerc as SafeAERC)?.owners.Should().Contain(_multiKeyIndex);
+            entity.RetainCount.Should().Be(3); // Context, Group, EntityIndex
+            (entity.Aerc as SafeAERC)?.Owners.Should().Contain(_multiKeyIndex);
         }
 
         [Fact]
@@ -71,8 +71,8 @@ namespace Entitas.Tests
             var entity = CreateNameAgeEntity(_context);
             entity.RemoveComponentA();
             _index.GetEntity(Name).Should().BeNull();
-            entity.retainCount.Should().Be(1); // Context
-            (entity.aerc as SafeAERC)?.owners.Should().NotContain(_index);
+            entity.RetainCount.Should().Be(1); // Context
+            (entity.Aerc as SafeAERC)?.Owners.Should().NotContain(_index);
         }
 
         [Fact]
@@ -82,8 +82,8 @@ namespace Entitas.Tests
             entity.RemoveComponentA();
             _multiKeyIndex.GetEntity($"{Name}1").Should().BeNull();
             _multiKeyIndex.GetEntity($"{Name}2").Should().BeNull();
-            entity.retainCount.Should().Be(1);
-            (entity.aerc as SafeAERC)?.owners.Should().NotContain(_multiKeyIndex);
+            entity.RetainCount.Should().Be(1);
+            (entity.Aerc as SafeAERC)?.Owners.Should().NotContain(_multiKeyIndex);
         }
 
         [Fact]
@@ -106,7 +106,7 @@ namespace Entitas.Tests
             var entity = CreateNameAgeEntity(_context);
             _index.Deactivate();
             _index.GetEntity(Name).Should().BeNull();
-            entity.retainCount.Should().Be(2); // Context, Group
+            entity.RetainCount.Should().Be(2); // Context, Group
         }
 
         [Fact]

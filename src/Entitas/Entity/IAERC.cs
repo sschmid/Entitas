@@ -2,7 +2,7 @@
 {
     public interface IAERC
     {
-        int retainCount { get; }
+        int RetainCount { get; }
         void Retain(object owner);
         void Release(object owner);
     }

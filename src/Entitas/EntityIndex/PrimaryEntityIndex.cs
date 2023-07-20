@@ -49,9 +49,9 @@ namespace Entitas
         {
             foreach (var entity in _index.Values)
             {
-                if (entity.aerc is SafeAERC safeAerc)
+                if (entity.Aerc is SafeAERC safeAerc)
                 {
-                    if (safeAerc.owners.Contains(this))
+                    if (safeAerc.Owners.Contains(this))
                         entity.Release(this);
                 }
                 else
@@ -72,9 +72,9 @@ namespace Entitas
 
             _index.Add(key, entity);
 
-            if (entity.aerc is SafeAERC safeAerc)
+            if (entity.Aerc is SafeAERC safeAerc)
             {
-                if (!safeAerc.owners.Contains(this))
+                if (!safeAerc.Owners.Contains(this))
                     entity.Retain(this);
             }
             else
@@ -87,9 +87,9 @@ namespace Entitas
         {
             _index.Remove(key);
 
-            if (entity.aerc is SafeAERC safeAerc)
+            if (entity.Aerc is SafeAERC safeAerc)
             {
-                if (safeAerc.owners.Contains(this))
+                if (safeAerc.Owners.Contains(this))
                     entity.Release(this);
             }
             else

@@ -8,14 +8,14 @@ namespace Entitas
     /// If you use retain manually you also have to
     /// release it manually at some point.
     /// SafeAERC checks if the entity has already been
-    /// retained or released. It's slower, but you keep the information
+    /// retained or released. It's slower than UnsafeAERC, but you keep the information
     /// about the owners.
     public sealed class SafeAERC : IAERC
     {
         public static readonly Func<IEntity, IAERC> Delegate = entity => new SafeAERC(entity);
 
-        public int retainCount => _owners.Count;
-        public HashSet<object> owners => _owners;
+        public int RetainCount => _owners.Count;
+        public HashSet<object> Owners => _owners;
 
         readonly IEntity _entity;
         readonly HashSet<object> _owners = new HashSet<object>();
@@ -27,13 +27,13 @@ namespace Entitas
 
         public void Retain(object owner)
         {
-            if (!owners.Add(owner))
+            if (!Owners.Add(owner))
                 throw new EntityIsAlreadyRetainedByOwnerException(_entity, owner);
         }
 
         public void Release(object owner)
         {
-            if (!owners.Remove(owner))
+            if (!Owners.Remove(owner))
                 throw new EntityIsNotRetainedByOwnerException(_entity, owner);
         }
     }

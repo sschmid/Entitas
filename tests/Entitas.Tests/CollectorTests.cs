@@ -112,8 +112,8 @@ namespace Entitas.Tests
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Added);
             var e = CreateEntityA();
             e.Destroy();
-            e.retainCount.Should().Be(1);
-            (e.aerc as SafeAERC)?.owners.Should().Contain(collector);
+            e.RetainCount.Should().Be(1);
+            (e.Aerc as SafeAERC)?.Owners.Should().Contain(collector);
         }
 
         [Fact]
@@ -123,7 +123,7 @@ namespace Entitas.Tests
             var e = CreateEntityA();
             e.Destroy();
             collector.ClearCollectedEntities();
-            e.retainCount.Should().Be(0);
+            e.RetainCount.Should().Be(0);
         }
 
         [Fact]
@@ -133,7 +133,7 @@ namespace Entitas.Tests
             var e = CreateEntityA();
             e.ReplaceComponentA(new ComponentA());
             e.Destroy();
-            e.retainCount.Should().Be(1);
+            e.RetainCount.Should().Be(1);
         }
 
         [Fact]

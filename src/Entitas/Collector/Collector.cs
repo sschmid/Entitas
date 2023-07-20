@@ -19,7 +19,8 @@ namespace Entitas
         readonly IGroup<TEntity>[] _groups;
         readonly GroupEvent[] _groupEvents;
 
-        readonly GroupChanged<TEntity> _addEntityDelegate;
+        // Cache delegate to reduce gc allocations
+        readonly GroupChanged<TEntity> _onEntityDelegate;
 
         string _toStringCache;
 
@@ -43,7 +44,7 @@ namespace Entitas
                 );
             }
 
-            _addEntityDelegate = (_, entity, _, _) =>
+            _onEntityDelegate = (_, entity, _, _) =>
             {
                 if (_collectedEntities.Add(entity))
                     entity.Retain(this);
@@ -63,18 +64,18 @@ namespace Entitas
                 switch (groupEvent)
                 {
                     case GroupEvent.Added:
-                        group.OnEntityAdded -= _addEntityDelegate;
-                        group.OnEntityAdded += _addEntityDelegate;
+                        group.OnEntityAdded -= _onEntityDelegate;
+                        group.OnEntityAdded += _onEntityDelegate;
                         break;
                     case GroupEvent.Removed:
-                        group.OnEntityRemoved -= _addEntityDelegate;
-                        group.OnEntityRemoved += _addEntityDelegate;
+                        group.OnEntityRemoved -= _onEntityDelegate;
+                        group.OnEntityRemoved += _onEntityDelegate;
                         break;
                     case GroupEvent.AddedOrRemoved:
-                        group.OnEntityAdded -= _addEntityDelegate;
-                        group.OnEntityAdded += _addEntityDelegate;
-                        group.OnEntityRemoved -= _addEntityDelegate;
-                        group.OnEntityRemoved += _addEntityDelegate;
+                        group.OnEntityAdded -= _onEntityDelegate;
+                        group.OnEntityAdded += _onEntityDelegate;
+                        group.OnEntityRemoved -= _onEntityDelegate;
+                        group.OnEntityRemoved += _onEntityDelegate;
                         break;
                 }
             }
@@ -88,8 +89,8 @@ namespace Entitas
             for (var i = 0; i < _groups.Length; i++)
             {
                 var group = _groups[i];
-                group.OnEntityAdded -= _addEntityDelegate;
-                group.OnEntityRemoved -= _addEntityDelegate;
+                group.OnEntityAdded -= _onEntityDelegate;
+                group.OnEntityRemoved -= _onEntityDelegate;
             }
 
             ClearCollectedEntities();
