@@ -38,7 +38,7 @@ namespace Entitas.Tests
         [Fact]
         public void IsEmpty()
         {
-            _groupA.count.Should().Be(0);
+            _groupA.Count.Should().Be(0);
         }
 
         [Fact]
@@ -503,7 +503,7 @@ namespace Entitas.Tests
 
         void AssertContains(params TestEntity[] expectedEntities)
         {
-            _groupA.count.Should().Be(expectedEntities.Length);
+            _groupA.Count.Should().Be(expectedEntities.Length);
 
             var entities = _groupA.GetEntities();
             entities.Length.Should().Be(expectedEntities.Length);
@@ -517,7 +517,7 @@ namespace Entitas.Tests
 
         void AssertContainsNot(TestEntity entity)
         {
-            _groupA.count.Should().Be(0);
+            _groupA.Count.Should().Be(0);
             _groupA.GetEntities().Should().BeEmpty();
             _groupA.ContainsEntity(entity).Should().BeFalse();
         }
