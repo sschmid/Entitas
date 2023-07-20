@@ -645,7 +645,7 @@ namespace Entitas.Tests
             var groupAB = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB));
             var groupB = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentB));
 
-            groupAB.OnEntityAdded += delegate { groupB.count.Should().Be(1); };
+            groupAB.OnEntityAdded += delegate { groupB.Count.Should().Be(1); };
 
             var entity = _context.CreateEntity();
             entity.AddComponentA();
@@ -658,7 +658,7 @@ namespace Entitas.Tests
             var groupB = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentB));
             var groupAB = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB));
 
-            groupB.OnEntityRemoved += delegate { groupAB.count.Should().Be(0); };
+            groupB.OnEntityRemoved += delegate { groupAB.Count.Should().Be(0); };
 
             var entity = _context.CreateEntity();
             entity.AddComponentA();

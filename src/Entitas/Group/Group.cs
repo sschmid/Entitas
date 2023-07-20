@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Entitas
 {
@@ -20,16 +21,13 @@ namespace Entitas
         public event GroupUpdated<TEntity> OnEntityUpdated;
 
         /// Returns the number of entities in the group.
-        public int count => _entities.Count;
+        public int Count => _entities.Count;
 
         /// Returns the matcher which was used to create this group.
-        public IMatcher<TEntity> matcher => _matcher;
+        public IMatcher<TEntity> Matcher => _matcher;
 
         readonly IMatcher<TEntity> _matcher;
-
-        readonly HashSet<TEntity> _entities = new HashSet<TEntity>(
-            EntityEqualityComparer<TEntity>.Comparer
-        );
+        readonly HashSet<TEntity> _entities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.Comparer);
 
         TEntity[] _entitiesCache;
         TEntity _singleEntityCache;
@@ -46,18 +44,18 @@ namespace Entitas
         public void HandleEntitySilently(TEntity entity)
         {
             if (_matcher.Matches(entity))
-                addEntitySilently(entity);
+                AddEntitySilently(entity);
             else
-                removeEntitySilently(entity);
+                RemoveEntitySilently(entity);
         }
 
         /// This is used by the context to manage the group.
         public void HandleEntity(TEntity entity, int index, IComponent component)
         {
             if (_matcher.Matches(entity))
-                addEntity(entity, index, component);
+                AddEntity(entity, index, component);
             else
-                removeEntity(entity, index, component);
+                RemoveEntity(entity, index, component);
         }
 
         /// This is used by the context to manage the group.
@@ -83,10 +81,12 @@ namespace Entitas
 
         public GroupChanged<TEntity> HandleEntity(TEntity entity) =>
             _matcher.Matches(entity)
-                ? (addEntitySilently(entity) ? OnEntityAdded : null)
-                : (removeEntitySilently(entity) ? OnEntityRemoved : null);
+                ? AddEntitySilently(entity) ? OnEntityAdded : null
+                : RemoveEntitySilently(entity)
+                    ? OnEntityRemoved
+                    : null;
 
-        bool addEntitySilently(TEntity entity)
+        bool AddEntitySilently(TEntity entity)
         {
             if (entity.IsEnabled)
             {
@@ -104,13 +104,13 @@ namespace Entitas
             return false;
         }
 
-        void addEntity(TEntity entity, int index, IComponent component)
+        void AddEntity(TEntity entity, int index, IComponent component)
         {
-            if (addEntitySilently(entity))
+            if (AddEntitySilently(entity))
                 OnEntityAdded?.Invoke(this, entity, index, component);
         }
 
-        bool removeEntitySilently(TEntity entity)
+        bool RemoveEntitySilently(TEntity entity)
         {
             var removed = _entities.Remove(entity);
             if (removed)
@@ -123,7 +123,7 @@ namespace Entitas
             return removed;
         }
 
-        void removeEntity(TEntity entity, int index, IComponent component)
+        void RemoveEntity(TEntity entity, int index, IComponent component)
         {
             var removed = _entities.Remove(entity);
             if (removed)
@@ -141,13 +141,7 @@ namespace Entitas
         /// Returns all entities which are currently in this group.
         public TEntity[] GetEntities()
         {
-            if (_entitiesCache == null)
-            {
-                _entitiesCache = new TEntity[_entities.Count];
-                _entities.CopyTo(_entitiesCache);
-            }
-
-            return _entitiesCache;
+            return _entitiesCache ??= _entities.ToArray();
         }
 
         /// Fills the buffer with all entities which are currently in this group.
@@ -191,12 +185,6 @@ namespace Entitas
             return _singleEntityCache;
         }
 
-        public override string ToString()
-        {
-            if (_toStringCache == null) 
-                _toStringCache = $"Group({_matcher})";
-
-            return _toStringCache;
-        }
+        public override string ToString() => _toStringCache ??= $"Group({_matcher})";
     }
 }
