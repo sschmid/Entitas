@@ -22,7 +22,7 @@ namespace Entitas.Generators.IntegrationTests
             var entity = _context.CreateEntity().AddUser("Test", 42);
             system.Cleanup();
             entity.HasUser().Should().BeFalse();
-            entity.isEnabled.Should().BeTrue();
+            entity.IsEnabled.Should().BeTrue();
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace Entitas.Generators.IntegrationTests
             var entity = _context.CreateEntity().AddLoading();
             system.Cleanup();
             entity.HasLoading().Should().BeFalse();
-            entity.isEnabled.Should().BeFalse();
+            entity.IsEnabled.Should().BeFalse();
         }
     }
 }

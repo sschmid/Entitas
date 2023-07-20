@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Entitas
 {
@@ -35,29 +35,29 @@ namespace Entitas
         public event EntityEvent OnDestroyEntity;
 
         /// The total amount of components an entity can possibly have.
-        public int totalComponents => _totalComponents;
+        public int TotalComponents => _totalComponents;
 
-        /// Each entity has its own unique creationIndex which will be set by
+        /// Each entity has its own unique ID which will be set by
         /// the context when you create the entity.
-        public int Id => _creationIndex;
+        public int Id => _id;
 
         /// The context manages the state of an entity.
         /// Active entities are enabled, destroyed entities are not.
-        public bool isEnabled => _isEnabled;
+        public bool IsEnabled => _isEnabled;
 
-        /// componentPools is set by the context which created the entity and
+        /// ComponentPools is set by the context which created the entity and
         /// is used to reuse removed components.
-        /// Removed components will be pushed to the componentPool.
+        /// Removed components will be pushed to the ComponentPool.
         /// Use entity.CreateComponent(index, type) to get a new or
-        /// reusable component from the componentPool.
+        /// reusable component from the ComponentPool.
         /// Use entity.GetComponentPool(index) to get a componentPool for
         /// a specific component index.
-        public Stack<IComponent>[] componentPools => _componentPools;
+        public Stack<IComponent>[] ComponentPools => _componentPools;
 
-        /// The contextInfo is set by the context which created the entity and
+        /// The ContextInfo is set by the context which created the entity and
         /// contains information about the context.
         /// It's used to provide better error messages.
-        public ContextInfo contextInfo => _contextInfo;
+        public ContextInfo ContextInfo => _contextInfo;
 
         /// Automatic Entity Reference Counting (AERC)
         /// is used internally to prevent pooling retained entities.
@@ -68,7 +68,7 @@ namespace Entitas
         readonly List<IComponent> _componentBuffer;
         readonly List<int> _indexBuffer;
 
-        int _creationIndex;
+        int _id;
         bool _isEnabled;
 
         int _totalComponents;
@@ -80,7 +80,6 @@ namespace Entitas
         IComponent[] _componentsCache;
         int[] _componentIndicesCache;
         string _toStringCache;
-        StringBuilder _toStringBuilder;
 
         public Entity()
         {
@@ -96,22 +95,22 @@ namespace Entitas
             _components = new IComponent[totalComponents];
             _componentPools = componentPools;
 
-            _contextInfo = contextInfo ?? createDefaultContextInfo();
+            _contextInfo = contextInfo ?? CreateDefaultContextInfo();
             _aerc = aerc ?? new SafeAERC(this);
         }
 
-        ContextInfo createDefaultContextInfo()
+        ContextInfo CreateDefaultContextInfo()
         {
-            var componentNames = new string[totalComponents];
+            var componentNames = new string[TotalComponents];
             for (var i = 0; i < componentNames.Length; i++)
                 componentNames[i] = i.ToString();
 
             return new ContextInfo("No Context", componentNames, null);
         }
 
-        public void Reactivate(int creationIndex)
+        public void Reactivate(int id)
         {
-            _creationIndex = creationIndex;
+            _id = id;
             _isEnabled = true;
         }
 
@@ -152,7 +151,7 @@ namespace Entitas
                     $"Cannot remove component '{_contextInfo.ComponentNames[index]}' from {this}!",
                     "You should check if an entity has the component before removing it.");
 
-            replaceComponent(index, null);
+            HandleComponent(index, null);
         }
 
         /// Replaces an existing component at the specified index
@@ -165,32 +164,26 @@ namespace Entitas
                 throw new EntityIsNotEnabledException($"Cannot replace component '{_contextInfo.ComponentNames[index]}' on {this}!");
 
             if (HasComponent(index))
-                replaceComponent(index, component);
+                HandleComponent(index, component);
             else if (component != null)
                 AddComponent(index, component);
         }
 
-        void replaceComponent(int index, IComponent replacement)
+        void HandleComponent(int index, IComponent newComponent)
         {
-            // TODO VD PERFORMANCE
-            // _toStringCache = null;
-
             var previousComponent = _components[index];
-            if (replacement != previousComponent)
+            if (newComponent != previousComponent)
             {
-                _components[index] = replacement;
+                _components[index] = newComponent;
                 _componentsCache = null;
-                if (replacement != null)
+                _toStringCache = null;
+                if (newComponent != null)
                 {
-                    OnComponentReplaced?.Invoke(this, index, previousComponent, replacement);
+                    OnComponentReplaced?.Invoke(this, index, previousComponent, newComponent);
                 }
                 else
                 {
                     _componentIndicesCache = null;
-
-                    // TODO VD PERFORMANCE
-                    _toStringCache = null;
-
                     OnComponentRemoved?.Invoke(this, index, previousComponent);
                 }
 
@@ -198,7 +191,7 @@ namespace Entitas
             }
             else
             {
-                OnComponentReplaced?.Invoke(this, index, previousComponent, replacement);
+                OnComponentReplaced?.Invoke(this, index, previousComponent, newComponent);
             }
         }
 
@@ -293,13 +286,13 @@ namespace Entitas
             _toStringCache = null;
             for (var i = 0; i < _components.Length; i++)
                 if (_components[i] != null)
-                    replaceComponent(i, null);
+                    HandleComponent(i, null);
         }
 
-        /// Returns the componentPool for the specified component index.
-        /// componentPools is set by the context which created the entity and
+        /// Returns the ComponentPool for the specified component index.
+        /// ComponentPools is set by the context which created the entity and
         /// is used to reuse removed components.
-        /// Removed components will be pushed to the componentPool.
+        /// Removed components will be pushed to the ComponentPool.
         /// Use entity.CreateComponent(index, type) to get a new or
         /// reusable component from the componentPool.
         public Stack<IComponent> GetComponentPool(int index)
@@ -314,7 +307,7 @@ namespace Entitas
             return componentPool;
         }
 
-        /// Returns a new or reusable component from the componentPool
+        /// Returns a new or reusable component from the ComponentPool
         /// for the specified component index.
         public IComponent CreateComponent(int index, Type type)
         {
@@ -324,7 +317,7 @@ namespace Entitas
                 : (IComponent)Activator.CreateInstance(type);
         }
 
-        /// Returns a new or reusable component from the componentPool
+        /// Returns a new or reusable component from the ComponentPool
         /// for the specified component index.
         public T CreateComponent<T>(int index) where T : new()
         {
@@ -345,9 +338,6 @@ namespace Entitas
         public void Retain(object owner)
         {
             _aerc.Retain(owner);
-
-            // TODO VD PERFORMANCE
-            // _toStringCache = null;
         }
 
         /// Releases the entity. An owner can only release an entity
@@ -359,10 +349,6 @@ namespace Entitas
         public void Release(object owner)
         {
             _aerc.Release(owner);
-
-            // TODO VD PERFORMANCE
-            // _toStringCache = null;
-
             if (_aerc.RetainCount == 0)
                 OnEntityReleased?.Invoke(this);
         }
@@ -396,50 +382,7 @@ namespace Entitas
         /// Entity_{creationIndex}(*{retainCount})({list of components})
         public override string ToString()
         {
-            if (_toStringCache == null)
-            {
-                _toStringBuilder ??= new StringBuilder();
-                _toStringBuilder.Length = 0;
-                _toStringBuilder
-                    .Append("Entity_")
-                    .Append(_creationIndex)
-
-                    // TODO VD PERFORMANCE
-//                    .Append("(*")
-//                    .Append(retainCount)
-//                    .Append(")")
-                    .Append("(");
-
-                const string separator = ", ";
-                var components = GetComponents();
-                var lastSeparator = components.Length - 1;
-                for (var i = 0; i < components.Length; i++)
-                {
-                    var component = components[i];
-                    // var type = component.GetType();
-
-                    // TODO VD PERFORMANCE
-                    _toStringCache = null;
-
-//                    var implementsToString = type.GetMethod("ToString")
-//                        .DeclaringType.ImplementsInterface<IComponent>();
-//                    _toStringBuilder.Append(
-//                        implementsToString
-//                            ? component.ToString()
-//                            : type.ToCompilableString().RemoveComponentSuffix()
-//                    );
-
-                    _toStringBuilder.Append(component.ToString());
-
-                    if (i < lastSeparator)
-                        _toStringBuilder.Append(separator);
-                }
-
-                _toStringBuilder.Append(")");
-                _toStringCache = _toStringBuilder.ToString();
-            }
-
-            return _toStringCache;
+            return _toStringCache ??= $"Entity_{_id}({string.Join(", ", GetComponents().Select(component => component.ToString()))})";
         }
     }
 }

@@ -141,7 +141,7 @@ namespace Entitas
 
             _OnEntityReleasedDelegate = entity =>
             {
-                if (entity.isEnabled)
+                if (entity.IsEnabled)
                     throw new EntityIsNotDestroyedException($"Cannot release {entity}!");
 
                 var tEntity = (TEntity)entity;

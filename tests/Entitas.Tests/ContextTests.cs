@@ -52,8 +52,8 @@ namespace Entitas.Tests
             var e = _context.CreateEntity();
             e.Should().NotBeNull();
             e.GetType().Should().Be(typeof(TestEntity));
-            e.totalComponents.Should().Be(_context.TotalComponents);
-            e.isEnabled.Should().BeTrue();
+            e.TotalComponents.Should().Be(_context.TotalComponents);
+            e.IsEnabled.Should().BeTrue();
         }
 
         [Fact]
@@ -75,7 +75,7 @@ namespace Entitas.Tests
         [Fact]
         public void CreatesEntityWithComponentPools()
         {
-            _context.CreateEntity().componentPools
+            _context.CreateEntity().ComponentPools
                 .Should().BeSameAs(_context.ComponentPools);
         }
 
@@ -94,7 +94,7 @@ namespace Entitas.Tests
         [Fact]
         public void CreatesEntityWithSameContextInfo()
         {
-            _contextWithInfo.CreateEntity().contextInfo.Should().BeSameAs(_contextInfo);
+            _contextWithInfo.CreateEntity().ContextInfo.Should().BeSameAs(_contextInfo);
         }
 
         [Fact]
@@ -264,7 +264,7 @@ namespace Entitas.Tests
                 c.Should().BeSameAs(_context);
                 entity.Should().BeSameAs(e);
                 entity.HasComponentA().Should().BeTrue();
-                entity.isEnabled.Should().BeTrue();
+                entity.IsEnabled.Should().BeTrue();
 
                 ((IContext<TestEntity>)c).GetEntities().Length.Should().Be(0);
             };
@@ -284,7 +284,7 @@ namespace Entitas.Tests
                 p.Should().BeSameAs(_context);
                 entity.Should().BeSameAs(e);
                 entity.HasComponentA().Should().BeFalse();
-                entity.isEnabled.Should().BeFalse();
+                entity.IsEnabled.Should().BeFalse();
             };
             e.Destroy();
             didDispatch.Should().Be(1);
@@ -455,7 +455,7 @@ namespace Entitas.Tests
 
             e = _context.CreateEntity();
             e.Id.Should().Be(creationIndex + 1);
-            e.isEnabled.Should().BeTrue();
+            e.IsEnabled.Should().BeTrue();
 
             e.AddComponentA();
             g.GetEntities().Should().Contain(e);

@@ -54,7 +54,7 @@ namespace Entitas.Generators.IntegrationTests
 
             listener.RemoveAnyLoadingAddedListener(_listener, true);
             listener.HasAnyLoadingAddedListener().Should().BeFalse();
-            listener.isEnabled.Should().BeFalse();
+            listener.IsEnabled.Should().BeFalse();
         }
     }
 
