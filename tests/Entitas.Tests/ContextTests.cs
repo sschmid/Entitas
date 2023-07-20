@@ -23,15 +23,15 @@ namespace Entitas.Tests
         [Fact]
         public void IncrementsCreationIndex()
         {
-            _context.CreateEntity().creationIndex.Should().Be(0);
-            _context.CreateEntity().creationIndex.Should().Be(1);
+            _context.CreateEntity().Id.Should().Be(0);
+            _context.CreateEntity().Id.Should().Be(1);
         }
 
         [Fact]
         public void StartsWithGivenCreationIndex()
         {
             new MyTest1Context(CID.TotalComponents, 42, null)
-                .CreateEntity().creationIndex.Should().Be(42);
+                .CreateEntity().Id.Should().Be(42);
         }
 
         [Fact]
@@ -184,7 +184,7 @@ namespace Entitas.Tests
             var order1 = new int[numEntities];
             var entities1 = _context.GetEntities();
             for (var i = 0; i < numEntities; i++)
-                order1[i] = entities1[i].creationIndex;
+                order1[i] = entities1[i].Id;
 
             _context.DestroyAllEntities();
             _context.ResetCreationIndex();
@@ -195,7 +195,7 @@ namespace Entitas.Tests
             var order2 = new int[numEntities];
             var entities2 = _context.GetEntities();
             for (var i = 0; i < numEntities; i++)
-                order2[i] = entities2[i].creationIndex;
+                order2[i] = entities2[i].Id;
 
             for (var i = 0; i < numEntities; i++)
                 order1[i].Should().Be(order2[i]);
@@ -449,12 +449,12 @@ namespace Entitas.Tests
         public void SetsUpEntityFromObjectPool()
         {
             var e = _context.CreateEntity();
-            var creationIndex = e.creationIndex;
+            var creationIndex = e.Id;
             e.Destroy();
             var g = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
 
             e = _context.CreateEntity();
-            e.creationIndex.Should().Be(creationIndex + 1);
+            e.Id.Should().Be(creationIndex + 1);
             e.isEnabled.Should().BeTrue();
 
             e.AddComponentA();
@@ -705,7 +705,7 @@ namespace Entitas.Tests
         {
             _context.CreateEntity();
             _context.ResetCreationIndex();
-            _context.CreateEntity().creationIndex.Should().Be(0);
+            _context.CreateEntity().Id.Should().Be(0);
         }
 
         [Fact]

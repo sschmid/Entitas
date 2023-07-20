@@ -22,7 +22,7 @@ namespace Entitas
         event EntityEvent OnDestroyEntity;
 
         int totalComponents { get; }
-        int creationIndex { get; }
+        int Id { get; }
         bool isEnabled { get; }
 
         Stack<IComponent>[] componentPools { get; }

@@ -21,8 +21,8 @@ namespace Entitas.Tests
         public void DoesNotChangeEntityIfOriginalDoesNotHaveAnyComponents()
         {
             _entity.CopyTo(_target);
-            _entity.creationIndex.Should().Be(0);
-            _target.creationIndex.Should().Be(1);
+            _entity.Id.Should().Be(0);
+            _target.Id.Should().Be(1);
             _target.GetComponents().Length.Should().Be(0);
         }
 

@@ -41,7 +41,7 @@ namespace Entitas
         {
             if (!_index.TryGetValue(key, out var entities))
             {
-                entities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.comparer);
+                entities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.Comparer);
                 _index.Add(key, entities);
             }
 
