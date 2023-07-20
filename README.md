@@ -43,15 +43,15 @@ reduces the amount of code you have to write and
 | Unite Europe 2016: ECS architecture with Unity by example | [![Video: Unite Europe 2016][unite16-thumb]][unite16-video] | [SlideShare: Unite Europe 2016][unite16-slides] |
 | Unite Europe 2015: Entity system architecture with Unity  | [![Video: Unite Europe 2015][unite15-thumb]][unite15-video] | [SlideShare: Unite Europe 2015][unite15-slides] |
 
-[shmup2-thumb]: readme/images/Entitas-Shmup-Part-2.jpg "Video: Entitas - Shmup - Part 2"
+[shmup2-thumb]: https://img.youtube.com/vi/DZpvUnj2dGI/0.jpg "Video: Entitas - Shmup - Part 2"
 [shmup2-video]: https://www.youtube.com/watch?v=DZpvUnj2dGI "Video: Entitas - Shmup - Part 2"
-[shmup1-thumb]: readme/images/Entitas-Shmup-Part-1.jpg "Video: Entitas - Shmup - Part 1"
+[shmup1-thumb]: https://img.youtube.com/vi/L-18XRTarOM/0.jpg "Video: Entitas - Shmup - Part 1"
 [shmup1-video]: https://www.youtube.com/watch?v=L-18XRTarOM "Video: Entitas - Shmup - Part 1"
-[unite16-thumb]: readme/images/UniteEurope2016-Video.png "Video: Watch the Entitas Talk at Unite Europe 2016"
+[unite16-thumb]: https://img.youtube.com/vi/Phx7IJ3XUzg/0.jpg "Video: Watch the Entitas Talk at Unite Europe 2016"
 [unite16-video]: https://www.youtube.com/watch?v=Phx7IJ3XUzg "Video: Watch the Entitas Talk at Unite Europe 2016"
 [unite16-slides]: http://www.slideshare.net/sschmid/uniteeurope-2016 "SlideShare: Unite Europe 2016"
 [unite15-thumb]: readme/images/UniteEurope2015-Video.png "Video: Watch the Entitas Talk at Unite Europe 2015"
-[unite15-video]: https://www.youtube.com/watch?v=Re5kGtxTW6E "Video: Watch the Entitas Talk at Unite Europe 2015"
+[unite15-video]: https://img.youtube.com/vi/Re5kGtxTW6E/0.jpg "Video: Watch the Entitas Talk at Unite Europe 2015"
 [unite15-slides]: http://www.slideshare.net/sschmid/uniteeurope-2015 "SlideShare: Unite Europe 2015"
 
 # First glimpse
