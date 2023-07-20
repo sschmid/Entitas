@@ -1,3 +1,5 @@
+#nullable disable
+
 using Entitas.Generators.Attributes;
 
 namespace MyApp

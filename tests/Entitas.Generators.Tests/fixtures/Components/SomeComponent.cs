@@ -1,3 +1,5 @@
+#nullable disable
+
 using Entitas;
 using Entitas.Generators.Attributes;
 using MyApp;
