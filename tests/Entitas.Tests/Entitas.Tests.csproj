@@ -25,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../Fixtures/Fixtures.csproj" />
     <ProjectReference Include="../../src/Entitas/Entitas.csproj" />
   </ItemGroup>
 

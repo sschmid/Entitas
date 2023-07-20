@@ -78,7 +78,6 @@ namespace Entitas.Unity.Editor
         static bool isSystem(Type type) =>
             type.ImplementsInterface<ISystem>()
             && type != typeof(ReactiveSystem<>)
-            && type != typeof(MultiReactiveSystem<,>)
             && type != typeof(Systems)
             && type != typeof(DebugSystems)
             && type != typeof(JobSystem<>)

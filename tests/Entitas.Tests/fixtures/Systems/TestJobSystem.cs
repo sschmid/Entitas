@@ -2,20 +2,21 @@
 using System.Threading;
 using Entitas;
 
-public sealed class TestJobSystem : JobSystem<Test1Entity> {
+public sealed class TestJobSystem : JobSystem<TestEntity> {
 
     public Exception exception;
 
-    public TestJobSystem(Test1Context context, int threads) :
-        base(context.GetGroup(Test1Matcher.NameAge), threads) {
+    public TestJobSystem(TestContext context, int threads) :
+        base(context.GetGroup(TestUserMatcher.User), threads) {
     }
 
-    protected override void Execute(Test1Entity entity) {
+    protected override void Execute(TestEntity entity) {
         if (exception != null) {
             throw exception;
         }
 
-        entity.nameAge.name += "-Processed";
-        entity.nameAge.age = Thread.CurrentThread.ManagedThreadId;
+        var user = entity.GetUser();
+        user.Name += "-Processed";
+        user.Age = Thread.CurrentThread.ManagedThreadId;
     }
 }

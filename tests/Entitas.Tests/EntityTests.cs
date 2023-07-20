@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
-using My.Namespace;
 using Xunit;
 
 namespace Entitas.Tests
@@ -10,11 +9,11 @@ namespace Entitas.Tests
     {
         readonly int[] _indicesA = {CID.ComponentA};
         readonly int[] _indicesAB = {CID.ComponentA, CID.ComponentB};
-        readonly Test1Entity _entity;
+        readonly TestEntity _entity;
 
         public EntityTests()
         {
-            _entity = new Test1Entity();
+            _entity = new TestEntity();
             _entity.Initialize(0, CID.TotalComponents, new Stack<IComponent>[CID.TotalComponents]);
         }
 
@@ -33,7 +32,7 @@ namespace Entitas.Tests
         {
             var contextInfo = new ContextInfo(null, null, null);
             var componentPools = new Stack<IComponent>[42];
-            var entity = new Test1Entity();
+            var entity = new TestEntity();
             entity.Initialize(1, 2, componentPools, contextInfo);
 
             entity.isEnabled.Should().BeTrue();
@@ -48,7 +47,7 @@ namespace Entitas.Tests
         {
             var contextInfo = new ContextInfo(null, null, null);
             var componentPools = new Stack<IComponent>[42];
-            var entity = new Test1Entity();
+            var entity = new TestEntity();
             entity.Initialize(1, 2, componentPools, contextInfo);
 
             entity.InternalDestroy();
@@ -232,23 +231,23 @@ namespace Entitas.Tests
         [Fact]
         public void ToStringDoesNotRemoveComponentSuffix()
         {
-            _entity.AddComponent(0, new StandardComponent());
+            _entity.AddUser("Test", 42);
             _entity.Retain(this);
-            _entity.ToString().Should().Be("Entity_0(StandardComponent)");
+            _entity.ToString().Should().Be("Entity_0(User(Test, 42))");
         }
 
         [Fact]
         public void UsesComponentToString()
         {
-            _entity.AddComponent(0, new NameAgeComponent {name = "Max", age = 42});
-            _entity.ToString().Should().Be("Entity_0(NameAge(Max, 42))");
+            _entity.AddComponent(0, new UserComponent {Name = "Max", Age = 42});
+            _entity.ToString().Should().Be("Entity_0(User(Max, 42))");
         }
 
         [Fact]
         public void UsesFullComponentNameWithNamespaceIfToStringIsNotImplemented()
         {
-            _entity.AddComponent(0, new MyNamespaceComponent());
-            _entity.ToString().Should().Be("Entity_0(My.Namespace.MyNamespaceComponent)");
+            _entity.AddComponent(0, new My.Namespace.UserComponent());
+            _entity.ToString().Should().Be("Entity_0(My.Namespace.UserComponent)");
         }
 
         [Fact]
@@ -280,22 +279,22 @@ namespace Entitas.Tests
         [Fact]
         public void CreatesNewComponentWhenComponentPoolIsEmpty()
         {
-            var type = typeof(NameAgeComponent);
+            var type = typeof(UserComponent);
             var component = _entity.CreateComponent(1, type);
             component.GetType().Should().Be(type);
 
-            var nameAgeComponent = ((NameAgeComponent)component);
-            nameAgeComponent.name.Should().BeNull();
-            nameAgeComponent.age.Should().Be(0);
+            var nameAgeComponent = ((UserComponent)component);
+            nameAgeComponent.Name.Should().BeNull();
+            nameAgeComponent.Age.Should().Be(0);
         }
 
         [Fact]
         public void GetsPooledComponent()
         {
-            var component = new NameAgeComponent();
+            var component = new UserComponent();
             _entity.AddComponent(1, component);
             _entity.RemoveComponent(1);
-            var newComponent = (NameAgeComponent)_entity.CreateComponent(1, typeof(NameAgeComponent));
+            var newComponent = (UserComponent)_entity.CreateComponent(1, typeof(UserComponent));
             newComponent.Should().BeSameAs(component);
         }
 
@@ -706,7 +705,7 @@ namespace Entitas.Tests
             _entity.ToString().Should().NotBeSameAs(cache);
         }
 
-        void AssertHasComponentA(Test1Entity e, IComponent componentA = null)
+        void AssertHasComponentA(TestEntity e, IComponent componentA = null)
         {
             componentA ??= Component.A;
 
@@ -725,7 +724,7 @@ namespace Entitas.Tests
             e.HasAnyComponent(_indicesA).Should().BeTrue();
         }
 
-        void AssertHasNotComponentA(Test1Entity e)
+        void AssertHasNotComponentA(TestEntity e)
         {
             var components = e.GetComponents();
             components.Length.Should().Be(0);

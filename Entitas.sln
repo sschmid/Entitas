@@ -14,8 +14,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGeneration.Attr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGeneration.Plugins", "src/Entitas.CodeGeneration.Plugins/Entitas.CodeGeneration.Plugins.csproj", "{84D279D3-76D8-4271-B895-83D46B08753C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixtures", "tests/Fixtures/Fixtures.csproj", "{6F01CC45-F951-43A5-923E-D3778F9DD435}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGeneration.Program", "tests/Entitas.CodeGeneration.Program/Entitas.CodeGeneration.Program.csproj", "{60A61441-C62A-48B6-9E39-00F0598F5512}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entitas.Generators", "Entitas.Generators", "{325ACD85-BA09-42FC-964E-DAA9F4D9A81B}"
@@ -68,10 +66,6 @@ Global
 		{84D279D3-76D8-4271-B895-83D46B08753C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84D279D3-76D8-4271-B895-83D46B08753C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84D279D3-76D8-4271-B895-83D46B08753C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F01CC45-F951-43A5-923E-D3778F9DD435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F01CC45-F951-43A5-923E-D3778F9DD435}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F01CC45-F951-43A5-923E-D3778F9DD435}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F01CC45-F951-43A5-923E-D3778F9DD435}.Release|Any CPU.Build.0 = Release|Any CPU
 		{60A61441-C62A-48B6-9E39-00F0598F5512}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{60A61441-C62A-48B6-9E39-00F0598F5512}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60A61441-C62A-48B6-9E39-00F0598F5512}.Release|Any CPU.ActiveCfg = Release|Any CPU
