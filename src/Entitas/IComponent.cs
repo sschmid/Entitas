@@ -9,6 +9,6 @@
     /// [MyContextName, MyOtherContextName]: You can make this component to be
     /// available only in the specified contexts.
     /// The code generator can generate these attributes for you.
-    /// More available Attributes can be found in Entitas.CodeGeneration.Attributes/Attributes.
+    /// More available Attributes can be found in Entitas.Generators.Attributes.
     public interface IComponent { }
 }
