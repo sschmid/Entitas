@@ -18,8 +18,8 @@
 
             for (var i = 0; i < triggers.Length; i++)
             {
-                groups[i] = context.GetGroup(triggers[i].matcher);
-                groupEvents[i] = triggers[i].groupEvent;
+                groups[i] = context.GetGroup(triggers[i].Matcher);
+                groupEvents[i] = triggers[i].GroupEvent;
             }
 
             return new Collector<TEntity>(groups, groupEvents);

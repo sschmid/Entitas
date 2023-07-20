@@ -20,7 +20,7 @@ namespace Entitas.Tests
         public void IsEmpty()
         {
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Added);
-            collector.collectedEntities.Should().BeEmpty();
+            collector.CollectedEntities.Should().BeEmpty();
         }
 
         [Fact]
@@ -28,7 +28,7 @@ namespace Entitas.Tests
         {
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Added);
             var e = CreateEntityA();
-            var entities = collector.collectedEntities;
+            var entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
             entities.Should().Contain(e);
         }
@@ -39,7 +39,7 @@ namespace Entitas.Tests
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Added);
             var e = CreateEntityA();
             CreateEntityB();
-            var entities = collector.collectedEntities;
+            var entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
             entities.Should().Contain(e);
         }
@@ -51,7 +51,7 @@ namespace Entitas.Tests
             var e = CreateEntityA();
             e.RemoveComponentA();
             e.AddComponentA();
-            var entities = collector.collectedEntities;
+            var entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
             entities.Should().Contain(e);
         }
@@ -62,7 +62,7 @@ namespace Entitas.Tests
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Added);
             CreateEntityA();
             collector.ClearCollectedEntities();
-            collector.collectedEntities.Should().BeEmpty();
+            collector.CollectedEntities.Should().BeEmpty();
         }
 
         [Fact]
@@ -71,7 +71,7 @@ namespace Entitas.Tests
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Added);
             CreateEntityA();
             collector.Deactivate();
-            collector.collectedEntities.Should().BeEmpty();
+            collector.CollectedEntities.Should().BeEmpty();
         }
 
         [Fact]
@@ -81,7 +81,7 @@ namespace Entitas.Tests
             CreateEntityA();
             collector.Deactivate();
             CreateEntityA();
-            collector.collectedEntities.Should().BeEmpty();
+            collector.CollectedEntities.Should().BeEmpty();
         }
 
         [Fact]
@@ -93,7 +93,7 @@ namespace Entitas.Tests
             CreateEntityA();
             collector.Activate();
             var e = CreateEntityA();
-            var entities = collector.collectedEntities;
+            var entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
             entities.Should().Contain(e);
         }
@@ -141,9 +141,9 @@ namespace Entitas.Tests
         {
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Removed);
             var e = CreateEntityA();
-            collector.collectedEntities.Should().BeEmpty();
+            collector.CollectedEntities.Should().BeEmpty();
             e.RemoveComponentA();
-            var entities = collector.collectedEntities;
+            var entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
             entities.Should().Contain(e);
         }
@@ -153,12 +153,12 @@ namespace Entitas.Tests
         {
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.AddedOrRemoved);
             var e = CreateEntityA();
-            var entities = collector.collectedEntities;
+            var entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
             entities.Should().Contain(e);
             collector.ClearCollectedEntities();
             e.RemoveComponentA();
-            entities = collector.collectedEntities;
+            entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
             entities.Should().Contain(e);
         }
@@ -190,7 +190,7 @@ namespace Entitas.Tests
 
             var eA = CreateEntityA();
             var eB = CreateEntityB();
-            var entities = collector.collectedEntities;
+            var entities = collector.CollectedEntities;
             entities.Should().HaveCount(2);
             entities.Should().Contain(eA);
             entities.Should().Contain(eB);
@@ -225,10 +225,10 @@ namespace Entitas.Tests
 
             var eA = CreateEntityA();
             var eB = CreateEntityB();
-            collector.collectedEntities.Should().BeEmpty();
+            collector.CollectedEntities.Should().BeEmpty();
             eA.RemoveComponentA();
             eB.RemoveComponentB();
-            var entities = collector.collectedEntities;
+            var entities = collector.CollectedEntities;
             entities.Should().HaveCount(2);
             entities.Should().Contain(eA);
             entities.Should().Contain(eB);
@@ -248,7 +248,7 @@ namespace Entitas.Tests
 
             var eA = CreateEntityA();
             var eB = CreateEntityB();
-            var entities = collector.collectedEntities;
+            var entities = collector.CollectedEntities;
             entities.Should().HaveCount(2);
             entities.Should().Contain(eA);
             entities.Should().Contain(eB);
@@ -256,7 +256,7 @@ namespace Entitas.Tests
 
             eA.RemoveComponentA();
             eB.RemoveComponentB();
-            entities = collector.collectedEntities;
+            entities = collector.CollectedEntities;
             entities.Should().HaveCount(2);
             entities.Should().Contain(eA);
             entities.Should().Contain(eB);
@@ -276,14 +276,14 @@ namespace Entitas.Tests
 
             var eA = CreateEntityA();
             var eB = CreateEntityB();
-            var entities = collector.collectedEntities;
+            var entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
             entities.Should().Contain(eA);
             collector.ClearCollectedEntities();
 
             eA.RemoveComponentA();
             eB.RemoveComponentB();
-            entities = collector.collectedEntities;
+            entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
             entities.Should().Contain(eB);
         }

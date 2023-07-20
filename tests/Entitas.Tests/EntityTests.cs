@@ -36,7 +36,7 @@ namespace Entitas.Tests
             entity.Initialize(1, 2, componentPools, contextInfo);
 
             entity.isEnabled.Should().BeTrue();
-            entity.creationIndex.Should().Be(1);
+            entity.Id.Should().Be(1);
             entity.totalComponents.Should().Be(2);
             entity.componentPools.Should().BeSameAs(componentPools);
             entity.contextInfo.Should().BeSameAs(contextInfo);
@@ -55,7 +55,7 @@ namespace Entitas.Tests
             entity.Reactivate(42);
 
             entity.isEnabled.Should().BeTrue();
-            entity.creationIndex.Should().Be(42);
+            entity.Id.Should().Be(42);
             entity.totalComponents.Should().Be(2);
             entity.componentPools.Should().BeSameAs(componentPools);
             entity.contextInfo.Should().BeSameAs(contextInfo);

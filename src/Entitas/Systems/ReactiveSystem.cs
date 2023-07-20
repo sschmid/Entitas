@@ -51,9 +51,9 @@ namespace Entitas
         /// if there are any. Otherwise it will not call Execute(entities).
         public void Execute()
         {
-            if (_collector.count != 0)
+            if (_collector.Count != 0)
             {
-                foreach (var e in _collector.collectedEntities)
+                foreach (var e in _collector.CollectedEntities)
                 {
                     if (Filter(e))
                     {

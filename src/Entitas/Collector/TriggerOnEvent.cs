@@ -2,13 +2,13 @@
 {
     public struct TriggerOnEvent<TEntity> where TEntity : class, IEntity
     {
-        public readonly IMatcher<TEntity> matcher;
-        public readonly GroupEvent groupEvent;
+        public readonly IMatcher<TEntity> Matcher;
+        public readonly GroupEvent GroupEvent;
 
         public TriggerOnEvent(IMatcher<TEntity> matcher, GroupEvent groupEvent)
         {
-            this.matcher = matcher;
-            this.groupEvent = groupEvent;
+            Matcher = matcher;
+            GroupEvent = groupEvent;
         }
     }
 }
