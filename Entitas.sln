@@ -42,8 +42,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Unity.Editor", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Unity.Tests", "tests/Entitas.Unity.Tests/Entitas.Unity.Tests.csproj", "{CEFDF4DE-6410-4ED0-B711-D43E198BA6C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Readme", "readme/Readme.csproj", "{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -118,10 +116,6 @@ Global
 		{CEFDF4DE-6410-4ED0-B711-D43E198BA6C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEFDF4DE-6410-4ED0-B711-D43E198BA6C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEFDF4DE-6410-4ED0-B711-D43E198BA6C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8} = {C6D52863-46B5-4E9E-86DF-B937688BAB4C}
