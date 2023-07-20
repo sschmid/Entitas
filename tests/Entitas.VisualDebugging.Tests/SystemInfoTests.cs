@@ -1,4 +1,4 @@
-using Entitas.VisualDebugging.Unity;
+using Entitas.Unity;
 using FluentAssertions;
 using Xunit;
 
