@@ -1,5 +1,4 @@
 using System;
-using Entitas.Blueprints;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -14,7 +13,7 @@ namespace Entitas.Tests
         public EntitasErrorMessagesTests(ITestOutputHelper output)
         {
             _output = output;
-            var componentNames = new[] {"Health", "Position", "View"};
+            var componentNames = new[] { "Health", "Position", "View" };
             var contextInfo = new ContextInfo("My Context", componentNames, null);
             _context = new MyTest1Context(componentNames.Length, 42, contextInfo);
             _entity = _context.CreateEntity();
@@ -92,13 +91,13 @@ namespace Entitas.Tests
                     new Group<Test1Entity>(Matcher<Test1Entity>.AllOf(CID.ComponentA)),
                     new Group<Test1Entity>(Matcher<Test1Entity>.AllOf(CID.ComponentB))
                 },
-                new[] {GroupEvent.Added}));
+                new[] { GroupEvent.Added }));
         }
 
         [Fact]
         public void WhenWrongContextInfoComponentNamesCount()
         {
-            var componentNames = new[] {"Health", "Position", "View"};
+            var componentNames = new[] { "Health", "Position", "View" };
             var contextInfo = new ContextInfo("My Context", componentNames, null);
             PrintErrorMessage(() => new MyTest1Context(1, 0, contextInfo));
         }
@@ -145,36 +144,6 @@ namespace Entitas.Tests
         public void WhenGettingSingleEntityFromCollectionWhenMultipleExist()
         {
             PrintErrorMessage(() => new IEntity[2].SingleEntity());
-        }
-
-        [Fact]
-        public void WhenComponentBluePrintTypeDoesNotImplementIComponent()
-        {
-            var componentBlueprint = new ComponentBlueprint();
-            componentBlueprint.fullTypeName = "string";
-            PrintErrorMessage(() => componentBlueprint.CreateComponent(_entity));
-        }
-
-        [Fact]
-        public void WhenComponentBluePrintTypeDoesNotExist()
-        {
-            var componentBlueprint = new ComponentBlueprint();
-            componentBlueprint.fullTypeName = "UnknownType";
-            PrintErrorMessage(() => componentBlueprint.CreateComponent(_entity));
-        }
-
-        [Fact]
-        public void WhenComponentBluePrintHasInvalidFieldName()
-        {
-            var componentBlueprint = new ComponentBlueprint();
-            componentBlueprint.index = 0;
-            componentBlueprint.fullTypeName = typeof(NameAgeComponent).FullName;
-            componentBlueprint.members = new[]
-            {
-                new SerializableMember("xxx", "publicFieldValue"),
-                new SerializableMember("publicProperty", "publicPropertyValue")
-            };
-            PrintErrorMessage(() => componentBlueprint.CreateComponent(_entity));
         }
 
         [Fact]
