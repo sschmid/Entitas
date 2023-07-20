@@ -8,19 +8,19 @@ namespace Entitas
                 return false;
 
             var matcher = (Matcher<TEntity>)obj;
-            if (!equalIndices(matcher.allOfIndices, _allOfIndices))
+            if (!EqualIndices(matcher._allOfIndices, _allOfIndices))
                 return false;
 
-            if (!equalIndices(matcher.anyOfIndices, _anyOfIndices))
+            if (!EqualIndices(matcher._anyOfIndices, _anyOfIndices))
                 return false;
 
-            if (!equalIndices(matcher.noneOfIndices, _noneOfIndices))
+            if (!EqualIndices(matcher._noneOfIndices, _noneOfIndices))
                 return false;
 
             return true;
         }
 
-        static bool equalIndices(int[] i1, int[] i2)
+        static bool EqualIndices(int[] i1, int[] i2)
         {
             if ((i1 == null) != (i2 == null))
                 return false;
@@ -46,9 +46,9 @@ namespace Entitas
             if (!_isHashCached)
             {
                 var hash = GetType().GetHashCode();
-                hash = applyHash(hash, _allOfIndices, 3, 53);
-                hash = applyHash(hash, _anyOfIndices, 307, 367);
-                hash = applyHash(hash, _noneOfIndices, 647, 683);
+                hash = ApplyHash(hash, _allOfIndices, 3, 53);
+                hash = ApplyHash(hash, _anyOfIndices, 307, 367);
+                hash = ApplyHash(hash, _noneOfIndices, 647, 683);
                 _hash = hash;
                 _isHashCached = true;
             }
@@ -56,7 +56,7 @@ namespace Entitas
             return _hash;
         }
 
-        static int applyHash(int hash, int[] indices, int i1, int i2)
+        static int ApplyHash(int hash, int[] indices, int i1, int i2)
         {
             if (indices != null)
             {

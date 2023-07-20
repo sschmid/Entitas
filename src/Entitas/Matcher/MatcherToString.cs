@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text;
 
 namespace Entitas
@@ -5,58 +6,41 @@ namespace Entitas
     public partial class Matcher<TEntity>
     {
         string _toStringCache;
-        StringBuilder _toStringBuilder;
 
         public override string ToString()
         {
             if (_toStringCache == null)
             {
-                _toStringBuilder ??= new StringBuilder();
-                _toStringBuilder.Length = 0;
-
+                var sb = new StringBuilder();
                 if (_allOfIndices != null)
                 {
-                    appendIndices(_toStringBuilder, "AllOf", _allOfIndices, componentNames);
+                    sb.Append(GetComponentNames("AllOf", _allOfIndices, ComponentNames));
                 }
 
                 if (_anyOfIndices != null)
                 {
                     if (_allOfIndices != null)
-                        _toStringBuilder.Append(".");
+                        sb.Append(".");
 
-                    appendIndices(_toStringBuilder, "AnyOf", _anyOfIndices, componentNames);
+                    sb.Append(GetComponentNames("AnyOf", _anyOfIndices, ComponentNames));
                 }
 
                 if (_noneOfIndices != null)
                 {
-                    appendIndices(_toStringBuilder, ".NoneOf", _noneOfIndices, componentNames);
+                    sb.Append(GetComponentNames(".NoneOf", _noneOfIndices, ComponentNames));
                 }
 
-                _toStringCache = _toStringBuilder.ToString();
+                _toStringCache = sb.ToString();
             }
 
             return _toStringCache;
         }
 
-        static void appendIndices(StringBuilder sb, string prefix, int[] indexArray, string[] componentNames)
+        static string GetComponentNames(string prefix, int[] indexArray, string[] componentNames)
         {
-            const string separator = ", ";
-            sb.Append(prefix);
-            sb.Append("(");
-            var lastSeparator = indexArray.Length - 1;
-            for (var i = 0; i < indexArray.Length; i++)
-            {
-                var index = indexArray[i];
-                if (componentNames == null)
-                    sb.Append(index);
-                else
-                    sb.Append(componentNames[index]);
-
-                if (i < lastSeparator)
-                    sb.Append(separator);
-            }
-
-            sb.Append(")");
+            return componentNames != null
+                ? $"{prefix}({string.Join(", ", indexArray.Select(index => componentNames[index]))})"
+                : $"{prefix}({string.Join(", ", indexArray.Select(index => index.ToString()))})";
         }
     }
 }
