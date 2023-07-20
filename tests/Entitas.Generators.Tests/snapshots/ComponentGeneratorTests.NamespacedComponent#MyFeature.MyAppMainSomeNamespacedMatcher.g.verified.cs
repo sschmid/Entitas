@@ -21,7 +21,7 @@ public sealed class MyAppMainSomeNamespacedMatcher
             if (_matcher == null)
             {
                 var matcher = (global::Entitas.Matcher<global::MyApp.Main.Entity>)global::Entitas.Matcher<global::MyApp.Main.Entity>.AllOf(MyAppMainSomeNamespacedComponentIndex.Index.Value);
-                matcher.componentNames = MyApp.MainContext.ComponentNames;
+                matcher.ComponentNames = MyApp.MainContext.ComponentNames;
                 _matcher = matcher;
             }
 
