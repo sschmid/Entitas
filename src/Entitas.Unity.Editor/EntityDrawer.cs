@@ -145,7 +145,7 @@ namespace Entitas.Unity.Editor
         public static void DrawComponent(bool[] unfoldedComponents, string[] componentMemberSearch, IEntity entity, int index, IComponent component)
         {
             var componentType = component.GetType();
-            var componentName = componentType.Name.RemoveComponentSuffix();
+            var componentName = componentType.Name.RemoveSuffix("Component");
             if (EditorLayout.MatchesSearchString(componentName.ToLower(), componentNameSearchString.ToLower()))
             {
                 var boxStyle = getColoredBoxStyle(entity, index);

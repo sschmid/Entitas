@@ -63,7 +63,7 @@ namespace Entitas.Unity
             var debugSystem = system as DebugSystems;
             _systemName = debugSystem != null
                 ? debugSystem.name
-                : system.GetType().Name.RemoveSystemSuffix();
+                : system.GetType().Name.RemoveSuffix("System");
 
             isActive = true;
         }
