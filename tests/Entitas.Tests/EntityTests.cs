@@ -20,11 +20,11 @@ namespace Entitas.Tests
         [Fact]
         public void HasDefaultContextInfo()
         {
-            _entity.contextInfo.name.Should().Be("No Context");
-            _entity.contextInfo.componentNames.Length.Should().Be(CID.TotalComponents);
-            _entity.contextInfo.componentTypes.Should().BeNull();
-            for (var i = 0; i < _entity.contextInfo.componentNames.Length; i++)
-                _entity.contextInfo.componentNames[i].Should().Be(i.ToString());
+            _entity.contextInfo.Name.Should().Be("No Context");
+            _entity.contextInfo.ComponentNames.Length.Should().Be(CID.TotalComponents);
+            _entity.contextInfo.ComponentTypes.Should().BeNull();
+            for (var i = 0; i < _entity.contextInfo.ComponentNames.Length; i++)
+                _entity.contextInfo.ComponentNames[i].Should().Be(i.ToString());
         }
 
         [Fact]
@@ -479,10 +479,10 @@ namespace Entitas.Tests
         [Fact]
         public void RetainsEntity()
         {
-            _entity.retainCount.Should().Be(0);
+            _entity.RetainCount.Should().Be(0);
             _entity.Retain(this);
-            _entity.retainCount.Should().Be(1);
-            (_entity.aerc as SafeAERC)?.owners.Should().Contain(this);
+            _entity.RetainCount.Should().Be(1);
+            (_entity.Aerc as SafeAERC)?.Owners.Should().Contain(this);
         }
 
         [Fact]
@@ -490,8 +490,8 @@ namespace Entitas.Tests
         {
             _entity.Retain(this);
             _entity.Release(this);
-            _entity.retainCount.Should().Be(0);
-            (_entity.aerc as SafeAERC)?.owners.Should().NotContain(this);
+            _entity.RetainCount.Should().Be(0);
+            (_entity.Aerc as SafeAERC)?.Owners.Should().NotContain(this);
         }
 
         [Fact]

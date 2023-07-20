@@ -27,7 +27,7 @@ namespace Entitas
 
         Stack<IComponent>[] componentPools { get; }
         ContextInfo contextInfo { get; }
-        IAERC aerc { get; }
+        IAERC Aerc { get; }
 
         void Initialize(int creationIndex,
             int totalComponents,

@@ -50,14 +50,14 @@ namespace Entitas.Unity
         {
             _toStringBuilder.Length = 0;
             _toStringBuilder
-                .Append(_context.contextInfo.name).Append(" (")
-                .Append(_context.count).Append(" entities, ")
-                .Append(_context.reusableEntitiesCount).Append(" reusable, ");
+                .Append(_context.ContextInfo.Name).Append(" (")
+                .Append(_context.Count).Append(" entities, ")
+                .Append(_context.ReusableEntitiesCount).Append(" reusable, ");
 
-            if (_context.retainedEntitiesCount != 0)
+            if (_context.RetainedEntitiesCount != 0)
             {
                 _toStringBuilder
-                    .Append(_context.retainedEntitiesCount).Append(" retained, ");
+                    .Append(_context.RetainedEntitiesCount).Append(" retained, ");
             }
 
             _toStringBuilder

@@ -14,9 +14,9 @@ namespace Entitas.Tests
 
             var info = new ContextInfo(contextName, componentNames, componentTypes);
 
-            info.name.Should().Be(contextName);
-            info.componentNames.Should().BeSameAs(componentNames);
-            info.componentTypes.Should().BeSameAs(componentTypes);
+            info.Name.Should().Be(contextName);
+            info.ComponentNames.Should().BeSameAs(componentNames);
+            info.ComponentTypes.Should().BeSameAs(componentTypes);
         }
     }
 }

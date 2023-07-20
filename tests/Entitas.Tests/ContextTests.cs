@@ -43,7 +43,7 @@ namespace Entitas.Tests
         [Fact]
         public void TotalEntityCountIsZero()
         {
-            _context.count.Should().Be(0);
+            _context.Count.Should().Be(0);
         }
 
         [Fact]
@@ -52,31 +52,31 @@ namespace Entitas.Tests
             var e = _context.CreateEntity();
             e.Should().NotBeNull();
             e.GetType().Should().Be(typeof(TestEntity));
-            e.totalComponents.Should().Be(_context.totalComponents);
+            e.totalComponents.Should().Be(_context.TotalComponents);
             e.isEnabled.Should().BeTrue();
         }
 
         [Fact]
         public void HasDefaultContextInfo()
         {
-            _context.contextInfo.name.Should().Be("Unnamed Context");
-            _context.contextInfo.componentNames.Length.Should().Be(CID.TotalComponents);
-            for (var i = 0; i < _context.contextInfo.componentNames.Length; i++)
-                _context.contextInfo.componentNames[i].Should().Be($"Index {i}");
+            _context.ContextInfo.Name.Should().Be("Unnamed Context");
+            _context.ContextInfo.ComponentNames.Length.Should().Be(CID.TotalComponents);
+            for (var i = 0; i < _context.ContextInfo.ComponentNames.Length; i++)
+                _context.ContextInfo.ComponentNames[i].Should().Be($"Index {i}");
         }
 
         [Fact]
         public void CreatesComponentPools()
         {
-            _context.componentPools.Should().NotBeNull();
-            _context.componentPools.Length.Should().Be(CID.TotalComponents);
+            _context.ComponentPools.Should().NotBeNull();
+            _context.ComponentPools.Length.Should().Be(CID.TotalComponents);
         }
 
         [Fact]
         public void CreatesEntityWithComponentPools()
         {
             _context.CreateEntity().componentPools
-                .Should().BeSameAs(_context.componentPools);
+                .Should().BeSameAs(_context.ComponentPools);
         }
 
         [Fact]
@@ -88,7 +88,7 @@ namespace Entitas.Tests
         [Fact]
         public void HasCustomContextInfo()
         {
-            _contextWithInfo.contextInfo.Should().BeSameAs(_contextInfo);
+            _contextWithInfo.ContextInfo.Should().BeSameAs(_contextInfo);
         }
 
         [Fact]
@@ -101,7 +101,7 @@ namespace Entitas.Tests
         public void ThrowsWhenComponentNamesLengthIsNotEqualToTotalComponents()
         {
             FluentActions.Invoking(() =>
-                new MyTest1Context(_contextInfo.componentNames.Length + 1, 0, _contextInfo)
+                new MyTest1Context(_contextInfo.ComponentNames.Length + 1, 0, _contextInfo)
             ).Should().Throw<ContextInfoException>();
         }
 
@@ -109,7 +109,7 @@ namespace Entitas.Tests
         public void GetsTotalEntityCount()
         {
             _context.CreateEntity().AddComponentA();
-            _context.count.Should().Be(1);
+            _context.Count.Should().Be(1);
         }
 
         [Fact]
@@ -136,7 +136,7 @@ namespace Entitas.Tests
             var e = _context.CreateEntity();
             e.Destroy();
             _context.HasEntity(e).Should().BeFalse();
-            _context.count.Should().Be(0);
+            _context.Count.Should().Be(0);
             _context.GetEntities().Should().BeEmpty();
         }
 
@@ -166,7 +166,7 @@ namespace Entitas.Tests
             _context.CreateEntity();
             _context.DestroyAllEntities();
             _context.HasEntity(e).Should().BeFalse();
-            _context.count.Should().Be(0);
+            _context.Count.Should().Be(0);
             _context.GetEntities().Should().BeEmpty();
             e.GetComponents().Should().BeEmpty();
         }
@@ -298,7 +298,7 @@ namespace Entitas.Tests
             _context.OnEntityDestroyed += (_, entity) =>
             {
                 didDispatch += 1;
-                entity.retainCount.Should().Be(1);
+                entity.RetainCount.Should().Be(1);
                 var newEntity = _context.CreateEntity();
                 newEntity.Should().NotBeNull();
                 newEntity.Should().NotBeSameAs(entity);
@@ -749,11 +749,11 @@ namespace Entitas.Tests
             entity.RemoveComponentA();
             entity.RemoveComponentB();
 
-            _context.componentPools[CID.ComponentA].Count.Should().Be(1);
-            _context.componentPools[CID.ComponentB].Count.Should().Be(1);
+            _context.ComponentPools[CID.ComponentA].Count.Should().Be(1);
+            _context.ComponentPools[CID.ComponentB].Count.Should().Be(1);
             _context.ClearComponentPools();
-            _context.componentPools[CID.ComponentA].Count.Should().Be(0);
-            _context.componentPools[CID.ComponentB].Count.Should().Be(0);
+            _context.ComponentPools[CID.ComponentA].Count.Should().Be(0);
+            _context.ComponentPools[CID.ComponentB].Count.Should().Be(0);
         }
 
         [Fact]
@@ -766,8 +766,8 @@ namespace Entitas.Tests
             entity.RemoveComponentB();
 
             _context.ClearComponentPool(CID.ComponentB);
-            _context.componentPools[CID.ComponentA].Count.Should().Be(1);
-            _context.componentPools[CID.ComponentB].Count.Should().Be(0);
+            _context.ComponentPools[CID.ComponentA].Count.Should().Be(1);
+            _context.ComponentPools[CID.ComponentB].Count.Should().Be(0);
         }
 
         [Fact]
