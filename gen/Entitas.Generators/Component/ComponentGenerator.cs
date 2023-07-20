@@ -27,6 +27,7 @@ namespace Entitas.Generators
                 {
                     foreach (var context in pair.Component.Contexts)
                     {
+                        spc.CancellationToken.ThrowIfCancellationRequested();
                         ComponentIndex(spc, pair.Component, context, pair.OptionsProvider);
                         Matcher(spc, pair.Component, context, pair.OptionsProvider);
                     }
@@ -38,6 +39,7 @@ namespace Entitas.Generators
                 {
                     foreach (var context in pair.Component.Contexts)
                     {
+                        spc.CancellationToken.ThrowIfCancellationRequested();
                         EntityExtension(spc, pair.Component, context, pair.OptionsProvider);
                     }
                 });
@@ -48,6 +50,7 @@ namespace Entitas.Generators
                 {
                     foreach (var context in pair.Component.Contexts)
                     {
+                        spc.CancellationToken.ThrowIfCancellationRequested();
                         ContextExtension(spc, pair.Component, context, pair.OptionsProvider);
                     }
                 });
@@ -58,6 +61,7 @@ namespace Entitas.Generators
                 {
                     foreach (var context in pair.Component.Contexts)
                     {
+                        spc.CancellationToken.ThrowIfCancellationRequested();
                         CleanupSystem(spc, pair.Component, context, pair.OptionsProvider);
                     }
                 });
@@ -68,6 +72,7 @@ namespace Entitas.Generators
                 {
                     foreach (var context in pair.Component.Contexts)
                     {
+                        spc.CancellationToken.ThrowIfCancellationRequested();
                         Events(spc, pair.Component, context, pair.OptionsProvider);
                     }
                 });
@@ -186,7 +191,7 @@ namespace Entitas.Generators
             if (contexts.Length == 0)
                 return null;
 
-            return new ComponentDeclaration(candidate.SyntaxTree, symbol, contexts, cancellationToken);
+            return new ComponentDeclaration(candidate.SyntaxTree, symbol, contexts);
         }
 
         static ImmutableArray<ComponentDeclaration> CreateComponentDeclarationsForCompilation(Compilation compilation, CancellationToken cancellationToken)
@@ -204,6 +209,7 @@ namespace Entitas.Generators
                 cancellationToken.ThrowIfCancellationRequested();
                 foreach (var member in stack.Pop().GetMembers())
                 {
+                    cancellationToken.ThrowIfCancellationRequested();
                     if (member is INamespaceSymbol ns)
                     {
                         stack.Push(ns);
@@ -218,7 +224,7 @@ namespace Entitas.Generators
                         if (contexts.Length == 0)
                             continue;
 
-                        var component = new ComponentDeclaration(symbol.DeclaringSyntaxReferences.FirstOrDefault()?.SyntaxTree, symbol, contexts, cancellationToken);
+                        var component = new ComponentDeclaration(symbol.DeclaringSyntaxReferences.FirstOrDefault()?.SyntaxTree, symbol, contexts);
                         allComponents.Add(component);
 
                         foreach (var context in contexts)
