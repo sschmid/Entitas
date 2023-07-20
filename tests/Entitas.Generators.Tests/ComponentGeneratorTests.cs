@@ -77,8 +77,9 @@ namespace Entitas.Generators.Tests
             { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" }
         };
 
-        static readonly Dictionary<string, string> ContextInitializationOptions = new Dictionary<string, string>
+        static readonly Dictionary<string, string> ContextInitializationOnlyOptions = new Dictionary<string, string>
         {
+            { EntitasAnalyzerConfigOptions.ComponentCleanupSystemsKey, "false" },
             { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
             { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" },
             { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
@@ -238,12 +239,12 @@ namespace Entitas.Generators.Tests
          */
 
         [Fact]
-        public Task EmptyContextInitialization() => VerifyContext("EmptyContextInitialization", ContextInitializationOptions);
+        public Task EmptyContextInitialization() => VerifyContext("EmptyContextInitialization", ContextInitializationOnlyOptions);
 
         [Fact]
-        public Task ContextInitialization() => VerifyContext("ContextInitialization", ContextInitializationOptions);
+        public Task ContextInitialization() => VerifyContext("ContextInitialization", ContextInitializationOnlyOptions);
 
         [Fact]
-        public Task ContextInitializationFromDifferentAssembly() => VerifyContext("ContextInitializationFromDifferentAssembly", ContextInitializationOptions);
+        public Task ContextInitializationFromDifferentAssembly() => VerifyContext("ContextInitializationFromDifferentAssembly", ContextInitializationOnlyOptions);
     }
 }
