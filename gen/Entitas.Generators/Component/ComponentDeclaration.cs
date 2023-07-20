@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Threading;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Entitas.Generators
 {
@@ -23,7 +21,7 @@ namespace Entitas.Generators
         public readonly string FullPrefix;
         public readonly string Prefix;
 
-        public ComponentDeclaration(SyntaxTree? syntaxTree, INamedTypeSymbol symbol, ImmutableArray<string> contexts, CancellationToken cancellationToken)
+        public ComponentDeclaration(SyntaxTree? syntaxTree, INamedTypeSymbol symbol, ImmutableArray<string> contexts)
         {
             SyntaxTree = syntaxTree;
             Namespace = !symbol.ContainingNamespace.IsGlobalNamespace ? symbol.ContainingNamespace.ToDisplayString() : null;
@@ -34,7 +32,7 @@ namespace Entitas.Generators
                 .Where(member => member.DeclaredAccessibility == Accessibility.Public
                                  && !member.IsStatic
                                  && member.CanBeReferencedByName
-                                 && (member is IFieldSymbol || IsAutoProperty(member, cancellationToken)))
+                                 && member is IFieldSymbol or IPropertySymbol { SetMethod: not null, GetMethod: not null })
                 .Select<ISymbol, MemberDeclaration?>(static member => member switch
                 {
                     IFieldSymbol field => new MemberDeclaration(field),
@@ -74,15 +72,6 @@ namespace Entitas.Generators
 
             FullPrefix = FullName.Replace(".", string.Empty).RemoveSuffix("Component");
             Prefix = prefix;
-
-            static bool IsAutoProperty(ISymbol symbol, CancellationToken cancellationToken)
-            {
-                return symbol is IPropertySymbol { SetMethod: not null, GetMethod: not null } property
-                       && !property.GetMethod?.DeclaringSyntaxReferences.FirstOrDefault()?
-                           .GetSyntax(cancellationToken).DescendantNodes().Any(static node => node is MethodDeclarationSyntax) == true
-                       && !property.SetMethod?.DeclaringSyntaxReferences.FirstOrDefault()?
-                           .GetSyntax(cancellationToken).DescendantNodes().Any(static node => node is MethodDeclarationSyntax) == true;
-            }
         }
 
         ComponentDeclaration(ComponentDeclaration component, string fullName, string name, ImmutableArray<MemberDeclaration> members, string prefix)
