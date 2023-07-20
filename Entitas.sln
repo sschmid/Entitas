@@ -40,7 +40,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Unity", "src/Entita
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Unity.Editor", "src/Entitas.Unity.Editor/Entitas.Unity.Editor.csproj", "{9AF72B25-85B0-4FDC-85C3-660926C82438}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.VisualDebugging.Tests", "tests/Entitas.VisualDebugging.Tests/Entitas.VisualDebugging.Tests.csproj", "{CEFDF4DE-6410-4ED0-B711-D43E198BA6C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Unity.Tests", "tests/Entitas.Unity.Tests/Entitas.Unity.Tests.csproj", "{CEFDF4DE-6410-4ED0-B711-D43E198BA6C4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Readme", "readme/Readme.csproj", "{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}"
 EndProject

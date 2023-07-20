@@ -1,8 +1,7 @@
-using Entitas.Unity;
 using FluentAssertions;
 using Xunit;
 
-namespace Entitas.VisualDebugging.Tests
+namespace Entitas.Unity.Tests
 {
     public class SystemInfoTests
     {
