@@ -2,7 +2,7 @@
 {
     public interface IMatcher<TEntity> where TEntity : class, IEntity
     {
-        int[] indices { get; }
+        int[] Indices { get; }
         bool Matches(TEntity entity);
     }
 }

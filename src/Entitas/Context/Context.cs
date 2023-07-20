@@ -252,9 +252,9 @@ namespace Entitas
 
                 _groups.Add(matcher, group);
 
-                for (var i = 0; i < matcher.indices.Length; i++)
+                for (var i = 0; i < matcher.Indices.Length; i++)
                 {
-                    var index = matcher.indices[i];
+                    var index = matcher.Indices[i];
                     _groupsForIndex[index] ??= new List<IGroup<TEntity>>();
                     _groupsForIndex[index].Add(group);
                 }

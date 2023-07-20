@@ -95,7 +95,7 @@ public static class TestUserMatcher
             if (_matcher == null)
             {
                 var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(0);
-                matcher.componentNames = TestContext.ComponentNames;
+                matcher.ComponentNames = TestContext.ComponentNames;
                 _matcher = matcher;
             }
 
