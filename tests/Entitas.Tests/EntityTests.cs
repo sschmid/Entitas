@@ -652,12 +652,12 @@ namespace Entitas.Tests
         }
 
         [Fact]
-        public void DoesNotUpdateCacheWhenComponentWasReplaced()
+        public void DoesUpdateCacheWhenComponentWasReplaced()
         {
             _entity.AddComponentA();
             var cache = _entity.ToString();
             _entity.ReplaceComponentA(new ComponentA());
-            _entity.ToString().Should().BeSameAs(cache);
+            _entity.ToString().Should().NotBeSameAs(cache);
         }
 
         [Fact]

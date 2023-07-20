@@ -4,7 +4,7 @@ namespace Entitas
 {
     public abstract class AbstractEntityIndex<TEntity, TKey> : IEntityIndex where TEntity : class, IEntity
     {
-        public string name => _name;
+        public string Name => _name;
 
         protected readonly string _name;
         protected readonly IGroup<TEntity> _group;
@@ -30,69 +30,69 @@ namespace Entitas
 
         public virtual void Activate()
         {
-            _group.OnEntityAdded += onEntityAdded;
-            _group.OnEntityRemoved += onEntityRemoved;
+            _group.OnEntityAdded += OnEntityAdded;
+            _group.OnEntityRemoved += OnEntityRemoved;
         }
 
         public virtual void Deactivate()
         {
-            _group.OnEntityAdded -= onEntityAdded;
-            _group.OnEntityRemoved -= onEntityRemoved;
-            clear();
+            _group.OnEntityAdded -= OnEntityAdded;
+            _group.OnEntityRemoved -= OnEntityRemoved;
+            Clear();
         }
 
-        public override string ToString() => name;
+        public override string ToString() => Name;
 
-        protected void indexEntities(IGroup<TEntity> group)
+        protected void IndexEntities(IGroup<TEntity> group)
         {
             foreach (var entity in group)
             {
                 if (_isSingleKey)
                 {
-                    addEntity(_getKey(entity, null), entity);
+                    AddEntity(_getKey(entity, null), entity);
                 }
                 else
                 {
                     var keys = _getKeys(entity, null);
                     for (var i = 0; i < keys.Length; i++)
-                        addEntity(keys[i], entity);
+                        AddEntity(keys[i], entity);
                 }
             }
         }
 
-        protected void onEntityAdded(IGroup<TEntity> group, TEntity entity, int index, IComponent component)
+        protected void OnEntityAdded(IGroup<TEntity> group, TEntity entity, int index, IComponent component)
         {
             if (_isSingleKey)
             {
-                addEntity(_getKey(entity, component), entity);
+                AddEntity(_getKey(entity, component), entity);
             }
             else
             {
                 var keys = _getKeys(entity, component);
                 for (var i = 0; i < keys.Length; i++)
-                    addEntity(keys[i], entity);
+                    AddEntity(keys[i], entity);
             }
         }
 
-        protected void onEntityRemoved(IGroup<TEntity> group, TEntity entity, int index, IComponent component)
+        protected void OnEntityRemoved(IGroup<TEntity> group, TEntity entity, int index, IComponent component)
         {
             if (_isSingleKey)
             {
-                removeEntity(_getKey(entity, component), entity);
+                RemoveEntity(_getKey(entity, component), entity);
             }
             else
             {
                 var keys = _getKeys(entity, component);
-                for (var i = 0; i < keys.Length; i++) 
-                    removeEntity(keys[i], entity);
+                for (var i = 0; i < keys.Length; i++)
+                    RemoveEntity(keys[i], entity);
             }
         }
 
-        protected abstract void addEntity(TKey key, TEntity entity);
+        protected abstract void AddEntity(TKey key, TEntity entity);
 
-        protected abstract void removeEntity(TKey key, TEntity entity);
+        protected abstract void RemoveEntity(TKey key, TEntity entity);
 
-        protected abstract void clear();
+        protected abstract void Clear();
 
         ~AbstractEntityIndex() => Deactivate();
     }

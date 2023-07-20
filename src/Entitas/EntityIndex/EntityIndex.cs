@@ -34,7 +34,7 @@ namespace Entitas
         public override void Activate()
         {
             base.Activate();
-            indexEntities(_group);
+            IndexEntities(_group);
         }
 
         public HashSet<TEntity> GetEntities(TKey key)
@@ -48,9 +48,9 @@ namespace Entitas
             return entities;
         }
 
-        public override string ToString() => $"EntityIndex({name})";
+        public override string ToString() => $"EntityIndex({Name})";
 
-        protected override void clear()
+        protected override void Clear()
         {
             foreach (var entities in _index.Values)
             {
@@ -71,7 +71,7 @@ namespace Entitas
             _index.Clear();
         }
 
-        protected override void addEntity(TKey key, TEntity entity)
+        protected override void AddEntity(TKey key, TEntity entity)
         {
             GetEntities(key).Add(entity);
 
@@ -86,7 +86,7 @@ namespace Entitas
             }
         }
 
-        protected override void removeEntity(TKey key, TEntity entity)
+        protected override void RemoveEntity(TKey key, TEntity entity)
         {
             GetEntities(key).Remove(entity);
 

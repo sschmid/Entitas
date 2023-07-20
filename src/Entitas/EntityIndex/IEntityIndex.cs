@@ -2,7 +2,7 @@
 {
     public interface IEntityIndex
     {
-        string name { get; }
+        string Name { get; }
 
         void Activate();
         void Deactivate();
