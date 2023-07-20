@@ -147,7 +147,7 @@ namespace Entitas.Unity.Editor
                 var entityBehaviour = gameObject.GetComponent<EntityBehaviour>();
                 if (entityBehaviour != null)
                 {
-                    if (entityBehaviour.entity.isEnabled)
+                    if (entityBehaviour.entity.IsEnabled)
                         GUI.DrawTexture(rect, entityHierarchyIcon);
                     else
                         GUI.DrawTexture(rect, entityErrorHierarchyIcon);

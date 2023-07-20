@@ -64,7 +64,7 @@ namespace Entitas.Generators.IntegrationTests
             var entity = _context.SetLoading();
             _context.UnsetLoading();
             _context.HasLoading().Should().BeFalse();
-            entity.isEnabled.Should().BeFalse();
+            entity.IsEnabled.Should().BeFalse();
         }
 
         [Fact]
@@ -172,7 +172,7 @@ namespace Entitas.Generators.IntegrationTests
             var entity = _context.SetUser("Test", 42);
             _context.RemoveUser();
             _context.HasUser().Should().BeFalse();
-            entity.isEnabled.Should().BeFalse();
+            entity.IsEnabled.Should().BeFalse();
         }
 
         [Fact]
