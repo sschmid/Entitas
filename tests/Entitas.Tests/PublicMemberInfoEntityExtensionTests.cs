@@ -5,16 +5,16 @@ namespace Entitas.Tests
 {
     public class PublicMemberInfoEntityExtensionTests
     {
-        readonly Test1Entity _entity;
-        readonly Test1Entity _target;
-        readonly NameAgeComponent _nameAge;
+        readonly TestEntity _entity;
+        readonly TestEntity _target;
+        readonly UserComponent _user;
 
         public PublicMemberInfoEntityExtensionTests()
         {
             var context = new MyTest1Context();
             _entity = context.CreateEntity();
             _target = context.CreateEntity();
-            _nameAge = new NameAgeComponent {name = "Max", age = 42};
+            _user = new UserComponent {Name = "Max", Age = 42};
         }
 
         [Fact]
@@ -30,26 +30,26 @@ namespace Entitas.Tests
         public void AddsCopiesOfAllComponentsToTargetEntity()
         {
             _entity.AddComponentA();
-            _entity.AddComponent(CID.ComponentB, _nameAge);
+            _entity.AddComponent(CID.ComponentB, _user);
             _entity.CopyTo(_target);
 
             _target.GetComponents().Length.Should().Be(2);
             _target.HasComponentA().Should().BeTrue();
             _target.HasComponentB().Should().BeTrue();
             _target.GetComponentA().Should().NotBeSameAs(Component.A);
-            _target.GetComponent(CID.ComponentB).Should().NotBeSameAs(_nameAge);
+            _target.GetComponent(CID.ComponentB).Should().NotBeSameAs(_user);
 
-            var clonedComponent = (NameAgeComponent)_target.GetComponent(CID.ComponentB);
-            clonedComponent.name.Should().Be(_nameAge.name);
-            clonedComponent.age.Should().Be(_nameAge.age);
+            var clonedComponent = (UserComponent)_target.GetComponent(CID.ComponentB);
+            clonedComponent.Name.Should().Be(_user.Name);
+            clonedComponent.Age.Should().Be(_user.Age);
         }
 
         [Fact]
         public void ThrowsWhenTargetAlreadyHasComponentAtIndex()
         {
             _entity.AddComponentA();
-            _entity.AddComponent(CID.ComponentB, _nameAge);
-            var component = new NameAgeComponent();
+            _entity.AddComponent(CID.ComponentB, _user);
+            var component = new UserComponent();
             _target.AddComponent(CID.ComponentB, component);
             FluentActions.Invoking(() => _entity.CopyTo(_target))
                 .Should().Throw<EntityAlreadyHasComponentException>();
@@ -59,16 +59,16 @@ namespace Entitas.Tests
         public void ReplacesExistingComponentsWhenOverwriteIsSet()
         {
             _entity.AddComponentA();
-            _entity.AddComponent(CID.ComponentB, _nameAge);
-            var component = new NameAgeComponent();
+            _entity.AddComponent(CID.ComponentB, _user);
+            var component = new UserComponent();
             _target.AddComponent(CID.ComponentB, component);
             _entity.CopyTo(_target, true);
 
             var copy = _target.GetComponent(CID.ComponentB);
-            copy.Should().NotBeSameAs(_nameAge);
+            copy.Should().NotBeSameAs(_user);
             copy.Should().NotBeSameAs(component);
-            ((NameAgeComponent)copy).name.Should().Be(_nameAge.name);
-            ((NameAgeComponent)copy).age.Should().Be(_nameAge.age);
+            ((UserComponent)copy).Name.Should().Be(_user.Name);
+            ((UserComponent)copy).Age.Should().Be(_user.Age);
         }
 
         [Fact]

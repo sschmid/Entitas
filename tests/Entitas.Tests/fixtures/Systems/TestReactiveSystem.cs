@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
 using Entitas;
 
-public class TestReactiveSystem : ReactiveSystem<Test1Entity> {
+public class TestReactiveSystem : ReactiveSystem<TestEntity> {
 
-    public TestReactiveSystem(IContext<Test1Entity> context) : base(context) { }
+    public TestReactiveSystem(IContext<TestEntity> context) : base(context) { }
 
-    protected override ICollector<Test1Entity> GetTrigger(IContext<Test1Entity> context) {
-        return context.CreateCollector(Matcher<Test1Entity>.AllOf(0));
+    protected override ICollector<TestEntity> GetTrigger(IContext<TestEntity> context) {
+        return context.CreateCollector(Matcher<TestEntity>.AllOf(0));
     }
 
-    protected override bool Filter(Test1Entity entity) {
+    protected override bool Filter(TestEntity entity) {
         return true;
     }
 
-    protected override void Execute(List<Test1Entity> entities) {
+    protected override void Execute(List<TestEntity> entities) {
     }
 }

@@ -6,10 +6,10 @@ namespace Entitas.Tests
 {
     public class ContextTests
     {
-        readonly IContext<Test1Entity> _context;
-        readonly IContext<Test1Entity> _contextWithInfo;
+        readonly IContext<TestEntity> _context;
+        readonly IContext<TestEntity> _contextWithInfo;
         readonly ContextInfo _contextInfo;
-        readonly IAllOfMatcher<Test1Entity> _matcherAB = Matcher<Test1Entity>.AllOf(CID.ComponentA, CID.ComponentB);
+        readonly IAllOfMatcher<TestEntity> _matcherAB = Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB);
 
         public ContextTests()
         {
@@ -51,7 +51,7 @@ namespace Entitas.Tests
         {
             var e = _context.CreateEntity();
             e.Should().NotBeNull();
-            e.GetType().Should().Be(typeof(Test1Entity));
+            e.GetType().Should().Be(typeof(TestEntity));
             e.totalComponents.Should().Be(_context.totalComponents);
             e.isEnabled.Should().BeTrue();
         }
@@ -266,7 +266,7 @@ namespace Entitas.Tests
                 entity.HasComponentA().Should().BeTrue();
                 entity.isEnabled.Should().BeTrue();
 
-                ((IContext<Test1Entity>)c).GetEntities().Length.Should().Be(0);
+                ((IContext<TestEntity>)c).GetEntities().Length.Should().Be(0);
             };
             _context.GetEntities();
             e.Destroy();
@@ -328,7 +328,7 @@ namespace Entitas.Tests
                 p.Should().BeSameAs(_context);
                 eventGroup = g;
             };
-            var group = _context.GetGroup(Matcher<Test1Entity>.AllOf(0));
+            var group = _context.GetGroup(Matcher<TestEntity>.AllOf(0));
             didDispatch.Should().Be(1);
             eventGroup.Should().BeSameAs(group);
         }
@@ -336,9 +336,9 @@ namespace Entitas.Tests
         [Fact]
         public void DoesNotDispatchOnGroupCreatedWhenGroupAlreadyExists()
         {
-            _context.GetGroup(Matcher<Test1Entity>.AllOf(0));
+            _context.GetGroup(Matcher<TestEntity>.AllOf(0));
             _context.OnGroupCreated += delegate { throw new Exception("context.OnGroupCreated"); };
-            _context.GetGroup(Matcher<Test1Entity>.AllOf(0));
+            _context.GetGroup(Matcher<TestEntity>.AllOf(0));
         }
 
         [Fact]
@@ -400,7 +400,7 @@ namespace Entitas.Tests
         {
             var e = _context.CreateEntity();
             e.Should().NotBeNull();
-            e.GetType().Should().Be(typeof(Test1Entity));
+            e.GetType().Should().Be(typeof(TestEntity));
         }
 
         [Fact]
@@ -451,7 +451,7 @@ namespace Entitas.Tests
             var e = _context.CreateEntity();
             var creationIndex = e.creationIndex;
             e.Destroy();
-            var g = _context.GetGroup(Matcher<Test1Entity>.AllOf(CID.ComponentA));
+            var g = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
 
             e = _context.CreateEntity();
             e.creationIndex.Should().Be(creationIndex + 1);
@@ -509,7 +509,7 @@ namespace Entitas.Tests
         [Fact]
         public void GetsEmptyGroupForMatcherWhenNoEntitiesWereCreated()
         {
-            var g = _context.GetGroup(Matcher<Test1Entity>.AllOf(CID.ComponentA));
+            var g = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
             g.Should().NotBeNull();
             g.GetEntities().Should().BeEmpty();
         }
@@ -612,7 +612,7 @@ namespace Entitas.Tests
             var updated = 0;
             var prevComp = e.GetComponent(CID.ComponentA);
             var newComp = new ComponentA();
-            var g = _context.GetGroup(Matcher<Test1Entity>.AllOf(CID.ComponentA));
+            var g = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
             g.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) =>
             {
                 updated += 1;
@@ -633,7 +633,7 @@ namespace Entitas.Tests
             var e = _context.CreateEntity();
             e.AddComponentA();
             e.AddComponentB();
-            var matcher = Matcher<Test1Entity>.AllOf(CID.ComponentB).NoneOf(CID.ComponentA);
+            var matcher = Matcher<TestEntity>.AllOf(CID.ComponentB).NoneOf(CID.ComponentA);
             var g = _context.GetGroup(matcher);
             g.OnEntityAdded += delegate { throw new Exception("group.OnEntityAdded"); };
             e.Destroy();
@@ -642,8 +642,8 @@ namespace Entitas.Tests
         [Fact]
         public void DispatchesOnEntityAddedEventsAfterAllGroupsAreUpdated()
         {
-            var groupAB = _context.GetGroup(Matcher<Test1Entity>.AllOf(CID.ComponentA, CID.ComponentB));
-            var groupB = _context.GetGroup(Matcher<Test1Entity>.AllOf(CID.ComponentB));
+            var groupAB = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB));
+            var groupB = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentB));
 
             groupAB.OnEntityAdded += delegate { groupB.count.Should().Be(1); };
 
@@ -655,8 +655,8 @@ namespace Entitas.Tests
         [Fact]
         public void DispatchesOnEntityRemovedEventsAfterAllGroupsAreUpdated()
         {
-            var groupB = _context.GetGroup(Matcher<Test1Entity>.AllOf(CID.ComponentB));
-            var groupAB = _context.GetGroup(Matcher<Test1Entity>.AllOf(CID.ComponentA, CID.ComponentB));
+            var groupB = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentB));
+            var groupAB = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB));
 
             groupB.OnEntityRemoved += delegate { groupAB.count.Should().Be(0); };
 
@@ -677,9 +677,9 @@ namespace Entitas.Tests
         [Fact]
         public void AddsEntityIndex()
         {
-            var entityIndex = new PrimaryEntityIndex<Test1Entity, string>(
+            var entityIndex = new PrimaryEntityIndex<TestEntity, string>(
                 "TestIndex",
-                _context.GetGroup(Matcher<Test1Entity>.AllOf(1)),
+                _context.GetGroup(Matcher<TestEntity>.AllOf(1)),
                 (_, _) => string.Empty
             );
             _context.AddEntityIndex(entityIndex);
@@ -689,9 +689,9 @@ namespace Entitas.Tests
         [Fact]
         public void ThrowsWhenAddingEntityIndexWithSameName()
         {
-            var entityIndex = new PrimaryEntityIndex<Test1Entity, string>(
+            var entityIndex = new PrimaryEntityIndex<TestEntity, string>(
                 "TestIndex",
-                _context.GetGroup(Matcher<Test1Entity>.AllOf(1)),
+                _context.GetGroup(Matcher<TestEntity>.AllOf(1)),
                 (_, _) => string.Empty
             );
             _context.AddEntityIndex(entityIndex);
@@ -737,7 +737,7 @@ namespace Entitas.Tests
         {
             _context.OnGroupCreated += delegate { throw new Exception("context.OnGroupCreated"); };
             _context.RemoveAllEventHandlers();
-            _context.GetGroup(Matcher<Test1Entity>.AllOf(0));
+            _context.GetGroup(Matcher<TestEntity>.AllOf(0));
         }
 
         [Fact]
@@ -779,9 +779,9 @@ namespace Entitas.Tests
         [Fact]
         public void PopsNewListFromListPool()
         {
-            var groupA = _context.GetGroup(Matcher<Test1Entity>.AllOf(CID.ComponentA));
-            var groupAB = _context.GetGroup(Matcher<Test1Entity>.AnyOf(CID.ComponentA, CID.ComponentB));
-            var groupABC = _context.GetGroup(Matcher<Test1Entity>.AnyOf(CID.ComponentA, CID.ComponentB, CID.ComponentC));
+            var groupA = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
+            var groupAB = _context.GetGroup(Matcher<TestEntity>.AnyOf(CID.ComponentA, CID.ComponentB));
+            var groupABC = _context.GetGroup(Matcher<TestEntity>.AnyOf(CID.ComponentA, CID.ComponentB, CID.ComponentC));
 
             var didExecute = 0;
 

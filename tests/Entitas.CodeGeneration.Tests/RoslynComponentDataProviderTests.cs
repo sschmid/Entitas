@@ -338,7 +338,7 @@ namespace Entitas.CodeGeneration.Tests
         [Fact]
         public void CreatesDataForEachType()
         {
-            var symbol1 = Types.Single(c => c.ToCompilableString() == typeof(NameAgeComponent).FullName);
+            var symbol1 = Types.Single(c => c.ToCompilableString() == typeof(UserComponent).FullName);
             var symbol2 = Types.Single(c => c.ToCompilableString() == typeof(Test2ContextComponent).FullName);
             var provider = new Entitas.Roslyn.CodeGeneration.Plugins.ComponentDataProvider(new[] {symbol1, symbol2});
             provider.Configure(

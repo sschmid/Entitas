@@ -7,10 +7,10 @@ namespace Entitas.Tests
     {
         const string Name = "Max";
 
-        readonly IContext<Test1Entity> _context;
-        readonly PrimaryEntityIndex<Test1Entity, string> _index;
-        readonly IContext<Test1Entity> _multiKeyContext;
-        readonly PrimaryEntityIndex<Test1Entity, string> _multiKeyIndex;
+        readonly IContext<TestEntity> _context;
+        readonly PrimaryEntityIndex<TestEntity, string> _index;
+        readonly IContext<TestEntity> _multiKeyContext;
+        readonly PrimaryEntityIndex<TestEntity, string> _multiKeyIndex;
 
         public PrimaryEntityIndexTests()
         {
@@ -147,30 +147,30 @@ namespace Entitas.Tests
             _index.GetEntity("Jack").Should().BeSameAs(entity);
         }
 
-        PrimaryEntityIndex<Test1Entity, string> CreatePrimaryEntityIndex()
+        PrimaryEntityIndex<TestEntity, string> CreatePrimaryEntityIndex()
         {
-            return new PrimaryEntityIndex<Test1Entity, string>(
+            return new PrimaryEntityIndex<TestEntity, string>(
                 "TestIndex",
-                _context.GetGroup(Matcher<Test1Entity>.AllOf(CID.ComponentA)),
-                (e, c) => (c as NameAgeComponent ?? (NameAgeComponent)e.GetComponent(CID.ComponentA)).name);
+                _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA)),
+                (e, c) => (c as UserComponent ?? (UserComponent)e.GetComponent(CID.ComponentA)).Name);
         }
 
-        PrimaryEntityIndex<Test1Entity, string> CreateMultiKeyPrimaryEntityIndex()
+        PrimaryEntityIndex<TestEntity, string> CreateMultiKeyPrimaryEntityIndex()
         {
-            return new PrimaryEntityIndex<Test1Entity, string>(
+            return new PrimaryEntityIndex<TestEntity, string>(
                 "TestIndex",
-                _multiKeyContext.GetGroup(Matcher<Test1Entity>.AllOf(CID.ComponentA)),
+                _multiKeyContext.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA)),
                 (e, c) =>
                 {
-                    var name = (c as NameAgeComponent ?? (NameAgeComponent)e.GetComponent(CID.ComponentA)).name;
+                    var name = (c as UserComponent ?? (UserComponent)e.GetComponent(CID.ComponentA)).Name;
                     return new[] {$"{name}1", $"{name}2"};
                 });
         }
 
-        static Test1Entity CreateNameAgeEntity(IContext<Test1Entity> context, string name = Name)
+        static TestEntity CreateNameAgeEntity(IContext<TestEntity> context, string name = Name)
         {
-            var nameAgeComponent = new NameAgeComponent();
-            nameAgeComponent.name = name;
+            var nameAgeComponent = new UserComponent();
+            nameAgeComponent.Name = name;
             var entity = context.CreateEntity();
             entity.AddComponent(CID.ComponentA, nameAgeComponent);
             return entity;

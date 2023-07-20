@@ -290,7 +290,7 @@ namespace Entitas.CodeGeneration.Tests
         [Fact]
         public void CreatesDataForEachType()
         {
-            var types = new[] {typeof(NameAgeComponent), typeof(Test2ContextComponent)};
+            var types = new[] {typeof(UserComponent), typeof(Test2ContextComponent)};
             var provider = new ComponentDataProvider(types);
             provider.Configure(new TestPreferences(
                 "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState"

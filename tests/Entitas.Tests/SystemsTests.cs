@@ -349,7 +349,7 @@ namespace Entitas.Tests
 
         ReactiveSystemSpy CreateReactiveSystem()
         {
-            var system = new ReactiveSystemSpy(_context.CreateCollector(Matcher<Test1Entity>.AllOf(CID.ComponentA)));
+            var system = new ReactiveSystemSpy(_context.CreateCollector(Matcher<TestEntity>.AllOf(CID.ComponentA)));
             _context.CreateEntity().AddComponentA();
             return system;
         }
