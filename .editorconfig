@@ -3,10 +3,22 @@ root = true
 [*]
 charset = utf-8
 end_of_line = lf
-trim_trailing_whitespace = true
-insert_final_newline = true
+indent_size = 4
 indent_style = space
+insert_final_newline = true
+tab_width = 4
+trim_trailing_whitespace = true
 
+[*.sln]
+indent_style = tab
+
+[*.csproj]
+indent_size = 2
+ij_xml_space_inside_empty_tag = true
+
+[*.DotSettings]
+indent_style = tab
+ij_xml_attribute_wrap = off
 
 # [*.cs]
 # entitas_generator.component.cleanup_systems = false
