@@ -31,7 +31,7 @@ namespace Entitas.Generators
                                 if (_matcher == null)
                                 {
                                     var matcher = (global::Entitas.Matcher<global::{{contextPrefix}}.Entity>)global::Entitas.Matcher<global::{{contextPrefix}}.Entity>.AllOf({{index}});
-                                    matcher.componentNames = {{context}}.ComponentNames;
+                                    matcher.ComponentNames = {{context}}.ComponentNames;
                                     _matcher = matcher;
                                 }
 

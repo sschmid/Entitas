@@ -19,7 +19,7 @@ public sealed class MyAppMainSomeMatcher
             if (_matcher == null)
             {
                 var matcher = (global::Entitas.Matcher<global::MyApp.Main.Entity>)global::Entitas.Matcher<global::MyApp.Main.Entity>.AllOf(MyAppMainSomeComponentIndex.Index.Value);
-                matcher.componentNames = MyApp.MainContext.ComponentNames;
+                matcher.ComponentNames = MyApp.MainContext.ComponentNames;
                 _matcher = matcher;
             }
 
