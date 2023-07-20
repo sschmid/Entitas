@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DesperateDevs.Extensions;
 using DesperateDevs.Reflection;
-using Entitas.CodeGeneration.Attributes;
+using Entitas.Generators.Attributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -63,7 +63,7 @@ namespace Entitas.Unity.Editor
         static string[] getContextNames(Type type) => Attribute
             .GetCustomAttributes(type)
             .OfType<ContextAttribute>()
-            .Select(attr => attr.contextName)
+            .Select(attr => attr.Type.FullName)
             .ToArray();
 
         static string[] getContextNamesOrDefault(Type type)
