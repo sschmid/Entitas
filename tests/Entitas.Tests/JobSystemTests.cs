@@ -19,54 +19,35 @@ namespace Entitas.Tests
         [Fact]
         public void ProcessesEntity()
         {
-            var system = new TestJobSystem(_context, 2);
-            var e = _context.CreateEntity();
-            e.AddUser("e", -1);
+            var system = new TestJobSystem(_context);
+            var entity = _context.CreateEntity();
+            entity.AddUser("Test", -1);
             system.Execute();
-            e.GetUser().Name.Should().Be("e-Processed");
+            entity.GetUser().Name.Should().Be("Test-Processed");
         }
 
-        [Fact(Skip = "Please run test individually")]
-        public void ProcessesAllEntitiesWhenCountIsDividableByNumThreads()
+        [Fact]
+        public void ProcessesAllEntities()
         {
-            var system = new TestJobSystem(_context, 2);
+            var system = new TestJobSystem(_context);
             for (var i = 0; i < 4; i++)
-                _context.CreateEntity().AddUser($"e{i}", -1);
+                _context.CreateEntity().AddUser($"Test{i}", -1);
 
             system.Execute();
 
             var entities = _context.GetEntities();
             entities.Length.Should().Be(4);
             for (var i = 0; i < entities.Length; i++)
-                entities[i].GetUser().Name.Should().Be($"e{i}-Processed");
-
-            entities[0].GetUser().Age.Should().Be(entities[1].GetUser().Age);
-            entities[2].GetUser().Age.Should().Be(entities[3].GetUser().Age);
-            entities[0].GetUser().Age.Should().NotBe(entities[2].GetUser().Age);
-        }
-
-        [Fact]
-        public void ProcessesAllEntitiesWhenCountIsNotDividableByNumThreads()
-        {
-            var system = new TestJobSystem(_context, 4);
-            for (var i = 0; i < 103; i++)
-                _context.CreateEntity().AddUser($"e{i}", -1);
-
-            system.Execute();
-
-            var entities = _context.GetEntities();
-            entities.Length.Should().Be(103);
-            for (var i = 0; i < entities.Length; i++)
-                entities[i].GetUser().Name.Should().Be($"e{i}-Processed");
+                entities[i].GetUser().Name.Should().Be($"Test{i}-Processed");
         }
 
         [Fact]
         public void ThrowsWhenThreadThrows()
         {
-            var system = new TestJobSystem(_context, 2);
-            system.exception = new Exception("Test Exception");
+            var system = new TestJobSystem(_context);
+            system.Exception = new Exception("Test Exception");
             for (var i = 0; i < 10; i++)
-                _context.CreateEntity().AddUser($"e{i}", -1);
+                _context.CreateEntity().AddUser($"Test{i}", -1);
 
             FluentActions.Invoking(() => system.Execute()).Should().Throw<Exception>();
         }
@@ -74,10 +55,10 @@ namespace Entitas.Tests
         [Fact]
         public void RecoversFromException()
         {
-            var system = new TestJobSystem(_context, 2);
-            system.exception = new Exception("Test Exception");
+            var system = new TestJobSystem(_context);
+            system.Exception = new Exception("Test Exception");
             for (var i = 0; i < 10; i++)
-                _context.CreateEntity().AddUser($"e{i}", -1);
+                _context.CreateEntity().AddUser($"Test{i}", -1);
 
             var didThrow = 0;
             try
@@ -90,7 +71,7 @@ namespace Entitas.Tests
             }
 
             didThrow.Should().Be(1);
-            system.exception = null;
+            system.Exception = null;
             system.Execute();
         }
     }

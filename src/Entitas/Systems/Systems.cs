@@ -9,19 +9,10 @@ namespace Entitas
     /// you added them.
     public class Systems : IInitializeSystem, IExecuteSystem, ICleanupSystem, ITearDownSystem
     {
-        protected readonly List<IInitializeSystem> _initializeSystems;
-        protected readonly List<IExecuteSystem> _executeSystems;
-        protected readonly List<ICleanupSystem> _cleanupSystems;
-        protected readonly List<ITearDownSystem> _tearDownSystems;
-
-        /// Creates a new Systems instance.
-        public Systems()
-        {
-            _initializeSystems = new List<IInitializeSystem>();
-            _executeSystems = new List<IExecuteSystem>();
-            _cleanupSystems = new List<ICleanupSystem>();
-            _tearDownSystems = new List<ITearDownSystem>();
-        }
+        protected readonly List<IInitializeSystem> _initializeSystems = new List<IInitializeSystem>();
+        protected readonly List<IExecuteSystem> _executeSystems = new List<IExecuteSystem>();
+        protected readonly List<ICleanupSystem> _cleanupSystems = new List<ICleanupSystem>();
+        protected readonly List<ITearDownSystem> _tearDownSystems = new List<ITearDownSystem>();
 
         /// Adds the system instance to the systems list.
         public virtual Systems Add(ISystem system)
@@ -30,7 +21,6 @@ namespace Entitas
             if (system is IExecuteSystem executeSystem) _executeSystems.Add(executeSystem);
             if (system is ICleanupSystem cleanupSystem) _cleanupSystems.Add(cleanupSystem);
             if (system is ITearDownSystem tearDownSystem) _tearDownSystems.Add(tearDownSystem);
-
             return this;
         }
 

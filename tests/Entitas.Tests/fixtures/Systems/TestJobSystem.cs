@@ -2,17 +2,17 @@
 using System.Threading;
 using Entitas;
 
-public sealed class TestJobSystem : JobSystem<TestEntity> {
+public sealed class TestJobSystem : JobSystem<TestEntity>
+{
+    public Exception Exception;
 
-    public Exception exception;
+    public TestJobSystem(TestContext context) : base(context.GetGroup(TestUserMatcher.User)) { }
 
-    public TestJobSystem(TestContext context, int threads) :
-        base(context.GetGroup(TestUserMatcher.User), threads) {
-    }
-
-    protected override void Execute(TestEntity entity) {
-        if (exception != null) {
-            throw exception;
+    protected override void Execute(TestEntity entity)
+    {
+        if (Exception != null)
+        {
+            throw Exception;
         }
 
         var user = entity.GetUser();
