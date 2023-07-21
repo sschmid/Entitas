@@ -22,9 +22,7 @@ namespace Entitas.Generators
                     {
                         public static global::Entitas.Systems CreateEventSystems(this {{method.ContextName}} context)
                         {
-                            var systems = new global::Entitas.Systems();
                     {{AddEventSystems(method.Components, method.FullContextPrefix)}}
-                            return systems;
                         }
                     }
 
@@ -32,15 +30,24 @@ namespace Entitas.Generators
 
             static string AddEventSystems(ImmutableArray<ComponentDeclaration> components, string contextPrefix)
             {
-                return string.Join("\n", components
+                var events = components
                     .SelectMany(component => component.Events.Select(@event => (Component: component, Event: @event)))
-                    .OrderBy(pair => pair.Event.Order)
-                    .Select(pair =>
-                    {
-                        var (component, @event) = pair;
-                        @event.ContextAware(ContextAware(contextPrefix));
-                        return $"        systems.Add(new global::{CombinedNamespace(component.Namespace, @event.ContextAwareEvent)}EventSystem(context)); // Order: {@event.Order}";
-                    }));
+                    .ToImmutableArray();
+
+                return events.Length == 0
+                    ? "        return null;"
+                    : $$"""
+                            var systems = new global::Entitas.Systems();
+                    {{string.Join("\n", events
+                        .OrderBy(pair => pair.Event.Order)
+                        .Select(pair =>
+                        {
+                            var (component, @event) = pair;
+                            @event.ContextAware(ContextAware(contextPrefix));
+                            return $"        systems.Add(new global::{CombinedNamespace(component.Namespace, @event.ContextAwareEvent)}EventSystem(context)); // Order: {@event.Order}";
+                        }))}}
+                            return systems;
+                    """;
             }
         }
     }
