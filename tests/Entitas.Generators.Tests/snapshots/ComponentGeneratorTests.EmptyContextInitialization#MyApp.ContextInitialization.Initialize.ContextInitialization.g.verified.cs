@@ -14,136 +14,16 @@ public static partial class ContextInitialization
 {
     public static partial void Initialize()
     {
-        global::MyAppMainCleanupDestroyEntityComponentIndex.Index = new global::MyApp.Main.ComponentIndex(0);
-        global::MyAppMainCleanupRemoveComponentIndex.Index = new global::MyApp.Main.ComponentIndex(1);
-        global::MyAppMainEntityIndexComponentIndex.Index = new global::MyApp.Main.ComponentIndex(2);
-        global::MyAppMainEventComponentIndex.Index = new global::MyApp.Main.ComponentIndex(3);
-        global::MyAppMainFlagEventComponentIndex.Index = new global::MyApp.Main.ComponentIndex(4);
-        global::MyAppMainMultipleFieldsComponentIndex.Index = new global::MyApp.Main.ComponentIndex(5);
-        global::MyAppMainAnyEventAddedListenerComponentIndex.Index = new global::MyApp.Main.ComponentIndex(6);
-        global::MyAppMainAnyEventRemovedListenerComponentIndex.Index = new global::MyApp.Main.ComponentIndex(7);
-        global::MyAppMainAnyFlagEventAddedListenerComponentIndex.Index = new global::MyApp.Main.ComponentIndex(8);
-        global::MyAppMainAnyFlagEventRemovedListenerComponentIndex.Index = new global::MyApp.Main.ComponentIndex(9);
-        global::MyAppMainEventAddedListenerComponentIndex.Index = new global::MyApp.Main.ComponentIndex(10);
-        global::MyAppMainEventRemovedListenerComponentIndex.Index = new global::MyApp.Main.ComponentIndex(11);
-        global::MyAppMainFlagEventAddedListenerComponentIndex.Index = new global::MyApp.Main.ComponentIndex(12);
-        global::MyAppMainFlagEventRemovedListenerComponentIndex.Index = new global::MyApp.Main.ComponentIndex(13);
-        global::MyFeature.MyAppMainCleanupDestroyEntityNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(14);
-        global::MyFeature.MyAppMainCleanupRemoveNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(15);
-        global::MyFeature.MyAppMainDuplicatedContextsNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(16);
-        global::MyFeature.MyAppMainEntityIndexNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(17);
-        global::MyFeature.MyAppMainEventNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(18);
-        global::MyFeature.MyAppMainFlagEventNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(19);
-        global::MyFeature.MyAppMainMultipleFieldsNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(20);
-        global::MyFeature.MyAppMainMultiplePropertiesNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(21);
-        global::MyFeature.MyAppMainAnyEventNamespacedAddedListenerComponentIndex.Index = new global::MyApp.Main.ComponentIndex(22);
-        global::MyFeature.MyAppMainAnyEventNamespacedRemovedListenerComponentIndex.Index = new global::MyApp.Main.ComponentIndex(23);
-        global::MyFeature.MyAppMainAnyFlagEventNamespacedAddedListenerComponentIndex.Index = new global::MyApp.Main.ComponentIndex(24);
-        global::MyFeature.MyAppMainAnyFlagEventNamespacedRemovedListenerComponentIndex.Index = new global::MyApp.Main.ComponentIndex(25);
-        global::MyFeature.MyAppMainEventNamespacedAddedListenerComponentIndex.Index = new global::MyApp.Main.ComponentIndex(26);
-        global::MyFeature.MyAppMainEventNamespacedRemovedListenerComponentIndex.Index = new global::MyApp.Main.ComponentIndex(27);
-        global::MyFeature.MyAppMainFlagEventNamespacedAddedListenerComponentIndex.Index = new global::MyApp.Main.ComponentIndex(28);
-        global::MyFeature.MyAppMainFlagEventNamespacedRemovedListenerComponentIndex.Index = new global::MyApp.Main.ComponentIndex(29);
-        global::MyFeature.MyAppMainNonPublicComponentIndex.Index = new global::MyApp.Main.ComponentIndex(30);
-        global::MyFeature.MyAppMainNoValidFieldsNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(31);
-        global::MyFeature.MyAppMainOneFieldNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(32);
-        global::MyFeature.MyAppMainPrimaryEntityIndexNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(33);
-        global::MyFeature.MyAppMainReservedKeywordFieldsNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(34);
-        global::MyFeature.MyAppMainSomeNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(35);
-        global::MyFeature.MyAppMainUniqueNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(36);
-        global::MyFeature.MyAppMainUniqueOneFieldNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(37);
-        global::MyAppMainOneFieldComponentIndex.Index = new global::MyApp.Main.ComponentIndex(38);
-        global::MyAppMainPrimaryEntityIndexComponentIndex.Index = new global::MyApp.Main.ComponentIndex(39);
-        global::MyAppMainSomeComponentIndex.Index = new global::MyApp.Main.ComponentIndex(40);
 
-        global::MyApp.MainContext.ComponentNames = new string[]
+
+        global::EmptyContext.ComponentNames = new string[]
         {
-            "CleanupDestroyEntity",
-            "CleanupRemove",
-            "EntityIndex",
-            "Event",
-            "FlagEvent",
-            "MultipleFields",
-            "MyAppMainAnyEventAddedListener",
-            "MyAppMainAnyEventRemovedListener",
-            "MyAppMainAnyFlagEventAddedListener",
-            "MyAppMainAnyFlagEventRemovedListener",
-            "MyAppMainEventAddedListener",
-            "MyAppMainEventRemovedListener",
-            "MyAppMainFlagEventAddedListener",
-            "MyAppMainFlagEventRemovedListener",
-            "MyFeature.CleanupDestroyEntityNamespaced",
-            "MyFeature.CleanupRemoveNamespaced",
-            "MyFeature.DuplicatedContextsNamespaced",
-            "MyFeature.EntityIndexNamespaced",
-            "MyFeature.EventNamespaced",
-            "MyFeature.FlagEventNamespaced",
-            "MyFeature.MultipleFieldsNamespaced",
-            "MyFeature.MultiplePropertiesNamespaced",
-            "MyFeature.MyAppMainAnyEventNamespacedAddedListener",
-            "MyFeature.MyAppMainAnyEventNamespacedRemovedListener",
-            "MyFeature.MyAppMainAnyFlagEventNamespacedAddedListener",
-            "MyFeature.MyAppMainAnyFlagEventNamespacedRemovedListener",
-            "MyFeature.MyAppMainEventNamespacedAddedListener",
-            "MyFeature.MyAppMainEventNamespacedRemovedListener",
-            "MyFeature.MyAppMainFlagEventNamespacedAddedListener",
-            "MyFeature.MyAppMainFlagEventNamespacedRemovedListener",
-            "MyFeature.NonPublic",
-            "MyFeature.NoValidFieldsNamespaced",
-            "MyFeature.OneFieldNamespaced",
-            "MyFeature.PrimaryEntityIndexNamespaced",
-            "MyFeature.ReservedKeywordFieldsNamespaced",
-            "MyFeature.SomeNamespaced",
-            "MyFeature.UniqueNamespaced",
-            "MyFeature.UniqueOneFieldNamespaced",
-            "OneField",
-            "PrimaryEntityIndex",
-            "Some"
+
         };
 
-        global::MyApp.MainContext.ComponentTypes = new global::System.Type[]
+        global::EmptyContext.ComponentTypes = new global::System.Type[]
         {
-            typeof(global::CleanupDestroyEntityComponent),
-            typeof(global::CleanupRemoveComponent),
-            typeof(global::EntityIndexComponent),
-            typeof(global::EventComponent),
-            typeof(global::FlagEventComponent),
-            typeof(global::MultipleFieldsComponent),
-            typeof(global::MyAppMainAnyEventAddedListenerComponent),
-            typeof(global::MyAppMainAnyEventRemovedListenerComponent),
-            typeof(global::MyAppMainAnyFlagEventAddedListenerComponent),
-            typeof(global::MyAppMainAnyFlagEventRemovedListenerComponent),
-            typeof(global::MyAppMainEventAddedListenerComponent),
-            typeof(global::MyAppMainEventRemovedListenerComponent),
-            typeof(global::MyAppMainFlagEventAddedListenerComponent),
-            typeof(global::MyAppMainFlagEventRemovedListenerComponent),
-            typeof(global::MyFeature.CleanupDestroyEntityNamespacedComponent),
-            typeof(global::MyFeature.CleanupRemoveNamespacedComponent),
-            typeof(global::MyFeature.DuplicatedContextsNamespacedComponent),
-            typeof(global::MyFeature.EntityIndexNamespacedComponent),
-            typeof(global::MyFeature.EventNamespacedComponent),
-            typeof(global::MyFeature.FlagEventNamespacedComponent),
-            typeof(global::MyFeature.MultipleFieldsNamespacedComponent),
-            typeof(global::MyFeature.MultiplePropertiesNamespacedComponent),
-            typeof(global::MyFeature.MyAppMainAnyEventNamespacedAddedListenerComponent),
-            typeof(global::MyFeature.MyAppMainAnyEventNamespacedRemovedListenerComponent),
-            typeof(global::MyFeature.MyAppMainAnyFlagEventNamespacedAddedListenerComponent),
-            typeof(global::MyFeature.MyAppMainAnyFlagEventNamespacedRemovedListenerComponent),
-            typeof(global::MyFeature.MyAppMainEventNamespacedAddedListenerComponent),
-            typeof(global::MyFeature.MyAppMainEventNamespacedRemovedListenerComponent),
-            typeof(global::MyFeature.MyAppMainFlagEventNamespacedAddedListenerComponent),
-            typeof(global::MyFeature.MyAppMainFlagEventNamespacedRemovedListenerComponent),
-            typeof(global::MyFeature.NonPublicComponent),
-            typeof(global::MyFeature.NoValidFieldsNamespacedComponent),
-            typeof(global::MyFeature.OneFieldNamespacedComponent),
-            typeof(global::MyFeature.PrimaryEntityIndexNamespacedComponent),
-            typeof(global::MyFeature.ReservedKeywordFieldsNamespacedComponent),
-            typeof(global::MyFeature.SomeNamespacedComponent),
-            typeof(global::MyFeature.UniqueNamespacedComponent),
-            typeof(global::MyFeature.UniqueOneFieldNamespacedComponent),
-            typeof(global::OneFieldComponent),
-            typeof(global::PrimaryEntityIndexComponent),
-            typeof(global::SomeComponent)
+
         };
     }
 }

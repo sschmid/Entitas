@@ -51,12 +51,11 @@ public static partial class ContextInitialization
         global::MyFeature.MyAppMainPrimaryEntityIndexNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(34);
         global::MyFeature.MyAppMainReservedKeywordFieldsNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(35);
         global::MyFeature.MyAppMainSomeNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(36);
-        global::MyFeature.MyAppMainSomeNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(37);
-        global::MyFeature.MyAppMainUniqueNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(38);
-        global::MyFeature.MyAppMainUniqueOneFieldNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(39);
-        global::MyAppMainOneFieldComponentIndex.Index = new global::MyApp.Main.ComponentIndex(40);
-        global::MyAppMainPrimaryEntityIndexComponentIndex.Index = new global::MyApp.Main.ComponentIndex(41);
-        global::MyAppMainSomeComponentIndex.Index = new global::MyApp.Main.ComponentIndex(42);
+        global::MyFeature.MyAppMainUniqueNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(37);
+        global::MyFeature.MyAppMainUniqueOneFieldNamespacedComponentIndex.Index = new global::MyApp.Main.ComponentIndex(38);
+        global::MyAppMainOneFieldComponentIndex.Index = new global::MyApp.Main.ComponentIndex(39);
+        global::MyAppMainPrimaryEntityIndexComponentIndex.Index = new global::MyApp.Main.ComponentIndex(40);
+        global::MyAppMainSomeComponentIndex.Index = new global::MyApp.Main.ComponentIndex(41);
 
         global::MyApp.MainContext.ComponentNames = new string[]
         {
@@ -96,7 +95,6 @@ public static partial class ContextInitialization
             "MyFeature.OneFieldNamespaced",
             "MyFeature.PrimaryEntityIndexNamespaced",
             "MyFeature.ReservedKeywordFieldsNamespaced",
-            "MyFeature.SomeNamespaced",
             "MyFeature.SomeNamespaced",
             "MyFeature.UniqueNamespaced",
             "MyFeature.UniqueOneFieldNamespaced",
@@ -143,7 +141,6 @@ public static partial class ContextInitialization
             typeof(global::MyFeature.OneFieldNamespacedComponent),
             typeof(global::MyFeature.PrimaryEntityIndexNamespacedComponent),
             typeof(global::MyFeature.ReservedKeywordFieldsNamespacedComponent),
-            typeof(global::MyFeature.SomeNamespacedComponent),
             typeof(global::MyFeature.SomeNamespacedComponent),
             typeof(global::MyFeature.UniqueNamespacedComponent),
             typeof(global::MyFeature.UniqueOneFieldNamespacedComponent),

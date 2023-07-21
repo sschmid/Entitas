@@ -123,34 +123,34 @@ namespace Entitas.Generators.Tests
         public Task Component() => VerifyComponent("SomeComponent", DefaultOptions);
 
         [Fact]
-        public Task OneFieldNamespacedComponent() => VerifyComponent("OneFieldNamespacedComponent", EntityIndexExtensionOptions);
+        public Task OneFieldNamespacedComponent() => VerifyComponent("OneFieldNamespacedComponent", EntityExtensionOptions);
 
         [Fact]
-        public Task OneFieldComponent() => VerifyComponent("OneFieldComponent", EntityIndexExtensionOptions);
+        public Task OneFieldComponent() => VerifyComponent("OneFieldComponent", EntityExtensionOptions);
 
         [Fact]
-        public Task MultipleFieldsNamespacedComponent() => VerifyComponent("MultipleFieldsNamespacedComponent", EntityIndexExtensionOptions);
+        public Task MultipleFieldsNamespacedComponent() => VerifyComponent("MultipleFieldsNamespacedComponent", EntityExtensionOptions);
 
         [Fact]
-        public Task MultipleFieldsComponent() => VerifyComponent("MultipleFieldsComponent", EntityIndexExtensionOptions);
+        public Task MultipleFieldsComponent() => VerifyComponent("MultipleFieldsComponent", EntityExtensionOptions);
 
         [Fact]
-        public Task ReservedKeywordFieldsNamespacedComponent() => VerifyComponent("ReservedKeywordFieldsNamespacedComponent", EntityIndexExtensionOptions);
+        public Task ReservedKeywordFieldsNamespacedComponent() => VerifyComponent("ReservedKeywordFieldsNamespacedComponent", EntityExtensionOptions);
 
         [Fact]
-        public Task NoValidFieldsNamespacedComponent() => VerifyComponent("NoValidFieldsNamespacedComponent", EntityIndexExtensionOptions);
+        public Task NoValidFieldsNamespacedComponent() => VerifyComponent("NoValidFieldsNamespacedComponent", EntityExtensionOptions);
 
         [Fact]
-        public Task MultiplePropertiesNamespacedComponent() => VerifyComponent("MultiplePropertiesNamespacedComponent", EntityIndexExtensionOptions);
+        public Task MultiplePropertiesNamespacedComponent() => VerifyComponent("MultiplePropertiesNamespacedComponent", EntityExtensionOptions);
 
         [Fact]
-        public Task ContextFromDifferentAssemblyNamespacedComponent() => VerifyComponent("ContextFromDifferentAssemblyNamespacedComponent", EntityIndexExtensionOptions);
+        public Task ContextFromDifferentAssemblyNamespacedComponent() => VerifyComponent("ContextFromDifferentAssemblyNamespacedComponent", EntityExtensionOptions);
 
         [Fact]
-        public Task UniqueNamespacedComponent() => VerifyComponent("UniqueNamespacedComponent", EntityIndexExtensionOptions);
+        public Task UniqueNamespacedComponent() => VerifyComponent("UniqueNamespacedComponent", ContextExtensionOptions);
 
         [Fact]
-        public Task UniqueOneFieldNamespacedComponent() => VerifyComponent("UniqueOneFieldNamespacedComponent", EntityIndexExtensionOptions);
+        public Task UniqueOneFieldNamespacedComponent() => VerifyComponent("UniqueOneFieldNamespacedComponent", ContextExtensionOptions);
 
         [Fact]
         public Task CleanupRemoveNamespacedComponent() => VerifyComponent("CleanupRemoveNamespacedComponent", CleanupSystemsOptions);
@@ -183,7 +183,10 @@ namespace Entitas.Generators.Tests
         public Task FlagEventComponent() => VerifyComponent("FlagEventComponent", EventsOptions);
 
         [Fact]
-        public Task EventSystems() => VerifyComponent("EventComponent", EventSystemsExtensionOptions);
+        public Task EventSystems() => VerifyContext("ContextInitialization", EventSystemsExtensionOptions);
+
+        [Fact]
+        public Task NoEventSystems() => VerifyContext("EmptyContextInitialization", EventSystemsExtensionOptions);
 
         /*
          *
@@ -192,19 +195,10 @@ namespace Entitas.Generators.Tests
          */
 
         [Fact]
-        public Task NoEntityIndexNamespacedComponent() => VerifyComponent("SomeNamespacedComponent", EntityIndexExtensionOptions);
+        public Task EntityIndexes() => VerifyContext("ContextInitialization", EntityIndexExtensionOptions);
 
         [Fact]
-        public Task EntityIndexNamespacedComponent() => VerifyComponent("EntityIndexNamespacedComponent", EntityIndexExtensionOptions);
-
-        [Fact]
-        public Task EntityIndexComponent() => VerifyComponent("EntityIndexComponent", EntityIndexExtensionOptions);
-
-        [Fact]
-        public Task PrimaryEntityIndexNamespacedComponent() => VerifyComponent("PrimaryEntityIndexNamespacedComponent", EntityIndexExtensionOptions);
-
-        [Fact]
-        public Task PrimaryEntityIndexComponent() => VerifyComponent("PrimaryEntityIndexComponent", EntityIndexExtensionOptions);
+        public Task NoEntityIndexes() => VerifyContext("EmptyContextInitialization", EntityIndexExtensionOptions);
 
         /*
          *
@@ -213,7 +207,7 @@ namespace Entitas.Generators.Tests
          */
 
         [Fact]
-        public Task DuplicatedContextsNamespacedComponent() => VerifyComponent("DuplicatedContextsNamespacedComponent", EntityIndexExtensionOptions);
+        public Task DuplicatedContextsNamespacedComponent() => VerifyComponent("DuplicatedContextsNamespacedComponent", EntityExtensionOptions);
 
         /*
          *

@@ -10,7 +10,6 @@ using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
-using MyFeature;
 using VerifyXunit;
 
 namespace Entitas.Generators.Tests
@@ -34,11 +33,32 @@ namespace Entitas.Generators.Tests
                 .Select(assembly => MetadataReference.CreateFromFile(assembly.Location))
                 .Concat(new[]
                 {
-                    MetadataReference.CreateFromFile(typeof(IComponent).Assembly.Location),
-                    MetadataReference.CreateFromFile(typeof(Attributes.ContextAttribute).Assembly.Location),
-                    MetadataReference.CreateFromFile(typeof(SomeNamespacedComponent).Assembly.Location),
-                    MetadataReference.CreateFromFile(typeof(MyApp.LibraryContext).Assembly.Location)
+                    MetadataReference.CreateFromFile(typeof(MyApp.LibraryContext).Assembly.Location),
                 });
+
+            var allOptions = new Dictionary<string, string>
+            {
+                // Component
+                { EntitasAnalyzerConfigOptions.ComponentCleanupSystemsKey, "false" },
+                { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
+                { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" },
+                { EntitasAnalyzerConfigOptions.ComponentContextInitializationMethodKey, "false" },
+                { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
+                { EntitasAnalyzerConfigOptions.ComponentEntityIndexExtensionKey, "false" },
+                { EntitasAnalyzerConfigOptions.ComponentEventsKey, "false" },
+                { EntitasAnalyzerConfigOptions.ComponentEventSystemsExtensionKey, "false" },
+                { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" },
+                // Context
+                { EntitasAnalyzerConfigOptions.ContextComponentIndexKey, "true" },
+                { EntitasAnalyzerConfigOptions.ContextContextKey, "true" },
+                { EntitasAnalyzerConfigOptions.ContextEntityKey, "true" },
+                { EntitasAnalyzerConfigOptions.ContextMatcherKey, "true" }
+            };
+
+            foreach (var kvp in options)
+            {
+                allOptions[kvp.Key] = kvp.Value;
+            }
 
             var compilation = CSharpCompilation.Create(
                 "Entitas.Generators.Tests",
@@ -48,7 +68,7 @@ namespace Entitas.Generators.Tests
 
             var driver = CSharpGeneratorDriver
                 .Create(generator)
-                .WithUpdatedAnalyzerConfigOptions(new TestAnalyzerConfigOptionsProvider(options))
+                .WithUpdatedAnalyzerConfigOptions(new TestAnalyzerConfigOptionsProvider(allOptions))
                 .RunGenerators(compilation);
 
             return Verifier.Verify(driver).UseDirectory("snapshots");

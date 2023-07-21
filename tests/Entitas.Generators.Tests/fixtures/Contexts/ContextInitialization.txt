@@ -5,9 +5,6 @@ using MyApp;
 namespace MyFeature
 {
     [Context(typeof(MainContext))]
-    public sealed class SomeNamespacedComponent : IComponent { }
-
-    [Context(typeof(MainContext))]
     public sealed class AnotherNamespacedComponent : IComponent { }
 }
 
