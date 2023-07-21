@@ -7,7 +7,7 @@ namespace Entitas.Tests
     public class EntitasErrorMessagesTests
     {
         readonly ITestOutputHelper _output;
-        readonly MyTest1Context _context;
+        readonly TestContext _context;
         readonly TestEntity _entity;
 
         public EntitasErrorMessagesTests(ITestOutputHelper output)
@@ -15,7 +15,7 @@ namespace Entitas.Tests
             _output = output;
             var componentNames = new[] { "Health", "Position", "View" };
             var contextInfo = new ContextInfo("My Context", componentNames, null);
-            _context = new MyTest1Context(componentNames.Length, 42, contextInfo);
+            _context = new TestContext(componentNames.Length, 42, contextInfo);
             _entity = _context.CreateEntity();
         }
 
@@ -99,19 +99,19 @@ namespace Entitas.Tests
         {
             var componentNames = new[] { "Health", "Position", "View" };
             var contextInfo = new ContextInfo("My Context", componentNames, null);
-            PrintErrorMessage(() => new MyTest1Context(1, 0, contextInfo));
+            PrintErrorMessage(() => new TestContext(999, 0, contextInfo));
         }
 
         [Fact]
         public void WhenDestroyingRetainedEntity()
         {
-            var e = _context.CreateEntity();
-            e.Retain(this);
-            e.Retain(new object());
+            var entity = _context.CreateEntity();
+            entity.Retain(this);
+            entity.Retain(new object());
 
-            e = _context.CreateEntity();
-            e.Retain(this);
-            e.Retain(new object());
+            entity = _context.CreateEntity();
+            entity.Retain(this);
+            entity.Retain(new object());
 
             PrintErrorMessage(() => _context.DestroyAllEntities());
         }
@@ -151,16 +151,12 @@ namespace Entitas.Tests
         {
             new PrimaryEntityIndex<TestEntity, string>(
                 "TestIndex",
-                _context.GetGroup((Matcher<TestEntity>)Matcher<TestEntity>.AllOf(CID.ComponentA)),
+                _context.GetGroup(TestUserMatcher.User),
                 (_, c) => ((UserComponent)c).Name
             );
 
-            var nameAge = new UserComponent();
-            nameAge.Name = "Max";
-            nameAge.Age = 42;
-
-            _context.CreateEntity().AddComponent(CID.ComponentA, nameAge);
-            PrintErrorMessage(() => _context.CreateEntity().AddComponent(CID.ComponentA, nameAge));
+            _context.CreateEntity().AddUser("Test", 42);
+            PrintErrorMessage(() => _context.CreateEntity().AddUser("Test", 42));
         }
 
         void PrintErrorMessage(Action action)

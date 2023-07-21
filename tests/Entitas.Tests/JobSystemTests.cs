@@ -11,9 +11,7 @@ namespace Entitas.Tests
 
         public JobSystemTests()
         {
-            TestContext.ComponentNames = new[] { "User" };
-            TestContext.ComponentTypes = new[] { typeof(UserComponent) };
-            _context = new TestContext();
+            _context = new TestContext(1);
         }
 
         [Fact]

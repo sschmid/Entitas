@@ -1,13 +1,18 @@
+using System;
+using Entitas;
+
 public static class TestEntityExtension
 {
-    public static void AddUser(this TestEntity entity, string name, int age)
+    public static TestEntity AddUser(this TestEntity entity, string name, int age)
     {
         entity.AddComponent(0, new UserComponent { Name = name, Age = age });
+        return entity;
     }
 
-    public static void RemoveUser(this TestEntity entity)
+    public static TestEntity RemoveUser(this TestEntity entity)
     {
         entity.RemoveComponent(0);
+        return entity;
     }
 
     public static UserComponent GetUser(this TestEntity entity)
@@ -34,68 +39,58 @@ public static class OtherTestEntityExtension
     }
 }
 
-public sealed class TestEntity : Entitas.Entity { }
+public sealed class TestEntity : Entity { }
 
-public sealed class TestContext : Entitas.Context<TestEntity>
+public sealed class TestContext : Context<TestEntity>
 {
-    public static string[] ComponentNames;
-    public static System.Type[] ComponentTypes;
+    static readonly Func<TestEntity> CreateEntityDelegate = () => new TestEntity();
 
-    public TestContext()
-        : base(
-            ComponentTypes.Length,
-            0,
-            new Entitas.ContextInfo(
-                "TestContext",
-                ComponentNames,
-                ComponentTypes
-            ),
-#if (ENTITAS_FAST_AND_UNSAFE)
-            Entitas.UnsafeAERC.Delegate,
-#else
-            Entitas.SafeAERC.Delegate,
-#endif
-            () => new TestEntity()
+    public TestContext(int totalComponents) :
+        base(totalComponents, CreateEntityDelegate) { }
+
+    public TestContext(int totalComponents, string[] componentNames, Type[] componentTypes) :
+        this(totalComponents, 0, new ContextInfo("TestContext", componentNames, componentTypes)) { }
+
+    public TestContext(int totalComponents, int startCreationIndex, ContextInfo contextInfo) :
+        base(
+            totalComponents,
+            startCreationIndex,
+            contextInfo,
+            SafeAERC.Delegate,
+            CreateEntityDelegate
         ) { }
 }
 
-public sealed class OtherTestEntity : Entitas.Entity { }
+public sealed class OtherTestEntity : Entity { }
 
-public sealed class OtherTestContext : Entitas.Context<OtherTestEntity>
+public sealed class OtherTestContext : Context<OtherTestEntity>
 {
-    public static string[] ComponentNames;
-    public static System.Type[] ComponentTypes;
-
-    public OtherTestContext()
-        : base(
-            ComponentTypes.Length,
+    public OtherTestContext() :
+        base(
+            1,
             0,
-            new Entitas.ContextInfo(
+            new ContextInfo(
                 "OtherTestContext",
-                ComponentNames,
-                ComponentTypes
+                new[] { "User" },
+                new[] { typeof(UserComponent) }
             ),
-#if (ENTITAS_FAST_AND_UNSAFE)
-            Entitas.UnsafeAERC.Delegate,
-#else
-            Entitas.SafeAERC.Delegate,
-#endif
+            SafeAERC.Delegate,
             () => new OtherTestEntity()
         ) { }
 }
 
 public static class TestUserMatcher
 {
-    static Entitas.IMatcher<TestEntity> _matcher;
+    static IMatcher<TestEntity> _matcher;
 
-    public static Entitas.IMatcher<TestEntity> User
+    public static IMatcher<TestEntity> User
     {
         get
         {
             if (_matcher == null)
             {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(0);
-                matcher.ComponentNames = TestContext.ComponentNames;
+                var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(0);
+                matcher.ComponentNames = new[] { "User" };
                 _matcher = matcher;
             }
 

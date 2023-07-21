@@ -40,7 +40,7 @@ namespace Entitas
             {
                 throw new CollectorException(
                     $"Unbalanced count with groups ({groups.Length}) and group events ({groupEvents.Length}).",
-                    "Group and group events count must be equal."
+                    "Group and GroupEvents count must be equal."
                 );
             }
 

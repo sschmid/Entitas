@@ -2,70 +2,54 @@
 using System.Collections.Generic;
 using Entitas;
 
-public interface IReactiveSystemSpy {
-    int didInitialize { get; }
-    int didExecute { get; }
-    int didCleanup { get; }
-    int didTearDown { get; }
-    IEntity[] entities { get; }
+public interface IReactiveSystemSpy
+{
+    int DidInitialize { get; }
+    int DidExecute { get; }
+    int DidCleanup { get; }
+    int DidTearDown { get; }
+    TestEntity[] Entities { get; }
 }
 
-public class ReactiveSystemSpy : ReactiveSystem<TestEntity>, IReactiveSystemSpy, IInitializeSystem, ICleanupSystem, ITearDownSystem {
+public class ReactiveSystemSpy : ReactiveSystem<TestEntity>, IReactiveSystemSpy, IInitializeSystem, ICleanupSystem, ITearDownSystem
+{
+    public int DidInitialize => _didInitialize;
+    public int DidExecute => _didExecute;
+    public int DidCleanup => _didCleanup;
+    public int DidTearDown => _didTearDown;
+    public TestEntity[] Entities => _entities;
 
-    public int didInitialize { get { return _didInitialize; } }
-    public int didExecute { get { return _didExecute; } }
-    public int didCleanup { get { return _didCleanup; } }
-    public int didTearDown { get { return _didTearDown; } }
-    public IEntity[] entities { get { return _entities; } }
-
-    public Action<List<TestEntity>> executeAction;
+    public Action<List<TestEntity>> ExecuteAction;
 
     protected int _didInitialize;
     protected int _didExecute;
     protected int _didCleanup;
     protected int _didTearDown;
-    protected IEntity[] _entities;
+    protected TestEntity[] _entities;
 
     readonly Func<TestEntity, bool> _filter;
 
-    public ReactiveSystemSpy(ICollector<TestEntity> collector) : base(collector) {
-    }
+    public ReactiveSystemSpy(ICollector<TestEntity> collector) : base(collector) { }
 
-    public ReactiveSystemSpy(ICollector<TestEntity> collector, Func<IEntity, bool> filter) : this(collector) {
+    public ReactiveSystemSpy(ICollector<TestEntity> collector, Func<IEntity, bool> filter) : this(collector)
+    {
         _filter = filter;
     }
 
-    protected override ICollector<TestEntity> GetTrigger(IContext<TestEntity> context) {
-        return null;
-    }
+    protected override ICollector<TestEntity> GetTrigger(IContext<TestEntity> context) => null;
 
-    protected override bool Filter(TestEntity entity) {
-        return _filter == null || _filter(entity);
-    }
+    protected override bool Filter(TestEntity entity) => _filter?.Invoke(entity) != false;
 
-    public void Initialize() {
-        _didInitialize += 1;
-    }
+    public void Initialize() => _didInitialize += 1;
 
-    protected override void Execute(List<TestEntity> entities) {
+    protected override void Execute(List<TestEntity> entities)
+    {
         _didExecute += 1;
-
-        if (entities != null) {
-            _entities = entities.ToArray();
-        } else {
-            _entities = null;
-        }
-
-        if (executeAction != null) {
-            executeAction(entities);
-        }
+        _entities = entities?.ToArray();
+        ExecuteAction?.Invoke(entities);
     }
 
-    public void Cleanup() {
-        _didCleanup += 1;
-    }
+    public void Cleanup() => _didCleanup += 1;
 
-    public void TearDown() {
-        _didTearDown += 1;
-    }
+    public void TearDown() => _didTearDown += 1;
 }

@@ -20,8 +20,8 @@ namespace Entitas.Generators
                         public static string[] ComponentNames;
                         public static global::System.Type[] ComponentTypes;
 
-                        public {{context.Name}}()
-                            : base(
+                        public {{context.Name}}() :
+                            base(
                                 ComponentTypes.Length,
                                 0,
                                 new global::Entitas.ContextInfo(
