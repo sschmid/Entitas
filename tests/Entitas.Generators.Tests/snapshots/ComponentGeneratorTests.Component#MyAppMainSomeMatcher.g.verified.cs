@@ -8,7 +8,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed class MyAppMainSomeMatcher
+public static class MyAppMainSomeMatcher
 {
     static global::Entitas.IMatcher<global::MyApp.Main.Entity> _matcher;
 
