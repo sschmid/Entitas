@@ -74,6 +74,12 @@ namespace Entitas.Tests
         }
 
         [Fact]
+        public void IgnoresAddingNull()
+        {
+            _systems.Add(null);
+        }
+
+        [Fact]
         public void ReturnsSystemsWhenAddingSystem()
         {
             _systems.Add(new InitializeSystemSpy()).Should().BeSameAs(_systems);
