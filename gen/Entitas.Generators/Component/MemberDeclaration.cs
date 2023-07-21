@@ -12,9 +12,11 @@ namespace Entitas.Generators
         public readonly int EntityIndexType;
         public readonly string ValidLowerFirstName;
 
-        public MemberDeclaration(IFieldSymbol field) : this(field.Type.ToDisplayString(), field.Name, GetEntityIndexType(field)) { }
+        public MemberDeclaration(IFieldSymbol field) : this(field, field.Type) { }
 
-        public MemberDeclaration(IPropertySymbol property) : this(property.Type.ToDisplayString(), property.Name, GetEntityIndexType(property)) { }
+        public MemberDeclaration(IPropertySymbol property) : this(property, property.Type) { }
+
+        public MemberDeclaration(ISymbol symbol, ITypeSymbol type) : this(GetTypeName(type), symbol.Name, GetEntityIndexType(symbol)) { }
 
         public MemberDeclaration(string type, string name, int entityIndexType)
         {
@@ -22,6 +24,13 @@ namespace Entitas.Generators
             Name = name;
             EntityIndexType = entityIndexType;
             ValidLowerFirstName = ToValidLowerFirst(Name);
+        }
+
+        static string GetTypeName(ITypeSymbol type)
+        {
+            return type is IArrayTypeSymbol arrayType
+                ? arrayType.ToDisplayString().Replace("*", string.Empty)
+                : type.ToDisplayString();
         }
 
         static int GetEntityIndexType(ISymbol symbol)
