@@ -80,7 +80,7 @@ namespace Entitas.Unity.Tests
         [Fact]
         public void CreatesSystemInfoForReactiveSystem()
         {
-            var system = new TestReactiveSystem(new TestContext(1));
+            var system = new TestReactiveSystem(new Context<Entity>(1, () => new Entity()));
             var info = new SystemInfo(system);
 
             info.systemName.Should().Be("TestReactive");

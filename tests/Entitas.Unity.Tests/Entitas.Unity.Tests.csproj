@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../Entitas.Tests/Entitas.Tests.csproj" />
     <ProjectReference Include="../../src/Entitas.Unity/Entitas.Unity.csproj" />
   </ItemGroup>
 

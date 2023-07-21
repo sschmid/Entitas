@@ -10,8 +10,6 @@ namespace Entitas.Generators.Tests
     [UsesVerify]
     public class ComponentGeneratorTests
     {
-        static readonly string ProjectRoot = TestExtensions.GetProjectRoot();
-
         static readonly string FixturesPath = Path.Combine(ProjectRoot, "tests", "Entitas.Generators.Tests", "fixtures");
 
         static Task Verify(string fixture, Dictionary<string, string> options) =>
@@ -25,71 +23,56 @@ namespace Entitas.Generators.Tests
 
         static readonly Dictionary<string, string> DefaultOptions = new Dictionary<string, string>
         {
-            { EntitasAnalyzerConfigOptions.ComponentEventSystemsExtensionKey, "false" }
+            { EntitasAnalyzerConfigOptions.ComponentCleanupSystemsKey, "true" },
+            { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "true" },
+            { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "true" },
+            { EntitasAnalyzerConfigOptions.ComponentContextInitializationMethodKey, "true" },
+            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "true" },
+            { EntitasAnalyzerConfigOptions.ComponentEntityIndexExtensionKey, "true" },
+            { EntitasAnalyzerConfigOptions.ComponentEventsKey, "true" },
+            { EntitasAnalyzerConfigOptions.ComponentEventSystemsExtensionKey, "true" },
+            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "true" }
         };
 
-        static readonly Dictionary<string, string> NoComponentIndexNoMatcherOptions = new Dictionary<string, string>
+        static readonly Dictionary<string, string> EntityExtensionOptions = new Dictionary<string, string>
         {
-            { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEventSystemsExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" }
+            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "true" }
         };
 
-        static readonly Dictionary<string, string> CleanupOnlyOptions = new Dictionary<string, string>
+        static readonly Dictionary<string, string> ContextExtensionOptions = new Dictionary<string, string>
         {
-            { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentContextInitializationMethodKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEntityIndexExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEventsKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEventSystemsExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" }
+            { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "true" }
         };
 
-        static readonly Dictionary<string, string> EventsOnlyOptions = new Dictionary<string, string>
+        static readonly Dictionary<string, string> CleanupSystemsOptions = new Dictionary<string, string>
         {
-            { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEventSystemsExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" }
+            { EntitasAnalyzerConfigOptions.ComponentCleanupSystemsKey, "true" }
         };
 
-        static readonly Dictionary<string, string> EventSystemsOnlyOptions = new Dictionary<string, string>
+        static readonly Dictionary<string, string> EventsOptions = new Dictionary<string, string>
         {
-            { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentContextInitializationMethodKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEventsKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" }
+            { EntitasAnalyzerConfigOptions.ComponentEventsKey, "true" }
         };
 
-        static readonly Dictionary<string, string> EntityIndexOnlyOptions = new Dictionary<string, string>
+        static readonly Dictionary<string, string> EventSystemsExtensionOptions = new Dictionary<string, string>
         {
-            { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentContextInitializationMethodKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEventsKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEventSystemsExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" }
+            { EntitasAnalyzerConfigOptions.ComponentEventSystemsExtensionKey, "true" }
         };
 
-        static readonly Dictionary<string, string> ContextInitializationOnlyOptions = new Dictionary<string, string>
+        static readonly Dictionary<string, string> EntityIndexExtensionOptions = new Dictionary<string, string>
         {
-            { EntitasAnalyzerConfigOptions.ComponentCleanupSystemsKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentComponentIndexKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentContextExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEntityExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEventsKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentEventSystemsExtensionKey, "false" },
-            { EntitasAnalyzerConfigOptions.ComponentMatcherKey, "false" }
+            { EntitasAnalyzerConfigOptions.ComponentEntityIndexExtensionKey, "true" }
+        };
+
+        static readonly Dictionary<string, string> ContextInitializationMethodOptions = new Dictionary<string, string>
+        {
+            { EntitasAnalyzerConfigOptions.ComponentContextInitializationMethodKey, "true" }
         };
 
         [Theory]
         [InlineData("ComponentGenerator")]
+        [InlineData("ComponentGenerator.CleanupSystem")]
+        [InlineData("ComponentGenerator.CleanupSystems")]
         [InlineData("ComponentGenerator.ComponentIndex")]
         [InlineData("ComponentGenerator.ContextExtension")]
         [InlineData("ComponentGenerator.ContextInitializationMethod")]
@@ -140,46 +123,46 @@ namespace Entitas.Generators.Tests
         public Task Component() => VerifyComponent("SomeComponent", DefaultOptions);
 
         [Fact]
-        public Task OneFieldNamespacedComponent() => VerifyComponent("OneFieldNamespacedComponent", NoComponentIndexNoMatcherOptions);
+        public Task OneFieldNamespacedComponent() => VerifyComponent("OneFieldNamespacedComponent", EntityIndexExtensionOptions);
 
         [Fact]
-        public Task OneFieldComponent() => VerifyComponent("OneFieldComponent", NoComponentIndexNoMatcherOptions);
+        public Task OneFieldComponent() => VerifyComponent("OneFieldComponent", EntityIndexExtensionOptions);
 
         [Fact]
-        public Task MultipleFieldsNamespacedComponent() => VerifyComponent("MultipleFieldsNamespacedComponent", NoComponentIndexNoMatcherOptions);
+        public Task MultipleFieldsNamespacedComponent() => VerifyComponent("MultipleFieldsNamespacedComponent", EntityIndexExtensionOptions);
 
         [Fact]
-        public Task MultipleFieldsComponent() => VerifyComponent("MultipleFieldsComponent", NoComponentIndexNoMatcherOptions);
+        public Task MultipleFieldsComponent() => VerifyComponent("MultipleFieldsComponent", EntityIndexExtensionOptions);
 
         [Fact]
-        public Task ReservedKeywordFieldsNamespacedComponent() => VerifyComponent("ReservedKeywordFieldsNamespacedComponent", NoComponentIndexNoMatcherOptions);
+        public Task ReservedKeywordFieldsNamespacedComponent() => VerifyComponent("ReservedKeywordFieldsNamespacedComponent", EntityIndexExtensionOptions);
 
         [Fact]
-        public Task NoValidFieldsNamespacedComponent() => VerifyComponent("NoValidFieldsNamespacedComponent", NoComponentIndexNoMatcherOptions);
+        public Task NoValidFieldsNamespacedComponent() => VerifyComponent("NoValidFieldsNamespacedComponent", EntityIndexExtensionOptions);
 
         [Fact]
-        public Task MultiplePropertiesNamespacedComponent() => VerifyComponent("MultiplePropertiesNamespacedComponent", NoComponentIndexNoMatcherOptions);
+        public Task MultiplePropertiesNamespacedComponent() => VerifyComponent("MultiplePropertiesNamespacedComponent", EntityIndexExtensionOptions);
 
         [Fact]
-        public Task ContextFromDifferentAssemblyNamespacedComponent() => VerifyComponent("ContextFromDifferentAssemblyNamespacedComponent", NoComponentIndexNoMatcherOptions);
+        public Task ContextFromDifferentAssemblyNamespacedComponent() => VerifyComponent("ContextFromDifferentAssemblyNamespacedComponent", EntityIndexExtensionOptions);
 
         [Fact]
-        public Task UniqueNamespacedComponent() => VerifyComponent("UniqueNamespacedComponent", NoComponentIndexNoMatcherOptions);
+        public Task UniqueNamespacedComponent() => VerifyComponent("UniqueNamespacedComponent", EntityIndexExtensionOptions);
 
         [Fact]
-        public Task UniqueOneFieldNamespacedComponent() => VerifyComponent("UniqueOneFieldNamespacedComponent", NoComponentIndexNoMatcherOptions);
+        public Task UniqueOneFieldNamespacedComponent() => VerifyComponent("UniqueOneFieldNamespacedComponent", EntityIndexExtensionOptions);
 
         [Fact]
-        public Task CleanupRemoveNamespacedComponent() => VerifyComponent("CleanupRemoveNamespacedComponent", CleanupOnlyOptions);
+        public Task CleanupRemoveNamespacedComponent() => VerifyComponent("CleanupRemoveNamespacedComponent", CleanupSystemsOptions);
 
         [Fact]
-        public Task CleanupRemoveComponent() => VerifyComponent("CleanupRemoveComponent", CleanupOnlyOptions);
+        public Task CleanupRemoveComponent() => VerifyComponent("CleanupRemoveComponent", CleanupSystemsOptions);
 
         [Fact]
-        public Task CleanupDestroyEntityNamespacedComponent() => VerifyComponent("CleanupDestroyEntityNamespacedComponent", CleanupOnlyOptions);
+        public Task CleanupDestroyEntityNamespacedComponent() => VerifyComponent("CleanupDestroyEntityNamespacedComponent", CleanupSystemsOptions);
 
         [Fact]
-        public Task CleanupDestroyEntityComponent() => VerifyComponent("CleanupDestroyEntityComponent", CleanupOnlyOptions);
+        public Task CleanupDestroyEntityComponent() => VerifyComponent("CleanupDestroyEntityComponent", CleanupSystemsOptions);
 
         /*
          *
@@ -188,19 +171,19 @@ namespace Entitas.Generators.Tests
          */
 
         [Fact]
-        public Task EventNamespacedComponent() => VerifyComponent("EventNamespacedComponent", EventsOnlyOptions);
+        public Task EventNamespacedComponent() => VerifyComponent("EventNamespacedComponent", EventsOptions);
 
         [Fact]
-        public Task EventComponent() => VerifyComponent("EventComponent", EventsOnlyOptions);
+        public Task EventComponent() => VerifyComponent("EventComponent", EventsOptions);
 
         [Fact]
-        public Task FlagEventNamespacedComponent() => VerifyComponent("FlagEventNamespacedComponent", EventsOnlyOptions);
+        public Task FlagEventNamespacedComponent() => VerifyComponent("FlagEventNamespacedComponent", EventsOptions);
 
         [Fact]
-        public Task FlagEventComponent() => VerifyComponent("FlagEventComponent", EventsOnlyOptions);
+        public Task FlagEventComponent() => VerifyComponent("FlagEventComponent", EventsOptions);
 
         [Fact]
-        public Task EventSystems() => VerifyComponent("EventComponent", EventSystemsOnlyOptions);
+        public Task EventSystems() => VerifyComponent("EventComponent", EventSystemsExtensionOptions);
 
         /*
          *
@@ -209,19 +192,19 @@ namespace Entitas.Generators.Tests
          */
 
         [Fact]
-        public Task NoEntityIndexNamespacedComponent() => VerifyComponent("SomeNamespacedComponent", EntityIndexOnlyOptions);
+        public Task NoEntityIndexNamespacedComponent() => VerifyComponent("SomeNamespacedComponent", EntityIndexExtensionOptions);
 
         [Fact]
-        public Task EntityIndexNamespacedComponent() => VerifyComponent("EntityIndexNamespacedComponent", EntityIndexOnlyOptions);
+        public Task EntityIndexNamespacedComponent() => VerifyComponent("EntityIndexNamespacedComponent", EntityIndexExtensionOptions);
 
         [Fact]
-        public Task EntityIndexComponent() => VerifyComponent("EntityIndexComponent", EntityIndexOnlyOptions);
+        public Task EntityIndexComponent() => VerifyComponent("EntityIndexComponent", EntityIndexExtensionOptions);
 
         [Fact]
-        public Task PrimaryEntityIndexNamespacedComponent() => VerifyComponent("PrimaryEntityIndexNamespacedComponent", EntityIndexOnlyOptions);
+        public Task PrimaryEntityIndexNamespacedComponent() => VerifyComponent("PrimaryEntityIndexNamespacedComponent", EntityIndexExtensionOptions);
 
         [Fact]
-        public Task PrimaryEntityIndexComponent() => VerifyComponent("PrimaryEntityIndexComponent", EntityIndexOnlyOptions);
+        public Task PrimaryEntityIndexComponent() => VerifyComponent("PrimaryEntityIndexComponent", EntityIndexExtensionOptions);
 
         /*
          *
@@ -230,7 +213,7 @@ namespace Entitas.Generators.Tests
          */
 
         [Fact]
-        public Task DuplicatedContextsNamespacedComponent() => VerifyComponent("DuplicatedContextsNamespacedComponent", NoComponentIndexNoMatcherOptions);
+        public Task DuplicatedContextsNamespacedComponent() => VerifyComponent("DuplicatedContextsNamespacedComponent", EntityIndexExtensionOptions);
 
         /*
          *
@@ -239,12 +222,12 @@ namespace Entitas.Generators.Tests
          */
 
         [Fact]
-        public Task EmptyContextInitialization() => VerifyContext("EmptyContextInitialization", ContextInitializationOnlyOptions);
+        public Task EmptyContextInitialization() => VerifyContext("EmptyContextInitialization", ContextInitializationMethodOptions);
 
         [Fact]
-        public Task ContextInitialization() => VerifyContext("ContextInitialization", ContextInitializationOnlyOptions);
+        public Task ContextInitialization() => VerifyContext("ContextInitialization", ContextInitializationMethodOptions);
 
         [Fact]
-        public Task ContextInitializationFromDifferentAssembly() => VerifyContext("ContextInitializationFromDifferentAssembly", ContextInitializationOnlyOptions);
+        public Task ContextInitializationFromDifferentAssembly() => VerifyContext("ContextInitializationFromDifferentAssembly", ContextInitializationMethodOptions);
     }
 }
