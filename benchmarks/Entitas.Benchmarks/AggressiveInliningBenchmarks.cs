@@ -146,8 +146,8 @@ namespace Entitas.Benchmarks
 
     public sealed class TestContext<TEntity> : Context<TEntity> where TEntity : class, IEntity, new()
     {
-        public TestContext(int totalComponents, Type[] componentTypes)
-            : base(
+        public TestContext(int totalComponents, Type[] componentTypes) :
+            base(
                 totalComponents,
                 0,
                 new ContextInfo(
