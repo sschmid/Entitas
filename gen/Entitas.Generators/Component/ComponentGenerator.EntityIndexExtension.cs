@@ -10,9 +10,6 @@ namespace Entitas.Generators
     {
         static void EntityIndexExtension(SourceProductionContext spc, ContextInitializationMethodDeclaration method, AnalyzerConfigOptionsProvider optionsProvider)
         {
-            if (method.Components.Length == 0)
-                return;
-
             if (!EntitasAnalyzerConfigOptions.ComponentEntityIndexExtension(optionsProvider, method.SyntaxTree))
                 return;
 
@@ -28,50 +25,54 @@ namespace Entitas.Generators
                 NamespaceDeclaration(method.ContextNamespace,
                     $$"""
                     public static class {{method.ContextName}}EntityIndexExtension
-                    {
-                    {{EntityIndexNames(componentMemberPairs)}}
-
+                    {{{EntityIndexNames(componentMemberPairs)}}
                         public static {{method.ContextName}} AddAllEntityIndexes(this {{method.ContextName}} context)
-                        {
-                    {{AddEntityIndexes(componentMemberPairs, method)}}
+                        {{{AddEntityIndexes(componentMemberPairs, method)}}
                             return context;
                         }
                     }
 
-                    """) + '\n' +
+                    """) +
                 EntityIndexExtensionMethods(componentMemberPairs, method));
 
             static string EntityIndexNames(ImmutableArray<(ComponentDeclaration Component, MemberDeclaration Member)> pairs)
             {
-                return string.Join("\n", pairs.Select(static pair =>
-                {
-                    var indexName = $"{pair.Component.FullPrefix}{pair.Member.Name}";
-                    return $"    public const string {indexName} = \"{indexName}\";";
-                }));
+                return pairs.Length == 0
+                    ? string.Empty
+                    : "\n" + string.Join("\n", pairs.Select(static pair =>
+                    {
+                        var indexName = $"{pair.Component.FullPrefix}{pair.Member.Name}";
+                        return $"    public const string {indexName} = \"{indexName}\";";
+                    })) + "\n";
             }
 
             static string AddEntityIndexes(ImmutableArray<(ComponentDeclaration Component, MemberDeclaration Member)> pairs, ContextInitializationMethodDeclaration method)
             {
-                return string.Join("\n", pairs.Select(pair =>
-                {
-                    var indexName = $"{pair.Component.FullPrefix}{pair.Member.Name}";
-                    var indexType = pair.Member.EntityIndexType == 0 ? "EntityIndex" : "PrimaryEntityIndex";
-                    var contextAwareComponentPrefix = pair.Component.ContextAwareComponentPrefix(method.FullContextPrefix);
-                    return $$"""
+                return pairs.Length == 0
+                    ? string.Empty
+                    : "\n" + string.Join("\n", pairs.Select(pair =>
+                    {
+                        var indexName = $"{pair.Component.FullPrefix}{pair.Member.Name}";
+                        var indexType = pair.Member.EntityIndexType == 0 ? "EntityIndex" : "PrimaryEntityIndex";
+                        var contextAwareComponentPrefix = pair.Component.ContextAwareComponentPrefix(method.FullContextPrefix);
+                        return $$"""
                                     context.AddEntityIndex(new global::Entitas.{{indexType}}<global::{{method.FullContextPrefix}}.Entity, {{pair.Member.Type}}>(
                                         {{indexName}},
                                         context.GetGroup(global::{{CombinedNamespace(pair.Component.Namespace, contextAwareComponentPrefix)}}Matcher.{{pair.Component.Prefix}}),
                                         (entity, component) => ((global::{{pair.Component.FullName}})component).{{pair.Member.Name}}));
 
                             """;
-                }));
+                    }));
             }
 
-            static string EntityIndexExtensionMethods(ImmutableArray<(ComponentDeclaration Component, MemberDeclaration Member)> pairs, ContextInitializationMethodDeclaration method) =>
-                string.Join("\n", pairs
-                    .GroupBy(pair => pair.Component.Namespace)
-                    .Select(group => NamespaceDeclaration(group.Key,
-                        $$"""
+            static string EntityIndexExtensionMethods(ImmutableArray<(ComponentDeclaration Component, MemberDeclaration Member)> pairs, ContextInitializationMethodDeclaration method)
+            {
+                return pairs.Length == 0
+                    ? string.Empty
+                    : "\n" + string.Join("\n", pairs
+                        .GroupBy(pair => pair.Component.Namespace)
+                        .Select(group => NamespaceDeclaration(group.Key,
+                            $$"""
                         public static class EntityIndexExtension
                         {
                         {{string.Join("\n\n", group.Select(pair => pair.Member.EntityIndexType == 0
@@ -90,7 +91,8 @@ namespace Entitas.Generators
                         }
 
                         """
-                    )));
+                        )));
+            }
         }
     }
 }
