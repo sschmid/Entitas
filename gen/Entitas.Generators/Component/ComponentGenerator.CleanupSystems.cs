@@ -22,9 +22,7 @@ namespace Entitas.Generators
                     {
                         public static global::Entitas.Systems CreateCleanupSystems(this {{method.ContextName}} context)
                         {
-                            var systems = new global::Entitas.Systems();
                     {{AddCleanupSystems(method.Components, method.FullContextPrefix)}}
-                            return systems;
                         }
                     }
 
@@ -32,11 +30,17 @@ namespace Entitas.Generators
 
             static string AddCleanupSystems(ImmutableArray<ComponentDeclaration> components, string contextPrefix)
             {
-                return string.Join("\n", components.Select(component =>
-                {
-                    var cleanupSystemPrefix = component.CleanupMode == 0 ? "Remove" : "Destroy";
-                    return $"        systems.Add(new global::{CombinedNamespace(component.Namespace, cleanupSystemPrefix)}{component.ContextAwareComponentPrefix(contextPrefix)}CleanupSystem(context));";
-                }));
+                return components.Length == 0
+                    ? "        return null;"
+                    : $$"""
+                            var systems = new global::Entitas.Systems();
+                    {{string.Join("\n", components.Select(component =>
+                    {
+                        var cleanupSystemPrefix = component.CleanupMode == 0 ? "Remove" : "Destroy";
+                        return $"        systems.Add(new global::{CombinedNamespace(component.Namespace, cleanupSystemPrefix)}{component.ContextAwareComponentPrefix(contextPrefix)}CleanupSystem(context));";
+                    }))}}
+                            return systems;
+                    """;
             }
         }
     }
