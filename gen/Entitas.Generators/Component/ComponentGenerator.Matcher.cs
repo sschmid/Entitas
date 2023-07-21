@@ -20,7 +20,7 @@ namespace Entitas.Generators
                 GeneratedFileHeader(GeneratorSource(nameof(Matcher))) +
                 NamespaceDeclaration(component.Namespace,
                     $$"""
-                    public sealed class {{className}}
+                    public static class {{className}}
                     {
                         static global::Entitas.IMatcher<global::{{contextPrefix}}.Entity> _matcher;
 

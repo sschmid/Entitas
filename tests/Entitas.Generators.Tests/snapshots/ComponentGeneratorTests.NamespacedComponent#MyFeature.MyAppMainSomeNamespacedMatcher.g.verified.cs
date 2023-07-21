@@ -10,7 +10,7 @@
 //------------------------------------------------------------------------------
 namespace MyFeature
 {
-public sealed class MyAppMainSomeNamespacedMatcher
+public static class MyAppMainSomeNamespacedMatcher
 {
     static global::Entitas.IMatcher<global::MyApp.Main.Entity> _matcher;
 
