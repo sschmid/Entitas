@@ -165,6 +165,12 @@ namespace Entitas.Generators.Tests
         public Task CleanupDestroyEntityComponent() => VerifyComponent("CleanupDestroyEntityComponent", CleanupSystemsOptions);
 
         [Fact]
+        public Task CleanupSystems() => VerifyContext("ContextInitialization", CleanupSystemsOptions);
+
+        [Fact]
+        public Task NoCleanupSystems() => VerifyContext("EmptyContextInitialization", CleanupSystemsOptions);
+
+        [Fact]
         public Task ComplexTypesComponent() => VerifyComponent("ComplexTypesComponent", EntityExtensionOptions);
 
         /*
