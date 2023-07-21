@@ -40,7 +40,7 @@ namespace Entitas.Generators
                 return -1;
 
             var arg = attribute.ConstructorArguments.FirstOrDefault();
-            return arg.Type?.ToDisplayString() == "bool" && arg.Value is bool isPrimary ? isPrimary ? 1 : 0 : 0;
+            return arg.Type?.ToDisplayString() == "bool" && arg.Value is bool isPrimary ? isPrimary ? 1 : 0 : -1;
         }
 
         static string ToValidLowerFirst(string value)
