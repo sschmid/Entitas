@@ -33,8 +33,8 @@
 
   <ItemGroup>
     <ProjectReference Include="../Entitas.Generators.Tests.Fixtures.Dependencies/Entitas.Generators.Tests.Fixtures.Dependencies.csproj" />
-    <ProjectReference Include="../Entitas.Tests/Entitas.Tests.csproj" />
     <ProjectReference Include="../../gen/Entitas.Generators/Entitas.Generators.csproj" />
+    <ProjectReference Include="../../src/Entitas/Entitas.csproj" />
     <ProjectReference Include="../../src/Entitas.Generators.Attributes/Entitas.Generators.Attributes.csproj" />
   </ItemGroup>
 

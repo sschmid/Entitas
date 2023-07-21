@@ -17,7 +17,14 @@ namespace Entitas.Generators.Tests
 {
     public static class TestHelper
     {
-        static readonly string ProjectRoot = TestExtensions.GetProjectRoot();
+        public static readonly string ProjectRoot = GetProjectRoot();
+
+        static string GetProjectRoot()
+        {
+            var current = new DirectoryInfo(Directory.GetCurrentDirectory());
+            while (current!.Name != "Entitas" && current.Name != "Entitas-CSharp") current = current.Parent;
+            return current.FullName;
+        }
 
         // https://andrewlock.net/creating-a-source-generator-part-2-testing-an-incremental-generator-with-snapshot-testing/
         public static Task Verify(string source, IIncrementalGenerator generator, Dictionary<string, string> options)
