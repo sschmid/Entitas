@@ -15,8 +15,8 @@ public sealed partial class NamespacedContext : global::Entitas.Context<Namespac
     public static string[] ComponentNames;
     public static global::System.Type[] ComponentTypes;
 
-    public NamespacedContext()
-        : base(
+    public NamespacedContext() :
+        base(
             ComponentTypes.Length,
             0,
             new global::Entitas.ContextInfo(

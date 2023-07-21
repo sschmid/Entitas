@@ -13,8 +13,8 @@ public sealed partial class SomeContext : global::Entitas.Context<Some.Entity>
     public static string[] ComponentNames;
     public static global::System.Type[] ComponentTypes;
 
-    public SomeContext()
-        : base(
+    public SomeContext() :
+        base(
             ComponentTypes.Length,
             0,
             new global::Entitas.ContextInfo(

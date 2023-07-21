@@ -7,8 +7,6 @@ namespace Entitas.Tests
 {
     public class EntityIndexTests
     {
-        const string Name = "Max";
-
         readonly IContext<TestEntity> _context;
         readonly EntityIndex<TestEntity, string> _index;
         readonly IContext<TestEntity> _multiKeyContext;
@@ -16,9 +14,9 @@ namespace Entitas.Tests
 
         public EntityIndexTests()
         {
-            _context = new MyTest1Context();
+            _context = new TestContext(CID.TotalComponents);
             _index = CreateEntityIndex();
-            _multiKeyContext = new MyTest1Context();
+            _multiKeyContext = new TestContext(CID.TotalComponents);
             _multiKeyIndex = CreateMultiKeyEntityIndex();
         }
 
@@ -31,58 +29,58 @@ namespace Entitas.Tests
         [Fact]
         public void GetsEntitiesForKey()
         {
-            var e1 = CreateNameAgeEntity(_context, 1);
-            var e2 = CreateNameAgeEntity(_context, 2);
-            var entities = _index.GetEntities(Name);
+            var entity1 = _context.CreateEntity().AddUser("Test", 1);
+            var entity2 = _context.CreateEntity().AddUser("Test", 2);
+            var entities = _index.GetEntities("Test");
             entities.Count.Should().Be(2);
-            entities.Should().Contain(e1);
-            entities.Should().Contain(e2);
+            entities.Should().Contain(entity1);
+            entities.Should().Contain(entity2);
         }
 
         [Fact]
         public void MultiKeyGetsEntityForKey()
         {
-            var e1 = CreateNameAgeEntity(_multiKeyContext, 1);
-            var e2 = CreateNameAgeEntity(_multiKeyContext, 2);
-            _multiKeyIndex.GetEntities("1").First().Should().BeSameAs(e1);
-            _multiKeyIndex.GetEntities("2").Should().Contain(e1);
-            _multiKeyIndex.GetEntities("2").Should().Contain(e2);
-            _multiKeyIndex.GetEntities("3").First().Should().BeSameAs(e2);
+            var entity1 = _multiKeyContext.CreateEntity().AddUser("Test", 1);
+            var entity2 = _multiKeyContext.CreateEntity().AddUser("Test", 2);
+            _multiKeyIndex.GetEntities("1").First().Should().BeSameAs(entity1);
+            _multiKeyIndex.GetEntities("2").Should().Contain(entity1);
+            _multiKeyIndex.GetEntities("2").Should().Contain(entity2);
+            _multiKeyIndex.GetEntities("3").First().Should().BeSameAs(entity2);
         }
 
         [Fact]
         public void RetainsEntity()
         {
-            var e1 = CreateNameAgeEntity(_context, 1);
-            var e2 = CreateNameAgeEntity(_context, 2);
-            e1.RetainCount.Should().Be(3); // Context, Group, EntityIndex
-            e2.RetainCount.Should().Be(3); // Context, Group, EntityIndex
+            var entity1 = _context.CreateEntity().AddUser("Test", 1);
+            var entity2 = _context.CreateEntity().AddUser("Test", 2);
+            entity1.RetainCount.Should().Be(3); // Context, Group, EntityIndex
+            entity2.RetainCount.Should().Be(3); // Context, Group, EntityIndex
         }
 
         [Fact]
         public void MultiKeyRetainsEntity()
         {
-            var e1 = CreateNameAgeEntity(_multiKeyContext, 1);
-            var e2 = CreateNameAgeEntity(_multiKeyContext, 2);
-            e1.RetainCount.Should().Be(3);
-            e2.RetainCount.Should().Be(3);
-            (e1.Aerc as SafeAERC)?.Owners.Should().Contain(_multiKeyIndex);
-            (e1.Aerc as SafeAERC)?.Owners.Should().Contain(_multiKeyIndex);
+            var entity1 = _multiKeyContext.CreateEntity().AddUser("Test", 1);
+            var entity2 = _multiKeyContext.CreateEntity().AddUser("Test", 2);
+            entity1.RetainCount.Should().Be(3);
+            entity2.RetainCount.Should().Be(3);
+            (entity1.Aerc as SafeAERC)?.Owners.Should().Contain(_multiKeyIndex);
+            (entity1.Aerc as SafeAERC)?.Owners.Should().Contain(_multiKeyIndex);
         }
 
         [Fact]
         public void HasExistingEntities()
         {
-            CreateNameAgeEntity(_context, 1);
-            CreateNameAgeEntity(_context, 2);
-            CreateEntityIndex().GetEntities(Name).Count.Should().Be(2);
+            _context.CreateEntity().AddUser("Test", 1);
+            _context.CreateEntity().AddUser("Test", 2);
+            CreateEntityIndex().GetEntities("Test").Count.Should().Be(2);
         }
 
         [Fact]
         public void MultiKeyHasExistingEntities()
         {
-            CreateNameAgeEntity(_multiKeyContext, 1);
-            CreateNameAgeEntity(_multiKeyContext, 2);
+            _multiKeyContext.CreateEntity().AddUser("Test", 1);
+            _multiKeyContext.CreateEntity().AddUser("Test", 2);
             _multiKeyIndex.GetEntities("1").Count.Should().Be(1);
             _multiKeyIndex.GetEntities("2").Count.Should().Be(2);
             _multiKeyIndex.GetEntities("3").Count.Should().Be(1);
@@ -91,27 +89,27 @@ namespace Entitas.Tests
         [Fact]
         public void ReleasesAndRemovesEntityFromIndexWhenComponentGetsRemoved()
         {
-            var e1 = CreateNameAgeEntity(_context, 1);
-            CreateNameAgeEntity(_context, 2);
-            e1.RemoveComponentA();
-            _index.GetEntities(Name).Count.Should().Be(1);
-            e1.RetainCount.Should().Be(1); // Context
-            (e1.Aerc as SafeAERC)?.Owners.Should().NotContain(_multiKeyIndex);
+            var entity1 = _context.CreateEntity().AddUser("Test", 1);
+            _context.CreateEntity().AddUser("Test", 2);
+            entity1.RemoveUser();
+            _index.GetEntities("Test").Count.Should().Be(1);
+            entity1.RetainCount.Should().Be(1); // Context
+            (entity1.Aerc as SafeAERC)?.Owners.Should().NotContain(_multiKeyIndex);
         }
 
         [Fact]
         public void MultiKeyReleasesAndRemovesEntityFromIndexWhenComponentGetsRemoved()
         {
-            var e1 = CreateNameAgeEntity(_multiKeyContext, 1);
-            var e2 = CreateNameAgeEntity(_multiKeyContext, 2);
-            e1.RemoveComponentA();
+            var entity1 = _multiKeyContext.CreateEntity().AddUser("Test", 1);
+            var entity2 = _multiKeyContext.CreateEntity().AddUser("Test", 2);
+            entity1.RemoveUser();
             _multiKeyIndex.GetEntities("1").Count.Should().Be(0);
             _multiKeyIndex.GetEntities("2").Count.Should().Be(1);
             _multiKeyIndex.GetEntities("3").Count.Should().Be(1);
-            e1.RetainCount.Should().Be(1);
-            e2.RetainCount.Should().Be(3);
-            (e1.Aerc as SafeAERC)?.Owners.Should().NotContain(_multiKeyIndex);
-            (e2.Aerc as SafeAERC)?.Owners.Should().Contain(_multiKeyIndex);
+            entity1.RetainCount.Should().Be(1);
+            entity2.RetainCount.Should().Be(3);
+            (entity1.Aerc as SafeAERC)?.Owners.Should().NotContain(_multiKeyIndex);
+            (entity2.Aerc as SafeAERC)?.Owners.Should().Contain(_multiKeyIndex);
         }
 
         [Fact]
@@ -123,62 +121,62 @@ namespace Entitas.Tests
         [Fact]
         public void ClearsIndexAndReleasesEntity()
         {
-            var e1 = CreateNameAgeEntity(_context, 1);
-            var e2 = CreateNameAgeEntity(_context, 2);
+            var entity1 = _context.CreateEntity().AddUser("Test", 1);
+            var entity2 = _context.CreateEntity().AddUser("Test", 2);
             _index.Deactivate();
-            _index.GetEntities(Name).Should().BeEmpty();
-            e1.RetainCount.Should().Be(2); // Context, Group
-            e2.RetainCount.Should().Be(2); // Context, Group
+            _index.GetEntities("Test").Should().BeEmpty();
+            entity1.RetainCount.Should().Be(2); // Context, Group
+            entity2.RetainCount.Should().Be(2); // Context, Group
         }
 
         [Fact]
         public void DoesNotAddEntitiesAnymore()
         {
             _index.Deactivate();
-            CreateNameAgeEntity(_context, 1);
-            _index.GetEntities(Name).Should().BeEmpty();
+            _context.CreateEntity().AddUser("Test", 1);
+            _index.GetEntities("Test").Should().BeEmpty();
         }
 
         [Fact]
         public void HasExistingEntitiesWhenActivating()
         {
-            var e1 = CreateNameAgeEntity(_context, 1);
-            var e2 = CreateNameAgeEntity(_context, 2);
+            var entity1 = _context.CreateEntity().AddUser("Test", 1);
+            var entity2 = _context.CreateEntity().AddUser("Test", 2);
             _index.Deactivate();
             _index.Activate();
-            var entities = _index.GetEntities(Name);
+            var entities = _index.GetEntities("Test");
             entities.Count.Should().Be(2);
-            entities.Should().Contain(e1);
-            entities.Should().Contain(e2);
+            entities.Should().Contain(entity1);
+            entities.Should().Contain(entity2);
         }
 
         [Fact]
         public void MultiKeyHasExistingEntitiesWhenActivating()
         {
-            var e1 = CreateNameAgeEntity(_multiKeyContext, 1);
-            var e2 = CreateNameAgeEntity(_multiKeyContext, 2);
+            var entity1 = _multiKeyContext.CreateEntity().AddUser("Test", 1);
+            var entity2 = _multiKeyContext.CreateEntity().AddUser("Test", 2);
             _multiKeyIndex.Deactivate();
             _multiKeyIndex.Activate();
-            _multiKeyIndex.GetEntities("1").First().Should().BeSameAs(e1);
-            _multiKeyIndex.GetEntities("2").Should().Contain(e1);
-            _multiKeyIndex.GetEntities("2").Should().Contain(e2);
-            _multiKeyIndex.GetEntities("3").First().Should().BeSameAs(e2);
+            _multiKeyIndex.GetEntities("1").First().Should().BeSameAs(entity1);
+            _multiKeyIndex.GetEntities("2").Should().Contain(entity1);
+            _multiKeyIndex.GetEntities("2").Should().Contain(entity2);
+            _multiKeyIndex.GetEntities("3").First().Should().BeSameAs(entity2);
         }
 
         [Fact]
         public void AddsNewEntitiesWhenActivated()
         {
-            var e1 = CreateNameAgeEntity(_context, 1);
-            var e2 = CreateNameAgeEntity(_context, 2);
+            var entity1 = _context.CreateEntity().AddUser("Test", 1);
+            var entity2 = _context.CreateEntity().AddUser("Test", 2);
             _index.Deactivate();
             _index.Activate();
-            var e3 = CreateNameAgeEntity(_context, 3);
+            var entity3 = _context.CreateEntity().AddUser("Test", 3);
 
-            var entities = _index.GetEntities(Name);
+            var entities = _index.GetEntities("Test");
             entities.Count.Should().Be(3);
-            entities.Should().Contain(e1);
-            entities.Should().Contain(e2);
-            entities.Should().Contain(e3);
+            entities.Should().Contain(entity1);
+            entities.Should().Contain(entity2);
+            entities.Should().Contain(entity3);
         }
 
         [Fact]
@@ -186,7 +184,7 @@ namespace Entitas.Tests
         {
             IComponent lastComponent = null;
 
-            var group = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB));
+            var group = _context.GetGroup(Matcher<TestEntity>.AllOf(1, 2));
             new EntityIndex<TestEntity, string>(
                 "TestIndex",
                 group, (_, c) =>
@@ -195,17 +193,14 @@ namespace Entitas.Tests
                     return ((UserComponent)c).Name;
                 });
 
-            var nameAge1 = new UserComponent();
-            nameAge1.Name = "Max";
-
-            var nameAge2 = new UserComponent();
-            nameAge2.Name = "Jack";
+            var user1 = new UserComponent { Name = "Test1", Age = 42 };
+            var user2 = new UserComponent { Name = "Test2", Age = 24 };
 
             var entity = _context.CreateEntity();
-            entity.AddComponent(CID.ComponentA, nameAge1);
-            entity.AddComponent(CID.ComponentB, nameAge2);
+            entity.AddComponent(CID.ComponentA, user1);
+            entity.AddComponent(CID.ComponentB, user2);
 
-            lastComponent.Should().BeSameAs(nameAge2);
+            lastComponent.Should().BeSameAs(user2);
         }
 
         [Fact]
@@ -213,10 +208,8 @@ namespace Entitas.Tests
         {
             var lastComponents = new List<IComponent>();
 
-            var nameAge1 = new UserComponent();
-            nameAge1.Name = "Max";
-            var nameAge2 = new UserComponent();
-            nameAge2.Name = "Jack";
+            var user1 = new UserComponent { Name = "Test1", Age = 42 };
+            var user2 = new UserComponent { Name = "Test2", Age = 24 };
 
             var index = new EntityIndex<TestEntity, string>(
                 "TestIndex",
@@ -224,19 +217,19 @@ namespace Entitas.Tests
                 (e, c) =>
                 {
                     lastComponents.Add(c);
-                    return c == nameAge1
+                    return c == user1
                         ? ((UserComponent)c).Name
                         : ((UserComponent)e.GetComponent(CID.ComponentA)).Name;
                 }
             );
 
             var entity = _context.CreateEntity();
-            entity.AddComponent(CID.ComponentA, nameAge1);
-            entity.AddComponent(CID.ComponentB, nameAge2);
+            entity.AddComponent(CID.ComponentA, user1);
+            entity.AddComponent(CID.ComponentB, user2);
 
             lastComponents.Count.Should().Be(2);
-            lastComponents[0].Should().Be(nameAge1);
-            lastComponents[1].Should().Be(nameAge2);
+            lastComponents[0].Should().Be(user1);
+            lastComponents[1].Should().Be(user2);
 
             index.GetEntities("Max").Should().BeEmpty();
             index.GetEntities("Jack").Should().BeEmpty();
@@ -245,24 +238,14 @@ namespace Entitas.Tests
         EntityIndex<TestEntity, string> CreateEntityIndex() =>
             new EntityIndex<TestEntity, string>(
                 "TestIndex",
-                _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA)),
-                (e, c) => (c as UserComponent)?.Name ?? ((UserComponent)e.GetComponent(CID.ComponentA)).Name);
+                _context.GetGroup(Matcher<TestEntity>.AllOf(0)),
+                (entity, component) => (component as UserComponent)?.Name ?? entity.GetUser().Name);
 
         EntityIndex<TestEntity, string> CreateMultiKeyEntityIndex() => new EntityIndex<TestEntity, string>(
             "TestIndex",
-            _multiKeyContext.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA)),
-            (e, c) => (c as UserComponent ?? (UserComponent)e.GetComponent(CID.ComponentA)).Age == 1
-                ? new[] {"1", "2"}
-                : new[] {"2", "3"});
-
-        static TestEntity CreateNameAgeEntity(IContext<TestEntity> context, int age)
-        {
-            var nameAgeComponent = new UserComponent();
-            nameAgeComponent.Name = Name;
-            nameAgeComponent.Age = age;
-            var entity = context.CreateEntity();
-            entity.AddComponent(CID.ComponentA, nameAgeComponent);
-            return entity;
-        }
+            _multiKeyContext.GetGroup(Matcher<TestEntity>.AllOf(0)),
+            (entity, c) => (c as UserComponent ?? entity.GetUser()).Age == 1
+                ? new[] { "1", "2" }
+                : new[] { "2", "3" });
     }
 }

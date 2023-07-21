@@ -8,18 +8,15 @@ namespace Entitas.Tests
         [Fact]
         public void CreatesExceptionWithHintSeparatedByNewLine()
         {
-            const string msg = "Message";
-            const string hint = "Hint";
-            new EntitasException(msg, hint).Message
-                .Should().Be($"{msg}\n{hint}");
+            new EntitasException("Message", "Hint").Message
+                .Should().Be("Message\nHint");
         }
 
         [Fact]
         public void IgnoresHintWhenNull()
         {
-            const string msg = "Message";
-            var ex = new EntitasException(msg, null);
-            ex.Message.Should().Be(msg);
+            new EntitasException("Message", null).Message
+                .Should().Be("Message");
         }
     }
 }

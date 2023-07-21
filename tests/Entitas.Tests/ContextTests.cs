@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using FluentAssertions;
 using Xunit;
 
@@ -7,17 +8,17 @@ namespace Entitas.Tests
     public class ContextTests
     {
         readonly IContext<TestEntity> _context;
-        readonly IContext<TestEntity> _contextWithInfo;
         readonly ContextInfo _contextInfo;
         readonly IAllOfMatcher<TestEntity> _matcherAB = Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB);
 
         public ContextTests()
         {
-            _context = new MyTest1Context();
-            var componentNames = new[] {"Health", "Position", "View"};
-            var componentTypes = new[] {typeof(ComponentA), typeof(ComponentB), typeof(ComponentC)};
-            _contextInfo = new ContextInfo("My Context", componentNames, componentTypes);
-            _contextWithInfo = new MyTest1Context(componentNames.Length, 0, _contextInfo);
+            _contextInfo = new ContextInfo(
+                "Test Context",
+                new[] { "Health", "Position", "View" },
+                new[] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) });
+
+            _context = new TestContext(CID.TotalComponents);
         }
 
         [Fact]
@@ -30,8 +31,8 @@ namespace Entitas.Tests
         [Fact]
         public void StartsWithGivenCreationIndex()
         {
-            new MyTest1Context(CID.TotalComponents, 42, null)
-                .CreateEntity().Id.Should().Be(42);
+            var context = new TestContext(_contextInfo.ComponentNames.Length, 42, _contextInfo);
+            context.CreateEntity().Id.Should().Be(42);
         }
 
         [Fact]
@@ -49,11 +50,11 @@ namespace Entitas.Tests
         [Fact]
         public void CreatesEntity()
         {
-            var e = _context.CreateEntity();
-            e.Should().NotBeNull();
-            e.GetType().Should().Be(typeof(TestEntity));
-            e.TotalComponents.Should().Be(_context.TotalComponents);
-            e.IsEnabled.Should().BeTrue();
+            var entity = _context.CreateEntity();
+            entity.Should().NotBeNull();
+            entity.GetType().Should().Be(typeof(TestEntity));
+            entity.TotalComponents.Should().Be(_context.TotalComponents);
+            entity.IsEnabled.Should().BeTrue();
         }
 
         [Fact]
@@ -88,21 +89,22 @@ namespace Entitas.Tests
         [Fact]
         public void HasCustomContextInfo()
         {
-            _contextWithInfo.ContextInfo.Should().BeSameAs(_contextInfo);
+            var context = new TestContext(_contextInfo.ComponentNames.Length, 0, _contextInfo);
+            context.ContextInfo.Should().BeSameAs(_contextInfo);
         }
 
         [Fact]
         public void CreatesEntityWithSameContextInfo()
         {
-            _contextWithInfo.CreateEntity().ContextInfo.Should().BeSameAs(_contextInfo);
+            var context = new TestContext(_contextInfo.ComponentNames.Length, 0, _contextInfo);
+            context.CreateEntity().ContextInfo.Should().BeSameAs(_contextInfo);
         }
 
         [Fact]
         public void ThrowsWhenComponentNamesLengthIsNotEqualToTotalComponents()
         {
-            FluentActions.Invoking(() =>
-                new MyTest1Context(_contextInfo.ComponentNames.Length + 1, 0, _contextInfo)
-            ).Should().Throw<ContextInfoException>();
+            FluentActions.Invoking(() => new TestContext(_contextInfo.ComponentNames.Length + 1, 0, _contextInfo))
+                .Should().Throw<ContextInfoException>();
         }
 
         [Fact]
@@ -115,27 +117,27 @@ namespace Entitas.Tests
         [Fact]
         public void HasEntitiesThatWereCreatedWithCreateEntity()
         {
-            var e = _context.CreateEntity().AddComponentA();
-            _context.HasEntity(e).Should().BeTrue();
+            var entity = _context.CreateEntity().AddComponentA();
+            _context.HasEntity(entity).Should().BeTrue();
         }
 
         [Fact]
         public void ReturnsAllCreatedEntities()
         {
-            var e1 = _context.CreateEntity();
-            var e2 = _context.CreateEntity();
+            var entity1 = _context.CreateEntity();
+            var entity2 = _context.CreateEntity();
             var entities = _context.GetEntities();
             entities.Length.Should().Be(2);
-            entities.Should().Contain(e1);
-            entities.Should().Contain(e2);
+            entities.Should().Contain(entity1);
+            entities.Should().Contain(entity2);
         }
 
         [Fact]
         public void DestroysEntityAndRemovesIt()
         {
-            var e = _context.CreateEntity();
-            e.Destroy();
-            _context.HasEntity(e).Should().BeFalse();
+            var entity = _context.CreateEntity();
+            entity.Destroy();
+            _context.HasEntity(entity).Should().BeFalse();
             _context.Count.Should().Be(0);
             _context.GetEntities().Should().BeEmpty();
         }
@@ -143,18 +145,18 @@ namespace Entitas.Tests
         [Fact]
         public void DestroysEntityAndRemovesAllComponents()
         {
-            var e = _context.CreateEntity();
-            e.Destroy();
-            e.GetComponents().Should().BeEmpty();
+            var entity = _context.CreateEntity();
+            entity.Destroy();
+            entity.GetComponents().Should().BeEmpty();
         }
 
         [Fact]
         public void RemovesOnDestroyEntityHandler()
         {
-            var e = _context.CreateEntity();
+            var entity = _context.CreateEntity();
             var didDestroy = 0;
             _context.OnEntityWillBeDestroyed += delegate { didDestroy += 1; };
-            e.Destroy();
+            entity.Destroy();
             _context.CreateEntity().Destroy();
             didDestroy.Should().Be(2);
         }
@@ -162,43 +164,35 @@ namespace Entitas.Tests
         [Fact]
         public void DestroysAllEntities()
         {
-            var e = _context.CreateEntity();
+            var testEntity = _context.CreateEntity();
             _context.CreateEntity();
             _context.DestroyAllEntities();
-            _context.HasEntity(e).Should().BeFalse();
+            _context.HasEntity(testEntity).Should().BeFalse();
             _context.Count.Should().Be(0);
             _context.GetEntities().Should().BeEmpty();
-            e.GetComponents().Should().BeEmpty();
+            testEntity.GetComponents().Should().BeEmpty();
         }
 
         [Fact]
         public void EnsuresSameDeterministicOrderWhenGettingEntitiesAfterDestroyingAllEntities()
         {
-            // This is a Unity specific problem. Run Unity Test Tools with in the Unity project
+            // This is a Unity specific problem. Run Unity Test Tools in the Unity project
 
             const int numEntities = 10;
 
             for (var i = 0; i < numEntities; i++)
                 _context.CreateEntity();
 
-            var order1 = new int[numEntities];
-            var entities1 = _context.GetEntities();
-            for (var i = 0; i < numEntities; i++)
-                order1[i] = entities1[i].Id;
+            var order1 = _context.GetEntities().Select(e => e.Id).ToArray();
 
-            _context.DestroyAllEntities();
-            _context.ResetCreationIndex();
+            _context.Reset();
 
             for (var i = 0; i < numEntities; i++)
                 _context.CreateEntity();
 
-            var order2 = new int[numEntities];
-            var entities2 = _context.GetEntities();
-            for (var i = 0; i < numEntities; i++)
-                order2[i] = entities2[i].Id;
+            var order2 = _context.GetEntities().Select(e => e.Id).ToArray();
 
-            for (var i = 0; i < numEntities; i++)
-                order1[i].Should().Be(order2[i]);
+            order1.Should().BeEquivalentTo(order2);
         }
 
         [Fact]
@@ -215,8 +209,7 @@ namespace Entitas.Tests
         [Fact]
         public void CachesEntities()
         {
-            var entities = _context.GetEntities();
-            _context.GetEntities().Should().BeSameAs(entities);
+            _context.GetEntities().Should().BeSameAs(_context.GetEntities());
         }
 
         [Fact]
@@ -230,9 +223,9 @@ namespace Entitas.Tests
         [Fact]
         public void UpdatesEntitiesCacheWhenDestroyingEntity()
         {
-            var e = _context.CreateEntity();
+            var entity = _context.CreateEntity();
             var entities = _context.GetEntities();
-            e.Destroy();
+            entity.Destroy();
             _context.GetEntities().Should().NotBeSameAs(entities);
         }
 
@@ -241,79 +234,76 @@ namespace Entitas.Tests
         {
             var didDispatch = 0;
             IEntity eventEntity = null;
-            _context.OnEntityCreated += (c, entity) =>
+            _context.OnEntityCreated += (c, e) =>
             {
                 didDispatch += 1;
-                eventEntity = entity;
+                eventEntity = e;
                 c.Should().BeSameAs(_context);
             };
 
-            var e = _context.CreateEntity();
+            var entity = _context.CreateEntity();
             didDispatch.Should().Be(1);
-            eventEntity.Should().BeSameAs(e);
+            eventEntity.Should().BeSameAs(entity);
         }
 
         [Fact]
         public void DispatchesOnEntityWillBeDestroyedWhenDestroyingEntity()
         {
-            var e = _context.CreateEntity().AddComponentA();
+            var entity = _context.CreateEntity().AddComponentA();
             var didDispatch = 0;
-            _context.OnEntityWillBeDestroyed += (c, entity) =>
+            _context.OnEntityWillBeDestroyed += (c, e) =>
             {
                 didDispatch += 1;
                 c.Should().BeSameAs(_context);
-                entity.Should().BeSameAs(e);
-                entity.HasComponentA().Should().BeTrue();
-                entity.IsEnabled.Should().BeTrue();
-
-                ((IContext<TestEntity>)c).GetEntities().Length.Should().Be(0);
+                e.Should().BeSameAs(entity);
+                e.HasComponentA().Should().BeTrue();
+                e.IsEnabled.Should().BeTrue();
+                c.Count.Should().Be(0);
             };
-            _context.GetEntities();
-            e.Destroy();
+            entity.Destroy();
             didDispatch.Should().Be(1);
         }
 
         [Fact]
         public void DispatchesOnEntityDestroyedWhenDestroyingEntity()
         {
-            var e = _context.CreateEntity();
+            var entity = _context.CreateEntity();
             var didDispatch = 0;
-            _context.OnEntityDestroyed += (p, entity) =>
+            _context.OnEntityDestroyed += (p, e) =>
             {
                 didDispatch += 1;
                 p.Should().BeSameAs(_context);
-                entity.Should().BeSameAs(e);
-                entity.HasComponentA().Should().BeFalse();
-                entity.IsEnabled.Should().BeFalse();
+                e.Should().BeSameAs(entity);
+                e.HasComponentA().Should().BeFalse();
+                e.IsEnabled.Should().BeFalse();
             };
-            e.Destroy();
+            entity.Destroy();
             didDispatch.Should().Be(1);
         }
 
         [Fact]
         public void ReleasesEntityAfterOnEntityDestroyed()
         {
-            var e = _context.CreateEntity();
+            var entity = _context.CreateEntity();
             var didDispatch = 0;
-            _context.OnEntityDestroyed += (_, entity) =>
+            _context.OnEntityDestroyed += (_, e) =>
             {
                 didDispatch += 1;
-                entity.RetainCount.Should().Be(1);
+                e.RetainCount.Should().Be(1);
                 var newEntity = _context.CreateEntity();
                 newEntity.Should().NotBeNull();
-                newEntity.Should().NotBeSameAs(entity);
+                newEntity.Should().NotBeSameAs(e);
             };
-            e.Destroy();
+            entity.Destroy();
             var reusedEntity = _context.CreateEntity();
-            reusedEntity.Should().BeSameAs(e);
+            reusedEntity.Should().BeSameAs(entity);
             didDispatch.Should().Be(1);
         }
 
         [Fact]
         public void ThrowsIfEntityIsReleasedBeforeItIsDestroyed()
         {
-            FluentActions.Invoking(() =>
-                    _context.CreateEntity().Release(_context))
+            FluentActions.Invoking(() => _context.CreateEntity().Release(_context))
                 .Should().Throw<EntityIsNotDestroyedException>();
         }
 
@@ -344,194 +334,183 @@ namespace Entitas.Tests
         [Fact]
         public void RemovesEventHandlersWhenDestroyingEntity()
         {
-            var e = _context.CreateEntity();
-            e.OnComponentAdded += delegate { throw new Exception("entity.OnComponentAdded"); };
-            e.OnComponentRemoved += delegate { throw new Exception("entity.OnComponentRemoved"); };
-            e.OnComponentReplaced += delegate { throw new Exception("entity.OnComponentReplaced"); };
-            e.Destroy();
-            var e2 = _context.CreateEntity();
-            e2.Should().BeSameAs(e);
-            e2.AddComponentA();
-            e2.ReplaceComponentA(Component.A);
-            e2.RemoveComponentA();
+            var entity1 = _context.CreateEntity();
+            entity1.OnComponentAdded += delegate { throw new Exception("entity.OnComponentAdded"); };
+            entity1.OnComponentRemoved += delegate { throw new Exception("entity.OnComponentRemoved"); };
+            entity1.OnComponentReplaced += delegate { throw new Exception("entity.OnComponentReplaced"); };
+            entity1.Destroy();
+
+            var entity2 = _context.CreateEntity();
+            entity2.Should().BeSameAs(entity1);
+            entity2.AddComponentA()
+                .ReplaceComponentA(Component.A)
+                .RemoveComponentA();
         }
 
         [Fact]
         public void WillNotRemoveOnEntityReleased()
         {
-            var e = _context.CreateEntity();
+            var entity = _context.CreateEntity();
             var didRelease = 0;
-            e.OnEntityReleased += delegate { didRelease += 1; };
-            e.Destroy();
+            entity.OnEntityReleased += delegate { didRelease += 1; };
+            entity.Destroy();
             didRelease.Should().Be(1);
         }
 
         [Fact]
         public void RemovesOnEntityReleasedAfterBeingDispatched()
         {
-            var e = _context.CreateEntity();
+            var entity = _context.CreateEntity();
             var didRelease = 0;
-            e.OnEntityReleased += delegate { didRelease += 1; };
-            e.Destroy();
-            e.Retain(this);
-            e.Release(this);
+            entity.OnEntityReleased += delegate { didRelease += 1; };
+            entity.Destroy();
+            entity.Retain(this);
+            entity.Release(this);
             didRelease.Should().Be(1);
         }
 
         [Fact]
         public void RemovesOnEntityReleasedAfterBeingDispatchedWhenDelayedRelease()
         {
-            var e = _context.CreateEntity();
+            var entity = _context.CreateEntity();
             var didRelease = 0;
-            e.OnEntityReleased += delegate { didRelease += 1; };
-            e.Retain(this);
-            e.Destroy();
+            entity.OnEntityReleased += delegate { didRelease += 1; };
+            entity.Retain(this);
+            entity.Destroy();
             didRelease.Should().Be(0);
-            e.Release(this);
+
+            entity.Release(this);
             didRelease.Should().Be(1);
 
-            e.Retain(this);
-            e.Release(this);
+            entity.Retain(this);
+            entity.Release(this);
             didRelease.Should().Be(1);
-        }
-
-        [Fact]
-        public void GetsEntityFromObjectPool()
-        {
-            var e = _context.CreateEntity();
-            e.Should().NotBeNull();
-            e.GetType().Should().Be(typeof(TestEntity));
-        }
-
-        [Fact]
-        public void DestroysEntityWhenPushingBackToObjectPool()
-        {
-            var e = _context.CreateEntity().AddComponentA();
-            e.Destroy();
-            e.HasComponent(CID.ComponentA).Should().BeFalse();
         }
 
         [Fact]
         public void ReturnsPushedEntity()
         {
-            var e = _context.CreateEntity().AddComponentA();
-            e.Destroy();
-            var entity = _context.CreateEntity();
-            entity.HasComponent(CID.ComponentA).Should().BeFalse();
-            entity.Should().BeSameAs(e);
+            var entity1 = _context.CreateEntity().AddComponentA();
+            entity1.Destroy();
+            var entity2 = _context.CreateEntity();
+            entity2.HasComponent(CID.ComponentA).Should().BeFalse();
+            entity2.Should().BeSameAs(entity1);
         }
 
         [Fact]
         public void OnlyReturnsReleasedEntities()
         {
-            var e1 = _context.CreateEntity();
-            e1.Retain(this);
-            e1.Destroy();
-            var e2 = _context.CreateEntity();
-            e2.Should().NotBeSameAs(e1);
-            e1.Release(this);
-            var e3 = _context.CreateEntity();
-            e3.Should().BeSameAs(e1);
+            var entity1 = _context.CreateEntity();
+            entity1.Retain(this);
+            entity1.Destroy();
+
+            var entity2 = _context.CreateEntity();
+            entity2.Should().NotBeSameAs(entity1);
+            entity1.Release(this);
+
+            var entity3 = _context.CreateEntity();
+            entity3.Should().BeSameAs(entity1);
         }
 
         [Fact]
         public void ReturnsNewEntity()
         {
-            var e1 = _context.CreateEntity().AddComponentA();
-            e1.Destroy();
+            var entity1 = _context.CreateEntity().AddComponentA();
+            entity1.Destroy();
             _context.CreateEntity();
-            var e2 = _context.CreateEntity();
-            e2.HasComponent(CID.ComponentA).Should().BeFalse();
-            e2.Should().NotBeSameAs(e1);
+
+            var entity2 = _context.CreateEntity();
+            entity2.HasComponent(CID.ComponentA).Should().BeFalse();
+            entity2.Should().NotBeSameAs(entity1);
         }
 
         [Fact]
         public void SetsUpEntityFromObjectPool()
         {
-            var e = _context.CreateEntity();
-            var creationIndex = e.Id;
-            e.Destroy();
-            var g = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
+            var entity = _context.CreateEntity();
+            var id = entity.Id;
+            entity.Destroy();
+            var group = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
 
-            e = _context.CreateEntity();
-            e.Id.Should().Be(creationIndex + 1);
-            e.IsEnabled.Should().BeTrue();
+            entity = _context.CreateEntity();
+            entity.Id.Should().Be(id + 1);
+            entity.IsEnabled.Should().BeTrue();
 
-            e.AddComponentA();
-            g.GetEntities().Should().Contain(e);
+            entity.AddComponentA();
+            group.GetEntities().Should().Contain(entity);
         }
 
         [Fact]
         public void ThrowsWhenAddingComponentToDestroyedEntity()
         {
-            var e = _context.CreateEntity().AddComponentA();
-            e.Destroy();
-            FluentActions.Invoking(() => e.AddComponentA())
+            var entity = _context.CreateEntity().AddComponentA();
+            entity.Destroy();
+            FluentActions.Invoking(() => entity.AddComponentA())
                 .Should().Throw<EntityIsNotEnabledException>();
         }
 
         [Fact]
         public void ThrowsWhenRemovingComponentFromDestroyedEntity()
         {
-            var e = _context.CreateEntity().AddComponentA();
-            e.Destroy();
-            FluentActions.Invoking(() => e.RemoveComponentA())
+            var entity = _context.CreateEntity().AddComponentA();
+            entity.Destroy();
+            FluentActions.Invoking(() => entity.RemoveComponentA())
                 .Should().Throw<EntityIsNotEnabledException>();
         }
 
         [Fact]
         public void ThrowsWhenReplacingComponentOnDestroyedEntity()
         {
-            var e = _context.CreateEntity().AddComponentA();
-            e.Destroy();
-            FluentActions.Invoking(() => e.ReplaceComponentA(new ComponentA()))
+            var entity = _context.CreateEntity().AddComponentA();
+            entity.Destroy();
+            FluentActions.Invoking(() => entity.ReplaceComponentA(new ComponentA()))
                 .Should().Throw<EntityIsNotEnabledException>();
         }
 
         [Fact]
         public void ThrowsWhenReplacingComponentWithNullOnDestroyedEntity()
         {
-            var e = _context.CreateEntity().AddComponentA();
-            e.Destroy();
-            FluentActions.Invoking(() => e.ReplaceComponentA(null))
+            var entity = _context.CreateEntity().AddComponentA();
+            entity.Destroy();
+            FluentActions.Invoking(() => entity.ReplaceComponentA(null))
                 .Should().Throw<EntityIsNotEnabledException>();
         }
 
         [Fact]
         public void ThrowsWhenDestroyingDestroyedEntity()
         {
-            var e = _context.CreateEntity().AddComponentA();
-            e.Destroy();
-            FluentActions.Invoking(() => e.Destroy())
+            var entity = _context.CreateEntity().AddComponentA();
+            entity.Destroy();
+            FluentActions.Invoking(() => entity.Destroy())
                 .Should().Throw<EntityIsNotEnabledException>();
         }
 
         [Fact]
         public void GetsEmptyGroupForMatcherWhenNoEntitiesWereCreated()
         {
-            var g = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
-            g.Should().NotBeNull();
-            g.GetEntities().Should().BeEmpty();
+            var group = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
+            group.Should().NotBeNull();
+            group.GetEntities().Should().BeEmpty();
         }
 
         [Fact]
         public void GetsGroupWithMatchingEntities()
         {
-            var e1 = _context.CreateEntity();
-            e1.AddComponentA();
-            e1.AddComponentB();
+            var entity1 = _context.CreateEntity();
+            entity1.AddComponentA();
+            entity1.AddComponentB();
 
-            var e2 = _context.CreateEntity();
-            e2.AddComponentA();
-            e2.AddComponentB();
+            var entity2 = _context.CreateEntity();
+            entity2.AddComponentA();
+            entity2.AddComponentB();
 
-            var eA = _context.CreateEntity();
-            eA.AddComponentA();
+            var entityA = _context.CreateEntity();
+            entityA.AddComponentA();
 
-            var g = _context.GetGroup(_matcherAB).GetEntities();
-            g.Length.Should().Be(2);
-            g.Should().Contain(e1);
-            g.Should().Contain(e2);
+            var entities = _context.GetGroup(_matcherAB).GetEntities();
+            entities.Length.Should().Be(2);
+            entities.Should().Contain(entity1);
+            entities.Should().Contain(entity2);
         }
 
         [Fact]
@@ -543,62 +522,65 @@ namespace Entitas.Tests
         [Fact]
         public void CachedGroupContainsNewlyCreatedMatchingEntity()
         {
-            var e = _context.CreateEntity();
-            e.AddComponentA();
-            var g = _context.GetGroup(_matcherAB);
-            e.AddComponentB();
-            g.GetEntities().Should().Contain(e);
+            var entity = _context.CreateEntity();
+            entity.AddComponentA();
+
+            var group = _context.GetGroup(_matcherAB);
+            entity.AddComponentB();
+            group.GetEntities().Should().Contain(entity);
         }
 
         [Fact]
         public void CachedGroupDoesNotContainEntityWhichIsNotMatchingAnymore()
         {
-            var e = _context.CreateEntity();
-            e.AddComponentA();
-            e.AddComponentB();
-            var g = _context.GetGroup(_matcherAB);
-            e.RemoveComponentA();
-            g.GetEntities().Should().NotContain(e);
+            var entity = _context.CreateEntity();
+            entity.AddComponentA();
+            entity.AddComponentB();
+
+            var group = _context.GetGroup(_matcherAB);
+            entity.RemoveComponentA();
+            group.GetEntities().Should().NotContain(entity);
         }
 
         [Fact]
         public void RemovesDestroyedEntityFromGroup()
         {
-            var e = _context.CreateEntity();
-            e.AddComponentA();
-            e.AddComponentB();
-            var g = _context.GetGroup(_matcherAB);
-            e.Destroy();
-            g.GetEntities().Should().NotContain(e);
+            var entity = _context.CreateEntity();
+            entity.AddComponentA();
+            entity.AddComponentB();
+
+            var group = _context.GetGroup(_matcherAB);
+            entity.Destroy();
+            group.GetEntities().Should().NotContain(entity);
         }
 
         [Fact]
         public void GroupDispatchesOnEntityRemovedAndOnEntityAddedWhenReplacingComponent()
         {
-            var e = _context.CreateEntity();
-            e.AddComponentA();
-            e.AddComponentB();
-            var g = _context.GetGroup(_matcherAB);
+            var entity = _context.CreateEntity();
+            entity.AddComponentA();
+            entity.AddComponentB();
+            var group = _context.GetGroup(_matcherAB);
             var didDispatchRemoved = 0;
             var didDispatchAdded = 0;
             var componentA = new ComponentA();
-            g.OnEntityRemoved += (group, entity, index, component) =>
+            group.OnEntityRemoved += (g, e, index, component) =>
             {
-                group.Should().BeSameAs(g);
-                entity.Should().BeSameAs(e);
+                g.Should().BeSameAs(group);
+                e.Should().BeSameAs(entity);
                 index.Should().Be(CID.ComponentA);
                 component.Should().BeSameAs(Component.A);
                 didDispatchRemoved++;
             };
-            g.OnEntityAdded += (group, entity, index, component) =>
+            group.OnEntityAdded += (g, e, index, component) =>
             {
-                group.Should().BeSameAs(g);
-                entity.Should().BeSameAs(e);
+                g.Should().BeSameAs(group);
+                e.Should().BeSameAs(entity);
                 index.Should().Be(CID.ComponentA);
                 component.Should().BeSameAs(componentA);
                 didDispatchAdded++;
             };
-            e.ReplaceComponentA(componentA);
+            entity.ReplaceComponentA(componentA);
             didDispatchRemoved.Should().Be(1);
             didDispatchAdded.Should().Be(1);
         }
@@ -606,37 +588,37 @@ namespace Entitas.Tests
         [Fact]
         public void GroupDispatchesOnEntityUpdatedWithPreviousAndCurrentComponentWhenReplacingComponent()
         {
-            var e = _context.CreateEntity();
-            e.AddComponentA();
-            e.AddComponentB();
+            var entity = _context.CreateEntity();
+            entity.AddComponentA();
+            entity.AddComponentB();
             var updated = 0;
-            var prevComp = e.GetComponent(CID.ComponentA);
+            var prevComp = entity.GetComponent(CID.ComponentA);
             var newComp = new ComponentA();
-            var g = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
-            g.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) =>
+            var group = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
+            group.OnEntityUpdated += (g, e, index, previousComponent, newComponent) =>
             {
                 updated += 1;
-                group.Should().BeSameAs(g);
-                entity.Should().BeSameAs(e);
+                g.Should().BeSameAs(group);
+                e.Should().BeSameAs(entity);
                 index.Should().Be(CID.ComponentA);
                 previousComponent.Should().BeSameAs(prevComp);
                 newComponent.Should().BeSameAs(newComp);
             };
 
-            e.ReplaceComponent(CID.ComponentA, newComp);
+            entity.ReplaceComponent(CID.ComponentA, newComp);
             updated.Should().Be(1);
         }
 
         [Fact]
         public void GroupWithMatcherNoneOfDoesNotDispatchOnEntityAddedWhenDestroyingEntity()
         {
-            var e = _context.CreateEntity();
-            e.AddComponentA();
-            e.AddComponentB();
+            var entity = _context.CreateEntity();
+            entity.AddComponentA();
+            entity.AddComponentB();
             var matcher = Matcher<TestEntity>.AllOf(CID.ComponentB).NoneOf(CID.ComponentA);
-            var g = _context.GetGroup(matcher);
-            g.OnEntityAdded += delegate { throw new Exception("group.OnEntityAdded"); };
-            e.Destroy();
+            var group = _context.GetGroup(matcher);
+            group.OnEntityAdded += delegate { throw new Exception("group.OnEntityAdded"); };
+            entity.Destroy();
         }
 
         [Fact]
@@ -751,13 +733,14 @@ namespace Entitas.Tests
 
             _context.ComponentPools[CID.ComponentA].Count.Should().Be(1);
             _context.ComponentPools[CID.ComponentB].Count.Should().Be(1);
+
             _context.ClearComponentPools();
             _context.ComponentPools[CID.ComponentA].Count.Should().Be(0);
             _context.ComponentPools[CID.ComponentB].Count.Should().Be(0);
         }
 
         [Fact]
-        public void ClearsSpecificComponentpool()
+        public void ClearsSpecificComponentPool()
         {
             var entity = _context.CreateEntity();
             entity.AddComponentA();
@@ -771,9 +754,10 @@ namespace Entitas.Tests
         }
 
         [Fact]
-        public void Fails()
+        public void ThrowsWhenClearingComponentPoolThatDoesNotExist()
         {
-            _context.ClearComponentPool(CID.ComponentC);
+            FluentActions.Invoking(() => _context.ClearComponentPool(99))
+                .Should().Throw<IndexOutOfRangeException>();
         }
 
         [Fact]
@@ -785,10 +769,10 @@ namespace Entitas.Tests
 
             var didExecute = 0;
 
-            groupA.OnEntityAdded += (_, entity, _, _) =>
+            groupA.OnEntityAdded += (_, e, _, _) =>
             {
                 didExecute += 1;
-                entity.RemoveComponentA();
+                e.RemoveComponentA();
             };
 
             groupAB.OnEntityAdded += delegate { didExecute += 1; };

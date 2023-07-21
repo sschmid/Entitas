@@ -14,9 +14,9 @@ namespace Entitas.Tests
 
         public PrimaryEntityIndexTests()
         {
-            _context = new MyTest1Context();
+            _context = new TestContext(CID.TotalComponents);
             _index = CreatePrimaryEntityIndex();
-            _multiKeyContext = new MyTest1Context();
+            _multiKeyContext = new TestContext(CID.TotalComponents);
             _multiKeyIndex = CreateMultiKeyPrimaryEntityIndex();
         }
 

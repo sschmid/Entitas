@@ -5,11 +5,11 @@ namespace Entitas.Tests
 {
     public class ReactiveSystemTests
     {
-        readonly MyTest1Context _context;
+        readonly TestContext _context;
 
         public ReactiveSystemTests()
         {
-            _context = new MyTest1Context();
+            _context = new TestContext(CID.TotalComponents);
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace Entitas.Tests
         {
             var system = CreateAddedSystem();
             var e = CreateEntityAB();
-            system.executeAction = entities => { entities[0].ReplaceComponentA(Component.A); };
+            system.ExecuteAction = entities => { entities[0].ReplaceComponentA(Component.A); };
             system.Execute();
             system.Execute();
             AssertEntities(system, e, 2);
@@ -67,7 +67,7 @@ namespace Entitas.Tests
             var system = CreateAddedSystem();
             var e1 = CreateEntityAB();
             TestEntity e2 = null;
-            system.executeAction = delegate { e2 ??= CreateEntityAB(); };
+            system.ExecuteAction = delegate { e2 ??= CreateEntityAB(); };
             system.Execute();
             AssertEntities(system, e1);
             system.Execute();
@@ -161,7 +161,7 @@ namespace Entitas.Tests
             var system = CreateRemovedSystem();
             var e = CreateEntityAB();
             var didExecute = 0;
-            system.executeAction = entities =>
+            system.ExecuteAction = entities =>
             {
                 didExecute += 1;
                 entities[0].RetainCount.Should().Be(1);
@@ -196,13 +196,13 @@ namespace Entitas.Tests
         [Fact]
         public void ExecutesWhenTriggeredOnMultipleContexts()
         {
-            var context1 = new MyTest1Context();
-            var context2 = new MyTest1Context();
+            var context1 = new TestContext(CID.TotalComponents);
+            var context2 = new TestContext(CID.TotalComponents);
 
             var groupA = context1.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
             var groupB = context2.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentB));
 
-            var groups = new[] {groupA, groupB};
+            var groups = new[] { groupA, groupB };
             var groupEvents = new[]
             {
                 GroupEvent.Added,
@@ -241,14 +241,14 @@ namespace Entitas.Tests
 
             var e1 = _context.CreateEntity();
             e1.AddComponentB();
-            e1.AddComponent(CID.ComponentA, new UserComponent {Age = 10});
+            e1.AddComponent(CID.ComponentA, new UserComponent { Age = 10 });
 
             var e2 = _context.CreateEntity();
             e2.AddComponentB();
-            e2.AddComponent(CID.ComponentA, new UserComponent {Age = 50});
+            e2.AddComponent(CID.ComponentA, new UserComponent { Age = 50 });
 
             var didExecute = 0;
-            system.executeAction = delegate
+            system.ExecuteAction = delegate
             {
                 didExecute += 1;
                 e2.RetainCount.Should().Be(3); // retained by context, group and collector
@@ -259,8 +259,8 @@ namespace Entitas.Tests
 
             system.Execute();
 
-            system.entities.Length.Should().Be(1);
-            system.entities[0].Should().BeSameAs(e2);
+            system.Entities.Length.Should().Be(1);
+            system.Entities[0].Should().BeSameAs(e2);
 
             e1.RetainCount.Should().Be(2); // retained by context and group
             e2.RetainCount.Should().Be(2);
@@ -270,7 +270,7 @@ namespace Entitas.Tests
         public void ClearsReactiveSystemAfterExecute()
         {
             var system = new ReactiveSystemSpy(_context.CreateCollector(Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB)));
-            system.executeAction = entities => { entities[0].ReplaceComponentA(Component.A); };
+            system.ExecuteAction = entities => { entities[0].ReplaceComponentA(Component.A); };
             var e = CreateEntityAB();
             system.Execute();
             system.Clear();
@@ -295,18 +295,18 @@ namespace Entitas.Tests
             .AddComponentB()
             .AddComponentC();
 
-        static void AssertEntities(IReactiveSystemSpy system, IEntity entity, int didExecute = 1)
+        static void AssertEntities(IReactiveSystemSpy system, TestEntity entity, int didExecute = 1)
         {
             if (entity == null)
             {
-                system.didExecute.Should().Be(0);
-                system.entities.Should().BeNull();
+                system.DidExecute.Should().Be(0);
+                system.Entities.Should().BeNull();
             }
             else
             {
-                system.didExecute.Should().Be(didExecute);
-                system.entities.Length.Should().Be(1);
-                system.entities.Should().Contain(entity);
+                system.DidExecute.Should().Be(didExecute);
+                system.Entities.Length.Should().Be(1);
+                system.Entities.Should().Contain(entity);
             }
         }
     }

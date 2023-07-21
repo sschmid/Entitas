@@ -7,8 +7,8 @@ namespace Entitas.Tests
 {
     public class EntityTests
     {
-        readonly int[] _indicesA = {CID.ComponentA};
-        readonly int[] _indicesAB = {CID.ComponentA, CID.ComponentB};
+        readonly int[] _indicesA = { CID.ComponentA };
+        readonly int[] _indicesAB = { CID.ComponentA, CID.ComponentB };
         readonly TestEntity _entity;
 
         public EntityTests()
@@ -126,11 +126,10 @@ namespace Entitas.Tests
         }
 
         [Fact]
-        public void ThrowsWhenComponentNamesLengthIsNotEqualToTotalComponents()
+        public void ThrowsWhenAddComponentTwice()
         {
             _entity.AddComponentA();
-            FluentActions.Invoking(() =>
-                    _entity.AddComponentA())
+            FluentActions.Invoking(() => _entity.AddComponentA())
                 .Should().Throw<EntityAlreadyHasComponentException>();
         }
 
@@ -239,7 +238,7 @@ namespace Entitas.Tests
         [Fact]
         public void UsesComponentToString()
         {
-            _entity.AddComponent(0, new UserComponent {Name = "Max", Age = 42});
+            _entity.AddComponent(0, new UserComponent { Name = "Max", Age = 42 });
             _entity.ToString().Should().Be("Entity_0(User(Max, 42))");
         }
 
@@ -283,9 +282,9 @@ namespace Entitas.Tests
             var component = _entity.CreateComponent(1, type);
             component.GetType().Should().Be(type);
 
-            var nameAgeComponent = ((UserComponent)component);
-            nameAgeComponent.Name.Should().BeNull();
-            nameAgeComponent.Age.Should().Be(0);
+            var user = (UserComponent)component;
+            user.Name.Should().BeNull();
+            user.Age.Should().Be(0);
         }
 
         [Fact]

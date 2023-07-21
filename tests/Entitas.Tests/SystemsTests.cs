@@ -5,12 +5,12 @@ namespace Entitas.Tests
 {
     public class SystemsTests
     {
-        readonly MyTest1Context _context;
+        readonly TestContext _context;
         readonly Systems _systems;
 
         public SystemsTests()
         {
-            _context = new MyTest1Context();
+            _context = new TestContext(CID.TotalComponents);
             _systems = new Systems();
         }
 
@@ -18,36 +18,36 @@ namespace Entitas.Tests
         public void InitializesInitializeSystemSpy()
         {
             var system = new InitializeSystemSpy();
-            system.didInitialize.Should().Be(0);
+            system.DidInitialize.Should().Be(0);
             system.Initialize();
-            system.didInitialize.Should().Be(1);
+            system.DidInitialize.Should().Be(1);
         }
 
         [Fact]
         public void ExecutesExecuteSystemSpy()
         {
             var system = new ExecuteSystemSpy();
-            system.didExecute.Should().Be(0);
+            system.DidExecute.Should().Be(0);
             system.Execute();
-            system.didExecute.Should().Be(1);
+            system.DidExecute.Should().Be(1);
         }
 
         [Fact]
         public void CleansUpCleanupSystemSpy()
         {
             var system = new CleanupSystemSpy();
-            system.didCleanup.Should().Be(0);
+            system.DidCleanup.Should().Be(0);
             system.Cleanup();
-            system.didCleanup.Should().Be(1);
+            system.DidCleanup.Should().Be(1);
         }
 
         [Fact]
         public void TearsDownTearDownSystemSpy()
         {
             var system = new TearDownSystemSpy();
-            system.didTearDown.Should().Be(0);
+            system.DidTearDown.Should().Be(0);
             system.TearDown();
-            system.didTearDown.Should().Be(1);
+            system.DidTearDown.Should().Be(1);
         }
 
         [Fact]
@@ -55,22 +55,22 @@ namespace Entitas.Tests
         {
             var system = CreateReactiveSystem();
 
-            system.didInitialize.Should().Be(0);
+            system.DidInitialize.Should().Be(0);
             system.Initialize();
-            system.didInitialize.Should().Be(1);
+            system.DidInitialize.Should().Be(1);
 
-            system.didExecute.Should().Be(0);
+            system.DidExecute.Should().Be(0);
             system.Execute();
-            system.didExecute.Should().Be(1);
-            system.entities.Length.Should().Be(1);
+            system.DidExecute.Should().Be(1);
+            system.Entities.Length.Should().Be(1);
 
-            system.didCleanup.Should().Be(0);
+            system.DidCleanup.Should().Be(0);
             system.Cleanup();
-            system.didCleanup.Should().Be(1);
+            system.DidCleanup.Should().Be(1);
 
-            system.didTearDown.Should().Be(0);
+            system.DidTearDown.Should().Be(0);
             system.TearDown();
-            system.didTearDown.Should().Be(1);
+            system.DidTearDown.Should().Be(1);
         }
 
         [Fact]
@@ -85,7 +85,7 @@ namespace Entitas.Tests
             var system = new InitializeSystemSpy();
             _systems.Add(system);
             _systems.Initialize();
-            system.didInitialize.Should().Be(1);
+            system.DidInitialize.Should().Be(1);
         }
 
         [Fact]
@@ -95,7 +95,7 @@ namespace Entitas.Tests
             _systems.Add(system);
             _systems.Remove(system);
             _systems.Initialize();
-            system.didInitialize.Should().Be(0);
+            system.DidInitialize.Should().Be(0);
         }
 
         [Fact]
@@ -104,7 +104,7 @@ namespace Entitas.Tests
             var system = new ExecuteSystemSpy();
             _systems.Add(system);
             _systems.Execute();
-            system.didExecute.Should().Be(1);
+            system.DidExecute.Should().Be(1);
         }
 
         [Fact]
@@ -114,7 +114,7 @@ namespace Entitas.Tests
             _systems.Add(system);
             _systems.Remove(system);
             _systems.Execute();
-            system.didExecute.Should().Be(0);
+            system.DidExecute.Should().Be(0);
         }
 
         [Fact]
@@ -123,7 +123,7 @@ namespace Entitas.Tests
             var system = CreateReactiveSystem();
             _systems.Add(system);
             _systems.Execute();
-            system.didExecute.Should().Be(1);
+            system.DidExecute.Should().Be(1);
         }
 
         [Fact]
@@ -133,7 +133,7 @@ namespace Entitas.Tests
             _systems.Add(system);
             _systems.Remove(system);
             _systems.Execute();
-            system.didExecute.Should().Be(0);
+            system.DidExecute.Should().Be(0);
         }
 
         [Fact]
@@ -142,7 +142,7 @@ namespace Entitas.Tests
             var system = new CleanupSystemSpy();
             _systems.Add(system);
             _systems.Cleanup();
-            system.didCleanup.Should().Be(1);
+            system.DidCleanup.Should().Be(1);
         }
 
         [Fact]
@@ -152,7 +152,7 @@ namespace Entitas.Tests
             _systems.Add(system);
             _systems.Remove(system);
             _systems.Cleanup();
-            system.didCleanup.Should().Be(0);
+            system.DidCleanup.Should().Be(0);
         }
 
         [Fact]
@@ -161,7 +161,7 @@ namespace Entitas.Tests
             var system = new TearDownSystemSpy();
             _systems.Add(system);
             _systems.TearDown();
-            system.didTearDown.Should().Be(1);
+            system.DidTearDown.Should().Be(1);
         }
 
         [Fact]
@@ -171,7 +171,7 @@ namespace Entitas.Tests
             _systems.Add(system);
             _systems.Remove(system);
             _systems.TearDown();
-            system.didTearDown.Should().Be(0);
+            system.DidTearDown.Should().Be(0);
         }
 
         [Fact]
@@ -182,16 +182,16 @@ namespace Entitas.Tests
             _systems.Remove(system);
 
             _systems.Initialize();
-            system.didInitialize.Should().Be(0);
+            system.DidInitialize.Should().Be(0);
 
             _systems.Execute();
-            system.didExecute.Should().Be(0);
+            system.DidExecute.Should().Be(0);
 
             _systems.Cleanup();
-            system.didCleanup.Should().Be(0);
+            system.DidCleanup.Should().Be(0);
 
             _systems.TearDown();
-            system.didTearDown.Should().Be(0);
+            system.DidTearDown.Should().Be(0);
         }
 
         [Fact]
@@ -200,21 +200,21 @@ namespace Entitas.Tests
             var system = CreateReactiveSystem();
             _systems.Add(system);
 
-            system.didInitialize.Should().Be(0);
+            system.DidInitialize.Should().Be(0);
             _systems.Initialize();
-            system.didInitialize.Should().Be(1);
+            system.DidInitialize.Should().Be(1);
 
-            system.didExecute.Should().Be(0);
+            system.DidExecute.Should().Be(0);
             _systems.Execute();
-            system.didExecute.Should().Be(1);
+            system.DidExecute.Should().Be(1);
 
-            system.didCleanup.Should().Be(0);
+            system.DidCleanup.Should().Be(0);
             _systems.Cleanup();
-            system.didCleanup.Should().Be(1);
+            system.DidCleanup.Should().Be(1);
 
-            system.didTearDown.Should().Be(0);
+            system.DidTearDown.Should().Be(0);
             _systems.TearDown();
-            system.didTearDown.Should().Be(1);
+            system.DidTearDown.Should().Be(1);
         }
 
         [Fact]
@@ -226,22 +226,22 @@ namespace Entitas.Tests
             var parentSystems = new Systems();
             parentSystems.Add(_systems);
 
-            system.didInitialize.Should().Be(0);
+            system.DidInitialize.Should().Be(0);
             parentSystems.Initialize();
-            system.didInitialize.Should().Be(1);
+            system.DidInitialize.Should().Be(1);
 
-            system.didExecute.Should().Be(0);
+            system.DidExecute.Should().Be(0);
             parentSystems.Execute();
             parentSystems.Execute();
-            system.didExecute.Should().Be(1);
+            system.DidExecute.Should().Be(1);
 
-            system.didCleanup.Should().Be(0);
+            system.DidCleanup.Should().Be(0);
             parentSystems.Cleanup();
-            system.didCleanup.Should().Be(1);
+            system.DidCleanup.Should().Be(1);
 
-            system.didTearDown.Should().Be(0);
+            system.DidTearDown.Should().Be(0);
             parentSystems.TearDown();
-            system.didTearDown.Should().Be(1);
+            system.DidTearDown.Should().Be(1);
         }
 
         [Fact]
@@ -251,11 +251,11 @@ namespace Entitas.Tests
             _systems.Add(system);
 
             _systems.Initialize();
-            system.didInitialize.Should().Be(1);
+            system.DidInitialize.Should().Be(1);
 
             _systems.ClearReactiveSystems();
             _systems.Execute();
-            system.didExecute.Should().Be(0);
+            system.DidExecute.Should().Be(0);
         }
 
         [Fact]
@@ -268,11 +268,11 @@ namespace Entitas.Tests
             parentSystems.Add(_systems);
 
             parentSystems.Initialize();
-            system.didInitialize.Should().Be(1);
+            system.DidInitialize.Should().Be(1);
 
             parentSystems.ClearReactiveSystems();
             parentSystems.Execute();
-            system.didExecute.Should().Be(0);
+            system.DidExecute.Should().Be(0);
         }
 
         [Fact]
@@ -282,11 +282,11 @@ namespace Entitas.Tests
             _systems.Add(system);
 
             _systems.Initialize();
-            system.didInitialize.Should().Be(1);
+            system.DidInitialize.Should().Be(1);
 
             _systems.DeactivateReactiveSystems();
             _systems.Execute();
-            system.didExecute.Should().Be(0);
+            system.DidExecute.Should().Be(0);
         }
 
         [Fact]
@@ -299,11 +299,11 @@ namespace Entitas.Tests
             parentSystems.Add(_systems);
 
             parentSystems.Initialize();
-            system.didInitialize.Should().Be(1);
+            system.DidInitialize.Should().Be(1);
 
             parentSystems.DeactivateReactiveSystems();
             parentSystems.Execute();
-            system.didExecute.Should().Be(0);
+            system.DidExecute.Should().Be(0);
         }
 
         [Fact]
@@ -313,16 +313,16 @@ namespace Entitas.Tests
             _systems.Add(system);
 
             _systems.Initialize();
-            system.didInitialize.Should().Be(1);
+            system.DidInitialize.Should().Be(1);
 
             _systems.DeactivateReactiveSystems();
             _systems.ActivateReactiveSystems();
             _systems.Execute();
-            system.didExecute.Should().Be(0);
+            system.DidExecute.Should().Be(0);
 
             _context.CreateEntity().AddComponentA();
             _systems.Execute();
-            system.didExecute.Should().Be(1);
+            system.DidExecute.Should().Be(1);
         }
 
         [Fact]
@@ -335,16 +335,16 @@ namespace Entitas.Tests
             parentSystems.Add(_systems);
 
             parentSystems.Initialize();
-            system.didInitialize.Should().Be(1);
+            system.DidInitialize.Should().Be(1);
 
             parentSystems.DeactivateReactiveSystems();
             parentSystems.ActivateReactiveSystems();
             parentSystems.Execute();
-            system.didExecute.Should().Be(0);
+            system.DidExecute.Should().Be(0);
 
             _context.CreateEntity().AddComponentA();
             _systems.Execute();
-            system.didExecute.Should().Be(1);
+            system.DidExecute.Should().Be(1);
         }
 
         ReactiveSystemSpy CreateReactiveSystem()

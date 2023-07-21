@@ -11,10 +11,10 @@ namespace Entitas.Tests
 
         public PublicMemberInfoEntityExtensionTests()
         {
-            var context = new MyTest1Context();
+            var context = new TestContext(CID.TotalComponents);
             _entity = context.CreateEntity();
             _target = context.CreateEntity();
-            _user = new UserComponent {Name = "Max", Age = 42};
+            _user = new UserComponent { Name = "Max", Age = 42 };
         }
 
         [Fact]

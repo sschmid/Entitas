@@ -5,13 +5,13 @@ namespace Entitas.Tests
 {
     public class CollectorTests
     {
-        readonly IContext<TestEntity> _context;
+        readonly TestContext _context;
         readonly IGroup<TestEntity> _groupA;
         readonly IGroup<TestEntity> _groupB;
 
         public CollectorTests()
         {
-            _context = new MyTest1Context();
+            _context = new TestContext(CID.TotalComponents);
             _groupA = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
             _groupB = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentB));
         }
@@ -27,40 +27,41 @@ namespace Entitas.Tests
         public void ReturnsCollectedEntitiesOnAdded()
         {
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Added);
-            var e = CreateEntityA();
+            var entity = _context.CreateEntity().AddComponentA();
             var entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
-            entities.Should().Contain(e);
+            entities.Should().Contain(entity);
         }
 
         [Fact]
         public void OnlyCollectsMatchingEntities()
         {
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Added);
-            var e = CreateEntityA();
-            CreateEntityB();
+            var entity = _context.CreateEntity().AddComponentA();
+            var unused = _context.CreateEntity().AddComponentB();
             var entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
-            entities.Should().Contain(e);
+            entities.Should().Contain(entity);
         }
 
         [Fact]
         public void CollectsEntitiesOnlyOnce()
         {
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Added);
-            var e = CreateEntityA();
-            e.RemoveComponentA();
-            e.AddComponentA();
+            var entity = _context.CreateEntity()
+                .AddComponentA()
+                .RemoveComponentA()
+                .AddComponentA();
             var entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
-            entities.Should().Contain(e);
+            entities.Should().Contain(entity);
         }
 
         [Fact]
         public void ClearsCollectedEntities()
         {
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Added);
-            CreateEntityA();
+            _context.CreateEntity().AddComponentA();
             collector.ClearCollectedEntities();
             collector.CollectedEntities.Should().BeEmpty();
         }
@@ -69,7 +70,7 @@ namespace Entitas.Tests
         public void ClearsCollectedEntitiesWhenDeactivating()
         {
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Added);
-            CreateEntityA();
+            _context.CreateEntity().AddComponentA();
             collector.Deactivate();
             collector.CollectedEntities.Should().BeEmpty();
         }
@@ -78,9 +79,9 @@ namespace Entitas.Tests
         public void DoesNotCollectEntitiesWhenDeactivated()
         {
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Added);
-            CreateEntityA();
+            _context.CreateEntity().AddComponentA();
             collector.Deactivate();
-            CreateEntityA();
+            _context.CreateEntity().AddComponentA();
             collector.CollectedEntities.Should().BeEmpty();
         }
 
@@ -88,21 +89,21 @@ namespace Entitas.Tests
         public void ContinuesCollectingWhenActivated()
         {
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Added);
-            CreateEntityA();
+            _context.CreateEntity().AddComponentA();
             collector.Deactivate();
-            CreateEntityA();
+            _context.CreateEntity().AddComponentA();
             collector.Activate();
-            var e = CreateEntityA();
+            var entity = _context.CreateEntity().AddComponentA();
             var entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
-            entities.Should().Contain(e);
+            entities.Should().Contain(entity);
         }
 
         [Fact]
         public void CanToString()
         {
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Added);
-            CreateEntityA();
+            _context.CreateEntity().AddComponentA();
             collector.ToString().Should().Be("Collector(Group(AllOf(1)))");
         }
 
@@ -110,64 +111,65 @@ namespace Entitas.Tests
         public void RetainsEntityEvenAfterDestroy()
         {
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Added);
-            var e = CreateEntityA();
-            e.Destroy();
-            e.RetainCount.Should().Be(1);
-            (e.Aerc as SafeAERC)?.Owners.Should().Contain(collector);
+            var entity = _context.CreateEntity().AddComponentA();
+            entity.Destroy();
+            entity.RetainCount.Should().Be(1);
+            (entity.Aerc as SafeAERC)!.Owners.Should().Contain(collector);
         }
 
         [Fact]
         public void ReleasesEntityWhenClearingCollectedEntities()
         {
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Added);
-            var e = CreateEntityA();
-            e.Destroy();
+            var entity = _context.CreateEntity().AddComponentA();
+            entity.Destroy();
             collector.ClearCollectedEntities();
-            e.RetainCount.Should().Be(0);
+            entity.RetainCount.Should().Be(0);
         }
 
         [Fact]
         public void RetainsEntitiesOnlyOnce()
         {
             var unused = new Collector<TestEntity>(_groupA, GroupEvent.Added);
-            var e = CreateEntityA();
-            e.ReplaceComponentA(new ComponentA());
-            e.Destroy();
-            e.RetainCount.Should().Be(1);
+            var entity = _context.CreateEntity()
+                .AddComponentA()
+                .ReplaceComponentA(new ComponentA());
+            entity.Destroy();
+            entity.RetainCount.Should().Be(1);
         }
 
         [Fact]
         public void ReturnsCollectedEntitiesOnRemoved()
         {
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.Removed);
-            var e = CreateEntityA();
+            var entity = _context.CreateEntity().AddComponentA();
             collector.CollectedEntities.Should().BeEmpty();
-            e.RemoveComponentA();
+            entity.RemoveComponentA();
             var entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
-            entities.Should().Contain(e);
+            entities.Should().Contain(entity);
         }
 
         [Fact]
         public void ReturnsCollectedEntitiesOnAddedOrRemoved()
         {
             var collector = new Collector<TestEntity>(_groupA, GroupEvent.AddedOrRemoved);
-            var e = CreateEntityA();
+            var entity = _context.CreateEntity().AddComponentA();
             var entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
-            entities.Should().Contain(e);
+            entities.Should().Contain(entity);
             collector.ClearCollectedEntities();
-            e.RemoveComponentA();
+            entity.RemoveComponentA();
             entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
-            entities.Should().Contain(e);
+            entities.Should().Contain(entity);
         }
 
         [Fact]
         public void ThrowsWhenGroupCountIsNotEqualGroupEventCount()
         {
             FluentActions.Invoking(() => new Collector<TestEntity>(
-                new[] {_groupA},
+                new[] { _groupA },
                 new[]
                 {
                     GroupEvent.Added,
@@ -180,7 +182,7 @@ namespace Entitas.Tests
         public void ReturnsCollectedEntitiesOnMultipleGroupsAdded()
         {
             var collector = new Collector<TestEntity>(
-                new[] {_groupA, _groupB},
+                new[] { _groupA, _groupB },
                 new[]
                 {
                     GroupEvent.Added,
@@ -188,19 +190,19 @@ namespace Entitas.Tests
                 }
             );
 
-            var eA = CreateEntityA();
-            var eB = CreateEntityB();
+            var entityA = _context.CreateEntity().AddComponentA();
+            var entityB = _context.CreateEntity().AddComponentB();
             var entities = collector.CollectedEntities;
             entities.Should().HaveCount(2);
-            entities.Should().Contain(eA);
-            entities.Should().Contain(eB);
+            entities.Should().Contain(entityA);
+            entities.Should().Contain(entityB);
         }
 
         [Fact]
         public void CanToStringWithMultipleGroups()
         {
             var collector = new Collector<TestEntity>(
-                new[] {_groupA, _groupB},
+                new[] { _groupA, _groupB },
                 new[]
                 {
                     GroupEvent.Added,
@@ -215,7 +217,7 @@ namespace Entitas.Tests
         public void ReturnsCollectedEntitiesOnMultipleGroupsRemoved()
         {
             var collector = new Collector<TestEntity>(
-                new[] {_groupA, _groupB},
+                new[] { _groupA, _groupB },
                 new[]
                 {
                     GroupEvent.Removed,
@@ -223,22 +225,22 @@ namespace Entitas.Tests
                 }
             );
 
-            var eA = CreateEntityA();
-            var eB = CreateEntityB();
+            var entityA = _context.CreateEntity().AddComponentA();
+            var entityB = _context.CreateEntity().AddComponentB();
             collector.CollectedEntities.Should().BeEmpty();
-            eA.RemoveComponentA();
-            eB.RemoveComponentB();
+            entityA.RemoveComponentA();
+            entityB.RemoveComponentB();
             var entities = collector.CollectedEntities;
             entities.Should().HaveCount(2);
-            entities.Should().Contain(eA);
-            entities.Should().Contain(eB);
+            entities.Should().Contain(entityA);
+            entities.Should().Contain(entityB);
         }
 
         [Fact]
         public void ReturnsCollectedEntitiesOnMultipleGroupsAddedOrRemoved()
         {
             var collector = new Collector<TestEntity>(
-                new[] {_groupA, _groupB},
+                new[] { _groupA, _groupB },
                 new[]
                 {
                     GroupEvent.AddedOrRemoved,
@@ -246,27 +248,27 @@ namespace Entitas.Tests
                 }
             );
 
-            var eA = CreateEntityA();
-            var eB = CreateEntityB();
+            var entityA = _context.CreateEntity().AddComponentA();
+            var entityB = _context.CreateEntity().AddComponentB();
             var entities = collector.CollectedEntities;
             entities.Should().HaveCount(2);
-            entities.Should().Contain(eA);
-            entities.Should().Contain(eB);
+            entities.Should().Contain(entityA);
+            entities.Should().Contain(entityB);
             collector.ClearCollectedEntities();
 
-            eA.RemoveComponentA();
-            eB.RemoveComponentB();
+            entityA.RemoveComponentA();
+            entityB.RemoveComponentB();
             entities = collector.CollectedEntities;
             entities.Should().HaveCount(2);
-            entities.Should().Contain(eA);
-            entities.Should().Contain(eB);
+            entities.Should().Contain(entityA);
+            entities.Should().Contain(entityB);
         }
 
         [Fact]
         public void ReturnsCollectedEntitiesOnMixedGroupEvents()
         {
             var collector = new Collector<TestEntity>(
-                new[] {_groupA, _groupB},
+                new[] { _groupA, _groupB },
                 new[]
                 {
                     GroupEvent.Added,
@@ -274,21 +276,18 @@ namespace Entitas.Tests
                 }
             );
 
-            var eA = CreateEntityA();
-            var eB = CreateEntityB();
+            var entityA = _context.CreateEntity().AddComponentA();
+            var entityB = _context.CreateEntity().AddComponentB();
             var entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
-            entities.Should().Contain(eA);
+            entities.Should().Contain(entityA);
             collector.ClearCollectedEntities();
 
-            eA.RemoveComponentA();
-            eB.RemoveComponentB();
+            entityA.RemoveComponentA();
+            entityB.RemoveComponentB();
             entities = collector.CollectedEntities;
             entities.Should().HaveCount(1);
-            entities.Should().Contain(eB);
+            entities.Should().Contain(entityB);
         }
-
-        TestEntity CreateEntityA() => _context.CreateEntity().AddComponentA();
-        TestEntity CreateEntityB() => _context.CreateEntity().AddComponentB();
     }
 }
