@@ -6,15 +6,15 @@ namespace Entitas
     {
         /// Adds copies of all specified components to the target entity.
         /// If replaceExisting is true it will replace exising components.
-        public static void CopyTo(this IEntity entity, IEntity target, bool replaceExisting = false, params int[] indices)
+        public static void CopyTo(this IEntity entity, IEntity target, bool replaceExisting = false, params int[] indexes)
         {
-            var componentIndices = indices.Length == 0
-                ? entity.GetComponentIndices()
-                : indices;
+            var componentIndexes = indexes.Length == 0
+                ? entity.GetComponentIndexes()
+                : indexes;
 
-            for (var i = 0; i < componentIndices.Length; i++)
+            for (var i = 0; i < componentIndexes.Length; i++)
             {
-                var index = componentIndices[i];
+                var index = componentIndexes[i];
                 var component = entity.GetComponent(index);
                 var clonedComponent = target.CreateComponent(index, component.GetType());
                 component.CopyPublicMemberValues(clonedComponent);

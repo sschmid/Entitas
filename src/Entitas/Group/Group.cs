@@ -71,7 +71,7 @@ namespace Entitas
 
         /// Removes all event handlers from this group.
         /// Keep in mind that this will break reactive systems and
-        /// entity indices which rely on this group.
+        /// entity indexes which rely on this group.
         public void RemoveAllEventHandlers()
         {
             OnEntityAdded = null;

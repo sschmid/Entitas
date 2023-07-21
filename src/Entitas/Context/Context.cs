@@ -63,7 +63,7 @@ namespace Entitas
         readonly Dictionary<IMatcher<TEntity>, IGroup<TEntity>> _groups = new Dictionary<IMatcher<TEntity>, IGroup<TEntity>>();
         readonly List<IGroup<TEntity>>[] _groupsForIndex;
 
-        readonly Dictionary<string, IEntityIndex> _entityIndices;
+        readonly Dictionary<string, IEntityIndex> _entityIndexes;
 
         int _creationIndex;
 
@@ -106,7 +106,7 @@ namespace Entitas
 
             _groupsForIndex = new List<IGroup<TEntity>>[totalComponents];
             _componentPools = new Stack<IComponent>[totalComponents];
-            _entityIndices = new Dictionary<string, IEntityIndex>();
+            _entityIndexes = new Dictionary<string, IEntityIndex>();
 
             var groupChangedListPool = new ObjectPool<List<GroupChanged<TEntity>>>(
                 () => new List<GroupChanged<TEntity>>(),
@@ -252,9 +252,9 @@ namespace Entitas
 
                 _groups.Add(matcher, group);
 
-                for (var i = 0; i < matcher.Indices.Length; i++)
+                for (var i = 0; i < matcher.Indexes.Length; i++)
                 {
-                    var index = matcher.Indices[i];
+                    var index = matcher.Indexes[i];
                     _groupsForIndex[index] ??= new List<IGroup<TEntity>>();
                     _groupsForIndex[index].Add(group);
                 }
@@ -269,16 +269,16 @@ namespace Entitas
         /// There can only be one IEntityIndex per name.
         public void AddEntityIndex(IEntityIndex entityIndex)
         {
-            if (_entityIndices.ContainsKey(entityIndex.Name))
+            if (_entityIndexes.ContainsKey(entityIndex.Name))
                 throw new ContextEntityIndexDoesAlreadyExistException(this, entityIndex.Name);
 
-            _entityIndices.Add(entityIndex.Name, entityIndex);
+            _entityIndexes.Add(entityIndex.Name, entityIndex);
         }
 
         /// Gets the IEntityIndex for the specified name.
         public IEntityIndex GetEntityIndex(string name)
         {
-            if (!_entityIndices.TryGetValue(name, out var entityIndex))
+            if (!_entityIndexes.TryGetValue(name, out var entityIndex))
                 throw new ContextEntityIndexDoesNotExistException(this, name);
 
             return entityIndex;

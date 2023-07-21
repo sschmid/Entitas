@@ -11,58 +11,58 @@ namespace Entitas
         [ThreadStatic] static HashSet<int> _indexSetBufferThreadStatic;
         static HashSet<int> _indexSetBuffer => _indexSetBufferThreadStatic ??= new HashSet<int>();
 
-        public static IAllOfMatcher<TEntity> AllOf(params int[] indices)
+        public static IAllOfMatcher<TEntity> AllOf(params int[] indexes)
         {
             var matcher = new Matcher<TEntity>();
-            matcher._allOfIndices = DistinctIndices(indices);
+            matcher._allOfIndexes = DistinctIndexes(indexes);
             return matcher;
         }
 
         public static IAllOfMatcher<TEntity> AllOf(params IMatcher<TEntity>[] matchers)
         {
-            var allOfMatcher = (Matcher<TEntity>)AllOf(MergeIndices(matchers));
+            var allOfMatcher = (Matcher<TEntity>)AllOf(MergeIndexes(matchers));
             SetComponentNames(allOfMatcher, matchers);
             return allOfMatcher;
         }
 
-        public static IAnyOfMatcher<TEntity> AnyOf(params int[] indices)
+        public static IAnyOfMatcher<TEntity> AnyOf(params int[] indexes)
         {
             var matcher = new Matcher<TEntity>();
-            matcher._anyOfIndices = DistinctIndices(indices);
+            matcher._anyOfIndexes = DistinctIndexes(indexes);
             return matcher;
         }
 
         public static IAnyOfMatcher<TEntity> AnyOf(params IMatcher<TEntity>[] matchers)
         {
-            var anyOfMatcher = (Matcher<TEntity>)AnyOf(MergeIndices(matchers));
+            var anyOfMatcher = (Matcher<TEntity>)AnyOf(MergeIndexes(matchers));
             SetComponentNames(anyOfMatcher, matchers);
             return anyOfMatcher;
         }
 
-        static int[] MergeIndices(int[] allOfIndices, int[] anyOfIndices, int[] noneOfIndices)
+        static int[] MergeIndexes(int[] allOfIndexes, int[] anyOfIndexes, int[] noneOfIndexes)
         {
-            if (allOfIndices != null) _indexBuffer.AddRange(allOfIndices);
-            if (anyOfIndices != null) _indexBuffer.AddRange(anyOfIndices);
-            if (noneOfIndices != null) _indexBuffer.AddRange(noneOfIndices);
+            if (allOfIndexes != null) _indexBuffer.AddRange(allOfIndexes);
+            if (anyOfIndexes != null) _indexBuffer.AddRange(anyOfIndexes);
+            if (noneOfIndexes != null) _indexBuffer.AddRange(noneOfIndexes);
 
-            var mergedIndices = DistinctIndices(_indexBuffer);
+            var mergedIndexes = DistinctIndexes(_indexBuffer);
             _indexBuffer.Clear();
-            return mergedIndices;
+            return mergedIndexes;
         }
 
-        static int[] MergeIndices(IMatcher<TEntity>[] matchers)
+        static int[] MergeIndexes(IMatcher<TEntity>[] matchers)
         {
-            var indices = new int[matchers.Length];
+            var indexes = new int[matchers.Length];
             for (var i = 0; i < matchers.Length; i++)
             {
                 var matcher = matchers[i];
-                if (matcher.Indices.Length != 1)
-                    throw new MatcherException(matcher.Indices.Length);
+                if (matcher.Indexes.Length != 1)
+                    throw new MatcherException(matcher.Indexes.Length);
 
-                indices[i] = matcher.Indices[0];
+                indexes[i] = matcher.Indexes[0];
             }
 
-            return indices;
+            return indexes;
         }
 
         static string[] GetComponentNames(IMatcher<TEntity>[] matchers)
@@ -83,18 +83,18 @@ namespace Entitas
                 matcher.ComponentNames = componentNames;
         }
 
-        static int[] DistinctIndices(IList<int> indices)
+        static int[] DistinctIndexes(IList<int> indexes)
         {
-            foreach (var index in indices)
+            foreach (var index in indexes)
                 _indexSetBuffer.Add(index);
 
-            var uniqueIndices = new int[_indexSetBuffer.Count];
-            _indexSetBuffer.CopyTo(uniqueIndices);
-            Array.Sort(uniqueIndices);
+            var uniqueIndexes = new int[_indexSetBuffer.Count];
+            _indexSetBuffer.CopyTo(uniqueIndexes);
+            Array.Sort(uniqueIndexes);
 
             _indexSetBuffer.Clear();
 
-            return uniqueIndices;
+            return uniqueIndexes;
         }
     }
 }
