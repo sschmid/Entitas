@@ -164,6 +164,9 @@ namespace Entitas.Generators.Tests
         [Fact]
         public Task CleanupDestroyEntityComponent() => VerifyComponent("CleanupDestroyEntityComponent", CleanupSystemsOptions);
 
+        [Fact]
+        public Task ComplexTypesComponent() => VerifyComponent("ComplexTypesComponent", EntityExtensionOptions);
+
         /*
          *
          * Events
