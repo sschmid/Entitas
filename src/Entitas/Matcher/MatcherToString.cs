@@ -12,22 +12,22 @@ namespace Entitas
             if (_toStringCache == null)
             {
                 var sb = new StringBuilder();
-                if (_allOfIndices != null)
+                if (_allOfIndexes != null)
                 {
-                    sb.Append(GetComponentNames("AllOf", _allOfIndices, ComponentNames));
+                    sb.Append(GetComponentNames("AllOf", _allOfIndexes, ComponentNames));
                 }
 
-                if (_anyOfIndices != null)
+                if (_anyOfIndexes != null)
                 {
-                    if (_allOfIndices != null)
+                    if (_allOfIndexes != null)
                         sb.Append(".");
 
-                    sb.Append(GetComponentNames("AnyOf", _anyOfIndices, ComponentNames));
+                    sb.Append(GetComponentNames("AnyOf", _anyOfIndexes, ComponentNames));
                 }
 
-                if (_noneOfIndices != null)
+                if (_noneOfIndexes != null)
                 {
-                    sb.Append(GetComponentNames(".NoneOf", _noneOfIndices, ComponentNames));
+                    sb.Append(GetComponentNames(".NoneOf", _noneOfIndexes, ComponentNames));
                 }
 
                 _toStringCache = sb.ToString();

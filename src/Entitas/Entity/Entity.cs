@@ -78,7 +78,7 @@ namespace Entitas
         IAERC _aerc;
 
         IComponent[] _componentsCache;
-        int[] _componentIndicesCache;
+        int[] _componentIndexesCache;
         string _toStringCache;
 
         public Entity()
@@ -132,7 +132,7 @@ namespace Entitas
 
             _components[index] = component;
             _componentsCache = null;
-            _componentIndicesCache = null;
+            _componentIndexesCache = null;
             _toStringCache = null;
             OnComponentAdded?.Invoke(this, index, component);
         }
@@ -183,7 +183,7 @@ namespace Entitas
                 }
                 else
                 {
-                    _componentIndicesCache = null;
+                    _componentIndexesCache = null;
                     OnComponentRemoved?.Invoke(this, index, previousComponent);
                 }
 
@@ -228,20 +228,20 @@ namespace Entitas
             return _componentsCache;
         }
 
-        /// Returns all indices of added components.
-        public int[] GetComponentIndices()
+        /// Returns all indexes of added components.
+        public int[] GetComponentIndexes()
         {
-            if (_componentIndicesCache == null)
+            if (_componentIndexesCache == null)
             {
                 for (var i = 0; i < _components.Length; i++)
                     if (_components[i] != null)
                         _indexBuffer.Add(i);
 
-                _componentIndicesCache = _indexBuffer.ToArray();
+                _componentIndexesCache = _indexBuffer.ToArray();
                 _indexBuffer.Clear();
             }
 
-            return _componentIndicesCache;
+            return _componentIndexesCache;
         }
 
         /// Determines whether this entity has a component
@@ -249,22 +249,22 @@ namespace Entitas
         public bool HasComponent(int index) => _components[index] != null;
 
         /// Determines whether this entity has components
-        /// at all the specified indices.
-        public bool HasComponents(int[] indices)
+        /// at all the specified indexes.
+        public bool HasComponents(int[] indexes)
         {
-            for (var i = 0; i < indices.Length; i++)
-                if (_components[indices[i]] == null)
+            for (var i = 0; i < indexes.Length; i++)
+                if (_components[indexes[i]] == null)
                     return false;
 
             return true;
         }
 
         /// Determines whether this entity has a component
-        /// at any of the specified indices.
-        public bool HasAnyComponent(int[] indices)
+        /// at any of the specified indexes.
+        public bool HasAnyComponent(int[] indexes)
         {
-            for (var i = 0; i < indices.Length; i++)
-                if (_components[indices[i]] != null)
+            for (var i = 0; i < indexes.Length; i++)
+                if (_components[indexes[i]] != null)
                     return true;
 
             return false;

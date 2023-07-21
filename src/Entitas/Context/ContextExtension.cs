@@ -12,11 +12,11 @@
         public static TEntity CloneEntity<TEntity>(this IContext<TEntity> context,
             IEntity entity,
             bool replaceExisting = false,
-            params int[] indices)
+            params int[] indexes)
             where TEntity : class, IEntity
         {
             var target = context.CreateEntity();
-            entity.CopyTo(target, replaceExisting, indices);
+            entity.CopyTo(target, replaceExisting, indexes);
             return target;
         }
     }

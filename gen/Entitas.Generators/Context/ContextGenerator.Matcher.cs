@@ -17,9 +17,9 @@ namespace Entitas.Generators
                     """
                     public static class Matcher
                     {
-                        public static global::Entitas.IAllOfMatcher<Entity> AllOf(params int[] indices)
+                        public static global::Entitas.IAllOfMatcher<Entity> AllOf(params int[] indexes)
                         {
-                            return global::Entitas.Matcher<Entity>.AllOf(indices);
+                            return global::Entitas.Matcher<Entity>.AllOf(indexes);
                         }
 
                         public static global::Entitas.IAllOfMatcher<Entity> AllOf(params global::Entitas.IMatcher<Entity>[] matchers)
@@ -27,9 +27,9 @@ namespace Entitas.Generators
                             return global::Entitas.Matcher<Entity>.AllOf(matchers);
                         }
 
-                        public static global::Entitas.IAnyOfMatcher<Entity> AnyOf(params int[] indices)
+                        public static global::Entitas.IAnyOfMatcher<Entity> AnyOf(params int[] indexes)
                         {
-                            return global::Entitas.Matcher<Entity>.AnyOf(indices);
+                            return global::Entitas.Matcher<Entity>.AnyOf(indexes);
                         }
 
                         public static global::Entitas.IAnyOfMatcher<Entity> AnyOf(params global::Entitas.IMatcher<Entity>[] matchers)
