@@ -6,6 +6,6 @@ namespace Entitas
     {
         public GroupSingleEntityException(IGroup<TEntity> group) :
             base($"Cannot get the single entity from {group}!\nGroup contains {group.Count} entities:",
-                string.Join("\n", group.GetEntities().Select(e => e.ToString()))) { }
+                string.Join("\n", group.GetEntities().Select(entity => entity.ToString()))) { }
     }
 }

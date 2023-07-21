@@ -704,36 +704,36 @@ namespace Entitas.Tests
             _entity.ToString().Should().NotBeSameAs(cache);
         }
 
-        void AssertHasComponentA(TestEntity e, IComponent componentA = null)
+        void AssertHasComponentA(TestEntity entity, IComponent componentA = null)
         {
             componentA ??= Component.A;
 
-            e.GetComponentA().Should().BeSameAs(componentA);
+            entity.GetComponentA().Should().BeSameAs(componentA);
 
-            var components = e.GetComponents();
+            var components = entity.GetComponents();
             components.Length.Should().Be(1);
             components.Should().Contain(componentA);
 
-            var indexes = e.GetComponentIndexes();
+            var indexes = entity.GetComponentIndexes();
             indexes.Length.Should().Be(1);
             indexes.Should().Contain(CID.ComponentA);
 
-            e.HasComponentA().Should().BeTrue();
-            e.HasComponents(_indexesA).Should().BeTrue();
-            e.HasAnyComponent(_indexesA).Should().BeTrue();
+            entity.HasComponentA().Should().BeTrue();
+            entity.HasComponents(_indexesA).Should().BeTrue();
+            entity.HasAnyComponent(_indexesA).Should().BeTrue();
         }
 
-        void AssertHasNotComponentA(TestEntity e)
+        void AssertHasNotComponentA(TestEntity entity)
         {
-            var components = e.GetComponents();
+            var components = entity.GetComponents();
             components.Length.Should().Be(0);
 
-            var indexes = e.GetComponentIndexes();
+            var indexes = entity.GetComponentIndexes();
             indexes.Length.Should().Be(0);
 
-            e.HasComponentA().Should().BeFalse();
-            e.HasComponents(_indexesA).Should().BeFalse();
-            e.HasAnyComponent(_indexesA).Should().BeFalse();
+            entity.HasComponentA().Should().BeFalse();
+            entity.HasComponents(_indexesA).Should().BeFalse();
+            entity.HasAnyComponent(_indexesA).Should().BeFalse();
         }
     }
 }

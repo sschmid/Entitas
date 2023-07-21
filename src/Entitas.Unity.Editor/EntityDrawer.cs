@@ -73,24 +73,24 @@ namespace Entitas.Unity.Editor
             GUI.backgroundColor = Color.red;
 
             if (GUILayout.Button("Destroy selected entities"))
-                foreach (var e in entities)
-                    e.Destroy();
+                foreach (var entity in entities)
+                    entity.Destroy();
 
             GUI.backgroundColor = bgColor;
 
             EditorGUILayout.Space();
 
-            foreach (var e in entities)
+            foreach (var entity in entities)
             {
                 EditorGUILayout.BeginHorizontal();
                 {
-                    EditorGUILayout.LabelField(e.ToString());
+                    EditorGUILayout.LabelField(entity.ToString());
 
                     bgColor = GUI.backgroundColor;
                     GUI.backgroundColor = Color.red;
 
                     if (EditorLayout.MiniButton("Destroy Entity"))
-                        e.Destroy();
+                        entity.Destroy();
 
                     GUI.backgroundColor = bgColor;
                 }
