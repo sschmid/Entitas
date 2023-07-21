@@ -6,7 +6,7 @@ namespace MyApp
 
     public static partial class ContextInitialization
     {
-        [ContextInitialization(typeof(MainContext))]
+        [ContextInitialization(typeof(EmptyContext))]
         public static partial void Initialize();
     }
 }
