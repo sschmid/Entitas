@@ -214,12 +214,12 @@ namespace Entitas.Tests
             var index = new EntityIndex<TestEntity, string>(
                 "TestIndex",
                 _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA).NoneOf(CID.ComponentB)),
-                (e, c) =>
+                (entity, c) =>
                 {
                     lastComponents.Add(c);
                     return c == user1
                         ? ((UserComponent)c).Name
-                        : ((UserComponent)e.GetComponent(CID.ComponentA)).Name;
+                        : ((UserComponent)entity.GetComponent(CID.ComponentA)).Name;
                 }
             );
 

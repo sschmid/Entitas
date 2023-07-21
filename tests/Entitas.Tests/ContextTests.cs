@@ -183,14 +183,14 @@ namespace Entitas.Tests
             for (var i = 0; i < numEntities; i++)
                 _context.CreateEntity();
 
-            var order1 = _context.GetEntities().Select(e => e.Id).ToArray();
+            var order1 = _context.GetEntities().Select(entity => entity.Id).ToArray();
 
             _context.Reset();
 
             for (var i = 0; i < numEntities; i++)
                 _context.CreateEntity();
 
-            var order2 = _context.GetEntities().Select(e => e.Id).ToArray();
+            var order2 = _context.GetEntities().Select(entity => entity.Id).ToArray();
 
             order1.Should().BeEquivalentTo(order2);
         }
@@ -769,10 +769,10 @@ namespace Entitas.Tests
 
             var didExecute = 0;
 
-            groupA.OnEntityAdded += (_, e, _, _) =>
+            groupA.OnEntityAdded += (_, entity, _, _) =>
             {
                 didExecute += 1;
-                e.RemoveComponentA();
+                entity.RemoveComponentA();
             };
 
             groupAB.OnEntityAdded += delegate { didExecute += 1; };

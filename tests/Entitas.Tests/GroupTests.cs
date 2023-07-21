@@ -89,15 +89,15 @@ namespace Entitas.Tests
         {
             HandleSilently(_entity1);
             var i = 0;
-            IEntity e = null;
-            foreach (var entity in _groupA)
+            IEntity entity = null;
+            foreach (var e in _groupA)
             {
                 i++;
-                e = entity;
+                entity = e;
             }
 
             i.Should().Be(1);
-            e.Should().BeSameAs(_entity1);
+            entity.Should().BeSameAs(_entity1);
         }
 
         [Fact]
@@ -127,9 +127,9 @@ namespace Entitas.Tests
         [Fact]
         public void DoesNotAddEntityWhenNotMatching()
         {
-            var e = CreateEntity().AddComponentB();
-            HandleSilently(e);
-            AssertContainsNot(e);
+            var entity = CreateEntity().AddComponentB();
+            HandleSilently(entity);
+            AssertContainsNot(entity);
         }
 
         [Fact]
@@ -186,11 +186,11 @@ namespace Entitas.Tests
         [Fact]
         public void DoesNotDispatchOnEntityAddedWhenEntityIsNotMatching()
         {
-            var e = CreateEntity().AddComponentB();
+            var entity = CreateEntity().AddComponentB();
             _groupA.OnEntityAdded += delegate { throw new Exception("group.OnEntityAdded"); };
             _groupA.OnEntityRemoved += delegate { throw new Exception("group.OnEntityRemoved"); };
             _groupA.OnEntityUpdated += delegate { throw new Exception("group.OnEntityUpdated"); };
-            HandleAddB(e);
+            HandleAddB(entity);
         }
 
         [Fact]
@@ -316,8 +316,8 @@ namespace Entitas.Tests
         {
             HandleSilently(_entity1);
             var cache = _groupA.GetEntities();
-            var e = CreateEntity();
-            HandleSilently(e);
+            var entity = CreateEntity();
+            HandleSilently(entity);
             _groupA.GetEntities().Should().BeSameAs(cache);
         }
 
@@ -508,10 +508,10 @@ namespace Entitas.Tests
             var entities = _groupA.GetEntities();
             entities.Length.Should().Be(expectedEntities.Length);
 
-            foreach (var e in expectedEntities)
+            foreach (var entity in expectedEntities)
             {
-                entities.Should().Contain(e);
-                _groupA.ContainsEntity(e).Should().BeTrue();
+                entities.Should().Contain(entity);
+                _groupA.ContainsEntity(entity).Should().BeTrue();
             }
         }
 

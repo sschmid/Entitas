@@ -152,7 +152,7 @@ namespace Entitas.Tests
             return new PrimaryEntityIndex<TestEntity, string>(
                 "TestIndex",
                 _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA)),
-                (e, c) => (c as UserComponent ?? (UserComponent)e.GetComponent(CID.ComponentA)).Name);
+                (entity, c) => (c as UserComponent ?? (UserComponent)entity.GetComponent(CID.ComponentA)).Name);
         }
 
         PrimaryEntityIndex<TestEntity, string> CreateMultiKeyPrimaryEntityIndex()
@@ -160,9 +160,9 @@ namespace Entitas.Tests
             return new PrimaryEntityIndex<TestEntity, string>(
                 "TestIndex",
                 _multiKeyContext.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA)),
-                (e, c) =>
+                (entity, c) =>
                 {
-                    var name = (c as UserComponent ?? (UserComponent)e.GetComponent(CID.ComponentA)).Name;
+                    var name = (c as UserComponent ?? (UserComponent)entity.GetComponent(CID.ComponentA)).Name;
                     return new[] {$"{name}1", $"{name}2"};
                 });
         }
