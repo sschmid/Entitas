@@ -12,8 +12,8 @@ namespace MyApp
         public static string[] ComponentNames;
         public static global::System.Type[] ComponentTypes;
 
-        public LibraryContext()
-            : base(
+        public LibraryContext() :
+            base(
                 ComponentTypes.Length,
                 0,
                 new global::Entitas.ContextInfo(
