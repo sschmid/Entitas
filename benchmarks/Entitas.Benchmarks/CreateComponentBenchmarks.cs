@@ -3,6 +3,12 @@
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
 
+// |    Method |     Mean |     Error |    StdDev | Rank |   Gen0 | Allocated |
+// |---------- |---------:|----------:|----------:|-----:|-------:|----------:|
+// |    Manual | 3.392 ns | 0.0159 ns | 0.0149 ns |    1 | 0.0115 |      24 B |
+// |   Generic | 8.100 ns | 0.0564 ns | 0.0500 ns |    2 | 0.0115 |      24 B |
+// | Activator | 9.741 ns | 0.0352 ns | 0.0312 ns |    3 | 0.0115 |      24 B |
+
 namespace Entitas.Benchmarks
 {
     [MemoryDiagnoser]
