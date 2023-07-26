@@ -18,9 +18,16 @@ namespace Entitas.Unity
         void Update()
         {
             if (_contextObserver == null)
-                gameObject.DestroyGameObject();
-            else if (_contextObserver.gameObject != null) 
+            {
+                if (Application.isPlaying)
+                    Destroy(gameObject);
+                else
+                    DestroyImmediate(gameObject);
+            }
+            else if (_contextObserver.gameObject != null)
+            {
                 _contextObserver.gameObject.name = _contextObserver.ToString();
+            }
         }
 
         void OnDestroy() => _contextObserver.Deactivate();
