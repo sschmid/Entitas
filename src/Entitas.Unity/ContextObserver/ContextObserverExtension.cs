@@ -9,18 +9,16 @@ namespace Entitas.Unity
 #endif
         public static void CreateContextObserver(this IContext context)
         {
-            Object.DontDestroyOnLoad(new ContextObserver(context).gameObject);
+            var contextObserver = new GameObject().AddComponent<ContextObserverBehaviour>();
+            contextObserver.Initialize(context);
+            Object.DontDestroyOnLoad(contextObserver.gameObject);
         }
 
         public static ContextObserverBehaviour FindContextObserver(this IContext context)
         {
-            var observers = Object.FindObjectsOfType<ContextObserverBehaviour>();
-            for (var i = 0; i < observers.Length; i++)
-            {
-                var observer = observers[i];
-                if (observer.contextObserver.context == context)
+            foreach (var observer in Object.FindObjectsOfType<ContextObserverBehaviour>())
+                if (observer.Context == context)
                     return observer;
-            }
 
             return null;
         }

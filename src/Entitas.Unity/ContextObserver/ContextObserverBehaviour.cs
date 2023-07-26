@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace Entitas.Unity
@@ -5,31 +7,66 @@ namespace Entitas.Unity
     [ExecuteInEditMode]
     public class ContextObserverBehaviour : MonoBehaviour
     {
-        public ContextObserver contextObserver => _contextObserver;
+        public IContext Context => _context;
 
-        ContextObserver _contextObserver;
+        public readonly List<IGroup> Groups = new List<IGroup>();
 
-        public void Init(ContextObserver contextObserver)
+        readonly Stack<EntityBehaviour> _entityBehaviourPool = new Stack<EntityBehaviour>();
+        readonly StringBuilder _toStringBuilder = new StringBuilder();
+
+        IContext _context;
+
+        public void Initialize(IContext context)
         {
-            _contextObserver = contextObserver;
+            _context = context;
+            context.OnEntityCreated += OnEntityCreated;
+            context.OnGroupCreated += OnGroupCreated;
             Update();
+        }
+
+        void OnEntityCreated(IContext context, IEntity entity)
+        {
+            var entityBehaviour = _entityBehaviourPool.Count > 0
+                ? _entityBehaviourPool.Pop()
+                : new GameObject().AddComponent<EntityBehaviour>();
+
+            entityBehaviour.Init(context, entity, _entityBehaviourPool);
+            entityBehaviour.transform.SetParent(transform, false);
+            entityBehaviour.transform.SetAsLastSibling();
+        }
+
+        void OnGroupCreated(IContext context, IGroup group)
+        {
+            Groups.Add(group);
         }
 
         void Update()
         {
-            if (_contextObserver == null)
-            {
-                if (Application.isPlaying)
-                    Destroy(gameObject);
-                else
-                    DestroyImmediate(gameObject);
-            }
-            else if (_contextObserver.gameObject != null)
-            {
-                _contextObserver.gameObject.name = _contextObserver.ToString();
-            }
+            name = ToString();
         }
 
-        void OnDestroy() => _contextObserver.Deactivate();
+        void OnDestroy()
+        {
+            _context.OnEntityCreated -= OnEntityCreated;
+            _context.OnGroupCreated -= OnGroupCreated;
+        }
+
+        public override string ToString()
+        {
+            _toStringBuilder.Length = 0;
+            _toStringBuilder
+                .Append(_context.ContextInfo.Name).Append(" (")
+                .Append(_context.Count).Append(" entities, ")
+                .Append(_context.ReusableEntitiesCount).Append(" reusable, ");
+
+            if (_context.RetainedEntitiesCount != 0)
+            {
+                _toStringBuilder.Append(_context.RetainedEntitiesCount).Append(" retained, ");
+            }
+
+            _toStringBuilder.Append(Groups.Count).Append(" groups)");
+
+            return _toStringBuilder.ToString();
+        }
     }
 }
