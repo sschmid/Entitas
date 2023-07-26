@@ -1,13 +1,13 @@
 namespace Entitas.Unity
 {
-#if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
+#if (UNITY_EDITOR && !ENTITAS_DISABLE_VISUAL_DEBUGGING)
     public class Feature : DebugSystems
     {
         public Feature(string name) : base(name) { }
 
         public Feature() : base(true) => Initialize(GetType().FullName);
     }
-#elif (!ENTITAS_DISABLE_DEEP_PROFILING && DEVELOPMENT_BUILD)
+#elif (DEVELOPMENT_BUILD && !ENTITAS_DISABLE_DEEP_PROFILING)
     public class Feature : Systems
     {
         public Feature(string name) : this() { }
