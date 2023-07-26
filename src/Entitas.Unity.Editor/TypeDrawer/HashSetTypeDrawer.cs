@@ -41,7 +41,7 @@ namespace Entitas.Unity.Editor
                     EditorGUILayout.BeginHorizontal();
                     {
                         EntityDrawer.DrawObjectMember(elementType, string.Empty, item,
-                            target, (newComponent, newValue) =>
+                            target, (_, newValue) =>
                             {
                                 itemsToRemove.Add(item);
                                 itemsToAdd.Add(newValue);
@@ -56,11 +56,13 @@ namespace Entitas.Unity.Editor
                 EditorGUI.indentLevel = indent;
             }
 
+            var removeMethod = memberType.GetMethod("Remove");
             foreach (var item in itemsToRemove)
-                memberType.GetMethod("Remove").Invoke(value, new[] {item});
+                removeMethod.Invoke(value, new[] { item });
 
+            var addMethod = memberType.GetMethod("Add");
             foreach (var item in itemsToAdd)
-                memberType.GetMethod("Add").Invoke(value, new[] {item});
+                addMethod.Invoke(value, new[] { item });
 
             return value;
         }

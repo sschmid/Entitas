@@ -9,7 +9,7 @@ namespace Entitas.Unity.Editor
             type == typeof(UnityEngine.Object) ||
             type.IsSubclassOf(typeof(UnityEngine.Object));
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) => 
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) =>
             EditorGUILayout.ObjectField(memberName, (UnityEngine.Object)value, memberType, true);
     }
 }
