@@ -16,12 +16,9 @@ namespace Entitas.Unity.Editor
             var elementType = memberType.GetElementType();
             var indent = EditorGUI.indentLevel;
 
-            if (array.Rank == 1)
-                array = drawRank1(array, memberName, elementType, indent, target);
-            else if (array.Rank == 2)
-                array = drawRank2(array, memberName, elementType, target);
-            else if (array.Rank == 3)
-                array = drawRank3(array, memberName, elementType, target);
+            if (array.Rank == 1) array = DrawRank1(array, memberName, elementType, indent, target);
+            else if (array.Rank == 2) array = DrawRank2(array, memberName, elementType, target);
+            else if (array.Rank == 3) array = DrawRank3(array, memberName, elementType, target);
 
             EditorGUI.indentLevel = indent;
 
@@ -34,11 +31,11 @@ namespace Entitas.Unity.Editor
          *
          */
 
-        Array drawRank1(Array array, string memberName, Type elementType, int indent, object target)
+        Array DrawRank1(Array array, string memberName, Type elementType, int indent, object target)
         {
             var length = array.GetLength(0);
             if (length == 0)
-                array = drawAddElement(array, memberName, elementType);
+                array = DrawAddElement(array, memberName, elementType);
             else
                 EditorGUILayout.LabelField(memberName);
 
@@ -51,9 +48,9 @@ namespace Entitas.Unity.Editor
                 EditorGUILayout.BeginHorizontal();
                 {
                     EntityDrawer.DrawObjectMember(elementType, $"{memberName}[{localIndex}]", array.GetValue(localIndex),
-                        target, (newComponent, newValue) => array.SetValue(newValue, localIndex));
+                        target, (_, newValue) => array.SetValue(newValue, localIndex));
 
-                    var action = drawEditActions(array, elementType, localIndex);
+                    var action = DrawEditActions(array, elementType, localIndex);
                     if (action != null)
                         editAction = action;
                 }
@@ -66,7 +63,7 @@ namespace Entitas.Unity.Editor
             return array;
         }
 
-        Array drawAddElement(Array array, string memberName, Type elementType)
+        Array DrawAddElement(Array array, string memberName, Type elementType)
         {
             EditorGUILayout.BeginHorizontal();
             {
@@ -92,7 +89,7 @@ namespace Entitas.Unity.Editor
          *
          */
 
-        Array drawRank2(Array array, string memberName, Type elementType, object target)
+        Array DrawRank2(Array array, string memberName, Type elementType, object target)
         {
             EditorGUILayout.LabelField(memberName);
 
@@ -103,7 +100,7 @@ namespace Entitas.Unity.Editor
                 {
                     var localIndex2 = j;
                     EntityDrawer.DrawObjectMember(elementType, $"{memberName}[{localIndex1}, {localIndex2}]", array.GetValue(localIndex1, localIndex2),
-                        target, (newComponent, newValue) => array.SetValue(newValue, localIndex1, localIndex2));
+                        target, (_, newValue) => array.SetValue(newValue, localIndex1, localIndex2));
                 }
 
                 EditorGUILayout.Space();
@@ -118,7 +115,7 @@ namespace Entitas.Unity.Editor
          *
          */
 
-        Array drawRank3(Array array, string memberName, Type elementType, object target)
+        Array DrawRank3(Array array, string memberName, Type elementType, object target)
         {
             EditorGUILayout.LabelField(memberName);
 
@@ -132,7 +129,7 @@ namespace Entitas.Unity.Editor
                     {
                         var localIndex3 = k;
                         EntityDrawer.DrawObjectMember(elementType, $"{memberName}[{localIndex1}, {localIndex2}, {localIndex3}]", array.GetValue(localIndex1, localIndex2, localIndex3),
-                            target, (newComponent, newValue) => array.SetValue(newValue, localIndex1, localIndex2, localIndex3));
+                            target, (_, newValue) => array.SetValue(newValue, localIndex1, localIndex2, localIndex3));
                     }
 
                     EditorGUILayout.Space();
@@ -144,7 +141,7 @@ namespace Entitas.Unity.Editor
             return array;
         }
 
-        static Func<Array> drawEditActions(Array array, Type elementType, int index)
+        static Func<Array> DrawEditActions(Array array, Type elementType, int index)
         {
             if (EditorLayout.MiniButtonLeft("↑"))
             {
@@ -178,22 +175,22 @@ namespace Entitas.Unity.Editor
 
             if (EditorLayout.MiniButtonMid("+"))
                 if (EntityDrawer.CreateDefault(elementType, out var defaultValue))
-                    return () => arrayInsertAt(array, elementType, defaultValue, index + 1);
+                    return () => ArrayInsertAt(array, elementType, defaultValue, index + 1);
 
             if (EditorLayout.MiniButtonRight("-"))
-                return () => arrayRemoveAt(array, elementType, index);
+                return () => ArrayRemoveAt(array, elementType, index);
 
             return null;
         }
 
-        static Array arrayRemoveAt(Array array, Type elementType, int removeAt)
+        static Array ArrayRemoveAt(Array array, Type elementType, int removeAt)
         {
             var arrayList = new ArrayList(array);
             arrayList.RemoveAt(removeAt);
             return arrayList.ToArray(elementType);
         }
 
-        static Array arrayInsertAt(Array array, Type elementType, object value, int insertAt)
+        static Array ArrayInsertAt(Array array, Type elementType, object value, int insertAt)
         {
             var arrayList = new ArrayList(array);
             arrayList.Insert(insertAt, value);

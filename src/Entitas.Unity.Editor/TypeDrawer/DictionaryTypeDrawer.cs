@@ -9,7 +9,7 @@ namespace Entitas.Unity.Editor
 {
     public class DictionaryTypeDrawer : ITypeDrawer
     {
-        static readonly Dictionary<Type, string> _keySearchTexts = new Dictionary<Type, string>();
+        static readonly Dictionary<Type, string> KeySearchTexts = new Dictionary<Type, string>();
 
         public bool HandlesType(Type type) => type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>);
 
@@ -19,15 +19,14 @@ namespace Entitas.Unity.Editor
             var keyType = memberType.GetGenericArguments()[0];
             var valueType = memberType.GetGenericArguments()[1];
             var targetType = target.GetType();
-            if (!_keySearchTexts.ContainsKey(targetType))
-                _keySearchTexts.Add(targetType, string.Empty);
+            KeySearchTexts.TryAdd(targetType, string.Empty);
 
             EditorGUILayout.BeginHorizontal();
             {
                 if (dictionary.Count == 0)
                 {
                     EditorGUILayout.LabelField(memberName, "empty");
-                    _keySearchTexts[targetType] = string.Empty;
+                    KeySearchTexts[targetType] = string.Empty;
                 }
                 else
                 {
@@ -51,7 +50,7 @@ namespace Entitas.Unity.Editor
                 if (dictionary.Count > 5)
                 {
                     EditorGUILayout.Space();
-                    _keySearchTexts[targetType] = EditorLayout.SearchTextField(_keySearchTexts[targetType]);
+                    KeySearchTexts[targetType] = EditorLayout.SearchTextField(KeySearchTexts[targetType]);
                 }
 
                 EditorGUILayout.Space();
@@ -60,10 +59,10 @@ namespace Entitas.Unity.Editor
                 for (var i = 0; i < keys.Count; i++)
                 {
                     var key = keys[i];
-                    if (EditorLayout.MatchesSearchString(key.ToString().ToLower(), _keySearchTexts[targetType].ToLower()))
+                    if (EditorLayout.MatchesSearchString(key.ToString().ToLower(), KeySearchTexts[targetType].ToLower()))
                     {
                         EntityDrawer.DrawObjectMember(keyType, "key", key,
-                            target, (newComponent, newValue) =>
+                            target, (_, newValue) =>
                             {
                                 var tmpValue = dictionary[key];
                                 dictionary.Remove(key);
@@ -74,7 +73,7 @@ namespace Entitas.Unity.Editor
                             });
 
                         EntityDrawer.DrawObjectMember(valueType, "value", dictionary[key],
-                            target, (newComponent, newValue) => dictionary[key] = newValue);
+                            target, (_, newValue) => dictionary[key] = newValue);
 
                         EditorGUILayout.Space();
                     }
