@@ -169,7 +169,7 @@ namespace Entitas.Unity.Editor
                 var debugSystemsBehaviour = gameObject.GetComponent<DebugSystemsBehaviour>();
                 if (debugSystemsBehaviour != null)
                 {
-                    if (debugSystemsBehaviour.systems.executeDuration < _systemWarningThreshold)
+                    if (debugSystemsBehaviour.Systems.ExecuteDuration < _systemWarningThreshold)
                         GUI.DrawTexture(rect, systemsHierarchyIcon);
                     else
                         GUI.DrawTexture(rect, systemsWarnHierarchyIcon);

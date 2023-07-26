@@ -1,20 +1,14 @@
 namespace Entitas.Unity
 {
 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-    public class Feature : Entitas.VisualDebugging.Unity.DebugSystems
+    public class Feature : DebugSystems
     {
         public Feature(string name) : base(name) { }
 
-        public Feature() : base(true)
-        {
-            var typeName = DesperateDevs.Extensions.TypeExtension.ToCompilableString(GetType());
-            var shortType = DesperateDevs.Extensions.TypeExtension.TypeName(typeName);
-            var readableType = DesperateDevs.Extensions.StringExtension.ToSpacedCamelCase(shortType);
-            initialize(readableType);
-        }
+        public Feature() : base(true) => Initialize(GetType().FullName);
     }
 #elif (!ENTITAS_DISABLE_DEEP_PROFILING && DEVELOPMENT_BUILD)
-    public class Feature : Entitas.Systems
+    public class Feature : Systems
     {
         public Feature(string name) : this() { }
 
@@ -22,8 +16,9 @@ namespace Entitas.Unity
 
         public override void Initialize()
         {
-            foreach (var system in _initializeSystems)
+            for (var i = 0; i < _initializeSystems.Count; i++)
             {
+                var system = _initializeSystems[i];
                 UnityEngine.Profiling.Profiler.BeginSample(system.GetType().FullName);
                 system.Initialize();
                 UnityEngine.Profiling.Profiler.EndSample();
@@ -32,8 +27,9 @@ namespace Entitas.Unity
 
         public override void Execute()
         {
-            foreach (var system in _executeSystems)
+            for (var i = 0; i < _executeSystems.Count; i++)
             {
+                var system = _executeSystems[i];
                 UnityEngine.Profiling.Profiler.BeginSample(system.GetType().FullName);
                 system.Execute();
                 UnityEngine.Profiling.Profiler.EndSample();
@@ -42,8 +38,9 @@ namespace Entitas.Unity
 
         public override void Cleanup()
         {
-            foreach (var system in _cleanupSystems)
+            for (var i = 0; i < _cleanupSystems.Count; i++)
             {
+                var system = _cleanupSystems[i];
                 UnityEngine.Profiling.Profiler.BeginSample(system.GetType().FullName);
                 system.Cleanup();
                 UnityEngine.Profiling.Profiler.EndSample();
@@ -52,8 +49,9 @@ namespace Entitas.Unity
 
         public override void TearDown()
         {
-            foreach (var system in _tearDownSystems)
+            for (var i = 0; i < _tearDownSystems.Count; i++)
             {
+                var system = _tearDownSystems[i];
                 UnityEngine.Profiling.Profiler.BeginSample(system.GetType().FullName);
                 system.TearDown();
                 UnityEngine.Profiling.Profiler.EndSample();
@@ -61,7 +59,7 @@ namespace Entitas.Unity
         }
     }
 #else
-    public class Feature : Entitas.Systems
+    public class Feature : Systems
     {
         public Feature(string name) { }
 

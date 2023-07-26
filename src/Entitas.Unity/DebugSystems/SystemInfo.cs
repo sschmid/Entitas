@@ -1,49 +1,34 @@
-using System;
-
 namespace Entitas.Unity
 {
-    [Flags]
-    public enum SystemInterfaceFlags
-    {
-        None = 0,
-        IInitializeSystem = 1 << 1,
-        IExecuteSystem = 1 << 2,
-        ICleanupSystem = 1 << 3,
-        ITearDownSystem = 1 << 4,
-        IReactiveSystem = 1 << 5
-    }
-
     public class SystemInfo
     {
-        public ISystem system => _system;
-        public string systemName => _systemName;
+        public bool IsInitializeSystems => (_interfaceFlags & SystemInterfaceFlags.InitializeSystem) == SystemInterfaceFlags.InitializeSystem;
+        public bool IsExecuteSystems => (_interfaceFlags & SystemInterfaceFlags.ExecuteSystem) == SystemInterfaceFlags.ExecuteSystem;
+        public bool IsCleanupSystems => (_interfaceFlags & SystemInterfaceFlags.CleanupSystem) == SystemInterfaceFlags.CleanupSystem;
+        public bool IsTearDownSystems => (_interfaceFlags & SystemInterfaceFlags.TearDownSystem) == SystemInterfaceFlags.TearDownSystem;
+        public bool IsReactiveSystems => (_interfaceFlags & SystemInterfaceFlags.ReactiveSystem) == SystemInterfaceFlags.ReactiveSystem;
 
-        public bool isInitializeSystems => (_interfaceFlags & SystemInterfaceFlags.IInitializeSystem) == SystemInterfaceFlags.IInitializeSystem;
-        public bool isExecuteSystems => (_interfaceFlags & SystemInterfaceFlags.IExecuteSystem) == SystemInterfaceFlags.IExecuteSystem;
-        public bool isCleanupSystems => (_interfaceFlags & SystemInterfaceFlags.ICleanupSystem) == SystemInterfaceFlags.ICleanupSystem;
-        public bool isTearDownSystems => (_interfaceFlags & SystemInterfaceFlags.ITearDownSystem) == SystemInterfaceFlags.ITearDownSystem;
-        public bool isReactiveSystems => (_interfaceFlags & SystemInterfaceFlags.IReactiveSystem) == SystemInterfaceFlags.IReactiveSystem;
+        public double InitializationDuration { get; set; }
+        public double CleanupDuration { get; set; }
+        public double TeardownDuration { get; set; }
 
-        public double initializationDuration { get; set; }
-        public double accumulatedExecutionDuration => _accumulatedExecutionDuration;
-        public double minExecutionDuration => _minExecutionDuration;
-        public double maxExecutionDuration => _maxExecutionDuration;
-        public double averageExecutionDuration => _executionDurationsCount == 0 ? 0 : _accumulatedExecutionDuration / _executionDurationsCount;
-        public double accumulatedCleanupDuration => _accumulatedCleanupDuration;
-        public double minCleanupDuration => _minCleanupDuration;
-        public double maxCleanupDuration => _maxCleanupDuration;
-        public double averageCleanupDuration => _cleanupDurationsCount == 0 ? 0 : _accumulatedCleanupDuration / _cleanupDurationsCount;
-        public double cleanupDuration { get; set; }
-        public double teardownDuration { get; set; }
+        public double AccumulatedExecutionDuration => _accumulatedExecutionDuration;
+        public double MinExecutionDuration => _minExecutionDuration;
+        public double MaxExecutionDuration => _maxExecutionDuration;
+        public double AverageExecutionDuration => _executionDurationsCount != 0 ? _accumulatedExecutionDuration / _executionDurationsCount : 0;
+        public double AccumulatedCleanupDuration => _accumulatedCleanupDuration;
+        public double MinCleanupDuration => _minCleanupDuration;
+        public double MaxCleanupDuration => _maxCleanupDuration;
+        public double AverageCleanupDuration => _cleanupDurationsCount != 0 ? _accumulatedCleanupDuration / _cleanupDurationsCount : 0;
 
-        public bool areAllParentsActive => parentSystemInfo == null || (parentSystemInfo.isActive && parentSystemInfo.areAllParentsActive);
+        public bool AreAllParentsActive => ParentSystemInfo == null || (ParentSystemInfo.IsActive && ParentSystemInfo.AreAllParentsActive);
 
-        public SystemInfo parentSystemInfo;
-        public bool isActive;
+        public SystemInfo ParentSystemInfo;
+        public bool IsActive;
 
-        readonly ISystem _system;
+        public readonly ISystem System;
+        public readonly string SystemName;
         readonly SystemInterfaceFlags _interfaceFlags;
-        readonly string _systemName;
 
         double _accumulatedExecutionDuration;
         double _minExecutionDuration;
@@ -57,15 +42,14 @@ namespace Entitas.Unity
 
         public SystemInfo(ISystem system)
         {
-            _system = system;
-            _interfaceFlags = getInterfaceFlags(system);
+            System = system;
+            _interfaceFlags = GetInterfaceFlags(system);
 
-            var debugSystem = system as DebugSystems;
-            _systemName = debugSystem != null
-                ? debugSystem.name
+            SystemName = system is DebugSystems debugSystem
+                ? debugSystem.Name
                 : system.GetType().Name.RemoveSuffix("System");
 
-            isActive = true;
+            IsActive = true;
         }
 
         public void AddExecutionDuration(double executionDuration)
@@ -101,22 +85,22 @@ namespace Entitas.Unity
             _cleanupDurationsCount = 0;
         }
 
-        static SystemInterfaceFlags getInterfaceFlags(ISystem system)
+        static SystemInterfaceFlags GetInterfaceFlags(ISystem system)
         {
             var flags = SystemInterfaceFlags.None;
             if (system is IInitializeSystem)
-                flags |= SystemInterfaceFlags.IInitializeSystem;
+                flags |= SystemInterfaceFlags.InitializeSystem;
 
             if (system is IReactiveSystem)
-                flags |= SystemInterfaceFlags.IReactiveSystem;
+                flags |= SystemInterfaceFlags.ReactiveSystem;
             else if (system is IExecuteSystem)
-                flags |= SystemInterfaceFlags.IExecuteSystem;
+                flags |= SystemInterfaceFlags.ExecuteSystem;
 
             if (system is ICleanupSystem)
-                flags |= SystemInterfaceFlags.ICleanupSystem;
+                flags |= SystemInterfaceFlags.CleanupSystem;
 
             if (system is ITearDownSystem)
-                flags |= SystemInterfaceFlags.ITearDownSystem;
+                flags |= SystemInterfaceFlags.TearDownSystem;
 
             return flags;
         }

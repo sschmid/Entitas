@@ -4,11 +4,11 @@ namespace Entitas.Unity
 {
     public class DebugSystemsBehaviour : MonoBehaviour
     {
-        public DebugSystems systems => _systems;
+        public DebugSystems Systems => _systems;
 
         DebugSystems _systems;
 
-        public void Init(DebugSystems systems)
+        public void Initialize(DebugSystems systems)
         {
             _systems = systems;
         }
