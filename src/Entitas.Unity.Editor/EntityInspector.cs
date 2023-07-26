@@ -10,12 +10,12 @@ namespace Entitas.Unity.Editor
         {
             if (targets.Length == 1)
             {
-                EntityDrawer.DrawEntity(((EntityBehaviour)target).entity);
+                EntityDrawer.DrawEntity(((EntityBehaviour)target).Entity);
             }
             else
             {
                 var entities = targets
-                    .Select(t => ((EntityBehaviour)t).entity)
+                    .Select(t => ((EntityBehaviour)t).Entity)
                     .ToArray();
 
                 EntityDrawer.DrawMultipleEntities(entities);
