@@ -64,7 +64,7 @@ namespace Entitas.Unity.Editor
         public override void OnInspectorGUI()
         {
             var debugSystemsBehaviour = (DebugSystemsBehaviour)target;
-            var systems = debugSystemsBehaviour.systems;
+            var systems = debugSystemsBehaviour.Systems;
 
             EditorGUILayout.Space();
             drawSystemsOverview(systems);
@@ -87,12 +87,12 @@ namespace Entitas.Unity.Editor
             {
                 EditorLayout.BeginSectionContent();
                 {
-                    EditorGUILayout.LabelField(systems.name, EditorStyles.boldLabel);
-                    EditorGUILayout.LabelField("Initialize Systems", systems.totalInitializeSystemsCount.ToString());
-                    EditorGUILayout.LabelField("Execute Systems", systems.totalExecuteSystemsCount.ToString());
-                    EditorGUILayout.LabelField("Cleanup Systems", systems.totalCleanupSystemsCount.ToString());
-                    EditorGUILayout.LabelField("TearDown Systems", systems.totalTearDownSystemsCount.ToString());
-                    EditorGUILayout.LabelField("Total Systems", systems.totalSystemsCount.ToString());
+                    EditorGUILayout.LabelField(systems.Name, EditorStyles.boldLabel);
+                    EditorGUILayout.LabelField("Initialize Systems", systems.TotalInitializeSystemsCount.ToString());
+                    EditorGUILayout.LabelField("Execute Systems", systems.TotalExecuteSystemsCount.ToString());
+                    EditorGUILayout.LabelField("Cleanup Systems", systems.TotalCleanupSystemsCount.ToString());
+                    EditorGUILayout.LabelField("TearDown Systems", systems.TotalTearDownSystemsCount.ToString());
+                    EditorGUILayout.LabelField("Total Systems", systems.TotalSystemsCount.ToString());
                 }
                 EditorLayout.EndSectionContent();
             }
@@ -115,8 +115,8 @@ namespace Entitas.Unity.Editor
                     {
                         EditorGUILayout.BeginVertical();
                         {
-                            EditorGUILayout.LabelField("Execution duration", systems.executeDuration.ToString());
-                            EditorGUILayout.LabelField("Cleanup duration", systems.cleanupDuration.ToString());
+                            EditorGUILayout.LabelField("Execution duration", systems.ExecuteDuration.ToString());
+                            EditorGUILayout.LabelField("Cleanup duration", systems.CleanupDuration.ToString());
                         }
                         EditorGUILayout.EndVertical();
 
@@ -126,20 +126,20 @@ namespace Entitas.Unity.Editor
                         if (_pauseButtonContent == null)
                             _pauseButtonContent = EditorGUIUtility.IconContent("PauseButton On");
 
-                        systems.paused = GUILayout.Toggle(systems.paused, _pauseButtonContent, "CommandLeft");
+                        systems.IsPaused = GUILayout.Toggle(systems.IsPaused, _pauseButtonContent, "CommandLeft");
 
                         if (GUILayout.Button(_stepButtonContent, "CommandRight"))
                         {
-                            systems.paused = true;
+                            systems.IsPaused = true;
                             systems.StepExecute();
                             systems.StepCleanup();
-                            addDuration((float)systems.executeDuration + (float)systems.cleanupDuration);
+                            addDuration((float)systems.ExecuteDuration + (float)systems.CleanupDuration);
                         }
                     }
                     EditorGUILayout.EndHorizontal();
 
-                    if (!EditorApplication.isPaused && !systems.paused)
-                        addDuration((float)systems.executeDuration + (float)systems.cleanupDuration);
+                    if (!EditorApplication.isPaused && !systems.IsPaused)
+                        addDuration((float)systems.ExecuteDuration + (float)systems.CleanupDuration);
 
                     _systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
                 }
@@ -156,7 +156,7 @@ namespace Entitas.Unity.Editor
                 {
                     EditorGUILayout.BeginHorizontal();
                     {
-                        DebugSystems.avgResetInterval = (AvgResetInterval)EditorGUILayout.EnumPopup("Reset average duration Ø", DebugSystems.avgResetInterval);
+                        DebugSystems.AvgResetInterval = (AvgResetInterval)EditorGUILayout.EnumPopup("Reset average duration Ø", DebugSystems.AvgResetInterval);
                         if (GUILayout.Button("Reset Ø now", EditorStyles.miniButton, GUILayout.Width(88)))
                             systems.ResetDurations();
                     }
@@ -177,11 +177,11 @@ namespace Entitas.Unity.Editor
                     EditorGUILayout.Space();
 
                     _showInitializeSystems = EditorLayout.DrawSectionHeaderToggle("Initialize Systems", _showInitializeSystems);
-                    if (_showInitializeSystems && shouldShowSystems(systems, SystemInterfaceFlags.IInitializeSystem))
+                    if (_showInitializeSystems && shouldShowSystems(systems, SystemInterfaceFlags.InitializeSystem))
                     {
                         EditorLayout.BeginSectionContent();
                         {
-                            var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.IInitializeSystem);
+                            var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.InitializeSystem);
                             if (systemsDrawn == 0)
                                 EditorGUILayout.LabelField(string.Empty);
                         }
@@ -189,11 +189,11 @@ namespace Entitas.Unity.Editor
                     }
 
                     _showExecuteSystems = EditorLayout.DrawSectionHeaderToggle("Execute Systems", _showExecuteSystems);
-                    if (_showExecuteSystems && shouldShowSystems(systems, SystemInterfaceFlags.IExecuteSystem))
+                    if (_showExecuteSystems && shouldShowSystems(systems, SystemInterfaceFlags.ExecuteSystem))
                     {
                         EditorLayout.BeginSectionContent();
                         {
-                            var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.IExecuteSystem);
+                            var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.ExecuteSystem);
                             if (systemsDrawn == 0)
                                 EditorGUILayout.LabelField(string.Empty);
                         }
@@ -201,11 +201,11 @@ namespace Entitas.Unity.Editor
                     }
 
                     _showCleanupSystems = EditorLayout.DrawSectionHeaderToggle("Cleanup Systems", _showCleanupSystems);
-                    if (_showCleanupSystems && shouldShowSystems(systems, SystemInterfaceFlags.ICleanupSystem))
+                    if (_showCleanupSystems && shouldShowSystems(systems, SystemInterfaceFlags.CleanupSystem))
                     {
                         EditorLayout.BeginSectionContent();
                         {
-                            var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.ICleanupSystem);
+                            var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.CleanupSystem);
                             if (systemsDrawn == 0)
                                 EditorGUILayout.LabelField(string.Empty);
                         }
@@ -213,11 +213,11 @@ namespace Entitas.Unity.Editor
                     }
 
                     _showTearDownSystems = EditorLayout.DrawSectionHeaderToggle("TearDown Systems", _showTearDownSystems);
-                    if (_showTearDownSystems && shouldShowSystems(systems, SystemInterfaceFlags.ITearDownSystem))
+                    if (_showTearDownSystems && shouldShowSystems(systems, SystemInterfaceFlags.TearDownSystem))
                     {
                         EditorLayout.BeginSectionContent();
                         {
-                            var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.ITearDownSystem);
+                            var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.TearDownSystem);
                             if (systemsDrawn == 0)
                                 EditorGUILayout.LabelField(string.Empty);
                         }
@@ -234,17 +234,17 @@ namespace Entitas.Unity.Editor
 
             switch (type)
             {
-                case SystemInterfaceFlags.IInitializeSystem:
-                    systemInfos = systems.initializeSystemInfos.Where(systemInfo => systemInfo.initializationDuration >= _threshold);
+                case SystemInterfaceFlags.InitializeSystem:
+                    systemInfos = systems.InitializeSystemInfos.Where(systemInfo => systemInfo.InitializationDuration >= _threshold);
                     break;
-                case SystemInterfaceFlags.IExecuteSystem:
-                    systemInfos = systems.executeSystemInfos.Where(systemInfo => systemInfo.averageExecutionDuration >= _threshold);
+                case SystemInterfaceFlags.ExecuteSystem:
+                    systemInfos = systems.ExecuteSystemInfos.Where(systemInfo => systemInfo.AverageExecutionDuration >= _threshold);
                     break;
-                case SystemInterfaceFlags.ICleanupSystem:
-                    systemInfos = systems.cleanupSystemInfos.Where(systemInfo => systemInfo.cleanupDuration >= _threshold);
+                case SystemInterfaceFlags.CleanupSystem:
+                    systemInfos = systems.CleanupSystemInfos.Where(systemInfo => systemInfo.CleanupDuration >= _threshold);
                     break;
-                case SystemInterfaceFlags.ITearDownSystem:
-                    systemInfos = systems.tearDownSystemInfos.Where(systemInfo => systemInfo.teardownDuration >= _threshold);
+                case SystemInterfaceFlags.TearDownSystem:
+                    systemInfos = systems.TearDownSystemInfos.Where(systemInfo => systemInfo.TeardownDuration >= _threshold);
                     break;
             }
 
@@ -253,21 +253,21 @@ namespace Entitas.Unity.Editor
             var systemsDrawn = 0;
             foreach (var systemInfo in systemInfos)
             {
-                if (systemInfo.system is DebugSystems debugSystems)
+                if (systemInfo.System is DebugSystems debugSystems)
                     if (!shouldShowSystems(debugSystems, type))
                         continue;
 
-                if (EditorLayout.MatchesSearchString(systemInfo.systemName.ToLower(), _systemNameSearchString.ToLower()))
+                if (EditorLayout.MatchesSearchString(systemInfo.SystemName.ToLower(), _systemNameSearchString.ToLower()))
                 {
                     EditorGUILayout.BeginHorizontal();
                     {
                         var indent = EditorGUI.indentLevel;
                         EditorGUI.indentLevel = 0;
 
-                        var wasActive = systemInfo.isActive;
-                        if (systemInfo.areAllParentsActive)
+                        var wasActive = systemInfo.IsActive;
+                        if (systemInfo.AreAllParentsActive)
                         {
-                            systemInfo.isActive = EditorGUILayout.Toggle(systemInfo.isActive, GUILayout.Width(20));
+                            systemInfo.IsActive = EditorGUILayout.Toggle(systemInfo.IsActive, GUILayout.Width(20));
                         }
                         else
                         {
@@ -281,12 +281,12 @@ namespace Entitas.Unity.Editor
 
                         EditorGUI.indentLevel = indent;
 
-                        if (systemInfo.isActive != wasActive)
+                        if (systemInfo.IsActive != wasActive)
                         {
-                            var reactiveSystem = systemInfo.system as IReactiveSystem;
+                            var reactiveSystem = systemInfo.System as IReactiveSystem;
                             if (reactiveSystem != null)
                             {
-                                if (systemInfo.isActive)
+                                if (systemInfo.IsActive)
                                     reactiveSystem.Activate();
                                 else
                                     reactiveSystem.Deactivate();
@@ -295,23 +295,23 @@ namespace Entitas.Unity.Editor
 
                         switch (type)
                         {
-                            case SystemInterfaceFlags.IInitializeSystem:
-                                EditorGUILayout.LabelField(systemInfo.systemName, systemInfo.initializationDuration.ToString(), getSystemStyle(systemInfo, SystemInterfaceFlags.IInitializeSystem));
+                            case SystemInterfaceFlags.InitializeSystem:
+                                EditorGUILayout.LabelField(systemInfo.SystemName, systemInfo.InitializationDuration.ToString(), getSystemStyle(systemInfo, SystemInterfaceFlags.InitializeSystem));
                                 break;
-                            case SystemInterfaceFlags.IExecuteSystem:
-                                var avgE = $"Ø {systemInfo.averageExecutionDuration:00.000}".PadRight(12);
-                                var minE = $"▼ {systemInfo.minExecutionDuration:00.000}".PadRight(12);
-                                var maxE = $"▲ {systemInfo.maxExecutionDuration:00.000}";
-                                EditorGUILayout.LabelField(systemInfo.systemName, avgE + minE + maxE, getSystemStyle(systemInfo, SystemInterfaceFlags.IExecuteSystem));
+                            case SystemInterfaceFlags.ExecuteSystem:
+                                var avgE = $"Ø {systemInfo.AverageExecutionDuration:00.000}".PadRight(12);
+                                var minE = $"▼ {systemInfo.MinExecutionDuration:00.000}".PadRight(12);
+                                var maxE = $"▲ {systemInfo.MaxExecutionDuration:00.000}";
+                                EditorGUILayout.LabelField(systemInfo.SystemName, avgE + minE + maxE, getSystemStyle(systemInfo, SystemInterfaceFlags.ExecuteSystem));
                                 break;
-                            case SystemInterfaceFlags.ICleanupSystem:
-                                var avgC = $"Ø {systemInfo.averageCleanupDuration:00.000}".PadRight(12);
-                                var minC = $"▼ {systemInfo.minCleanupDuration:00.000}".PadRight(12);
-                                var maxC = $"▲ {systemInfo.maxCleanupDuration:00.000}";
-                                EditorGUILayout.LabelField(systemInfo.systemName, avgC + minC + maxC, getSystemStyle(systemInfo, SystemInterfaceFlags.ICleanupSystem));
+                            case SystemInterfaceFlags.CleanupSystem:
+                                var avgC = $"Ø {systemInfo.AverageCleanupDuration:00.000}".PadRight(12);
+                                var minC = $"▼ {systemInfo.MinCleanupDuration:00.000}".PadRight(12);
+                                var maxC = $"▲ {systemInfo.MaxCleanupDuration:00.000}";
+                                EditorGUILayout.LabelField(systemInfo.SystemName, avgC + minC + maxC, getSystemStyle(systemInfo, SystemInterfaceFlags.CleanupSystem));
                                 break;
-                            case SystemInterfaceFlags.ITearDownSystem:
-                                EditorGUILayout.LabelField(systemInfo.systemName, systemInfo.teardownDuration.ToString(), getSystemStyle(systemInfo, SystemInterfaceFlags.ITearDownSystem));
+                            case SystemInterfaceFlags.TearDownSystem:
+                                EditorGUILayout.LabelField(systemInfo.SystemName, systemInfo.TeardownDuration.ToString(), getSystemStyle(systemInfo, SystemInterfaceFlags.TearDownSystem));
                                 break;
                         }
                     }
@@ -320,7 +320,7 @@ namespace Entitas.Unity.Editor
                     systemsDrawn += 1;
                 }
 
-                if (systemInfo.system is DebugSystems debugSystem)
+                if (systemInfo.System is DebugSystems debugSystem)
                 {
                     var indent = EditorGUI.indentLevel;
                     EditorGUI.indentLevel += 1;
@@ -334,10 +334,10 @@ namespace Entitas.Unity.Editor
 
         static IEnumerable<SystemInfo> getSortedSystemInfos(IEnumerable<SystemInfo> systemInfos, SortMethod sortMethod) => sortMethod switch
         {
-            SortMethod.Name => systemInfos.OrderBy(systemInfo => systemInfo.systemName),
-            SortMethod.NameDescending => systemInfos.OrderByDescending(systemInfo => systemInfo.systemName),
-            SortMethod.ExecutionTime => systemInfos.OrderBy(systemInfo => systemInfo.averageExecutionDuration),
-            SortMethod.ExecutionTimeDescending => systemInfos.OrderByDescending(systemInfo => systemInfo.averageExecutionDuration),
+            SortMethod.Name => systemInfos.OrderBy(systemInfo => systemInfo.SystemName),
+            SortMethod.NameDescending => systemInfos.OrderByDescending(systemInfo => systemInfo.SystemName),
+            SortMethod.ExecutionTime => systemInfos.OrderBy(systemInfo => systemInfo.AverageExecutionDuration),
+            SortMethod.ExecutionTimeDescending => systemInfos.OrderByDescending(systemInfo => systemInfo.AverageExecutionDuration),
             _ => systemInfos
         };
 
@@ -348,10 +348,10 @@ namespace Entitas.Unity.Editor
 
             return type switch
             {
-                SystemInterfaceFlags.IInitializeSystem => systems.totalInitializeSystemsCount > 0,
-                SystemInterfaceFlags.IExecuteSystem => systems.totalExecuteSystemsCount > 0,
-                SystemInterfaceFlags.ICleanupSystem => systems.totalCleanupSystemsCount > 0,
-                SystemInterfaceFlags.ITearDownSystem => systems.totalTearDownSystemsCount > 0,
+                SystemInterfaceFlags.InitializeSystem => systems.TotalInitializeSystemsCount > 0,
+                SystemInterfaceFlags.ExecuteSystem => systems.TotalExecuteSystemsCount > 0,
+                SystemInterfaceFlags.CleanupSystem => systems.TotalCleanupSystemsCount > 0,
+                SystemInterfaceFlags.TearDownSystem => systems.TotalTearDownSystemsCount > 0,
                 _ => true
             };
         }
@@ -359,14 +359,14 @@ namespace Entitas.Unity.Editor
         GUIStyle getSystemStyle(SystemInfo systemInfo, SystemInterfaceFlags systemFlag)
         {
             var style = new GUIStyle(GUI.skin.label);
-            var color = systemInfo.isReactiveSystems && EditorGUIUtility.isProSkin
+            var color = systemInfo.IsReactiveSystems && EditorGUIUtility.isProSkin
                 ? Color.white
                 : style.normal.textColor;
 
-            if (systemFlag == SystemInterfaceFlags.IExecuteSystem && systemInfo.averageExecutionDuration >= _systemWarningThreshold)
+            if (systemFlag == SystemInterfaceFlags.ExecuteSystem && systemInfo.AverageExecutionDuration >= _systemWarningThreshold)
                 color = Color.red;
 
-            if (systemFlag == SystemInterfaceFlags.ICleanupSystem && systemInfo.averageCleanupDuration >= _systemWarningThreshold)
+            if (systemFlag == SystemInterfaceFlags.CleanupSystem && systemInfo.AverageCleanupDuration >= _systemWarningThreshold)
                 color = Color.red;
 
             style.normal.textColor = color;
