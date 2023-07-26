@@ -192,7 +192,7 @@ namespace Entitas
             if (_reusableEntities.Count > 0)
             {
                 entity = _reusableEntities.Pop();
-                entity.Reactivate(_creationIndex++);
+                entity.Reuse(_creationIndex++);
             }
             else
             {
