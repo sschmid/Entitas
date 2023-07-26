@@ -11,23 +11,23 @@ namespace Entitas.Unity.Editor
         {
             var link = (EntityLink)target;
 
-            if (link.entity != null)
+            if (link.Entity != null)
                 if (GUILayout.Button("Unlink"))
                     link.Unlink();
 
-            if (link.entity != null)
+            if (link.Entity != null)
             {
                 EditorGUILayout.Space();
 
-                EditorGUILayout.LabelField(link.entity.ToString());
+                EditorGUILayout.LabelField(link.Entity.ToString());
 
                 if (GUILayout.Button("Show entity"))
                     Selection.activeGameObject = FindObjectsOfType<EntityBehaviour>()
-                        .Single(entity => entity.entity == link.entity).gameObject;
+                        .Single(entity => entity.Entity == link.Entity).gameObject;
 
                 EditorGUILayout.Space();
 
-                EntityDrawer.DrawEntity(link.entity);
+                EntityDrawer.DrawEntity(link.Entity);
             }
             else
             {

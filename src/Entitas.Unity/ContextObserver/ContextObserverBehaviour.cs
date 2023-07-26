@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Entitas.Unity
 {
-    [ExecuteInEditMode]
     public class ContextObserverBehaviour : MonoBehaviour
     {
         public IContext Context => _context;
@@ -30,7 +29,7 @@ namespace Entitas.Unity
                 ? _entityBehaviourPool.Pop()
                 : new GameObject().AddComponent<EntityBehaviour>();
 
-            entityBehaviour.Init(context, entity, _entityBehaviourPool);
+            entityBehaviour.Initialize(context, entity, _entityBehaviourPool);
             entityBehaviour.transform.SetParent(transform, false);
             entityBehaviour.transform.SetAsLastSibling();
         }

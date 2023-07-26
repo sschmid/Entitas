@@ -5,7 +5,7 @@ namespace Entitas.Unity
 {
     public class EntityLink : MonoBehaviour
     {
-        public IEntity entity => _entity;
+        public IEntity Entity => _entity;
 
         IEntity _entity;
         bool _applicationIsQuitting;
@@ -45,15 +45,22 @@ namespace Entitas.Unity
 
         public static EntityLink Link(this GameObject gameObject, IEntity entity)
         {
-            var link = gameObject.GetEntityLink();
-            if (link == null)
-                link = gameObject.AddComponent<EntityLink>();
+            if (!gameObject.TryGetComponent<EntityLink>(out var entityLink))
+            {
+                entityLink = gameObject.AddComponent<EntityLink>();
+                entityLink.Link(entity);
+            }
+            else
+            {
+                entityLink.Link(entity);
+            }
 
-            link.Link(entity);
-            return link;
+            return entityLink;
         }
 
-        public static void Unlink(this GameObject gameObject) =>
+        public static void Unlink(this GameObject gameObject)
+        {
             gameObject.GetEntityLink().Unlink();
+        }
     }
 }
