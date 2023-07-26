@@ -35,7 +35,7 @@ namespace Entitas
             ContextInfo contextInfo = null,
             IAERC aerc = null);
 
-        void Reactivate(int creationIndex);
+        void Reuse(int creationIndex);
 
         void AddComponent(int index, IComponent component);
         void RemoveComponent(int index);

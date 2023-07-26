@@ -89,7 +89,7 @@ namespace Entitas
 
         public void Initialize(int creationIndex, int totalComponents, Stack<IComponent>[] componentPools, ContextInfo contextInfo = null, IAERC aerc = null)
         {
-            Reactivate(creationIndex);
+            Reuse(creationIndex);
 
             _totalComponents = totalComponents;
             _components = new IComponent[totalComponents];
@@ -108,7 +108,7 @@ namespace Entitas
             return new ContextInfo("No Context", componentNames, null);
         }
 
-        public void Reactivate(int id)
+        public void Reuse(int id)
         {
             _id = id;
             _isEnabled = true;

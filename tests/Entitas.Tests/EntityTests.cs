@@ -43,7 +43,7 @@ namespace Entitas.Tests
         }
 
         [Fact]
-        public void ReactivatesEntityAfterBeingDestroyed()
+        public void ReusesEntityAfterBeingDestroyed()
         {
             var contextInfo = new ContextInfo(null, null, null);
             var componentPools = new Stack<IComponent>[42];
@@ -52,7 +52,7 @@ namespace Entitas.Tests
 
             entity.InternalDestroy();
 
-            entity.Reactivate(42);
+            entity.Reuse(42);
 
             entity.IsEnabled.Should().BeTrue();
             entity.Id.Should().Be(42);
