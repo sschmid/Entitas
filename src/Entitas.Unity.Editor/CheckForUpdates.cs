@@ -15,17 +15,14 @@ namespace Entitas.Unity.Editor
 
     public class UpdateInfo
     {
-        public UpdateState updateState => _updateState;
-
-        public readonly string localVersionString;
-        public readonly string remoteVersionString;
-
-        readonly UpdateState _updateState;
+        public readonly UpdateState UpdateState;
+        public readonly string LocalVersionString;
+        public readonly string RemoteVersionString;
 
         public UpdateInfo(string localVersionString, string remoteVersionString)
         {
-            this.localVersionString = localVersionString.Trim();
-            this.remoteVersionString = remoteVersionString.Trim();
+            LocalVersionString = localVersionString.Trim();
+            RemoteVersionString = remoteVersionString.Trim();
 
             if (remoteVersionString != string.Empty)
             {
@@ -35,31 +32,32 @@ namespace Entitas.Unity.Editor
                 switch (remoteVersion.CompareTo(localVersion))
                 {
                     case 1:
-                        _updateState = UpdateState.UpdateAvailable;
+                        UpdateState = UpdateState.UpdateAvailable;
                         break;
                     case 0:
-                        _updateState = UpdateState.UpToDate;
+                        UpdateState = UpdateState.UpToDate;
                         break;
                     case -1:
-                        _updateState = UpdateState.AheadOfLatestRelease;
+                        UpdateState = UpdateState.AheadOfLatestRelease;
                         break;
                 }
             }
             else
             {
-                _updateState = UpdateState.NoConnection;
+                UpdateState = UpdateState.NoConnection;
             }
         }
     }
 
     public static class CheckForUpdates
     {
-        const string URL_GITHUB_API_LATEST_RELEASE = "https://api.github.com/repos/sschmid/Entitas/releases/latest";
-        const string URL_GITHUB_RELEASES = "https://github.com/sschmid/Entitas/releases";
-        const string URL_ASSET_STORE = "http://u3d.as/NuJ";
+        const string GithubAPILatestReleaseUrl = "https://api.github.com/repos/sschmid/Entitas/releases/latest";
+
+        const string GithubReleasesUrl = "https://github.com/sschmid/Entitas/releases";
+        // const string AssetStoreUrl = "http://u3d.as/NuJ";
 
         [MenuItem(EntitasMenuItems.check_for_updates, false, EntitasMenuItemPriorities.check_for_updates)]
-        public static void DisplayUpdates() => displayUpdateInfo(GetUpdateInfo());
+        public static void DisplayUpdates() => DisplayUpdateInfo(GetUpdateInfo());
 
         public static UpdateInfo GetUpdateInfo() => new UpdateInfo(GetLocalVersion(), GetRemoteVersion());
 
@@ -69,7 +67,7 @@ namespace Entitas.Unity.Editor
         {
             try
             {
-                return JsonUtility.FromJson<ResponseData>(requestLatestRelease()).tag_name;
+                return JsonUtility.FromJson<ResponseData>(RequestLatestRelease()).tag_name;
             }
             catch (Exception)
             {
@@ -79,10 +77,10 @@ namespace Entitas.Unity.Editor
             return string.Empty;
         }
 
-        static string requestLatestRelease()
+        static string RequestLatestRelease()
         {
             var response = string.Empty;
-            using (var www = UnityWebRequest.Get(URL_GITHUB_API_LATEST_RELEASE))
+            using (var www = UnityWebRequest.Get(GithubAPILatestReleaseUrl))
             {
                 var asyncOperation = www.SendWebRequest();
                 while (!asyncOperation.isDone) { }
@@ -97,32 +95,32 @@ namespace Entitas.Unity.Editor
             return response;
         }
 
-        static void displayUpdateInfo(UpdateInfo info)
+        static void DisplayUpdateInfo(UpdateInfo info)
         {
-            switch (info.updateState)
+            switch (info.UpdateState)
             {
                 case UpdateState.UpdateAvailable:
                     if (EditorUtility.DisplayDialog("Entitas Update",
-                            $"A newer version of Entitas is available!\n\nCurrently installed version: {info.localVersionString}\nNew version: {info.remoteVersionString}",
-                            "Show in Unity Asset Store",
+                            $"A newer version of Entitas is available!\n\nCurrently installed version: {info.LocalVersionString}\nNew version: {info.RemoteVersionString}",
+                            "Show Entitas GitHub releases",
                             "Cancel"))
                     {
-                        Application.OpenURL(URL_ASSET_STORE);
+                        Application.OpenURL(GithubReleasesUrl);
                     }
 
                     break;
                 case UpdateState.UpToDate:
                     EditorUtility.DisplayDialog("Entitas Update",
-                        $"Entitas is up to date ({info.localVersionString})",
+                        $"Entitas is up to date ({info.LocalVersionString})",
                         "Ok");
                     break;
                 case UpdateState.AheadOfLatestRelease:
                     if (EditorUtility.DisplayDialog("Entitas Update",
-                            $"Your Entitas version seems to be newer than the latest release?!?\n\nCurrently installed version: {info.localVersionString}\nLatest release: {info.remoteVersionString}",
-                            "Show in Unity Asset Store",
+                            $"Your Entitas version seems to be newer than the latest release?!?\n\nCurrently installed version: {info.LocalVersionString}\nLatest release: {info.RemoteVersionString}",
+                            "Show Entitas GitHub releases",
                             "Cancel"))
                     {
-                        Application.OpenURL(URL_ASSET_STORE);
+                        Application.OpenURL(GithubReleasesUrl);
                     }
 
                     break;
@@ -140,6 +138,7 @@ namespace Entitas.Unity.Editor
             }
         }
 
+        // ReSharper disable once InconsistentNaming
         struct ResponseData
         {
 #pragma warning disable CS0649

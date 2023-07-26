@@ -28,15 +28,15 @@ namespace Entitas.Unity.Editor
                 .ToArray();
 
             var systems = types
-                .Where(isSystem)
+                .Where(IsSystem)
                 .ToArray();
 
-            var contexts = getContexts(components);
+            var contexts = GetContexts(components);
 
             var stats = new Dictionary<string, int>
             {
-                {"Total Components", components.Length},
-                {"Systems", systems.Length}
+                { "Total Components", components.Length },
+                { "Systems", systems.Length }
             };
 
             foreach (var context in contexts)
@@ -45,37 +45,35 @@ namespace Entitas.Unity.Editor
             return stats;
         }
 
-        static Dictionary<string, int> getContexts(Type[] components) => components
+        static Dictionary<string, int> GetContexts(Type[] components) => components
             .Aggregate(new Dictionary<string, int>(), (contexts, type) =>
             {
-                var contextNames = getContextNamesOrDefault(type);
+                var contextNames = GetContextNamesOrDefault(type);
                 foreach (var contextName in contextNames)
                 {
-                    if (!contexts.ContainsKey(contextName))
-                        contexts.Add(contextName, 0);
-
+                    contexts.TryAdd(contextName, 0);
                     contexts[contextName] += 1;
                 }
 
                 return contexts;
             });
 
-        static string[] getContextNames(Type type) => Attribute
+        static string[] GetContextNames(Type type) => Attribute
             .GetCustomAttributes(type)
             .OfType<ContextAttribute>()
             .Select(attr => attr.Type.FullName)
             .ToArray();
 
-        static string[] getContextNamesOrDefault(Type type)
+        static string[] GetContextNamesOrDefault(Type type)
         {
-            var contextNames = getContextNames(type);
+            var contextNames = GetContextNames(type);
             if (contextNames.Length == 0)
-                contextNames = new[] {"Default"};
+                contextNames = new[] { "Default" };
 
             return contextNames;
         }
 
-        static bool isSystem(Type type) =>
+        static bool IsSystem(Type type) =>
             type.ImplementsInterface<ISystem>()
             && type != typeof(ReactiveSystem<>)
             && type != typeof(Systems)

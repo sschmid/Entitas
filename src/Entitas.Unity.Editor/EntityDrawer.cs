@@ -27,8 +27,7 @@ namespace Entitas.Unity.Editor
 
             EditorGUILayout.LabelField($"Retained by ({entity.RetainCount})", EditorStyles.boldLabel);
 
-            var safeAerc = entity.Aerc as SafeAERC;
-            if (safeAerc != null)
+            if (entity.Aerc is SafeAERC safeAerc)
             {
                 EditorLayout.BeginVerticalBox();
                 {
@@ -54,7 +53,7 @@ namespace Entitas.Unity.Editor
             EditorGUILayout.BeginHorizontal();
             {
                 var entity = entities[0];
-                var index = drawAddComponentMenu(entity);
+                var index = DrawAddComponentMenu(entity);
                 if (index >= 0)
                 {
                     var componentType = entity.ContextInfo.ComponentTypes[index];
@@ -100,8 +99,8 @@ namespace Entitas.Unity.Editor
 
         public static void DrawComponents(IEntity entity)
         {
-            var unfoldedComponents = getUnfoldedComponents(entity);
-            var componentMemberSearch = getComponentMemberSearch(entity);
+            var unfoldedComponents = GetUnfoldedComponents(entity);
+            var componentMemberSearch = GetComponentMemberSearch(entity);
 
             EditorLayout.BeginVerticalBox();
             {
@@ -120,7 +119,7 @@ namespace Entitas.Unity.Editor
 
                 EditorGUILayout.Space();
 
-                var index = drawAddComponentMenu(entity);
+                var index = DrawAddComponentMenu(entity);
                 if (index >= 0)
                 {
                     var componentType = entity.ContextInfo.ComponentTypes[index];
@@ -130,7 +129,7 @@ namespace Entitas.Unity.Editor
 
                 EditorGUILayout.Space();
 
-                componentNameSearchString = EditorLayout.SearchTextField(componentNameSearchString);
+                ComponentNameSearchString = EditorLayout.SearchTextField(ComponentNameSearchString);
 
                 EditorGUILayout.Space();
 
@@ -146,10 +145,9 @@ namespace Entitas.Unity.Editor
         {
             var componentType = component.GetType();
             var componentName = componentType.Name.RemoveSuffix("Component");
-            if (EditorLayout.MatchesSearchString(componentName.ToLower(), componentNameSearchString.ToLower()))
+            if (EditorLayout.MatchesSearchString(componentName.ToLower(), ComponentNameSearchString.ToLower()))
             {
-                var boxStyle = getColoredBoxStyle(entity, index);
-                EditorGUILayout.BeginVertical(boxStyle);
+                EditorGUILayout.BeginVertical();
                 {
                     if (!Attribute.IsDefined(componentType, typeof(DontDrawComponentAttribute)))
                     {
@@ -162,7 +160,7 @@ namespace Entitas.Unity.Editor
                             }
                             else
                             {
-                                unfoldedComponents[index] = EditorLayout.Foldout(unfoldedComponents[index], componentName, foldoutStyle);
+                                unfoldedComponents[index] = EditorLayout.Foldout(unfoldedComponents[index], componentName, FoldoutStyle);
                                 if (unfoldedComponents[index])
                                 {
                                     componentMemberSearch[index] = memberInfos.Length > 5
@@ -182,7 +180,7 @@ namespace Entitas.Unity.Editor
                             component.CopyPublicMemberValues(newComponent);
 
                             var changed = false;
-                            var componentDrawer = getComponentDrawer(componentType);
+                            var componentDrawer = GetComponentDrawer(componentType);
                             if (componentDrawer != null)
                             {
                                 EditorGUI.BeginChangeCheck();
@@ -254,7 +252,7 @@ namespace Entitas.Unity.Editor
 
             EditorGUI.BeginChangeCheck();
             {
-                var typeDrawer = getTypeDrawer(memberType);
+                var typeDrawer = GetTypeDrawer(memberType);
                 if (typeDrawer != null)
                 {
                     var newValue = typeDrawer.DrawAndGetNewValue(memberType, memberName, value, target);
@@ -288,7 +286,7 @@ namespace Entitas.Unity.Editor
                     }
                     else
                     {
-                        drawUnsupportedType(memberType, memberName, value);
+                        DrawUnsupportedType(memberType, memberName, value);
                     }
                 }
 
@@ -314,7 +312,7 @@ namespace Entitas.Unity.Editor
             }
             catch (Exception)
             {
-                foreach (var creator in _defaultInstanceCreators)
+                foreach (var creator in DefaultInstanceCreators)
                 {
                     if (creator.HandlesType(type))
                     {
@@ -341,21 +339,21 @@ namespace Entitas.Unity.Editor
             return false;
         }
 
-        static int drawAddComponentMenu(IEntity entity)
+        static int DrawAddComponentMenu(IEntity entity)
         {
-            var componentInfos = getComponentInfos(entity)
-                .Where(info => !entity.HasComponent(info.index))
+            var componentInfos = GetComponentInfos(entity)
+                .Where(info => !entity.HasComponent(info.Index))
                 .ToArray();
             var componentNames = componentInfos
-                .Select(info => info.name)
+                .Select(info => info.Name)
                 .ToArray();
             var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
             return index >= 0
-                ? componentInfos[index].index
+                ? componentInfos[index].Index
                 : -1;
         }
 
-        static void drawUnsupportedType(Type memberType, string memberName, object value)
+        static void DrawUnsupportedType(Type memberType, string memberName, object value)
         {
             EditorGUILayout.BeginHorizontal();
             {
@@ -385,10 +383,10 @@ namespace Entitas.Unity.Editor
             var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
             var folder = config.defaultInstanceCreatorFolderPath;
             var filePath = folder + Path.DirectorySeparatorChar + "Default" + typeName.TypeName() + "InstanceCreator.cs";
-            var template = DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT
+            var template = DefaultInstanceCreatorTemplateFormat
                 .Replace("${Type}", typeName)
                 .Replace("${ShortType}", typeName.TypeName());
-            generateTemplate(folder, filePath, template);
+            GenerateTemplate(folder, filePath, template);
         }
 
         public static void GenerateITypeDrawer(string typeName)
@@ -397,13 +395,13 @@ namespace Entitas.Unity.Editor
             var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
             var folder = config.typeDrawerFolderPath;
             var filePath = folder + Path.DirectorySeparatorChar + typeName.TypeName() + "TypeDrawer.cs";
-            var template = TYPE_DRAWER_TEMPLATE_FORMAT
+            var template = TypeDrawerTemplateFormat
                 .Replace("${Type}", typeName)
                 .Replace("${ShortType}", typeName.TypeName());
-            generateTemplate(folder, filePath, template);
+            GenerateTemplate(folder, filePath, template);
         }
 
-        static void generateTemplate(string folder, string filePath, string template)
+        static void GenerateTemplate(string folder, string filePath, string template)
         {
             if (!Directory.Exists(folder))
                 Directory.CreateDirectory(folder);
@@ -414,7 +412,7 @@ namespace Entitas.Unity.Editor
             Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(filePath);
         }
 
-        const string DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT =
+        const string DefaultInstanceCreatorTemplateFormat =
             @"using System;
 using Entitas.VisualDebugging.Unity.Editor;
 
@@ -431,7 +429,7 @@ public class Default${ShortType}InstanceCreator : IDefaultInstanceCreator {
 }
 ";
 
-        const string TYPE_DRAWER_TEMPLATE_FORMAT =
+        const string TypeDrawerTemplateFormat =
             @"using System;
 using Entitas;
 using Entitas.VisualDebugging.Unity.Editor;

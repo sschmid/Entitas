@@ -10,7 +10,7 @@ namespace Entitas.Unity.Editor
     {
         public override void OnInspectorGUI()
         {
-            var contextObserver = ((ContextObserverBehaviour)target);
+            var contextObserver = (ContextObserverBehaviour)target;
 
             EditorLayout.BeginVerticalBox();
             {
@@ -25,15 +25,19 @@ namespace Entitas.Unity.Editor
                     GUI.color = Color.red;
                     EditorGUILayout.LabelField("Retained entities", retainedEntitiesCount.ToString());
                     GUI.color = c;
-                    EditorGUILayout.HelpBox("WARNING: There are retained entities.\nDid you call entity.Retain(owner) and forgot to call entity.Release(owner)?", MessageType.Warning);
+                    EditorGUILayout.HelpBox(
+                        "WARNING: There are retained entities.\nDid you call entity.Retain(owner) and forgot to call entity.Release(owner)?",
+                        MessageType.Warning);
                 }
 
                 EditorGUILayout.BeginHorizontal();
                 {
                     if (GUILayout.Button("Create Entity"))
                     {
-                        var entity = contextObserver.Context.CreateEntity();
-                        var entityBehaviour = Object.FindObjectsOfType<EntityBehaviour>()
+                        var entity = (IEntity)contextObserver.Context.GetType().GetMethod("CreateEntity")!
+                            .Invoke(contextObserver.Context, null);
+
+                        var entityBehaviour = FindObjectsOfType<EntityBehaviour>()
                             .Single(eb => eb.Entity == entity);
 
                         Selection.activeGameObject = entityBehaviour.gameObject;
