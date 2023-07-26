@@ -9,7 +9,7 @@ namespace Entitas.Unity.Editor
     [InitializeOnLoad]
     public static class EntitasHierarchyIcon
     {
-        static Texture2D contextHierarchyIcon
+        static Texture2D ContextHierarchyIcon
         {
             get
             {
@@ -20,7 +20,7 @@ namespace Entitas.Unity.Editor
             }
         }
 
-        static Texture2D contextErrorHierarchyIcon
+        static Texture2D ContextErrorHierarchyIcon
         {
             get
             {
@@ -31,7 +31,7 @@ namespace Entitas.Unity.Editor
             }
         }
 
-        static Texture2D entityHierarchyIcon
+        static Texture2D EntityHierarchyIcon
         {
             get
             {
@@ -42,7 +42,7 @@ namespace Entitas.Unity.Editor
             }
         }
 
-        static Texture2D entityErrorHierarchyIcon
+        static Texture2D EntityErrorHierarchyIcon
         {
             get
             {
@@ -53,7 +53,7 @@ namespace Entitas.Unity.Editor
             }
         }
 
-        static Texture2D entityLinkHierarchyIcon
+        static Texture2D EntityLinkHierarchyIcon
         {
             get
             {
@@ -64,7 +64,7 @@ namespace Entitas.Unity.Editor
             }
         }
 
-        static Texture2D entityLinkWarnHierarchyIcon
+        static Texture2D EntityLinkWarnHierarchyIcon
         {
             get
             {
@@ -75,7 +75,7 @@ namespace Entitas.Unity.Editor
             }
         }
 
-        static Texture2D systemsHierarchyIcon
+        static Texture2D SystemsHierarchyIcon
         {
             get
             {
@@ -86,7 +86,7 @@ namespace Entitas.Unity.Editor
             }
         }
 
-        static Texture2D systemsWarnHierarchyIcon
+        static Texture2D SystemsWarnHierarchyIcon
         {
             get
             {
@@ -106,7 +106,7 @@ namespace Entitas.Unity.Editor
         static Texture2D _systemsHierarchyIcon;
         static Texture2D _systemsWarnHierarchyIcon;
 
-        static readonly int _systemWarningThreshold;
+        static readonly int SystemWarningThreshold;
 
         static EntitasHierarchyIcon()
         {
@@ -114,66 +114,59 @@ namespace Entitas.Unity.Editor
             {
                 var preferences = new Preferences("Entitas.properties", $"{Environment.UserName}.userproperties");
                 var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
-                _systemWarningThreshold = config.systemWarningThreshold;
+                SystemWarningThreshold = config.systemWarningThreshold;
             }
             catch (Exception)
             {
-                _systemWarningThreshold = int.MaxValue;
+                SystemWarningThreshold = int.MaxValue;
             }
 
-            EditorApplication.hierarchyWindowItemOnGUI += onHierarchyWindowItemOnGUI;
+            EditorApplication.hierarchyWindowItemOnGUI += OnHierarchyWindowItemOnGUI;
         }
 
-        static void onHierarchyWindowItemOnGUI(int instanceID, Rect selectionRect)
+        static void OnHierarchyWindowItemOnGUI(int instanceID, Rect selectionRect)
         {
             var gameObject = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
-            if (gameObject != null)
+            if (gameObject == null)
+                return;
+
+            const float iconSize = 16f;
+            const float iconOffset = iconSize + 2f;
+            var rect = new Rect(selectionRect.x + selectionRect.width - iconOffset, selectionRect.y, iconSize, iconSize);
+
+            if (gameObject.TryGetComponent<ContextObserverBehaviour>(out var contextObserver))
             {
-                const float iconSize = 16f;
-                const float iconOffset = iconSize + 2f;
-                var rect = new Rect(selectionRect.x + selectionRect.width - iconOffset, selectionRect.y, iconSize, iconSize);
+                GUI.DrawTexture(rect, contextObserver.Context.RetainedEntitiesCount != 0
+                    ? ContextErrorHierarchyIcon
+                    : ContextHierarchyIcon);
 
-                var contextObserver = gameObject.GetComponent<ContextObserverBehaviour>();
-                if (contextObserver != null)
-                {
-                    if (contextObserver.Context.RetainedEntitiesCount != 0)
-                        GUI.DrawTexture(rect, contextErrorHierarchyIcon);
-                    else
-                        GUI.DrawTexture(rect, contextHierarchyIcon);
+                return;
+            }
 
-                    return;
-                }
+            if (gameObject.TryGetComponent<EntityBehaviour>(out var entityBehaviour))
+            {
+                GUI.DrawTexture(rect, entityBehaviour.Entity.IsEnabled
+                    ? EntityHierarchyIcon
+                    : EntityErrorHierarchyIcon);
+                return;
+            }
 
-                var entityBehaviour = gameObject.GetComponent<EntityBehaviour>();
-                if (entityBehaviour != null)
-                {
-                    if (entityBehaviour.Entity.IsEnabled)
-                        GUI.DrawTexture(rect, entityHierarchyIcon);
-                    else
-                        GUI.DrawTexture(rect, entityErrorHierarchyIcon);
+            if (gameObject.TryGetComponent<EntityLink>(out var entityLink))
+            {
+                GUI.DrawTexture(rect, entityLink.Entity != null
+                    ? EntityLinkHierarchyIcon
+                    : EntityLinkWarnHierarchyIcon);
 
-                    return;
-                }
+                return;
+            }
 
-                var entityLink = gameObject.GetComponent<EntityLink>();
-                if (entityLink != null)
-                {
-                    if (entityLink.Entity != null)
-                        GUI.DrawTexture(rect, entityLinkHierarchyIcon);
-                    else
-                        GUI.DrawTexture(rect, entityLinkWarnHierarchyIcon);
+            if (gameObject.TryGetComponent<DebugSystemsBehaviour>(out var debugSystemsBehaviour))
+            {
+                GUI.DrawTexture(rect, debugSystemsBehaviour.Systems.ExecuteDuration < SystemWarningThreshold
+                    ? SystemsHierarchyIcon
+                    : SystemsWarnHierarchyIcon);
 
-                    return;
-                }
-
-                var debugSystemsBehaviour = gameObject.GetComponent<DebugSystemsBehaviour>();
-                if (debugSystemsBehaviour != null)
-                {
-                    if (debugSystemsBehaviour.Systems.ExecuteDuration < _systemWarningThreshold)
-                        GUI.DrawTexture(rect, systemsHierarchyIcon);
-                    else
-                        GUI.DrawTexture(rect, systemsWarnHierarchyIcon);
-                }
+                return;
             }
         }
     }

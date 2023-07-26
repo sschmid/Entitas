@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using DesperateDevs.Serialization;
 using DesperateDevs.Unity.Editor;
@@ -24,7 +25,7 @@ namespace Entitas.Unity.Editor
 
         Graph _systemsMonitor;
         Queue<float> _systemMonitorData;
-        const int SYSTEM_MONITOR_DATA_LENGTH = 60;
+        const int SystemMonitorDataLength = 60;
 
         static bool _showDetails = false;
         static bool _showSystemsMonitor = true;
@@ -67,20 +68,20 @@ namespace Entitas.Unity.Editor
             var systems = debugSystemsBehaviour.Systems;
 
             EditorGUILayout.Space();
-            drawSystemsOverview(systems);
+            DrawSystemsOverview(systems);
 
             EditorGUILayout.Space();
-            drawSystemsMonitor(systems);
+            DrawSystemsMonitor(systems);
 
             EditorGUILayout.Space();
-            drawSystemList(systems);
+            DrawSystemList(systems);
 
             EditorGUILayout.Space();
 
             EditorUtility.SetDirty(target);
         }
 
-        static void drawSystemsOverview(DebugSystems systems)
+        static void DrawSystemsOverview(DebugSystems systems)
         {
             _showDetails = EditorLayout.DrawSectionHeaderToggle("Details", _showDetails);
             if (_showDetails)
@@ -98,12 +99,12 @@ namespace Entitas.Unity.Editor
             }
         }
 
-        void drawSystemsMonitor(DebugSystems systems)
+        void DrawSystemsMonitor(DebugSystems systems)
         {
             if (_systemsMonitor == null)
             {
-                _systemsMonitor = new Graph(SYSTEM_MONITOR_DATA_LENGTH);
-                _systemMonitorData = new Queue<float>(new float[SYSTEM_MONITOR_DATA_LENGTH]);
+                _systemsMonitor = new Graph(SystemMonitorDataLength);
+                _systemMonitorData = new Queue<float>(new float[SystemMonitorDataLength]);
             }
 
             _showSystemsMonitor = EditorLayout.DrawSectionHeaderToggle("Performance", _showSystemsMonitor);
@@ -115,8 +116,8 @@ namespace Entitas.Unity.Editor
                     {
                         EditorGUILayout.BeginVertical();
                         {
-                            EditorGUILayout.LabelField("Execution duration", systems.ExecuteDuration.ToString());
-                            EditorGUILayout.LabelField("Cleanup duration", systems.CleanupDuration.ToString());
+                            EditorGUILayout.LabelField("Execution duration", systems.ExecuteDuration.ToString(CultureInfo.InvariantCulture));
+                            EditorGUILayout.LabelField("Cleanup duration", systems.CleanupDuration.ToString(CultureInfo.InvariantCulture));
                         }
                         EditorGUILayout.EndVertical();
 
@@ -133,13 +134,13 @@ namespace Entitas.Unity.Editor
                             systems.IsPaused = true;
                             systems.StepExecute();
                             systems.StepCleanup();
-                            addDuration((float)systems.ExecuteDuration + (float)systems.CleanupDuration);
+                            AddDuration((float)systems.ExecuteDuration + (float)systems.CleanupDuration);
                         }
                     }
                     EditorGUILayout.EndHorizontal();
 
                     if (!EditorApplication.isPaused && !systems.IsPaused)
-                        addDuration((float)systems.ExecuteDuration + (float)systems.CleanupDuration);
+                        AddDuration((float)systems.ExecuteDuration + (float)systems.CleanupDuration);
 
                     _systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
                 }
@@ -147,7 +148,7 @@ namespace Entitas.Unity.Editor
             }
         }
 
-        void drawSystemList(DebugSystems systems)
+        void DrawSystemList(DebugSystems systems)
         {
             _showSystemsList = EditorLayout.DrawSectionHeaderToggle("Systems", _showSystemsList);
             if (_showSystemsList)
@@ -177,11 +178,11 @@ namespace Entitas.Unity.Editor
                     EditorGUILayout.Space();
 
                     _showInitializeSystems = EditorLayout.DrawSectionHeaderToggle("Initialize Systems", _showInitializeSystems);
-                    if (_showInitializeSystems && shouldShowSystems(systems, SystemInterfaceFlags.InitializeSystem))
+                    if (_showInitializeSystems && ShouldShowSystems(systems, SystemInterfaceFlags.InitializeSystem))
                     {
                         EditorLayout.BeginSectionContent();
                         {
-                            var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.InitializeSystem);
+                            var systemsDrawn = DrawSystemInfos(systems, SystemInterfaceFlags.InitializeSystem);
                             if (systemsDrawn == 0)
                                 EditorGUILayout.LabelField(string.Empty);
                         }
@@ -189,11 +190,11 @@ namespace Entitas.Unity.Editor
                     }
 
                     _showExecuteSystems = EditorLayout.DrawSectionHeaderToggle("Execute Systems", _showExecuteSystems);
-                    if (_showExecuteSystems && shouldShowSystems(systems, SystemInterfaceFlags.ExecuteSystem))
+                    if (_showExecuteSystems && ShouldShowSystems(systems, SystemInterfaceFlags.ExecuteSystem))
                     {
                         EditorLayout.BeginSectionContent();
                         {
-                            var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.ExecuteSystem);
+                            var systemsDrawn = DrawSystemInfos(systems, SystemInterfaceFlags.ExecuteSystem);
                             if (systemsDrawn == 0)
                                 EditorGUILayout.LabelField(string.Empty);
                         }
@@ -201,11 +202,11 @@ namespace Entitas.Unity.Editor
                     }
 
                     _showCleanupSystems = EditorLayout.DrawSectionHeaderToggle("Cleanup Systems", _showCleanupSystems);
-                    if (_showCleanupSystems && shouldShowSystems(systems, SystemInterfaceFlags.CleanupSystem))
+                    if (_showCleanupSystems && ShouldShowSystems(systems, SystemInterfaceFlags.CleanupSystem))
                     {
                         EditorLayout.BeginSectionContent();
                         {
-                            var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.CleanupSystem);
+                            var systemsDrawn = DrawSystemInfos(systems, SystemInterfaceFlags.CleanupSystem);
                             if (systemsDrawn == 0)
                                 EditorGUILayout.LabelField(string.Empty);
                         }
@@ -213,11 +214,11 @@ namespace Entitas.Unity.Editor
                     }
 
                     _showTearDownSystems = EditorLayout.DrawSectionHeaderToggle("TearDown Systems", _showTearDownSystems);
-                    if (_showTearDownSystems && shouldShowSystems(systems, SystemInterfaceFlags.TearDownSystem))
+                    if (_showTearDownSystems && ShouldShowSystems(systems, SystemInterfaceFlags.TearDownSystem))
                     {
                         EditorLayout.BeginSectionContent();
                         {
-                            var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.TearDownSystem);
+                            var systemsDrawn = DrawSystemInfos(systems, SystemInterfaceFlags.TearDownSystem);
                             if (systemsDrawn == 0)
                                 EditorGUILayout.LabelField(string.Empty);
                         }
@@ -228,7 +229,7 @@ namespace Entitas.Unity.Editor
             }
         }
 
-        int drawSystemInfos(DebugSystems systems, SystemInterfaceFlags type)
+        int DrawSystemInfos(DebugSystems systems, SystemInterfaceFlags type)
         {
             IEnumerable<SystemInfo> systemInfos = null;
 
@@ -248,13 +249,13 @@ namespace Entitas.Unity.Editor
                     break;
             }
 
-            systemInfos = getSortedSystemInfos(systemInfos, _systemSortMethod);
+            systemInfos = GetSortedSystemInfos(systemInfos, _systemSortMethod);
 
             var systemsDrawn = 0;
             foreach (var systemInfo in systemInfos)
             {
                 if (systemInfo.System is DebugSystems debugSystems)
-                    if (!shouldShowSystems(debugSystems, type))
+                    if (!ShouldShowSystems(debugSystems, type))
                         continue;
 
                 if (EditorLayout.MatchesSearchString(systemInfo.SystemName.ToLower(), _systemNameSearchString.ToLower()))
@@ -283,8 +284,7 @@ namespace Entitas.Unity.Editor
 
                         if (systemInfo.IsActive != wasActive)
                         {
-                            var reactiveSystem = systemInfo.System as IReactiveSystem;
-                            if (reactiveSystem != null)
+                            if (systemInfo.System is IReactiveSystem reactiveSystem)
                             {
                                 if (systemInfo.IsActive)
                                     reactiveSystem.Activate();
@@ -296,22 +296,22 @@ namespace Entitas.Unity.Editor
                         switch (type)
                         {
                             case SystemInterfaceFlags.InitializeSystem:
-                                EditorGUILayout.LabelField(systemInfo.SystemName, systemInfo.InitializationDuration.ToString(), getSystemStyle(systemInfo, SystemInterfaceFlags.InitializeSystem));
+                                EditorGUILayout.LabelField(systemInfo.SystemName, systemInfo.InitializationDuration.ToString(CultureInfo.InvariantCulture), GetSystemStyle(systemInfo, SystemInterfaceFlags.InitializeSystem));
                                 break;
                             case SystemInterfaceFlags.ExecuteSystem:
                                 var avgE = $"Ø {systemInfo.AverageExecutionDuration:00.000}".PadRight(12);
                                 var minE = $"▼ {systemInfo.MinExecutionDuration:00.000}".PadRight(12);
                                 var maxE = $"▲ {systemInfo.MaxExecutionDuration:00.000}";
-                                EditorGUILayout.LabelField(systemInfo.SystemName, avgE + minE + maxE, getSystemStyle(systemInfo, SystemInterfaceFlags.ExecuteSystem));
+                                EditorGUILayout.LabelField(systemInfo.SystemName, avgE + minE + maxE, GetSystemStyle(systemInfo, SystemInterfaceFlags.ExecuteSystem));
                                 break;
                             case SystemInterfaceFlags.CleanupSystem:
                                 var avgC = $"Ø {systemInfo.AverageCleanupDuration:00.000}".PadRight(12);
                                 var minC = $"▼ {systemInfo.MinCleanupDuration:00.000}".PadRight(12);
                                 var maxC = $"▲ {systemInfo.MaxCleanupDuration:00.000}";
-                                EditorGUILayout.LabelField(systemInfo.SystemName, avgC + minC + maxC, getSystemStyle(systemInfo, SystemInterfaceFlags.CleanupSystem));
+                                EditorGUILayout.LabelField(systemInfo.SystemName, avgC + minC + maxC, GetSystemStyle(systemInfo, SystemInterfaceFlags.CleanupSystem));
                                 break;
                             case SystemInterfaceFlags.TearDownSystem:
-                                EditorGUILayout.LabelField(systemInfo.SystemName, systemInfo.TeardownDuration.ToString(), getSystemStyle(systemInfo, SystemInterfaceFlags.TearDownSystem));
+                                EditorGUILayout.LabelField(systemInfo.SystemName, systemInfo.TeardownDuration.ToString(CultureInfo.InvariantCulture), GetSystemStyle(systemInfo, SystemInterfaceFlags.TearDownSystem));
                                 break;
                         }
                     }
@@ -324,7 +324,7 @@ namespace Entitas.Unity.Editor
                 {
                     var indent = EditorGUI.indentLevel;
                     EditorGUI.indentLevel += 1;
-                    systemsDrawn += drawSystemInfos(debugSystem, type);
+                    systemsDrawn += DrawSystemInfos(debugSystem, type);
                     EditorGUI.indentLevel = indent;
                 }
             }
@@ -332,7 +332,7 @@ namespace Entitas.Unity.Editor
             return systemsDrawn;
         }
 
-        static IEnumerable<SystemInfo> getSortedSystemInfos(IEnumerable<SystemInfo> systemInfos, SortMethod sortMethod) => sortMethod switch
+        static IEnumerable<SystemInfo> GetSortedSystemInfos(IEnumerable<SystemInfo> systemInfos, SortMethod sortMethod) => sortMethod switch
         {
             SortMethod.Name => systemInfos.OrderBy(systemInfo => systemInfo.SystemName),
             SortMethod.NameDescending => systemInfos.OrderByDescending(systemInfo => systemInfo.SystemName),
@@ -341,7 +341,7 @@ namespace Entitas.Unity.Editor
             _ => systemInfos
         };
 
-        static bool shouldShowSystems(DebugSystems systems, SystemInterfaceFlags type)
+        static bool ShouldShowSystems(DebugSystems systems, SystemInterfaceFlags type)
         {
             if (!_hideEmptySystems)
                 return true;
@@ -356,7 +356,7 @@ namespace Entitas.Unity.Editor
             };
         }
 
-        GUIStyle getSystemStyle(SystemInfo systemInfo, SystemInterfaceFlags systemFlag)
+        GUIStyle GetSystemStyle(SystemInfo systemInfo, SystemInterfaceFlags systemFlag)
         {
             var style = new GUIStyle(GUI.skin.label);
             var color = systemInfo.IsReactiveSystems && EditorGUIUtility.isProSkin
@@ -374,13 +374,13 @@ namespace Entitas.Unity.Editor
             return style;
         }
 
-        void addDuration(float duration)
+        void AddDuration(float duration)
         {
             // OnInspectorGUI is called twice per frame - only add duration once
             if (Time.renderedFrameCount != _lastRenderedFrameCount)
             {
                 _lastRenderedFrameCount = Time.renderedFrameCount;
-                if (_systemMonitorData.Count >= SYSTEM_MONITOR_DATA_LENGTH)
+                if (_systemMonitorData.Count >= SystemMonitorDataLength)
                     _systemMonitorData.Dequeue();
 
                 _systemMonitorData.Enqueue(duration);

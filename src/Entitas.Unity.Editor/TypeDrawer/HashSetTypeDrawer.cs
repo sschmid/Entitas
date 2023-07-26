@@ -56,11 +56,11 @@ namespace Entitas.Unity.Editor
                 EditorGUI.indentLevel = indent;
             }
 
-            var removeMethod = memberType.GetMethod("Remove");
+            var removeMethod = memberType.GetMethod("Remove")!;
             foreach (var item in itemsToRemove)
                 removeMethod.Invoke(value, new[] { item });
 
-            var addMethod = memberType.GetMethod("Add");
+            var addMethod = memberType.GetMethod("Add")!;
             foreach (var item in itemsToAdd)
                 addMethod.Invoke(value, new[] { item });
 
