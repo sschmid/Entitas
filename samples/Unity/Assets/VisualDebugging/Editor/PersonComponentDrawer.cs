@@ -1,6 +1,6 @@
 using System;
 using Entitas;
-using Entitas.VisualDebugging.Unity.Editor;
+using Entitas.Unity.Editor;
 using UnityEditor;
 
 public class PersonComponentDrawer : IComponentDrawer

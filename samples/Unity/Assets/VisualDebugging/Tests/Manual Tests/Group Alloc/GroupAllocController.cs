@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Entitas;
+using Entitas.Unity;
 using UnityEngine;
 
 public class GroupAllocController : MonoBehaviour
@@ -7,21 +8,23 @@ public class GroupAllocController : MonoBehaviour
     public GroupAlloc Mode;
     public int Count;
 
-    readonly List<GameEntity> _buffer = new List<GameEntity>();
-    GameContext _context;
-    IGroup<GameEntity> _group;
+    readonly List<Game.Entity> _buffer = new List<Game.Entity>();
+    GameContext _gameContext;
+    IGroup<Game.Entity> _group;
 
     void Start()
     {
-        _context = Contexts.sharedInstance.game;
-        _group = _context.GetGroup(GameMatcher.MyInt);
+        ContextInitialization.InitializeAllContexts();
+        _gameContext = new GameContext();
+        _gameContext.CreateContextObserver();
+        _group = _gameContext.GetGroup(GameMyIntMatcher.MyInt);
     }
 
     void Update()
     {
-        _context.DestroyAllEntities();
+        _gameContext.DestroyAllEntities();
         for (var i = 0; i < Count; i++)
-            _context.CreateEntity().AddMyInt(i);
+            _gameContext.CreateEntity().AddMyInt(i);
 
         Iterate();
     }
@@ -31,23 +34,23 @@ public class GroupAllocController : MonoBehaviour
         switch (Mode)
         {
             case GroupAlloc.Group:
-                foreach (var e in _group)
+                foreach (var entity in _group)
                 {
-                    var unused = e.myInt.Value;
+                    var unused = entity.GetMyInt().Value;
                 }
 
                 break;
             case GroupAlloc.GetEntities:
-                foreach (var e in _group.GetEntities())
+                foreach (var entity in _group.GetEntities())
                 {
-                    var unused = e.myInt.Value;
+                    var unused = entity.GetMyInt().Value;
                 }
 
                 break;
             case GroupAlloc.GetEntitiesBuffer:
-                foreach (var e in _group.GetEntities(_buffer))
+                foreach (var entity in _group.GetEntities(_buffer))
                 {
-                    var unused = e.myInt.Value;
+                    var unused = entity.GetMyInt().Value;
                 }
 
                 break;

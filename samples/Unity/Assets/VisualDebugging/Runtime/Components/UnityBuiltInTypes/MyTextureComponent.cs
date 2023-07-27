@@ -1,8 +1,9 @@
 using Entitas;
+using Entitas.Generators.Attributes;
 using UnityEngine;
 
-[Game]
-public class MyTextureComponent : IComponent
+[Context(typeof(GameContext))]
+public sealed class MyTextureComponent : IComponent
 {
     public Texture Value;
 }

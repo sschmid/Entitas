@@ -1,7 +1,8 @@
 using Entitas;
+using Entitas.Generators.Attributes;
 
-[Game]
-public class MyMemberListComponent : IComponent
+[Context(typeof(GameContext))]
+public sealed class MyMemberListComponent : IComponent
 {
     public string Field1;
     public string Field2;

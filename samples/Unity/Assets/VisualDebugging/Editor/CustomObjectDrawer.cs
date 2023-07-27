@@ -1,5 +1,5 @@
 ﻿using System;
-using Entitas.VisualDebugging.Unity.Editor;
+using Entitas.Unity.Editor;
 using UnityEditor;
 
 public class CustomObjectDrawer : ITypeDrawer, IDefaultInstanceCreator

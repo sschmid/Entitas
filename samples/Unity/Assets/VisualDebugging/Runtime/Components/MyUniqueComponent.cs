@@ -1,8 +1,8 @@
 using Entitas;
-using Entitas.CodeGeneration.Attributes;
+using Entitas.Generators.Attributes;
 
-[Game, Unique]
-public class MyUniqueComponent : IComponent
+[Context(typeof(GameContext)), Unique]
+public sealed class MyUniqueComponent : IComponent
 {
     public string Value;
 }

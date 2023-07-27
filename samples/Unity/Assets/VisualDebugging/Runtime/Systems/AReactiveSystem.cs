@@ -2,16 +2,16 @@
 using System.Threading;
 using Entitas;
 
-public class AReactiveSystem : ReactiveSystem<GameEntity>
+public class AReactiveSystem : ReactiveSystem<Game.Entity>
 {
-    public AReactiveSystem(Contexts contexts) : base(contexts.game) { }
+    public AReactiveSystem(GameContext context) : base(context) { }
 
-    protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) =>
-        context.CreateCollector(GameMatcher.MyString);
+    protected override ICollector<Game.Entity> GetTrigger(IContext<Game.Entity> context) =>
+        context.CreateCollector(GameMyStringMatcher.MyString);
 
-    protected override bool Filter(GameEntity entity) => true;
+    protected override bool Filter(Game.Entity entity) => true;
 
-    protected override void Execute(List<GameEntity> entities)
+    protected override void Execute(List<Game.Entity> entities)
     {
         Thread.Sleep(2);
     }

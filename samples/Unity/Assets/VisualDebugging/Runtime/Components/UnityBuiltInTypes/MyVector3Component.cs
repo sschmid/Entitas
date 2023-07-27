@@ -1,8 +1,9 @@
 using Entitas;
+using Entitas.Generators.Attributes;
 using UnityEngine;
 
-[Game]
-public class MyVector3Component : IComponent
+[Context(typeof(GameContext))]
+public sealed class MyVector3Component : IComponent
 {
     public Vector3 Value;
 }

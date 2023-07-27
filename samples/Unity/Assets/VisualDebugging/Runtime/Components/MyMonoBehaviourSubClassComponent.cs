@@ -1,8 +1,9 @@
 using Entitas;
+using Entitas.Generators.Attributes;
 using UnityEngine;
 
-[Game]
-public class MyMonoBehaviourSubClassComponent : IComponent
+[Context(typeof(GameContext))]
+public sealed class MyMonoBehaviourSubClassComponent : IComponent
 {
     public MyMonoBehaviourSubClass Value;
 }

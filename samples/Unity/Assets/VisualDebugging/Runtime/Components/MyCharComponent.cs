@@ -1,7 +1,8 @@
 using Entitas;
+using Entitas.Generators.Attributes;
 
-[Game]
-public class MyCharComponent : IComponent
+[Context(typeof(GameContext))]
+public sealed class MyCharComponent : IComponent
 {
     public char Value;
 }

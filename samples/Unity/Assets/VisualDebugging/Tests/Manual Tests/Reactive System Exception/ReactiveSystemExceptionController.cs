@@ -1,38 +1,42 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Entitas;
+using Entitas.Unity;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class ReactiveSystemExceptionController : MonoBehaviour
 {
-    GameEntity _entity;
+    Game.Entity _entity;
     ExceptionReactiveSystem _system;
 
     void Start()
     {
-        var contexts = Contexts.sharedInstance;
-        _entity = contexts.game.CreateEntity();
-        _system = new ExceptionReactiveSystem(contexts);
+        ContextInitialization.InitializeAllContexts();
+        var gameContext = new GameContext();
+        gameContext.CreateContextObserver();
+        _entity = gameContext.CreateEntity();
+        _system = new ExceptionReactiveSystem(gameContext);
     }
 
     void Update()
     {
-        _entity.ReplaceMyString(Random.value.ToString());
+        _entity.ReplaceMyString(Random.value.ToString(CultureInfo.InvariantCulture));
         _system.Execute();
     }
 }
 
-public class ExceptionReactiveSystem : ReactiveSystem<GameEntity>
+public class ExceptionReactiveSystem : ReactiveSystem<Game.Entity>
 {
-    public ExceptionReactiveSystem(Contexts contexts) : base(contexts.game) { }
+    public ExceptionReactiveSystem(GameContext context) : base(context) { }
 
-    protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) =>
-        context.CreateCollector(GameMatcher.MyString);
+    protected override ICollector<Game.Entity> GetTrigger(IContext<Game.Entity> context) =>
+        context.CreateCollector(GameMyStringMatcher.MyString);
 
-    protected override bool Filter(GameEntity entity) => true;
+    protected override bool Filter(Game.Entity entity) => true;
 
-    protected override void Execute(List<GameEntity> entities)
+    protected override void Execute(List<Game.Entity> entities)
     {
         if (Random.value > 0.99f)
             throw new Exception("ExceptionReactiveSystem Exception!");

@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using Entitas;
+using Entitas.Generators.Attributes;
 
-[Game]
-public class MySimpleObjectComponent : IComponent
+[Context(typeof(GameContext))]
+public sealed class MySimpleObjectComponent : IComponent
 {
     public MySimpleObject Value;
 }
@@ -13,6 +14,5 @@ public class MySimpleObject
     public int Age;
     public Dictionary<string, string> Data;
     public MyCustomObject MyCustomObject;
-    public MyIntVector2 MyIntVector;
     public MySimpleObject Next;
 }

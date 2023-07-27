@@ -1,14 +1,15 @@
 using Entitas;
+using Entitas.Generators.Attributes;
 
-[Game]
-public class MyEnumComponent : IComponent
+[Context(typeof(GameContext))]
+public sealed class MyEnumComponent : IComponent
 {
-    public enum MyEnum
-    {
-        Item1,
-        Item2,
-        Item3
-    }
-
     public MyEnum Value;
+}
+
+public enum MyEnum
+{
+    Item1,
+    Item2,
+    Item3
 }

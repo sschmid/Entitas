@@ -1,7 +1,8 @@
 using Entitas;
+using Entitas.Generators.Attributes;
 
-[Game]
-public class MyArray2DComponent : IComponent
+[Context(typeof(GameContext))]
+public sealed class MyArray2DComponent : IComponent
 {
     public string[,] Value;
 }

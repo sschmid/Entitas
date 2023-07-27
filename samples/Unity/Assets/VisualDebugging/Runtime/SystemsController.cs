@@ -1,44 +1,65 @@
 using Entitas;
+using Entitas.Unity;
 using UnityEngine;
 
 public class SystemsController : MonoBehaviour
 {
-    Contexts _contexts;
+    GameContext _gameContext;
     Systems _systems;
 
     void Start()
     {
-        _contexts = new Contexts();
+        ContextInitialization.InitializeAllContexts();
+        _gameContext = new GameContext();
+        _gameContext.CreateContextObserver();
 
-        //_systems = createNestedSystems();
-
-        _systems = new Feature().Add(new SomeMultiReactiveSystem(_contexts));
-
-        //// Test call
+        _systems = CreateNestedSystems();
+        //// Test calls
         _systems.Initialize();
         _systems.Execute();
         _systems.Cleanup();
         _systems.TearDown();
 
-        _contexts.game.CreateEntity().AddMyString("");
+        _gameContext.CreateEntity().AddMyString("");
+    }
+
+    Systems CreateNestedSystems()
+    {
+        var systems1 = new Feature("Nested 1");
+        var systems2 = new Feature("Nested 2");
+        var systems3 = new Feature("Nested 3");
+
+        systems1.Add(systems2);
+        systems2.Add(systems3);
+        systems1.Add(CreateSomeSystems());
+
+        return new Feature("Nested Systems")
+            .Add(systems1);
+    }
+
+    Systems CreateSomeSystems()
+    {
+        return new SomeSystems(_gameContext);
     }
 
     void Update()
     {
-        _contexts.game.GetGroup(GameMatcher.MyString).GetSingleEntity()
+        _gameContext.GetGroup(GameMyStringMatcher.MyString).GetSingleEntity()
             .ReplaceMyString(Random.value.ToString());
 
         _systems.Execute();
         _systems.Cleanup();
     }
 
-    Systems CreateAllSystemCombinations() => new Feature("All System Combinations")
-        .Add(new SomeInitializeSystem())
-        .Add(new SomeExecuteSystem())
-        .Add(new SomeReactiveSystem(_contexts))
-        .Add(new SomeMultiReactiveSystem(_contexts))
-        .Add(new SomeInitializeExecuteSystem())
-        .Add(new SomeInitializeReactiveSystem(_contexts));
+    Systems CreateAllSystemCombinations()
+    {
+        return new Feature("All System Combinations")
+            .Add(new SomeInitializeSystem())
+            .Add(new SomeExecuteSystem())
+            .Add(new SomeReactiveSystem(_gameContext))
+            .Add(new SomeInitializeExecuteSystem())
+            .Add(new SomeInitializeReactiveSystem(_gameContext));
+    }
 
     Systems CreateSubSystems()
     {
@@ -60,20 +81,6 @@ public class SystemsController : MonoBehaviour
             .Add(system);
     }
 
-    Systems CreateNestedSystems()
-    {
-        var systems1 = new Feature("Nested 1");
-        var systems2 = new Feature("Nested 2");
-        var systems3 = new Feature("Nested 3");
-
-        systems1.Add(systems2);
-        systems2.Add(systems3);
-        systems1.Add(CreateSomeSystems());
-
-        return new Feature("Nested Systems")
-            .Add(systems1);
-    }
-
     Systems CreateEmptySystems()
     {
         var systems1 = new Feature("Empty 1");
@@ -87,24 +94,19 @@ public class SystemsController : MonoBehaviour
             .Add(systems1);
     }
 
-    Systems CreateSomeSystems()
-    {
-        return new SomeSystems(_contexts);
-    }
-
     sealed class SomeSystems : Feature
     {
-        public SomeSystems(Contexts contexts)
+        public SomeSystems(GameContext gameContext)
         {
             Add(new SlowInitializeSystem());
             Add(new SlowInitializeExecuteSystem());
             Add(new FastSystem());
             Add(new SlowSystem());
             Add(new RandomDurationSystem());
-            Add(new AReactiveSystem(contexts));
+            Add(new AReactiveSystem(gameContext));
 
-            Add(new RandomValueSystem(contexts));
-            Add(new ProcessRandomValueSystem(contexts));
+            Add(new RandomValueSystem(gameContext));
+            Add(new ProcessRandomValueSystem(gameContext));
             Add(new CleanupSystem());
             Add(new TearDownSystem());
             Add(new MixedSystem());

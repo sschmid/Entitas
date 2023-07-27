@@ -5,9 +5,9 @@ public class RandomValueSystem : IExecuteSystem
 {
     readonly GameContext _context;
 
-    public RandomValueSystem(Contexts contexts)
+    public RandomValueSystem(GameContext context)
     {
-        _context = contexts.game;
+        _context = context;
     }
 
     public void Execute()

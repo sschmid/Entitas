@@ -1,16 +1,18 @@
-﻿using UnityEngine;
+﻿using Entitas.Unity;
+using UnityEngine;
 
 public class EntityStressTestController : MonoBehaviour
 {
     public int count;
 
-    Contexts _contexts;
-
+    GameContext _gameContext;
     bool _flag;
 
     void Start()
     {
-        _contexts = Contexts.sharedInstance;
+        ContextInitialization.InitializeAllContexts();
+        _gameContext = new GameContext();
+        _gameContext.CreateContextObserver();
 
         // for (var i = 0; i < count; i++)
         // {
@@ -30,10 +32,10 @@ public class EntityStressTestController : MonoBehaviour
             _flag = !_flag;
             if (_flag)
                 for (var i = 0; i < count; i++)
-                    _contexts.game.CreateEntity().AddMyInt(i);
+                    _gameContext.CreateEntity().AddMyInt(i);
             else
-                foreach (var e in _contexts.game.GetEntities())
-                    e.Destroy();
+                foreach (var entity in _gameContext.GetEntities())
+                    entity.Destroy();
         }
     }
 }

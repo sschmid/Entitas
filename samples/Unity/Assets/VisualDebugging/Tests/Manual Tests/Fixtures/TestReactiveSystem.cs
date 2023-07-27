@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using Entitas;
 
-public class TestReactiveSystem : ReactiveSystem<GameEntity>
+public class TestReactiveSystem : ReactiveSystem<Game.Entity>
 {
-    public TestReactiveSystem(Contexts contexts) : base(contexts.game) { }
+    public TestReactiveSystem(GameContext context) : base(context) { }
 
-    protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) =>
-        context.CreateCollector(GameMatcher.Test);
+    protected override ICollector<Game.Entity> GetTrigger(IContext<Game.Entity> context) =>
+        context.CreateCollector(GameTestMatcher.Test);
 
-    protected override bool Filter(GameEntity entity) => true;
+    protected override bool Filter(Game.Entity entity) => true;
 
-    protected override void Execute(List<GameEntity> entities) { }
+    protected override void Execute(List<Game.Entity> entities) { }
 }

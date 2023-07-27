@@ -1,3 +1,4 @@
+using System.Linq;
 using NUnit.Framework;
 using Entitas;
 
@@ -5,29 +6,24 @@ using Entitas;
 class ContextTests
 {
     [Test]
-    public void ensures_same_deterministic_order_when_getting_entities_after_DestroyAllEntities()
+    public void EnsuresSameDeterministicOrderWhenGettingEntitiesAfterDestroyAllEntities()
     {
-        var context = new Context<Entity>(1, () => new GameEntity());
+        ContextInitialization.InitializeAllContexts();
+        var gameContext = new Context<Entity>(1, () => new Game.Entity());
 
         const int numEntities = 10;
-        for (var i = 0; i < numEntities; i++)
-            context.CreateEntity();
-
-        var order1 = new int[numEntities];
-        var entities1 = context.GetEntities();
-        for (var i = 0; i < numEntities; i++)
-            order1[i] = entities1[i].creationIndex;
-
-        context.DestroyAllEntities();
-        context.ResetCreationIndex();
 
         for (var i = 0; i < numEntities; i++)
-            context.CreateEntity();
+            gameContext.CreateEntity();
 
-        var order2 = new int[numEntities];
-        var entities2 = context.GetEntities();
+        var order1 = gameContext.GetEntities().Select(entity => entity.Id).ToArray();
+
+        gameContext.Reset();
+
         for (var i = 0; i < numEntities; i++)
-            order2[i] = entities2[i].creationIndex;
+            gameContext.CreateEntity();
+
+        var order2 = gameContext.GetEntities().Select(entity => entity.Id).ToArray();
 
         for (var i = 0; i < numEntities; i++)
         {

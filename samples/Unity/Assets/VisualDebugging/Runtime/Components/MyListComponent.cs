@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using Entitas;
+using Entitas.Generators.Attributes;
 
-[Game]
-public class MyListComponent : IComponent
+[Context(typeof(GameContext))]
+public sealed class MyListComponent : IComponent
 {
     public List<string> Value;
 }

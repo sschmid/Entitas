@@ -1,8 +1,9 @@
 ﻿using Entitas;
+using Entitas.Generators.Attributes;
 using UnityEngine;
 
-[Game]
-public class MyBoundsComponent : IComponent
+[Context(typeof(GameContext))]
+public sealed class MyBoundsComponent : IComponent
 {
     public Bounds Value;
 }

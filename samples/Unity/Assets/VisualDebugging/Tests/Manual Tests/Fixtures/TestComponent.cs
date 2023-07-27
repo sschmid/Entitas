@@ -1,4 +1,5 @@
 ﻿using Entitas;
+using Entitas.Generators.Attributes;
 
-[Game, Input]
-public class TestComponent : IComponent { }
+[Context(typeof(GameContext)), Context(typeof(InputContext))]
+public sealed class TestComponent : IComponent { }

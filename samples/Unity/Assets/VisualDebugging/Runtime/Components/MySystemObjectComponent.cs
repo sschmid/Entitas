@@ -1,7 +1,8 @@
 using Entitas;
+using Entitas.Generators.Attributes;
 
-[Game]
-public class MySystemObjectComponent : IComponent
+[Context(typeof(GameContext))]
+public sealed class MySystemObjectComponent : IComponent
 {
     public System.Object Value;
 }

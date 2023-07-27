@@ -5,13 +5,15 @@ public class EntityLinkController : MonoBehaviour
 {
     void Start()
     {
-        var context = Contexts.sharedInstance.game;
-        var e = context.CreateEntity();
+        ContextInitialization.InitializeAllContexts();
+        var gameContext = new GameContext();
+        gameContext.CreateContextObserver();
+        var entity = gameContext.CreateEntity();
 
         var go = new GameObject();
-        go.Link(e);
+        go.Link(entity);
 
-        e.AddMyGameObject(go);
+        entity.AddMyGameObject(go);
 
 //        go.Unlink();
 

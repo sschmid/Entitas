@@ -1,16 +1,17 @@
 using Entitas;
+using Entitas.Generators.Attributes;
 
-[Game]
-public class MyFlagsComponent : IComponent
+[Context(typeof(GameContext))]
+public sealed class MyFlagsComponent : IComponent
 {
-    [System.Flags]
-    public enum MyFlags
-    {
-        Item1 = 1,
-        Item2 = 2,
-        Item3 = 4,
-        Item4 = 8
-    }
-
     public MyFlags Value;
+}
+
+[System.Flags]
+public enum MyFlags
+{
+    Item1 = 1,
+    Item2 = 2,
+    Item3 = 4,
+    Item4 = 8
 }

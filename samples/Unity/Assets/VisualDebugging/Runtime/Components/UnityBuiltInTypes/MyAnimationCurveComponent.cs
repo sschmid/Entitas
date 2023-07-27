@@ -1,8 +1,9 @@
 using Entitas;
+using Entitas.Generators.Attributes;
 using UnityEngine;
 
-[Game]
-public class MyAnimationCurveComponent : IComponent
+[Context(typeof(GameContext))]
+public sealed class MyAnimationCurveComponent : IComponent
 {
     public AnimationCurve Value;
 }

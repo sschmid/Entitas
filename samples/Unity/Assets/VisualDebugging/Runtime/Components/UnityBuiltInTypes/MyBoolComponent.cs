@@ -1,7 +1,8 @@
 using Entitas;
+using Entitas.Generators.Attributes;
 
-[Game]
-public class MyBoolComponent : IComponent
+[Context(typeof(GameContext))]
+public sealed class MyBoolComponent : IComponent
 {
     public bool Value;
 }

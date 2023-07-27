@@ -1,17 +1,21 @@
 using UnityEngine;
 using Entitas;
+using Entitas.Unity;
 using UnityEditor;
 
 public class CollectorDestructorController : MonoBehaviour
 {
-    GameEntity _initialEntity;
+    GameContext _gameContext;
+    Game.Entity _initialEntity;
 
     void Start()
     {
-        var context = Contexts.sharedInstance.game;
-        context.GetGroup(GameMatcher.Test).CreateCollector();
-        _initialEntity = context.CreateEntity();
-        _initialEntity.isTest = true;
+        ContextInitialization.InitializeAllContexts();
+        _gameContext = new GameContext();
+        _gameContext.CreateContextObserver();
+        _gameContext.GetGroup(GameTestMatcher.Test).CreateCollector();
+        _initialEntity = _gameContext.CreateEntity();
+        _initialEntity.AddTest();
         _initialEntity.Destroy();
         // TODO
         // context.ClearGroups();
@@ -19,11 +23,10 @@ public class CollectorDestructorController : MonoBehaviour
 
     void Update()
     {
-        var context = Contexts.sharedInstance.game;
         for (var i = 0; i < 5000; i++)
         {
-            var e = context.CreateEntity();
-            if (e == _initialEntity)
+            var entity = _gameContext.CreateEntity();
+            if (entity == _initialEntity)
             {
                 Debug.Log("Reusing entity!");
                 EditorApplication.isPlaying = false;

@@ -1,4 +1,5 @@
 ﻿using Entitas;
+using Entitas.Generators.Attributes;
 
-[Game]
-public class MyFlagComponent : IComponent { }
+[Context(typeof(GameContext))]
+public sealed class MyFlagComponent : IComponent { }

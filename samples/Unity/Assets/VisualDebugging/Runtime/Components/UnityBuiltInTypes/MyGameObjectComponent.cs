@@ -1,8 +1,9 @@
 using Entitas;
+using Entitas.Generators.Attributes;
 using UnityEngine;
 
-[Game]
-public class MyGameObjectComponent : IComponent
+[Context(typeof(GameContext))]
+public sealed class MyGameObjectComponent : IComponent
 {
     public GameObject Value;
 }

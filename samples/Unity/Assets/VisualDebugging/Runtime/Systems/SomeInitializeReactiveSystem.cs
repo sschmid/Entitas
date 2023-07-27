@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using Entitas;
 
-public class SomeInitializeReactiveSystem : ReactiveSystem<GameEntity>, IInitializeSystem
+public class SomeInitializeReactiveSystem : ReactiveSystem<Game.Entity>, IInitializeSystem
 {
-    public SomeInitializeReactiveSystem(Contexts contexts) : base(contexts.game) { }
+    public SomeInitializeReactiveSystem(GameContext context) : base(context) { }
 
-    protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) =>
-        context.CreateCollector(Matcher<GameEntity>.AllOf(0));
+    protected override ICollector<Game.Entity> GetTrigger(IContext<Game.Entity> context) =>
+        context.CreateCollector(Game.Matcher.AllOf(0));
 
-    protected override bool Filter(GameEntity entity) => true;
+    protected override bool Filter(Game.Entity entity) => true;
 
     public void Initialize() { }
 
-    protected override void Execute(List<GameEntity> entities) { }
+    protected override void Execute(List<Game.Entity> entities) { }
 }
