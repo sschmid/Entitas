@@ -1,9 +1,7 @@
 {
   "dependencies": {
-    "com.unity.2d.sprite": "1.0.0",
-    "com.unity.ide.rider": "3.0.15",
+    "com.unity.ide.rider": "3.0.24",
     "com.unity.test-framework": "1.1.33",
-    "com.unity.textmeshpro": "3.0.6",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
