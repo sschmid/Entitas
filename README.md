@@ -9,10 +9,10 @@
 </p>
 <p align="center">
     <b>Entitas is free, but powered by</b>
-    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BTMLSDQULZ852"><b>your donations</b></a>
+    <a href="https://www.paypal.com/donate/?hosted_button_id=BTMLSDQULZ852"><b>your donations</b></a>
 </p>
 <p align="center">
-    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BTMLSDQULZ852"><img src="https://img.shields.io/static/v1.svg?logo=paypal&label=PayPal&labelColor=3F70B6&&message=Donate&color=gray" alt="Donate"></a>
+    <a href="https://www.paypal.com/donate/?hosted_button_id=BTMLSDQULZ852"><img src="https://img.shields.io/static/v1.svg?logo=paypal&label=PayPal&labelColor=3F70B6&&message=Donate&color=gray" alt="Donate"></a>
 </p>
 
 # Entitas - The Entity Component System Framework for C# and Unity
