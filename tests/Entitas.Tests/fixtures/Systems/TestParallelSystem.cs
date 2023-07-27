@@ -2,11 +2,11 @@
 using System.Threading;
 using Entitas;
 
-public sealed class TestJobSystem : JobSystem<TestEntity>
+public sealed class TestParallelSystem : ParallelSystem<TestEntity>
 {
     public Exception Exception;
 
-    public TestJobSystem(TestContext context) : base(context.GetGroup(TestUserMatcher.User)) { }
+    public TestParallelSystem(TestContext context) : base(context.GetGroup(TestUserMatcher.User)) { }
 
     protected override void Execute(TestEntity entity)
     {

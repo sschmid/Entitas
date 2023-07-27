@@ -78,7 +78,7 @@ namespace Entitas.Unity.Editor
             && type != typeof(ReactiveSystem<>)
             && type != typeof(Systems)
             && type != typeof(DebugSystems)
-            && type != typeof(JobSystem<>)
+            && type != typeof(ParallelSystem<>)
             && type.FullName != "Feature";
     }
 }

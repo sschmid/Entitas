@@ -4,12 +4,12 @@ using Xunit;
 
 namespace Entitas.Tests
 {
-    [Collection(nameof(JobSystemTests))]
-    public class JobSystemTests
+    [Collection(nameof(ParallelSystemTests))]
+    public class ParallelSystemTests
     {
         readonly TestContext _context;
 
-        public JobSystemTests()
+        public ParallelSystemTests()
         {
             _context = new TestContext(1);
         }
@@ -17,7 +17,7 @@ namespace Entitas.Tests
         [Fact]
         public void ProcessesEntity()
         {
-            var system = new TestJobSystem(_context);
+            var system = new TestParallelSystem(_context);
             var entity = _context.CreateEntity();
             entity.AddUser("Test", -1);
             system.Execute();
@@ -27,7 +27,7 @@ namespace Entitas.Tests
         [Fact]
         public void ProcessesAllEntities()
         {
-            var system = new TestJobSystem(_context);
+            var system = new TestParallelSystem(_context);
             for (var i = 0; i < 4; i++)
                 _context.CreateEntity().AddUser($"Test{i}", -1);
 
@@ -42,7 +42,7 @@ namespace Entitas.Tests
         [Fact]
         public void ThrowsWhenThreadThrows()
         {
-            var system = new TestJobSystem(_context);
+            var system = new TestParallelSystem(_context);
             system.Exception = new Exception("Test Exception");
             for (var i = 0; i < 10; i++)
                 _context.CreateEntity().AddUser($"Test{i}", -1);
@@ -53,7 +53,7 @@ namespace Entitas.Tests
         [Fact]
         public void RecoversFromException()
         {
-            var system = new TestJobSystem(_context);
+            var system = new TestParallelSystem(_context);
             system.Exception = new Exception("Test Exception");
             for (var i = 0; i < 10; i++)
                 _context.CreateEntity().AddUser($"Test{i}", -1);

@@ -2,15 +2,15 @@
 
 namespace Entitas
 {
-    /// A JobSystem calls Execute(entities) with subsets of entities
+    /// A ParallelSystem calls Execute(entities) with subsets of entities
     /// and distributes the workload over multiple threads.
     /// Don't use the generated methods like AddXyz() and ReplaceXyz() when
     /// writing multi-threaded code in Entitas.
-    public abstract class JobSystem<TEntity> : IExecuteSystem where TEntity : class, IEntity
+    public abstract class ParallelSystem<TEntity> : IExecuteSystem where TEntity : class, IEntity
     {
         readonly IGroup<TEntity> _group;
 
-        protected JobSystem(IGroup<TEntity> group)
+        protected ParallelSystem(IGroup<TEntity> group)
         {
             _group = group;
         }
