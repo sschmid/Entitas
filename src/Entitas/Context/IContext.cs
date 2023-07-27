@@ -2,7 +2,7 @@
 
 namespace Entitas
 {
-    public delegate void ContextEntityChanged(IContext context, IEntity entity);
+    public delegate void ContextEntityChanged(IContext context, Entity entity);
 
     public delegate void ContextGroupChanged(IContext context, IGroup group);
 
@@ -35,7 +35,7 @@ namespace Entitas
         void Reset();
     }
 
-    public interface IContext<TEntity> : IContext where TEntity : class, IEntity
+    public interface IContext<TEntity> : IContext where TEntity : Entity
     {
         TEntity CreateEntity();
 

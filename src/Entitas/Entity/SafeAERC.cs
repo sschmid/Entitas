@@ -12,15 +12,15 @@ namespace Entitas
     /// about the owners.
     public sealed class SafeAERC : IAERC
     {
-        public static readonly Func<IEntity, IAERC> Delegate = entity => new SafeAERC(entity);
+        public static readonly Func<Entity, IAERC> Delegate = entity => new SafeAERC(entity);
 
         public int RetainCount => _owners.Count;
         public HashSet<object> Owners => _owners;
 
-        readonly IEntity _entity;
+        readonly Entity _entity;
         readonly HashSet<object> _owners = new HashSet<object>();
 
-        public SafeAERC(IEntity entity)
+        public SafeAERC(Entity entity)
         {
             _entity = entity;
         }

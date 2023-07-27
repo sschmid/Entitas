@@ -7,7 +7,7 @@ namespace Entitas
     /// A common use-case is to react to changes, e.g. a change of the position
     /// of an entity to update the gameObject.transform.position
     /// of the related gameObject.
-    public abstract class ReactiveSystem<TEntity> : IReactiveSystem where TEntity : class, IEntity
+    public abstract class ReactiveSystem<TEntity> : IReactiveSystem where TEntity : Entity
     {
         readonly ICollector<TEntity> _collector;
         readonly List<TEntity> _buffer = new List<TEntity>();

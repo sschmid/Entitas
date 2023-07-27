@@ -11,7 +11,7 @@ namespace Entitas
         void ClearCollectedEntities();
     }
 
-    public interface ICollector<TEntity> : ICollector where TEntity : class, IEntity
+    public interface ICollector<TEntity> : ICollector where TEntity : Entity
     {
         HashSet<TEntity> CollectedEntities { get; }
     }

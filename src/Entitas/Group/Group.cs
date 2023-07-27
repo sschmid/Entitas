@@ -9,7 +9,7 @@ namespace Entitas
     /// The created group is managed by the context and will always be up to date.
     /// It will automatically add entities that match the matcher or
     /// remove entities as soon as they don't match the matcher anymore.
-    public class Group<TEntity> : IGroup<TEntity> where TEntity : class, IEntity
+    public class Group<TEntity> : IGroup<TEntity> where TEntity : Entity
     {
         /// Occurs when an entity gets added.
         public event GroupChanged<TEntity> OnEntityAdded;

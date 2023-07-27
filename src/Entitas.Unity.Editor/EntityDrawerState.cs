@@ -66,7 +66,7 @@ namespace Entitas.Unity.Editor
             ComponentDrawers = AppDomain.CurrentDomain.GetInstancesOf<IComponentDrawer>().ToArray();
         }
 
-        static bool[] GetUnfoldedComponents(IEntity entity)
+        static bool[] GetUnfoldedComponents(Entity entity)
         {
             if (!ContextToUnfoldedComponents.TryGetValue(entity.ContextInfo.Name, out var unfoldedComponents))
             {
@@ -80,7 +80,7 @@ namespace Entitas.Unity.Editor
             return unfoldedComponents;
         }
 
-        static string[] GetComponentMemberSearch(IEntity entity)
+        static string[] GetComponentMemberSearch(Entity entity)
         {
             if (!ContextToComponentMemberSearch.TryGetValue(entity.ContextInfo.Name, out var componentMemberSearch))
             {
@@ -94,7 +94,7 @@ namespace Entitas.Unity.Editor
             return componentMemberSearch;
         }
 
-        static ComponentInfo[] GetComponentInfos(IEntity entity)
+        static ComponentInfo[] GetComponentInfos(Entity entity)
         {
             if (!ContextToComponentInfos.TryGetValue(entity.ContextInfo.Name, out var infos))
             {

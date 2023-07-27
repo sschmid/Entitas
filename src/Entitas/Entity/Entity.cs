@@ -4,10 +4,20 @@ using System.Linq;
 
 namespace Entitas
 {
+    public delegate void EntityComponentChanged(
+        Entity entity, int index, IComponent component
+    );
+
+    public delegate void EntityComponentReplaced(
+        Entity entity, int index, IComponent previousComponent, IComponent newComponent
+    );
+
+    public delegate void EntityEvent(Entity entity);
+
     /// Use context.CreateEntity() to create a new entity and
     /// entity.Destroy() to destroy it.
     /// You can add, replace and remove IComponent to an entity.
-    public class Entity : IEntity
+    public class Entity
     {
         /// Occurs when a component gets added.
         /// All event handlers will be removed when

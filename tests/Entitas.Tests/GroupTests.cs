@@ -89,7 +89,7 @@ namespace Entitas.Tests
         {
             HandleSilently(_entity1);
             var i = 0;
-            IEntity entity = null;
+            Entity entity = null;
             foreach (var e in _groupA)
             {
                 i++;

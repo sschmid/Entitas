@@ -9,7 +9,7 @@ namespace Entitas
     /// You can create and destroy entities and get groups of entities.
     /// The preferred way to create a context is to use the generated methods
     /// from the code generator, e.g. var context = new GameContext();
-    public class Context<TEntity> : IContext<TEntity> where TEntity : class, IEntity
+    public class Context<TEntity> : IContext<TEntity> where TEntity : Entity
     {
         /// Occurs when an entity gets created.
         public event ContextEntityChanged OnEntityCreated;
@@ -53,7 +53,7 @@ namespace Entitas
 
         readonly Stack<IComponent>[] _componentPools;
         readonly ContextInfo _contextInfo;
-        readonly Func<IEntity, IAERC> _aercFactory;
+        readonly Func<Entity, IAERC> _aercFactory;
         readonly Func<TEntity> _entityFactory;
 
         readonly HashSet<TEntity> _entities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.Comparer);
@@ -81,7 +81,7 @@ namespace Entitas
 
         /// The preferred way to create a context is to use the generated methods
         /// from the code generator, e.g. var context = new GameContext();
-        public Context(int totalComponents, int startCreationIndex, ContextInfo contextInfo, Func<IEntity, IAERC> aercFactory, Func<TEntity> entityFactory)
+        public Context(int totalComponents, int startCreationIndex, ContextInfo contextInfo, Func<Entity, IAERC> aercFactory, Func<TEntity> entityFactory)
         {
             _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;

@@ -143,7 +143,7 @@ namespace Entitas.Tests
         [Fact]
         public void WhenGettingSingleEntityFromCollectionWhenMultipleExist()
         {
-            PrintErrorMessage(() => new IEntity[2].SingleEntity());
+            PrintErrorMessage(() => new Entity[2].SingleEntity());
         }
 
         [Fact]

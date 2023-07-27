@@ -12,7 +12,7 @@ namespace Entitas.Unity.Editor
 {
     public static partial class EntityDrawer
     {
-        public static void DrawEntity(IEntity entity)
+        public static void DrawEntity(Entity entity)
         {
             var bgColor = GUI.backgroundColor;
             GUI.backgroundColor = Color.red;
@@ -47,7 +47,7 @@ namespace Entitas.Unity.Editor
             }
         }
 
-        public static void DrawMultipleEntities(IEntity[] entities)
+        public static void DrawMultipleEntities(Entity[] entities)
         {
             EditorGUILayout.Space();
             EditorGUILayout.BeginHorizontal();
@@ -97,7 +97,7 @@ namespace Entitas.Unity.Editor
             }
         }
 
-        public static void DrawComponents(IEntity entity)
+        public static void DrawComponents(Entity entity)
         {
             var unfoldedComponents = GetUnfoldedComponents(entity);
             var componentMemberSearch = GetComponentMemberSearch(entity);
@@ -141,7 +141,7 @@ namespace Entitas.Unity.Editor
             EditorLayout.EndVerticalBox();
         }
 
-        public static void DrawComponent(bool[] unfoldedComponents, string[] componentMemberSearch, IEntity entity, int index, IComponent component)
+        public static void DrawComponent(bool[] unfoldedComponents, string[] componentMemberSearch, Entity entity, int index, IComponent component)
         {
             var componentType = component.GetType();
             var componentName = componentType.Name.RemoveSuffix("Component");
@@ -339,7 +339,7 @@ namespace Entitas.Unity.Editor
             return false;
         }
 
-        static int DrawAddComponentMenu(IEntity entity)
+        static int DrawAddComponentMenu(Entity entity)
         {
             var componentInfos = GetComponentInfos(entity)
                 .Where(info => !entity.HasComponent(info.Index))

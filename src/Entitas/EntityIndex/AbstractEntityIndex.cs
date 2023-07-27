@@ -2,7 +2,7 @@
 
 namespace Entitas
 {
-    public abstract class AbstractEntityIndex<TEntity, TKey> : IEntityIndex where TEntity : class, IEntity
+    public abstract class AbstractEntityIndex<TEntity, TKey> : IEntityIndex where TEntity : Entity
     {
         public string Name => _name;
 

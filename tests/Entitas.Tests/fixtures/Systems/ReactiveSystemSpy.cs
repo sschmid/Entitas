@@ -31,7 +31,7 @@ public class ReactiveSystemSpy : ReactiveSystem<TestEntity>, IReactiveSystemSpy,
 
     public ReactiveSystemSpy(ICollector<TestEntity> collector) : base(collector) { }
 
-    public ReactiveSystemSpy(ICollector<TestEntity> collector, Func<IEntity, bool> filter) : this(collector)
+    public ReactiveSystemSpy(ICollector<TestEntity> collector, Func<Entity, bool> filter) : this(collector)
     {
         _filter = filter;
     }

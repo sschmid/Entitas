@@ -6,7 +6,7 @@ namespace Entitas
     /// and distributes the workload over multiple threads.
     /// Don't use the generated methods like AddXyz() and ReplaceXyz() when
     /// writing multi-threaded code in Entitas.
-    public abstract class ParallelSystem<TEntity> : IExecuteSystem where TEntity : class, IEntity
+    public abstract class ParallelSystem<TEntity> : IExecuteSystem where TEntity : Entity
     {
         readonly IGroup<TEntity> _group;
 

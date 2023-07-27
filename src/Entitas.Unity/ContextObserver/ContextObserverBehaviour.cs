@@ -23,7 +23,7 @@ namespace Entitas.Unity
             Update();
         }
 
-        void OnEntityCreated(IContext context, IEntity entity)
+        void OnEntityCreated(IContext context, Entity entity)
         {
             var entityBehaviour = _entityBehaviourPool.Count > 0
                 ? _entityBehaviourPool.Pop()

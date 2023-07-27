@@ -11,7 +11,7 @@ namespace Entitas
     /// about the owners.
     public sealed class UnsafeAERC : IAERC
     {
-        public static readonly Func<IEntity, IAERC> Delegate = entity => new UnsafeAERC();
+        public static readonly Func<Entity, IAERC> Delegate = entity => new UnsafeAERC();
 
         public int RetainCount => _retainCount;
 

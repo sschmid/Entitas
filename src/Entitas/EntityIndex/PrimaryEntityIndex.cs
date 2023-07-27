@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Entitas
 {
-    public class PrimaryEntityIndex<TEntity, TKey> : AbstractEntityIndex<TEntity, TKey> where TEntity : class, IEntity
+    public class PrimaryEntityIndex<TEntity, TKey> : AbstractEntityIndex<TEntity, TKey> where TEntity : Entity
     {
         readonly Dictionary<TKey, TEntity> _index;
 

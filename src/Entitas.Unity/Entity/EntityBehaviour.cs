@@ -6,14 +6,14 @@ namespace Entitas.Unity
     public class EntityBehaviour : MonoBehaviour
     {
         public IContext Context => _context;
-        public IEntity Entity => _entity;
+        public Entity Entity => _entity;
 
         IContext _context;
-        IEntity _entity;
+        Entity _entity;
         Stack<EntityBehaviour> _entityBehaviourPool;
         string _cachedName;
 
-        public void Initialize(IContext context, IEntity entity, Stack<EntityBehaviour> entityBehaviourPool)
+        public void Initialize(IContext context, Entity entity, Stack<EntityBehaviour> entityBehaviourPool)
         {
             _context = context;
             _entity = entity;
@@ -25,7 +25,7 @@ namespace Entitas.Unity
             Update();
         }
 
-        void OnEntityReleased(IEntity e)
+        void OnEntityReleased(Entity e)
         {
             _entity.OnEntityReleased -= OnEntityReleased;
             gameObject.hideFlags = HideFlags.HideInHierarchy;

@@ -34,7 +34,7 @@ namespace Entitas.Unity.Editor
                 {
                     if (GUILayout.Button("Create Entity"))
                     {
-                        var entity = (IEntity)contextObserver.Context.GetType().GetMethod("CreateEntity")!
+                        var entity = (Entity)contextObserver.Context.GetType().GetMethod("CreateEntity")!
                             .Invoke(contextObserver.Context, null);
 
                         var entityBehaviour = FindObjectsOfType<EntityBehaviour>()

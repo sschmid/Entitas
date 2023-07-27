@@ -1,6 +1,6 @@
 ﻿namespace Entitas
 {
-    public partial class Matcher<TEntity> : IAllOfMatcher<TEntity> where TEntity : class, IEntity
+    public partial class Matcher<TEntity> : IAllOfMatcher<TEntity> where TEntity : Entity
     {
         public int[] Indexes => _indexes ??= MergeIndexes(_allOfIndexes, _anyOfIndexes, _noneOfIndexes);
         public int[] AllOfIndexes => _allOfIndexes;

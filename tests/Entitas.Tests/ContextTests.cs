@@ -233,7 +233,7 @@ namespace Entitas.Tests
         public void DispatchesOnEntityCreatedWhenCreatingNewEntity()
         {
             var didDispatch = 0;
-            IEntity eventEntity = null;
+            Entity eventEntity = null;
             _context.OnEntityCreated += (c, e) =>
             {
                 didDispatch += 1;
