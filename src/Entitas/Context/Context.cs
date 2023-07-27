@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DesperateDevs.Caching;
 
 namespace Entitas
 {
@@ -108,17 +107,16 @@ namespace Entitas
             _componentPools = new Stack<IComponent>[totalComponents];
             _entityIndexes = new Dictionary<string, IEntityIndex>();
 
-            var groupChangedListPool = new ObjectPool<List<GroupChanged<TEntity>>>(
-                () => new List<GroupChanged<TEntity>>(),
-                list => list.Clear()
-            );
-
+            var groupChangedListPool = new Stack<List<GroupChanged<TEntity>>>();
             _onEntityChangedDelegate = (entity, index, component) =>
             {
                 var groups = _groupsForIndex[index];
                 if (groups != null)
                 {
-                    var events = groupChangedListPool.Get();
+                    var events = groupChangedListPool.Count != 0
+                        ? groupChangedListPool.Pop()
+                        : new List<GroupChanged<TEntity>>();
+
                     var tEntity = (TEntity)entity;
 
                     for (var i = 0; i < groups.Count; i++)
@@ -127,6 +125,7 @@ namespace Entitas
                     for (var i = 0; i < events.Count; i++)
                         events[i]?.Invoke(groups[i], tEntity, index, component);
 
+                    events.Clear();
                     groupChangedListPool.Push(events);
                 }
             };
@@ -236,6 +235,12 @@ namespace Entitas
         public TEntity[] GetEntities()
         {
             return _entitiesCache ??= _entities.ToArray();
+        }
+
+        /// Returns all entities matching the specified matcher.
+        public TEntity[] GetEntities(IMatcher<TEntity> matcher)
+        {
+            return GetGroup(matcher).GetEntities();
         }
 
         /// Returns a group for the specified matcher.

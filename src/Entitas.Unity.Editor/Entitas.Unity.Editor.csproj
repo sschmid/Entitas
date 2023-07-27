@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DesperateDevs.Reflection" Version="1.*" />
     <PackageReference Include="DesperateDevs.Unity.Editor" Version="2.*" />
   </ItemGroup>
 

@@ -12,9 +12,4 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="DesperateDevs.Caching" Version="1.*" />
-    <PackageReference Include="DesperateDevs.Reflection" Version="1.*" />
-  </ItemGroup>
-
 </Project>
