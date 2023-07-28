@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Entitas.Unity.Editor
 {
     [CustomEditor(typeof(DebugSystemsBehaviour))]
-    public class DebugSystemsInspector : UnityEditor.Editor
+    public class DebugSystemsEditor : UnityEditor.Editor
     {
         enum SortMethod
         {

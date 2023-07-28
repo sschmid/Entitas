@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Entitas.Unity.Editor
 {
     [CustomEditor(typeof(ContextObserverBehaviour))]
-    public class ContextObserverInspector : UnityEditor.Editor
+    public class ContextObserverEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {

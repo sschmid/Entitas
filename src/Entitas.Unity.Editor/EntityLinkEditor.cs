@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Entitas.Unity.Editor
 {
     [CustomEditor(typeof(EntityLink))]
-    public class EntityLinkInspector : UnityEditor.Editor
+    public class EntityLinkEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
