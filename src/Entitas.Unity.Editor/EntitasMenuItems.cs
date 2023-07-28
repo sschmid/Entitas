@@ -122,9 +122,6 @@ namespace Entitas.Unity.Editor
         [MenuItem("Tools/Entitas/Request a feature...", false, 102)]
         public static void RequestFeature() => Application.OpenURL("https://github.com/sschmid/Entitas/issues");
 
-        [MenuItem("Tools/Entitas/Donate...", false, 103)]
-        public static void Donate() => Application.OpenURL("https://www.paypal.com/donate/?hosted_button_id=BTMLSDQULZ852");
-
         public static Dictionary<string, int> GetStatistics()
         {
             var types = AppDomain.CurrentDomain.GetAllTypes();
