@@ -379,7 +379,7 @@ namespace Entitas.Unity.Editor
         public static void GenerateIDefaultInstanceCreator(string typeName)
         {
             var folder = "Assets/Editor/DefaultInstanceCreator";
-            var filePath = folder + Path.DirectorySeparatorChar + "Default" + typeName.TypeName() + "InstanceCreator.cs";
+            var filePath = Path.Combine(folder, "Default" + typeName.TypeName() + "InstanceCreator.cs");
             var template = DefaultInstanceCreatorTemplateFormat
                 .Replace("${Type}", typeName)
                 .Replace("${ShortType}", typeName.TypeName());
@@ -389,7 +389,7 @@ namespace Entitas.Unity.Editor
         public static void GenerateITypeDrawer(string typeName)
         {
             var folder = "Assets/Editor/TypeDrawer";
-            var filePath = folder + Path.DirectorySeparatorChar + typeName.TypeName() + "TypeDrawer.cs";
+            var filePath = Path.Combine(folder, typeName.TypeName() + "TypeDrawer.cs");
             var template = TypeDrawerTemplateFormat
                 .Replace("${Type}", typeName)
                 .Replace("${ShortType}", typeName.TypeName());
