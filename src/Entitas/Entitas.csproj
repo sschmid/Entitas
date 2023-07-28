@@ -5,11 +5,4 @@
     <Version>1.14.2</Version>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Entitas/version.txt" />
-    <EmbeddedResource Include="version.txt">
-      <LogicalName>version.txt</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>
-
 </Project>

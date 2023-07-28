@@ -43,9 +43,6 @@ namespace Entitas.Unity.Editor
         {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
             {
-                if (GUILayout.Button("Check for Updates", EditorStyles.toolbarButton))
-                    CheckForUpdates.DisplayUpdates();
-
                 if (GUILayout.Button("Chat", EditorStyles.toolbarButton))
                     EntitasFeedback.EntitasChat();
 
