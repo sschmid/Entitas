@@ -27,7 +27,7 @@ jobs:
         run: dotnet test -c Release --no-build --collect:"XPlat Code Coverage"
 
       - name: "Publish"
-        run: dotnet publish -c Release --no-build -p:UseAppHost=false -o dist/Assemblies
+        run: dotnet publish -c Release --no-build -p:UseAppHost=false -p:PublishDir=/home/runner/work/Entitas/Entitas/dist/Assemblies
 
       - name: "Upload assemblies"
         uses: actions/upload-artifact@v3
