@@ -345,10 +345,7 @@ namespace Entitas
         /// and is used internally to prevent pooling retained entities.
         /// If you use retain manually you also have to
         /// release it manually at some point.
-        public void Retain(object owner)
-        {
-            _aerc.Retain(owner);
-        }
+        public void Retain(object owner) => _aerc.Retain(owner);
 
         /// Releases the entity. An owner can only release an entity
         /// if it retains it.

@@ -25,7 +25,7 @@ namespace MyApp
                 ),
                 entity =>
 #if (ENTITAS_FAST_AND_UNSAFE)
-                new global::Entitas.UnsafeAERC(),
+                    new global::Entitas.UnsafeAERC(),
 #else
                     new global::Entitas.SafeAERC(entity),
 #endif
