@@ -7,7 +7,7 @@ using UnityEngine;
 public class EntityLinkTests
 {
     GameContext _context;
-    IEntity _entity;
+    Entity _entity;
     GameObject _gameObject;
     EntityLink _link;
 
