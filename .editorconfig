@@ -20,6 +20,9 @@ ij_xml_space_inside_empty_tag = true
 indent_style = tab
 ij_xml_attribute_wrap = off
 
+[*.yml]
+indent_size = 2
+
 # [*.cs]
 # entitas_generator.component.cleanup_systems = false
 # entitas_generator.component.component_index = false
