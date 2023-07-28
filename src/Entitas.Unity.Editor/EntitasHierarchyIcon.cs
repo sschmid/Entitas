@@ -1,5 +1,3 @@
-using System;
-using DesperateDevs.Serialization;
 using DesperateDevs.Unity.Editor;
 using UnityEditor;
 using UnityEngine;
@@ -110,17 +108,7 @@ namespace Entitas.Unity.Editor
 
         static EntitasHierarchyIcon()
         {
-            try
-            {
-                var preferences = new Preferences("Entitas.properties", $"{Environment.UserName}.userproperties");
-                var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
-                SystemWarningThreshold = config.systemWarningThreshold;
-            }
-            catch (Exception)
-            {
-                SystemWarningThreshold = int.MaxValue;
-            }
-
+            SystemWarningThreshold = EntitasSettings.Instance.SystemWarningThreshold;
             EditorApplication.hierarchyWindowItemOnGUI += OnHierarchyWindowItemOnGUI;
         }
 

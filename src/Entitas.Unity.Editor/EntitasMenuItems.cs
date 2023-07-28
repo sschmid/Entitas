@@ -1,49 +1,190 @@
-﻿using UnityEditor;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using DesperateDevs.Extensions;
+using DesperateDevs.Reflection;
+using DesperateDevs.Unity.Editor;
+using Entitas.Generators.Attributes;
+using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.Editor
 {
     public static class EntitasMenuItems
     {
-        public const string preferences = "Tools/Entitas/Preferences... #%e";
+        const string EntitasDisableVisualDebugging = "ENTITAS_DISABLE_VISUAL_DEBUGGING";
+        const string EntitasDisableDeepProfiling = "ENTITAS_DISABLE_DEEP_PROFILING";
+        const string EntitasFastAndUnsafe = "ENTITAS_FAST_AND_UNSAFE";
 
-        public const string check_for_updates = "Tools/Entitas/Check for Updates...";
+        [MenuItem("Tools/Entitas/Settings...", false, 1)]
+        public static void EntitasSettings() => Selection.activeObject = Editor.EntitasSettings.Instance;
 
-        public const string feedback_report_a_bug = "Tools/Entitas/Feedback/Report a bug...";
-        public const string feedback_request_a_feature = "Tools/Entitas/Feedback/Request a feature...";
-        public const string feedback_join_the_entitas_chat = "Tools/Entitas/Feedback/Join the Entitas chat...";
-        public const string feedback_entitas_wiki = "Tools/Entitas/Feedback/Entitas Wiki...";
-        public const string feedback_donate = "Tools/Entitas/Feedback/Donate...";
-    }
+        [MenuItem("Tools/Entitas/Enable VisualDebugging", false, 2)]
+        public static void EnableVisualDebugging()
+        {
+            if (IsVisualDebuggingEnabled)
+                new ScriptingDefineSymbols().AddForAll(EntitasDisableVisualDebugging);
+            else
+                new ScriptingDefineSymbols().RemoveForAll(EntitasDisableVisualDebugging);
+        }
 
-    public static class EntitasMenuItemPriorities
-    {
-        public const int preferences = 1;
+        [MenuItem("Tools/Entitas/Enable VisualDebugging", true)]
+        public static bool ValidateEnableVisualDebugging()
+        {
+            Menu.SetChecked("Tools/Entitas/Enable VisualDebugging", IsVisualDebuggingEnabled);
+            return true;
+        }
 
-        public const int check_for_updates = 10;
+        static bool IsVisualDebuggingEnabled => !ScriptingDefineSymbols.BuildTargetGroups.All(buildTarget =>
+            PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTarget).Contains(EntitasDisableVisualDebugging));
 
-        public const int feedback_report_a_bug = 20;
-        public const int feedback_request_a_feature = 21;
-        public const int feedback_join_the_entitas_chat = 22;
-        public const int feedback_entitas_wiki = 23;
-        public const int feedback_donate = 24;
-    }
+        [MenuItem("Tools/Entitas/Enable Deep Profiling", false, 3)]
+        public static void EnableDeepProfiling()
+        {
+            if (IsDeepProfilingEnabled)
+                new ScriptingDefineSymbols().AddForAll(EntitasDisableDeepProfiling);
+            else
+                new ScriptingDefineSymbols().RemoveForAll(EntitasDisableDeepProfiling);
+        }
 
-    public static class EntitasFeedback
-    {
-        [MenuItem(EntitasMenuItems.feedback_report_a_bug, false, EntitasMenuItemPriorities.feedback_report_a_bug)]
-        public static void ReportBug() => Application.OpenURL("https://github.com/sschmid/Entitas/issues");
+        [MenuItem("Tools/Entitas/Enable Deep Profiling", true)]
+        public static bool ValidateEnableDeepProfiling()
+        {
+            Menu.SetChecked("Tools/Entitas/Enable Deep Profiling", IsDeepProfilingEnabled);
+            return true;
+        }
 
-        [MenuItem(EntitasMenuItems.feedback_request_a_feature, false, EntitasMenuItemPriorities.feedback_request_a_feature)]
-        public static void RequestFeature() => Application.OpenURL("https://github.com/sschmid/Entitas/issues");
+        static bool IsDeepProfilingEnabled => !ScriptingDefineSymbols.BuildTargetGroups
+            .All(buildTarget => PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTarget).Contains(EntitasDisableDeepProfiling));
 
-        [MenuItem(EntitasMenuItems.feedback_join_the_entitas_chat, false, EntitasMenuItemPriorities.feedback_join_the_entitas_chat)]
-        public static void EntitasChat() => Application.OpenURL("https://discord.gg/uHrVx5Z");
+        [MenuItem("Tools/Entitas/AERC - Safe", false, 4)]
+        public static void SetSafeAerc()
+        {
+            new ScriptingDefineSymbols().RemoveForAll(EntitasFastAndUnsafe);
+        }
 
-        [MenuItem(EntitasMenuItems.feedback_entitas_wiki, false, EntitasMenuItemPriorities.feedback_entitas_wiki)]
+        [MenuItem("Tools/Entitas/AERC - Safe", true)]
+        public static bool ValidateSetSafeAerc()
+        {
+            var isChecked = GetAercMode == 0;
+            Menu.SetChecked("Tools/Entitas/AERC - Safe", isChecked);
+            return !isChecked;
+        }
+
+        [MenuItem("Tools/Entitas/AERC - FastAndUnsafe", false, 5)]
+        public static void SetUnsafeAerc()
+        {
+            new ScriptingDefineSymbols().AddForAll(EntitasFastAndUnsafe);
+        }
+
+        [MenuItem("Tools/Entitas/AERC - FastAndUnsafe", true)]
+        public static bool ValidateSetUnsafeAerc()
+        {
+            var isChecked = GetAercMode == 1;
+            Menu.SetChecked("Tools/Entitas/AERC - FastAndUnsafe", isChecked);
+            return !isChecked;
+        }
+
+        static int GetAercMode => ScriptingDefineSymbols.BuildTargetGroups
+            .All(buildTarget => PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTarget).Contains(EntitasFastAndUnsafe))
+            ? 1
+            : 0;
+
+        [MenuItem("Tools/Entitas/Generate/DefaultInstanceCreator", false, 6)]
+        public static void GenerateDefaultInstanceCreator() => EntityDrawer.GenerateIDefaultInstanceCreator("MyType");
+
+        [MenuItem("Tools/Entitas/Generate/TypeDrawer", false, 7)]
+        public static void GenerateTypeDrawer() => EntityDrawer.GenerateITypeDrawer("MyType");
+
+        [MenuItem("Tools/Entitas/Show Statistics", false, 8)]
+        public static void ShowStatistics()
+        {
+            var stats = string.Join("\n", GetStatistics().Select(kvp => $"{kvp.Key}: {kvp.Value}"));
+            Debug.Log(stats);
+            EditorUtility.DisplayDialog("Entitas Statistics", stats, "Close");
+        }
+
+        [MenuItem("Tools/Entitas/Open Entitas Wiki...", false, 50)]
         public static void EntitasWiki() => Application.OpenURL("https://github.com/sschmid/Entitas/wiki");
 
-        [MenuItem(EntitasMenuItems.feedback_donate, false, EntitasMenuItemPriorities.feedback_donate)]
-        public static void Donate() => Application.OpenURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BTMLSDQULZ852");
+        [MenuItem("Tools/Entitas/Join the Entitas Discord Server...", false, 51)]
+        public static void EntitasChat() => Application.OpenURL("https://discord.gg/uHrVx5Z");
+
+        [MenuItem("Tools/Entitas/Feedback", false, 100)]
+        public static void Feedback() => Application.OpenURL("https://github.com/sschmid/Entitas/issues");
+
+        [MenuItem("Tools/Entitas/Feedback", true)]
+        public static bool ValidateFeedback() => false;
+
+        [MenuItem("Tools/Entitas/Report a bug...", false, 101)]
+        public static void ReportBug() => Application.OpenURL("https://github.com/sschmid/Entitas/issues");
+
+        [MenuItem("Tools/Entitas/Request a feature...", false, 102)]
+        public static void RequestFeature() => Application.OpenURL("https://github.com/sschmid/Entitas/issues");
+
+        [MenuItem("Tools/Entitas/Donate...", false, 103)]
+        public static void Donate() => Application.OpenURL("https://www.paypal.com/donate/?hosted_button_id=BTMLSDQULZ852");
+
+        public static Dictionary<string, int> GetStatistics()
+        {
+            var types = AppDomain.CurrentDomain.GetAllTypes();
+
+            var components = types
+                .Where(type => type.ImplementsInterface<IComponent>())
+                .ToArray();
+
+            var systems = types
+                .Where(IsSystem)
+                .ToArray();
+
+            var contexts = GetContexts(components);
+
+            var stats = new Dictionary<string, int>
+            {
+                { "Total Components", components.Length },
+                { "Systems", systems.Length }
+            };
+
+            foreach (var context in contexts)
+                stats.Add($"Components in {context.Key}", context.Value);
+
+            return stats;
+        }
+
+        static Dictionary<string, int> GetContexts(Type[] components) => components
+            .Aggregate(new Dictionary<string, int>(), (contexts, type) =>
+            {
+                var contextNames = GetContextNamesOrDefault(type);
+                foreach (var contextName in contextNames)
+                {
+                    contexts.TryAdd(contextName, 0);
+                    contexts[contextName] += 1;
+                }
+
+                return contexts;
+            });
+
+        static string[] GetContextNames(Type type) => Attribute
+            .GetCustomAttributes(type)
+            .OfType<ContextAttribute>()
+            .Select(attr => attr.Type.FullName)
+            .ToArray();
+
+        static string[] GetContextNamesOrDefault(Type type)
+        {
+            var contextNames = GetContextNames(type);
+            if (contextNames.Length == 0)
+                contextNames = new[] { "Default" };
+
+            return contextNames;
+        }
+
+        static bool IsSystem(Type type) =>
+            type.ImplementsInterface<ISystem>()
+            && type != typeof(ReactiveSystem<>)
+            && type != typeof(Systems)
+            && type != typeof(DebugSystems)
+            && type != typeof(ParallelSystem<>)
+            && type.FullName != "Feature";
     }
 }

@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using DesperateDevs.Extensions;
 using DesperateDevs.Reflection;
-using DesperateDevs.Serialization;
 using DesperateDevs.Unity.Editor;
 using UnityEditor;
 using UnityEngine;
@@ -379,9 +378,7 @@ namespace Entitas.Unity.Editor
 
         public static void GenerateIDefaultInstanceCreator(string typeName)
         {
-            var preferences = new Preferences("Entitas.properties", $"{Environment.UserName}.userproperties");
-            var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
-            var folder = config.defaultInstanceCreatorFolderPath;
+            var folder = "Assets/Editor/DefaultInstanceCreator";
             var filePath = folder + Path.DirectorySeparatorChar + "Default" + typeName.TypeName() + "InstanceCreator.cs";
             var template = DefaultInstanceCreatorTemplateFormat
                 .Replace("${Type}", typeName)
@@ -391,9 +388,7 @@ namespace Entitas.Unity.Editor
 
         public static void GenerateITypeDrawer(string typeName)
         {
-            var preferences = new Preferences("Entitas.properties", $"{Environment.UserName}.userproperties");
-            var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
-            var folder = config.typeDrawerFolderPath;
+            var folder = "Assets/Editor/TypeDrawer";
             var filePath = folder + Path.DirectorySeparatorChar + typeName.TypeName() + "TypeDrawer.cs";
             var template = TypeDrawerTemplateFormat
                 .Replace("${Type}", typeName)
@@ -414,33 +409,37 @@ namespace Entitas.Unity.Editor
 
         const string DefaultInstanceCreatorTemplateFormat =
             @"using System;
-using Entitas.VisualDebugging.Unity.Editor;
+using Entitas.Unity.Editor;
 
-public class Default${ShortType}InstanceCreator : IDefaultInstanceCreator {
-
-    public bool HandlesType(Type type) {
+public class Default${ShortType}InstanceCreator : IDefaultInstanceCreator
+{
+    public bool HandlesType(Type type)
+    {
         return type == typeof(${Type});
     }
 
-    public object CreateDefault(Type type) {
+    public object CreateDefault(Type type)
+    {
         // TODO return an instance of type ${Type}
         throw new NotImplementedException();
     }
 }
+
 ";
 
         const string TypeDrawerTemplateFormat =
             @"using System;
-using Entitas;
-using Entitas.VisualDebugging.Unity.Editor;
+using Entitas.Unity.Editor;
 
-public class ${ShortType}TypeDrawer : ITypeDrawer {
-
-    public bool HandlesType(Type type) {
+public class ${ShortType}TypeDrawer : ITypeDrawer
+{
+    public bool HandlesType(Type type)
+    {
         return type == typeof(${Type});
     }
 
-    public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
+    public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target)
+    {
         // TODO draw the type ${Type}
         throw new NotImplementedException();
     }
