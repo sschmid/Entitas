@@ -46,7 +46,7 @@ reduces the amount of code you have to write and
 # First glimpse
 
 The optional [code generator](https://github.com/sschmid/Entitas/wiki/Code-Generator)
-lets you write code that is super fast, safe and literally screams its intent.
+lets you write code that is super fast, safe and makes its intent obvious.
 
 ```csharp
 var entity = context.CreateEntity();
