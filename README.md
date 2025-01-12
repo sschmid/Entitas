@@ -14,6 +14,11 @@
 <p align="center">
     <a href="https://www.paypal.com/donate/?hosted_button_id=BTMLSDQULZ852"><img src="https://img.shields.io/static/v1.svg?logo=paypal&label=PayPal&labelColor=3F70B6&&message=Donate&color=gray" alt="Donate"></a>
 </p>
+## Getting Started with Entitas
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/sschmid/Entitas.git
 
 # Entitas - The Entity Component System Framework for C# and Unity
 
