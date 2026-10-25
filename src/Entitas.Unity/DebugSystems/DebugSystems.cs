@@ -84,6 +84,23 @@ namespace Entitas.Unity
             return base.Add(system);
         }
 
+        public override void Remove(ISystem system)
+        {
+            AllSystems.Remove(system);
+            RemoveSystemInfo(InitializeSystemInfos, system);
+            RemoveSystemInfo(ExecuteSystemInfos, system);
+            RemoveSystemInfo(CleanupSystemInfos, system);
+            RemoveSystemInfo(TearDownSystemInfos, system);
+            base.Remove(system);
+        }
+
+        static void RemoveSystemInfo(List<SystemInfo> systemInfos, ISystem system)
+        {
+            // Index-aligned with the base system lists, so remove the first match like List.Remove does
+            var index = systemInfos.FindIndex(info => info.System == system);
+            if (index >= 0) systemInfos.RemoveAt(index);
+        }
+
         public void ResetDurations()
         {
             foreach (var systemInfo in ExecuteSystemInfos)

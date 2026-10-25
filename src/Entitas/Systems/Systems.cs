@@ -25,7 +25,7 @@ namespace Entitas
         }
 
         /// Removes the system instance from the systems list.
-        public void Remove(ISystem system)
+        public virtual void Remove(ISystem system)
         {
             if (system is IInitializeSystem initializeSystem) _initializeSystems.Remove(initializeSystem);
             if (system is IExecuteSystem executeSystem) _executeSystems.Remove(executeSystem);
